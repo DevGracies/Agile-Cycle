@@ -89,7 +89,7 @@ export default function SignInPage() {
               </label>
 
               <Link
-                href="#"
+                href="/forgot-password"
                 className="text-sm font-medium text-green-600 underline underline-offset-4"
               >
                 Forgot Password?
@@ -156,7 +156,7 @@ export default function SignInPage() {
       {/* Right Side */}
       <div className="relative hidden md:block md:w-1/2">
         <Image
-          src="/signin-bike-image.jpg"
+          src="/agile-image1.jpg"
           alt="Agile Cycle Electric Bike"
           fill
           priority
