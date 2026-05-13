@@ -102,7 +102,7 @@ const OrdersUpdateChart: React.FC<OrdersUpdateChartProps> = ({
 
         <Typography
           variant="body1"
-          className="text-[18px] font-medium !text-[#111827]"
+          className="text-[18px] text-[#111827]"
         >
           {title}
         </Typography>

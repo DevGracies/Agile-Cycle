@@ -98,12 +98,12 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 
   return (
     <Box
-      className={`rounded-[24px] bg-[#F8F9F7] p-6 shadow-sm ${className}`}
+      className={`rounded-3xl bg-[#F8F9F7] p-6 shadow-sm ${className}`}
     >
       {/* Header */}
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <Typography
-          className="!text-[20px] !font-semibold !text-[#111827]"
+          className="text-[20px] font-semibold text-[#111827]"
         >
           {title}
         </Typography>
@@ -179,7 +179,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                     <img
                       src={order.image}
                       alt={order.productName}
-                      className="h-[46px] w-[46px] rounded-[10px] object-cover"
+                      className="h-11.5 w-11.5 rounded-[10px] object-cover"
                     />
 
                     <p className="text-[16px] font-medium text-[#555]">
@@ -252,7 +252,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                   Math.max(prev - 1, 1)
                 )
               }
-              className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#52A30D] text-white"
+              className="flex h-10.5 w-10.5 items-center justify-center rounded-full bg-[#52A30D] text-white"
             >
               <ArrowBackRoundedIcon />
             </button>
@@ -263,10 +263,10 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
             }).map((_, index) => (
               <div
                 key={index}
-                className={`h-[5px] rounded-full transition-all ${
+                className={`h-1.25 rounded-full transition-all ${
                   currentPage === index + 1
-                    ? "w-[24px] bg-[#0F3D0F]"
-                    : "w-[12px] bg-[#B7C7B0]"
+                    ? "w-6 bg-[#0F3D0F]"
+                    : "w-3 bg-[#B7C7B0]"
                 }`}
               />
             ))}
@@ -278,14 +278,14 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                 Math.min(prev + 1, totalPages)
               )
             }
-            className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#52A30D] text-white"
+            className="flex h-10.5 w-10.5 items-center justify-center rounded-full bg-[#52A30D] text-white"
           >
             <ArrowForwardRoundedIcon />
           </button>
         </div>
 
         {/* Count */}
-        <Typography className="!text-[16px] !text-[#555]">
+        <Typography className="text-[16px] text-[#555]">
           Showing{" "}
           {(currentPage - 1) * itemsPerPage + 1}
           -
