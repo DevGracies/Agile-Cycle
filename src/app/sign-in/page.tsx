@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Eye } from 'lucide-react';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 export default function SignInPage() {
   return (
@@ -70,7 +70,7 @@ export default function SignInPage() {
                   type="button"
                   className="absolute right-0 top-1/2 flex h-[40px] w-[54px] -translate-y-1/2 items-center justify-center rounded-br-[6px] rounded-tr-[6px] border-l border-[#CFD9E0] text-gray-500"
                 >
-                  <Eye size={20} />
+                  <RemoveRedEyeIcon style={{ fontSize: 20 }} />
                 </button>
               </div>
             </div>
