@@ -68,7 +68,7 @@ export default function SignInPage() {
 
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500"
+                  className="absolute right-0 top-1/2 flex h-[40px] w-[54px] -translate-y-1/2 items-center justify-center rounded-br-[6px] rounded-tr-[6px] border-l border-[#CFD9E0] text-gray-500"
                 >
                   <Eye size={20} />
                 </button>
