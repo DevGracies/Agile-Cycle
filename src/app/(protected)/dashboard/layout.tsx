@@ -3,6 +3,12 @@
 import Navbar from "@/src/components/dashboard/Navbar";
 import Sidebar from "@/src/components/dashboard/Sidebar";
 import { ReactNode, useState } from "react";
+import { Lexend } from "next/font/google";
+
+const lexend = Lexend({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export default function DashboardLayout({
   children,
@@ -12,7 +18,7 @@ export default function DashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className={`${lexend.className} flex h-screen bg-[#F2F5F3]`}>
 
       {/* Sidebar */}
       <Sidebar
