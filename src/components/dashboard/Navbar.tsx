@@ -17,7 +17,7 @@ export default function Navbar({
   return (
     <header className="sticky top-0 z-30 bg-white border-b border-gray-100">
 
-      <div className="h-[72px] px-2 md:px-8 flex items-center justify-between">
+      <div className="w-auto h-[72px] px-2 md:px-8 flex items-center justify-between">
         <Link
             href="/"
             className="md:block hidden"
@@ -27,6 +27,7 @@ export default function Navbar({
               alt="Logo"
               width={70}
               height={70}
+              loading="eager"
               className="object-contain"
             />
           </Link>

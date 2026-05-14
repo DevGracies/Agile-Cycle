@@ -33,7 +33,7 @@ export default function Sidebar({
       {/* SIDEBAR */}
       <aside
         className={`
-          fixed top-0 left-0 z-50 h-screen w-[260px]
+          fixed top-0 left-0 z-50 h-full w-[260px]
           bg-white border-r border-gray-100
           transition-transform duration-300
           flex flex-col
@@ -44,7 +44,7 @@ export default function Sidebar({
       >
 
         {/* HEADER */}
-        <div className="h-[90px] flex items-center justify-between px-6 border-b border-gray-100">
+        <div className="w-auto h-[90px] flex items-center justify-between px-6 border-b border-gray-100">
 
           <Link
             href="/"
@@ -55,6 +55,7 @@ export default function Sidebar({
               alt="Logo"
               width={110}
               height={110}
+              loading="eager"
               className="object-contain"
             />
           </Link>
@@ -80,6 +81,7 @@ export default function Sidebar({
               <Link
                 key={item.id}
                 href={item.path}
+                onClick={() => setOpen(false)}
                 className={`
                   relative flex items-center gap-4
                   px-4 h-[42px]
@@ -89,7 +91,7 @@ export default function Sidebar({
 
                   ${
                     active
-                      ? "bg-linear-to-r from-[#519A09] to-white"
+                      ? "bg-linear-to-r from-[#ECFDF3] to-white"
                       : "text-gray-400 hover:bg-gray-50 hover:text-gray-700"
                   }
                 `}
@@ -97,20 +99,18 @@ export default function Sidebar({
 
                 {/* LEFT BORDER */}
                 {active && (
-                  <div className="absolute left-0 top-0 h-full w-1 db-logout-btn" />
+                  <div className="absolute left-0 top-0 h-full w-1 bg-[#519A09]" />
                 )}
 
                 <Icon
                   size={20}
-                  className={active ? "text-white" : ""}
+                  className={active ? "text-[#519A09]" : ""}
                 />
 
-                <span className={`${active ? "text-white font-bold" : ""}`}>{item.label}</span>
+                <span className={`${active ? "text-[#519A09] font-bold" : ""}`}>{item.label}</span>
               </Link>
             );
           })}
-        </nav>
-
         {/* LOGOUT */}
         <div className="p-5">
 
@@ -118,7 +118,7 @@ export default function Sidebar({
             className="
               w-full h-[50px]
               rounded-xl
-              db-logout-btn
+              bg-[#01430D]
               text-white
               font-semibold
               flex items-center justify-center gap-2
@@ -129,6 +129,8 @@ export default function Sidebar({
             Logout
           </button>
         </div>
+        </nav>
+
       </aside>
     </>
   );
