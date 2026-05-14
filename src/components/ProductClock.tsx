@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import ArchiveIcon from '@mui/icons-material/Archive';
 
 const DigitalClock = () => {
   const [time, setTime] = useState(new Date());
@@ -17,7 +18,8 @@ const DigitalClock = () => {
   }).toLowerCase();
 
   return (
-    <div className="relative w-64 h-64 flex items-center justify-center bg-white rounded-3xl">
+   <div className='bg-white rounded-2xl '>
+     <div className="relative w-64 h-64 flex items-center justify-center ">
       
       {/* LAYER 1: The Static Background Track */}
       <svg className="absolute w-full h-full transform -rotate-90">
@@ -78,6 +80,34 @@ const DigitalClock = () => {
         </span>
       </div>
     </div>
+    <div className='pl-[0.8rem]'>
+      <div className='flex mb-[1rem]'>
+          <ArchiveIcon className='text-[#01430d]'/>
+          <div className='ml-[0.7rem]'>
+            <h3 className='font-bold mb-[0.2rem]'>Ebike in Stock</h3>
+            <p className='text-[0.78rem] text-gray-500'>520</p>
+          </div>
+    </div>
+    <div className='flex mb-[1rem]'>
+          <ArchiveIcon  className='text-[#519a09]'/>
+          <div className='ml-[0.7rem]'>
+            <h3 className='font-bold mb-[0.2rem]'>Accessories in Stock</h3>
+            <p className='text-[0.78rem] text-gray-500'>180</p>
+          </div>
+    </div>
+    <div className='flex mb-[1rem]'>
+          <ArchiveIcon  className='text-[#ddeee1]'/>
+          <div className='ml-[0.7rem]'>
+            <h3 className='font-bold mb-[0.2rem]'>Life Time Sells</h3>
+            <div className='text-[0.78rem] text-gray-500 flex'>
+              <p >Ebike: 300</p>
+              <div className='w-[1px] h-4 bg-gray-500 mx-[0.4rem]'></div>
+              <p >Ebike: 300</p>
+            </div>
+          </div>
+    </div>
+    </div>
+   </div>
   );
 };
 

@@ -1,8 +1,8 @@
 "use client";
 
-import { SparkLineChart } from "@mui/x-charts/SparkLineChart";
 import BriefProductSummary from '@/src/components/BriefProductSummary'
-import RevenueDashboard from '@/src/components/tepm'
+import ProductCard from '@/src/components/ProductsCard';
+import RevenueDashboard from '@/src/components/RevenueAnalytics'
 
 const dataRevenue = [100, 120, 110, 130, 140, 150, 160];
 const dataOrders = [20, 22, 21, 25, 27, 26, 28];
@@ -11,7 +11,6 @@ const dataRefunds = [15, 18, 17, 16, 18, 19, 17];
 export default function DashboardCards() {
   return (
     <div className="p-6 space-y-6 bg-[#F2F5F3]">
-      {/* Cards grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <BriefProductSummary title="Revenue" amount="105M" percentage="22" sign="+" data={dataRevenue}/>
         <BriefProductSummary title="Orders Paid" amount="600M" percentage="22" sign="+" data={dataOrders}/>
@@ -42,6 +41,7 @@ export default function DashboardCards() {
         </div>
       </div>
       <RevenueDashboard/>
+      <ProductCard/>
     </div>
 
   );
