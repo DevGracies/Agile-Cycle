@@ -98,7 +98,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 
   return (
     <Box
-      className={`rounded-lg bg-[#F8F9F7] p-6 shadow-sm ${className}`}
+      className={`rounded-lg bg-[#FFFFFF] p-6 shadow-sm ${className}`}
     >
       {/* Header */}
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -157,8 +157,8 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                 <th
                   key={header}
                   className={`px-4 py-5 text-left text-[16px] font-semibold text-[#52A30D]
-                    ${idx === 0 ? "rounded-l-[14px]" : ""}
-                    ${idx === 6 ? "rounded-r-[14px]" : ""}
+                    ${idx === 0 ? "rounded-l-lg" : ""}
+                    ${idx === 6 ? "rounded-r-lg" : ""}
                   `}
                 >
                   {header}

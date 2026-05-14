@@ -60,6 +60,7 @@ const OrderDetailsModal: React.FC<
                     sx: {
                         borderRadius: "24px",
                         padding: "12px",
+                        background: "#FFFFFF",
                     },
                 },
             }}

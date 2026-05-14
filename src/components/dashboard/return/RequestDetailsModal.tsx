@@ -78,7 +78,7 @@ const RequestDetailsModal: React.FC<
 						sx: {
 							borderRadius: "24px",
 							padding: "12px",
-							background: "#F8F9F7",
+							background: "#FFFFFF",
 						},
 					},
 				}}

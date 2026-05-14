@@ -104,7 +104,7 @@ const ReturnRefundTable: React.FC<
 
   return (
     <Box
-      className={`rounded-lg bg-[#F8F9F7] p-6 shadow-sm ${className}`}
+      className={`rounded-lg bg-[#FFFFFF] p-6 shadow-sm ${className}`}
     >
       {/* Header */}
       <div className="mb-8">
@@ -132,12 +132,12 @@ const ReturnRefundTable: React.FC<
                   className={`px-4 py-5 text-left text-[15px] font-semibold text-[#52A30D]
                     ${
                       idx === 0
-                        ? "rounded-l-[14px]"
+                        ? "rounded-l-lg"
                         : ""
                     }
                     ${
                       idx === 6
-                        ? "rounded-r-[14px]"
+                        ? "rounded-r-lg"
                         : ""
                     }
                   `}

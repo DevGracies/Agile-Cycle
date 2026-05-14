@@ -91,7 +91,7 @@ const OrdersUpdateChart: React.FC<OrdersUpdateChartProps> = ({
 }) => {
   return (
     <Box
-      className={`rounded-2xl bg-[#F7F8F7] p-6 shadow-sm ${className}`}
+      className={`rounded-2xl bg-[#FFFFFF] p-6 shadow-sm ${className}`}
     >
       {/* Header */}
       <div className="mb-8 flex items-center gap-2">
