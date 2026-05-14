@@ -98,7 +98,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 
   return (
     <Box
-      className={`rounded-3xl bg-[#F8F9F7] p-6 shadow-sm ${className}`}
+      className={`rounded-lg bg-[#F8F9F7] p-6 shadow-sm ${className}`}
     >
       {/* Header */}
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
