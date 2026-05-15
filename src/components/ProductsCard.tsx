@@ -6,6 +6,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useState } from 'react';
+import Link from 'next/link';
 
 const onClose=()=>{console.log('closed')}
 const onDelete=()=>{console.log('deleted')}
@@ -27,7 +28,7 @@ export default function ProductCard() {
 const [isOpen, setisOpen] = useState(true)
 
   return (
-    <div className="bg-white px-3 py-5 rounded-2xl  mx-auto my-10 font-sans">
+    <div className="bg-white px-3 py-5 rounded-[0.5rem]  mx-auto my-10 font-sans">
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-xl font-bold ml-[1rem] text-gray-800">Products</h2>
         <button className="flex items-center gap-1 text-[#4f7c2b] font-semibold text-sm hover:opacity-80 transition-opacity">
@@ -66,12 +67,20 @@ const [isOpen, setisOpen] = useState(true)
                 <td className="px-4 py-4">{item.stock}</td>
                 <td className="px-4 py-4 text-right">
                   <div className="flex justify-end gap-3 text-gray-400">
+                     <Link
+      href={{
+        pathname: '/dashboard/addProduct',
+        query: {
+          edit: true,
+        },
+      }}
+    >
                     <button className="hover:text-[#519a09] transition-colors">
                       <EditOutlinedIcon  />
                     </button>
+    </Link>
                     <button className="hover:text-red-500 transition-colors">
                       <DeleteProductModal onDelete={onDelete}/>
-                      {/* <DeleteProductModal isOpen={isOpen} onClose={onClose} onDelete={onDelete}/> */}
                     </button>
                   </div>
                 </td>
@@ -82,8 +91,9 @@ const [isOpen, setisOpen] = useState(true)
       </div>
 
       {/* Pagination Footer */}
-      <div className="flex justify-evenly items-center mt-8">
-        <div className="flex items-center gap-3 mx-auto">
+      <div className="flex justify-between items-center mt-8 max-[689px]:flex-col">
+        <div className='w-[6.5rem] max-[689px]:w-[9%] max-[689px]:hidden'></div>
+        <div className="flex items-center gap-3 max-[689px]:mb-[2rem]">
           <button className="w-10 h-10 flex items-center justify-center bg-[#4f7c2b] text-white rounded-full hover:bg-[#3d6122] transition-colors shadow-md">
             <ArrowBackIcon fontSize="small" />
           </button>
@@ -96,7 +106,6 @@ const [isOpen, setisOpen] = useState(true)
             <ArrowForwardIcon fontSize="small" />
           </button>
         </div>
-        
         <div className="text-sm text-gray-600 font-medium">
           Showing 1-10 of 50
         </div>

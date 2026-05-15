@@ -11,7 +11,7 @@ interface IBriefProduct {
 
 const BriefProductSummary = ({title,amount,percentage,sign,data}:IBriefProduct) => {
   return (
-      <div className="bg-white rounded-lg p-4 flex justify-between items-center">
+      <div className="bg-white rounded-[0.5rem] p-4 flex justify-between items-center">
           <div>
             <p className="text-sm text-gray-500">{title}</p>
              {title === 'Revenue' ? <p className="text-2xl font-bold">₦{amount}</p>: <p className="text-2xl font-bold">{amount}</p> }

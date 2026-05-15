@@ -7,9 +7,9 @@ const yData = [1.4, 1.1, 1.0, 2.0, 1.5, 1.8, 1.4, 1.4, 2.0];
 
 export default function AnalyticsDashboard() {
   return (
-    <div className="flex flex-col md:flex-row gap-6 min-h-screen font-sans text-gray-800">
+    <div className="flex flex-col md:flex-row gap-6 font-sans text-gray-800">
       <ProductClock/>
-      <div className="flex-1 bg-white rounded-2xl px-2 py-4 ">
+      <div className="flex-1 bg-white rounded-[0.5rem] px-2 py-4 ">
         <div className="flex items-center ml-[1rem] mb-4">
           <div className="w-2 h-2 bg-green-600 rounded-full mr-[0.6rem]"></div>
           <span className="font-bold text-gray-800">Revenue</span>

@@ -5,8 +5,13 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import CloseIcon from '@mui/icons-material/Close';
+import { useSearchParams } from "next/navigation";
 
 export default function EditProductPage() {
+  const searchParams = useSearchParams();
+    const edit = searchParams.get("edit");
+
+  console.log(edit)
   // --- STATE ---
   const [images, setImages] = useState<(string | null)[]>([null, null, null, null]);
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
@@ -48,19 +53,19 @@ export default function EditProductPage() {
   };
 
   return (
-    <div className="min-h-screen p-8 font-sans text-gray-700  bg-[#F2F5F3]">
+    <div className="min-h-screen p-8 font-sans text-gray-700 bg-[#F2F5F3] max-[525px]:p-3">
       <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
 
       {/* --- HEADER --- */}
        <div className="bg-white mb-10 max-w-7xl mx-auto rounded-xl justify-between flex items-center overflow-hidden h-20 bg-gradient-to-r from-[#ffffff] to-[#F2F5F3]">
-        <div 
-          className="h-full flex items-center pl-8 pr-12 bg-gradient-to-r from-[#01430D] to-[#519A09] text-white font-semibold text-sm"
+         <div 
+          className="h-full flex items-center pl-8 pr-12 bg-gradient-to-r from-[#01430D] to-[#519A09] text-white font-semibold text-sm max-[597px]:pr-5 max-[597px]:pl-4 max-[382px]:pr-4 max-[382px]:pl-2"
           style={{ 
-            clipPath: 'polygon(0 0, 85% 0, 100% 100%, 0% 100%)',
-            minWidth: '240px'
+            clipPath: 'polygon(0% 0%, 100% 0, 85% 100%, 0% 100%)',
+            minWidth: '108.5px'
           }}
         >
-          Edit product
+          {edit ? "Edit product" : "Add New product"}
         </div>
         <button className="bg-[#0a3614] mr-[1rem] text-white px-8 py-2.5 rounded-lg font-semibold text-sm hover:opacity-90 transition-all shadow-md">
           Publish product
@@ -70,31 +75,30 @@ export default function EditProductPage() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
         
         {/* --- LEFT UNIFIED COLUMN --- */}
-        <div className="bg-white rounded-[0.5rem] shadow-sm border border-gray-100 overflow-hidden h-full">
-          
+        <div className="bg-white rounded-[0.5rem] overflow-hidden h-full">
           {/* Basic Details Section */}
-          <div className="p-8 border-b border-gray-50">
-            <h3 className="font-bold mb-6 text-sm uppercase tracking-wide">Basic details</h3>
+          <div className="p-4 border-b border-gray-50">
+            <h3 className="font-bold mb-3 mt-2 text-sm uppercase tracking-wide">Basic details</h3>
             <div className="space-y-5">
               <div>
                 <label className="text-xs text-gray-400 mb-2 block font-semibold">Product name</label>
-                <input type="text" defaultValue="Agile Pro Rider (eBike)" className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-xl p-3 text-sm font-medium focus:outline-none focus:border-green-200" />
+                <input type="text" defaultValue="Agile Pro Rider (eBike)" className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3 text-sm font-medium focus:outline-none focus:border-green-200 focus:bg-[#f2f5f3] transition-colors" />
               </div>
               <div>
                 <label className="text-xs text-gray-400 mb-2 block font-semibold">Product Description</label>
-                <textarea rows={6} className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-xl p-4 text-xs leading-relaxed focus:outline-none focus:border-green-200" defaultValue="Agile Comet X is designed for urban adventurers..." />
+                <textarea rows={6} className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-4 text-xs leading-relaxed focus:outline-none focus:border-green-200 focus:bg-[#f2f5f3] transition-colors" defaultValue="Agile Comet X is designed for urban adventurers..." />
               </div>
             </div>
           </div>
 
           {/* Pricing Section */}
-          <div className="p-8 border-b border-gray-50">
+          <div className="p-4 border-b border-gray-50">
             <h3 className="font-bold mb-6 text-sm uppercase tracking-wide">Pricing</h3>
             <div className="space-y-5">
-              <div>
+              <div >
                 <label className="text-xs text-gray-400 mb-2 block font-semibold">Product price</label>
-                <div className="relative">
-                  <input type="text" defaultValue="250,000" className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-xl p-3 text-sm font-semibold focus:outline-none" />
+                <div className="relative bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] focus-within:bg-[#f2f5f3] focus-within:border-green-200 transition-colors">
+                  <input type="text" defaultValue="250,000" className="w-full  p-3 text-sm font-semibold focus:outline-none" />
                   <div className="absolute right-3 top-2.5 flex items-center gap-1 border-l pl-2 border-gray-200">
                     <span className="text-lg">🇳🇬</span>
                     <KeyboardArrowDownOutlinedIcon fontSize="small" className="text-gray-400" />
@@ -104,7 +108,7 @@ export default function EditProductPage() {
 
               <div>
                 <label className="text-xs font-bold text-gray-400 mb-2 block">Discounted Price <span className="text-[#4f9a14]">(Optional)</span></label>
-                <div className="relative flex items-center bg-[#fcfdfc] border border-[#e8f3e8] rounded-xl px-3 py-1">
+                <div className="focus-within:bg-[#f2f5f3] focus-within:border-green-200 transition-colors relative flex items-center bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] px-3 py-1">
                   <div className="flex items-center gap-2 mr-2">
                     <span className="bg-[#0a3614] text-white px-2 py-0.5 rounded text-xs font-bold">N</span>
                   </div>
@@ -115,7 +119,7 @@ export default function EditProductPage() {
 
               <div className="pt-2">
                 <p className="text-xs text-gray-400 mb-4 font-semibold">Tax Included</p>
-                <div className="flex gap-8">
+                <div className="md:block md:space-y-3 flex gap-8">
                   <div className="flex items-center gap-3 cursor-pointer" onClick={() => setTaxIncluded('yes')}>
                     <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${taxIncluded === 'yes' ? 'border-[#4f9a14]' : 'border-gray-300'}`}>
                       {taxIncluded === 'yes' && <div className="w-1.5 h-1.5 rounded-full bg-[#4f9a14]" />}
@@ -134,17 +138,17 @@ export default function EditProductPage() {
           </div>
 
           {/* Inventory Section */}
-          <div className="p-8">
+          <div className="p-4">
             <h3 className="font-bold mb-6 text-sm uppercase tracking-wide">Inventory</h3>
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div>
                 <label className="text-xs text-gray-400 mb-2 block font-semibold">Stock Quantity</label>
-                <input type="text" defaultValue="Unlimited" className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-xl p-3 text-sm font-medium focus:outline-none" />
+                <input type="text" defaultValue="Unlimited" className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3 text-sm font-medium focus:outline-none focus:bg-[#f2f5f3] focus:border-green-200 transition-colors" />
               </div>
               <div>
                 <label className="text-xs text-gray-400 mb-2 block font-semibold">Stock Status</label>
                 <div className="relative">
-                  <select className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-xl p-3 text-sm appearance-none focus:outline-none cursor-pointer font-medium">
+                  <select className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3 text-sm appearance-none focus:outline-none cursor-pointer font-medium focus:bg-[#f2f5f3] focus:border-green-200 transition-colors">
                     <option>In Stock</option>
                   </select>
                   <KeyboardArrowDownOutlinedIcon className="absolute right-3 top-3 text-gray-400 pointer-events-none" fontSize="small" />
@@ -168,12 +172,12 @@ export default function EditProductPage() {
         </div>
 
         {/* --- RIGHT UNIFIED COLUMN --- */}
-        <div className="bg-white rounded-[0.5rem] shadow-sm border border-gray-100 overflow-hidden h-full">
+        <div className="bg-white rounded-[0.5rem] shadow-sm  border border-gray-100 overflow-hidden h-full">
           
           {/* Image Upload Section */}
-          <div className="p-8 border-b border-gray-50">
-            <h3 className="font-bold mb-4 text-sm uppercase tracking-wide">Upload Product Image</h3>
-            <div className="relative w-full aspect-[16/9] bg-[#fcfdfc] rounded-2xl overflow-hidden border border-[#e8f3e8] mb-6 flex items-center justify-center">
+          <div className="p-4 border-b border-gray-50">
+            <h3 className="font-bold mb-6 mt-4 text-sm uppercase tracking-wide">Upload Product Image</h3>
+            <div className="relative w-full aspect-[16/9] bg-[#fcfdfc] rounded-[0.5rem] overflow-hidden border border-[#e8f3e8] mb-6 flex items-center justify-center">
               {images[selectedIdx] ? (
                 <img src={images[selectedIdx]!} className="w-full h-full object-cover" alt="Selected product" />
               ) : (
@@ -193,7 +197,7 @@ export default function EditProductPage() {
                 <div 
                   key={idx} 
                   onClick={() => { setSelectedIdx(idx); if(!img) fileInputRef.current?.click(); }}
-                  className={`relative aspect-square rounded-2xl border-2 cursor-pointer flex flex-col items-center justify-center transition-all ${selectedIdx === idx ? 'border-[#4f9a14] bg-[#f8faf8] scale-105 z-10' : 'border-dashed border-[#e8f3e8] bg-white hover:border-green-300'}`}
+                  className={`relative aspect-square rounded-[0.5rem] border-2 cursor-pointer flex flex-col items-center justify-center transition-all ${selectedIdx === idx ? 'border-[#4f9a14] bg-[#f8faf8] scale-105 z-10' : 'border-dashed border-[#e8f3e8] bg-white hover:border-green-300'}`}
                 >
                   {img ? (
                     <>
@@ -219,18 +223,18 @@ export default function EditProductPage() {
           </div>
 
           {/* Category & Color Section */}
-          <div className="p-8">
+          <div className="p-4">
             <h3 className="font-bold mb-6 text-sm uppercase tracking-wide">Category & Sub - category</h3>
             <div className="space-y-4 mb-10">
               <div className="relative">
-                <select className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-xl p-3.5 text-sm appearance-none focus:outline-none focus:border-green-200 cursor-pointer font-medium">
+                <select className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3.5 text-sm appearance-none focus:outline-none focus:border-green-200 cursor-pointer font-medium focus:bg-[#f2f5f3] focus-within:border-green-200 transition-colors">
                   <option value="" disabled >Select product category</option>
                   <option>E-Bikes</option>
                 </select>
                 <KeyboardArrowDownOutlinedIcon className="absolute right-4 top-4 text-gray-400 pointer-events-none" fontSize="small" />
               </div>
               <div className="relative">
-                <select className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-xl p-3.5 text-sm appearance-none focus:outline-none focus:border-green-200 cursor-pointer font-medium">
+                <select className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3.5 text-sm appearance-none focus:outline-none focus:border-green-200 cursor-pointer font-medium focus:bg-[#f2f5f3] focus:border-green-200 transition-colors">
                   <option value="" disabled >Select product sub-category</option>
                   <option>Urban Cruisers</option>
                 </select>
@@ -242,7 +246,7 @@ export default function EditProductPage() {
             <div className="flex flex-wrap items-center gap-4">
               {colors.map((color, idx) => (
                 <div key={idx} className="relative group">
-                  <div className="w-12 h-12 rounded-2xl shadow-sm border border-gray-200 overflow-hidden" style={{ backgroundColor: color }} />
+                  <div className="w-12 h-12 rounded-[0.5rem] shadow-sm border border-gray-200 overflow-hidden" style={{ backgroundColor: color }} />
                   <button 
                     onClick={() => removeColor(idx)}
                     className="absolute -top-1.5 -right-1.5 bg-white text-gray-500 rounded-full w-5 h-5 flex items-center justify-center shadow-md border border-gray-100 hover:text-red-500 transition-all"
@@ -252,7 +256,7 @@ export default function EditProductPage() {
                 </div>
               ))}
 
-              <div className="flex items-center border border-[#e8f3e8] rounded-2xl bg-[#fcfdfc] px-2 h-12 w-24 shadow-sm focus-within:border-green-200 transition-colors">
+              <div className="flex items-center border border-[#e8f3e8] rounded-[0.5rem] bg-[#fcfdfc] px-2 h-12 w-24  focus-within:bg-[#f2f5f3] focus-within:border-green-200 transition-colors">
                 <input 
                   type="text" 
                   value={hexInput} 

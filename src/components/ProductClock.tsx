@@ -18,10 +18,9 @@ const DigitalClock = () => {
   }).toLowerCase();
 
   return (
-   <div className='bg-white rounded-2xl '>
-     <div className="relative w-64 h-64 flex items-center justify-center ">
-      
-      {/* LAYER 1: The Static Background Track */}
+   <div className='bg-white rounded-[0.5rem]'>
+    <div >
+       <div className="relative w-64 h-64 flex items-center justify-center max-[767px]:mx-[auto] ">
       <svg className="absolute w-full h-full transform -rotate-90">
         <circle
           cx="128"
@@ -65,9 +64,9 @@ const DigitalClock = () => {
                43px - (16px / 2) = 35px.
         */}
         <div 
-          className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-[#166534] rounded-full border-2 border-white shadow-md"
+          className="absolute left-[7rem]  w-3 h-3 bg-[#166534] rounded-full border-2 border-white shadow-md"
           style={{ 
-            top: '35px', 
+            top: '33px', 
             zIndex: 30
           }}
         ></div>
@@ -80,8 +79,9 @@ const DigitalClock = () => {
         </span>
       </div>
     </div>
-    <div className='pl-[0.8rem]'>
-      <div className='flex mb-[1rem]'>
+    </div>
+    <div className='pl-[0.8rem]  max-[767px]:pl-[2.8rem] max-[397px]:pl-[1rem]'>
+      <div className='flex mb-[1rem] '>
           <ArchiveIcon className='text-[#01430d]'/>
           <div className='ml-[0.7rem]'>
             <h3 className='font-bold mb-[0.2rem]'>Ebike in Stock</h3>
