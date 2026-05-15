@@ -2,11 +2,12 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import { StatCard } from "@/src/components/StatCard";
-import { OrdersUpdateChart } from "@/src/components/OrdersUpdateChart";
-import { CustomersTable } from "@/src/components/CustomersTable";
-import { Pagination } from "@/src/components/Pagination";
-import { CustomerProfileModal } from "@/src/components/CustomerProfileModal";
+import { Box, Typography } from "@mui/material";
+import { StatCard } from "@/src/components/dashboard/customers/StatCard";
+import { OrdersUpdateChart } from "@/src/components/dashboard/customers/OrdersUpdateChart";
+import { CustomersTable } from "@/src/components/dashboard/customers/CustomersTable";
+import { Pagination } from "@/src/components/dashboard/customers/Pagination";
+import { CustomerProfileModal } from "@/src/components/dashboard/customers/CustomerProfileModal";
 import {
   fetchCustomerSection,
   type CustomerSectionResponse,
@@ -15,16 +16,12 @@ import type { Customer } from "@/src/store/useCustomerStore";
 
 const statCardLabels = ["Total Customers", "New Customers", "Visitors"];
 
-// Table shows only headers until the client/back-end supplies `sectionData.customers`.
-
 export default function CustomersPage() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [sectionData, setSectionData] =
-    useState<CustomerSectionResponse | null>(null);
+  const [sectionData, setSectionData] = useState<CustomerSectionResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // No local fallback data — keep labels/headers local and show empty values until backend/client supplies them.
   const customers = sectionData?.customers ?? [];
   const statsToShow = sectionData?.stats ?? [];
   const overviewToShow = sectionData?.overview ?? {
@@ -42,9 +39,7 @@ export default function CustomersPage() {
     } catch (error) {
       setSectionData(null);
       setErrorMessage(
-        error instanceof Error
-          ? error.message
-          : "Failed to load customer section",
+        error instanceof Error ? error.message : "Failed to load customer section"
       );
     } finally {
       setIsLoading(false);
@@ -56,21 +51,13 @@ export default function CustomersPage() {
   }, [currentPage, loadCustomerSection]);
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] font-sans">
+    <Box className="min-h-screen bg-[#F5F5F5] font-sans">
       <Toaster position="top-right" />
-      <CustomerProfileModal
-        onDeleted={() => void loadCustomerSection(currentPage)}
-      />
+      <CustomerProfileModal onDeleted={() => void loadCustomerSection(currentPage)} />
 
-      {/* Page Content */}
-      <main className="p-4 sm:p-6 lg:p-8 max-w-350 mx-auto">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="sr-only">Customer Dashboard</h1>
-          <div />
-        </div>
-
+      <Box component="main" className="mx-auto max-w-[1400px] p-4 sm:p-6 lg:p-8">
         {/* Stat Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <Box className="mb-6 grid grid-cols-1 gap-4 sm:mb-8 sm:grid-cols-3 sm:gap-6">
           {statCardLabels.map((title, index) => (
             <StatCard
               key={title}
@@ -79,40 +66,42 @@ export default function CustomersPage() {
               change={statsToShow[index]?.change ?? "N/A"}
             />
           ))}
-        </div>
+        </Box>
 
         {/* Customer Overview Chart */}
-        <div className="mb-6 sm:mb-8">
+        <Box className="mb-6 sm:mb-8">
           <OrdersUpdateChart overview={overviewToShow} />
-        </div>
+        </Box>
 
         {/* Customers Table */}
-        <div className="mb-0">
+        <Box className="mb-0">
           <CustomersTable
             customers={customers}
             isLoading={isLoading}
             onCustomerDeleted={() => void loadCustomerSection(currentPage)}
           />
-        </div>
+        </Box>
 
         {/* Pagination */}
-        <div className="bg-white border border-[#E8E8E8] border-t-0 rounded-b-lg">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={sectionData?.pagination.totalPages ?? 1}
-            onPageChange={setCurrentPage}
-            totalItems={sectionData?.pagination.totalItems ?? 0}
-            itemsPerPage={sectionData?.pagination.itemsPerPage ?? 10}
-          />
-        </div>
+        {sectionData?.pagination && (
+          <Box className="rounded-b-lg border border-t-0 border-[#E8E8E8] bg-white">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={sectionData.pagination.totalPages}
+              onPageChange={setCurrentPage}
+              totalItems={sectionData.pagination.totalItems}
+              itemsPerPage={sectionData.pagination.itemsPerPage}
+            />
+          </Box>
+        )}
 
         {/* Footer */}
-        <div className="text-center py-6 sm:py-8 mt-4 sm:mt-6">
-          <span className="text-xs sm:text-sm text-[#717378]">
+        <Box className="mt-6 py-6 text-center sm:mt-8 sm:py-8">
+          <Typography variant="body2" className="text-[#717378]">
             © 2026 AgileCycle. All Rights Reserved.
-          </span>
-        </div>
-      </main>
-    </div>
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 }
