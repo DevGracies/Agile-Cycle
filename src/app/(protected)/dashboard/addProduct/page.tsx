@@ -201,7 +201,7 @@ export default function EditProductPage() {
                 >
                   {img ? (
                     <>
-                      <img src={img} className="w-full h-full object-cover rounded-xl" alt={`Thumb ${idx + 1}`} />
+                      <img src={img} className="w-full h-full object-cover rounded-[0.4rem]" alt={`Thumb ${idx + 1}`} />
                       <button 
                         onClick={(e) => removeImage(idx, e)}
                         className="absolute top-1.5 right-1.5 bg-white text-gray-500 rounded-full w-5 h-5 flex items-center justify-center shadow-md border border-gray-100 hover:text-red-500 transition-all z-20"
