@@ -75,7 +75,7 @@ export default function Sidebar({
           {DASHBOARD_NAVS.map((item) => {
             const Icon = item.icon;
 
-            const active = pathname === item.path;
+            const active = pathname === item.path || pathname.startsWith(`/dashboard/${item.path.split("/")[2]}`);
 
             return (
               <Link

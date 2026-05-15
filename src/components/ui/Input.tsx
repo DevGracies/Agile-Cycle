@@ -1,14 +1,21 @@
-import React from "react";
-
-const Input = ({ ...props }) => {
+export const Input = ({
+  label,
+  placeholder,
+}: {
+  label: string;
+  placeholder: string;
+}) => {
   return (
     <div>
+      <label className="text-xs text-[#6b7280] mb-2 block">
+        {label}
+      </label>
+
       <input
-        {...props}
-        className="w-full bg-gray-200 rounded-lg focus:ring-1 focus:ring-black/30 transition duration-200"
+        type="text"
+        placeholder={placeholder}
+        className="w-full bg-[#ECFDF3] border border-[#dfe6dc] rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#2f7d32]/20 focus:border-[#2f7d32]"
       />
     </div>
   );
 };
-
-export default Input;
