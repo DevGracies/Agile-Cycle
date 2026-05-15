@@ -60,6 +60,7 @@ const OrderDetailsModal: React.FC<
                     sx: {
                         borderRadius: "24px",
                         padding: "12px",
+                        background: "#FFFFFF",
                     },
                 },
             }}
@@ -71,9 +72,9 @@ const OrderDetailsModal: React.FC<
                         View Order Details
                     </Typography>
 
-                    <IconButton onClick={onClose}>
-                        <CloseRoundedIcon />
-                    </IconButton>
+                    <IconButton onClick={onClose} className=" h-6 w-6 rounded-full !border-1 !border-[#05422C26] ">
+						<CloseRoundedIcon className="text-[#05422C] p-1" />
+					</IconButton>
                 </div>
 
                 {/* Top Info */}
