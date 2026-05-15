@@ -3,7 +3,7 @@
 import { Bell, Menu, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/public/Agile-Cycle-Logo.png";
+import logo from "@/public/auth/Agile-Cycle-Logo.png";
 
 export default function Navbar({
   setSidebarOpen,

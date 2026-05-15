@@ -150,9 +150,9 @@ const NotificationsPage = () => {
             Notification Types
           </h2>
 
-          <div className="space-y-6 w-1/2">
+          <div className="space-y-6 md:w-1/2 w-full">
             {notificationTypes.map((item) => (
-              <div key={item.key} className="grid grid-cols-2 gap-2">
+              <div key={item.key} className="md:grid grid-cols-2 gap-2 flex justify-between items-center">
                 <p className="text-[#5B5B5B] font-medium">{item.label}</p>
 
                 <ToggleSwitch
@@ -175,9 +175,9 @@ const NotificationsPage = () => {
             Trigger Events
           </h2>
 
-          <div className="space-y-6 w-1/2">
+          <div className="space-y-6 md:w-1/2 w-full">
             {triggerEvents.map((item) => (
-              <div key={item.key} className="grid grid-cols-2 gap-2">
+              <div key={item.key} className="md:grid grid-cols-2 gap-2 flex justify-between items-center">
                 <p className="text-[#5B5B5B] font-medium">{item.label}</p>
 
                 <ToggleSwitch

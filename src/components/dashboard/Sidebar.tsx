@@ -6,7 +6,7 @@ import {
   X,
 } from "lucide-react";
 
-import logo from "@/public/Agile-Cycle-Logo.png";
+import logo from "@/public/auth/Agile-Cycle-Logo.png";
 import { usePathname } from "next/navigation";
 import { DASHBOARD_NAVS } from "@/src/lib/utils";
 
