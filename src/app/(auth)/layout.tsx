@@ -33,7 +33,7 @@ export default function AuthLayout({
     <section className="hidden lg:block">
       <div className="sticky top-0 relative min-h-screen w-full">
         <Image
-          src="/signup-bike-image.jpg"
+          src="/auth/signupBike-image.jpg"
           alt="Electric bike"
           fill
           priority

@@ -19,9 +19,10 @@ const Input = ({ label, className, ...props }: Props) => {
         className={`h-12 w-full rounded-xl border border-gray-300 bg-green-50 px-4 
                     text-sm text-gray-700 outline-none transition-all 
                     placeholder:text-gray-400 focus:border-green-600 ${className}`}
-      />
-    </div>
-  );
-};
-
+                     
+                    />
+</div>
+  )
+}
 export default Input;                                            
+
