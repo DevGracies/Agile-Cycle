@@ -46,6 +46,7 @@ const DeleteOrderModal: React.FC<
           sx: {
             borderRadius: "20px",
             padding: "10px",
+            background: "#FFFFFF",
           },
         },
       }}
