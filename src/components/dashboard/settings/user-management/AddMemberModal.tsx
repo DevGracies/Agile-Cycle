@@ -1,4 +1,4 @@
-// components/dashboard/settings/user-management/AddMemberModal.tsx
+"use client"
 
 import { Input } from "@/src/components/ui/Input";
 import { Camera, UploadCloud, X } from "lucide-react";

@@ -15,7 +15,7 @@ const tabs = [
 const SettingsTabs = () => {
   const pathname = usePathname()
   return (
-    <div className="bg-white overflow-hidden max-sm:p-2 h-full flex md:flex-col flex-row items-center">
+    <div className="bg-white border border-[#EEF1EC] overflow-hidden p-2 flex xl:flex-col flex-row xl:h-full overflow-x-auto">
       {tabs.map((tab, index) => {
         const active = pathname === tab.path
         return(

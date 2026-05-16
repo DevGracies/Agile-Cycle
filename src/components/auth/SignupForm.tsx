@@ -5,7 +5,7 @@ import { Eye, EyeOff, Goal } from "lucide-react";
 import { useState } from "react";
 
 import Button from "../ui/Button";
-import Input from "../ui/Input";
+import {Input} from "../ui/Input";
 import Image from "next/image";
 
 const SignupForm = () => {

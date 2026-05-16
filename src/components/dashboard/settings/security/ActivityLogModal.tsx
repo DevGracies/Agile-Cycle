@@ -1,26 +1,28 @@
 "use client";
 
-import { X, BellRing, CalendarDays } from "lucide-react";
+import { X, BellRing, CalendarDays, User2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { StatusBadge } from "../../common/Dashboard";
-import { PaymentStatus } from "./Transactions";
 
-type PaymentModalProps = {
+type ActivityLogModalProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   selectedLog: {
-    transactionId: string;
-    orderId: string;
-    paymentMethod: string;
-    amount: string;
-    status: PaymentStatus;
+    id: string;
+    adminUser: string;
+    action: string;
+    status: string;
     date: string;
   } | null;
 };
 
-const PaymentModal = ({ open, setOpen, selectedLog }: PaymentModalProps) => {
+const ActivityLogModal = ({
+  open,
+  setOpen,
+  selectedLog,
+}: ActivityLogModalProps) => {
   const [show, setShow] = useState(false);
-    const modalRef = useRef<HTMLDivElement | null>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (open) {
@@ -33,16 +35,16 @@ const PaymentModal = ({ open, setOpen, selectedLog }: PaymentModalProps) => {
   }, [open]);
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if(modalRef.current && !modalRef.current.contains(e.target as Node)){
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       setOpen(false);
     }
-  }
+  };
 
   if (!open || !selectedLog) return null;
 
   return (
     <div
-    onClick={handleOutsideClick}
+      onClick={handleOutsideClick}
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300
       ${
         show
@@ -51,7 +53,7 @@ const PaymentModal = ({ open, setOpen, selectedLog }: PaymentModalProps) => {
       }`}
     >
       <div
-      ref={modalRef}
+        ref={modalRef}
         className={`w-full max-w-2xl rounded-3xl bg-white shadow-2xl overflow-hidden transition-all duration-300
         ${
           show
@@ -63,11 +65,11 @@ const PaymentModal = ({ open, setOpen, selectedLog }: PaymentModalProps) => {
         <div className="flex items-center justify-between border-b border-[#EEF1EC] px-6 py-5">
           <div>
             <h2 className="text-2xl font-semibold text-[#111827]">
-              Payment Details
+              Activity Details
             </h2>
 
             <p className="text-sm text-gray-500 mt-1">
-              Full payment activity information.
+              Full activity activity information.
             </p>
           </div>
 
@@ -83,18 +85,9 @@ const PaymentModal = ({ open, setOpen, selectedLog }: PaymentModalProps) => {
         <div className="p-6 space-y-6">
           <div className="grid sm:grid-cols-2 gap-5">
             <div className="rounded-2xl bg-[#F8FAF7] border border-[#EEF1EC] p-5">
-              <p className="text-sm text-gray-500 mb-2">Transaction ID</p>
+              <p className="text-sm text-gray-500 mb-2">Log ID</p>
 
-              <h3 className="font-semibold text-[#111827]">
-                {selectedLog.transactionId}
-              </h3>
-            </div>
-            <div className="rounded-2xl bg-[#F8FAF7] border border-[#EEF1EC] p-5">
-              <p className="text-sm text-gray-500 mb-2">Order ID</p>
-
-              <h3 className="font-semibold text-[#111827]">
-                {selectedLog.orderId}
-              </h3>
+              <h3 className="font-semibold text-[#111827]">{selectedLog.id}</h3>
             </div>
 
             <div className="rounded-2xl bg-[#F8FAF7] border border-[#EEF1EC] p-5">
@@ -110,13 +103,22 @@ const PaymentModal = ({ open, setOpen, selectedLog }: PaymentModalProps) => {
             <div className="flex items-center gap-3 mb-3">
               <BellRing className="text-[#52A30D]" size={20} />
 
-              <p className="font-medium text-[#111827]">PaymentMethod</p>
+              <p className="font-medium text-[#111827]">Action</p>
             </div>
 
-            <p className="text-gray-600">{selectedLog.paymentMethod}</p>
+            <p className="text-gray-600">{selectedLog.action}</p>
           </div>
 
           <div className="grid sm:grid-cols-2 gap-5">
+            <div className="rounded-2xl bg-[#F8FAF7] border border-[#EEF1EC] p-5">
+              <div className="flex items-center gap-3 mb-3">
+                <User2 className="text-[#52A30D]" size={20} />
+
+                <p className="font-medium text-[#111827]">Admin User</p>
+              </div>
+
+              <p className="text-gray-600">{selectedLog.adminUser}</p>
+            </div>
 
             <div className="rounded-2xl bg-[#F8FAF7] border border-[#EEF1EC] p-5">
               <div className="flex items-center gap-3 mb-3">
@@ -134,4 +136,4 @@ const PaymentModal = ({ open, setOpen, selectedLog }: PaymentModalProps) => {
   );
 };
 
-export default PaymentModal;
+export default ActivityLogModal;

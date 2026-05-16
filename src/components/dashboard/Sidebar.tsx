@@ -2,13 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  X,
-} from "lucide-react";
+import { X } from "lucide-react";
 
 import logo from "@/public/auth/Agile-Cycle-Logo.png";
 import { usePathname } from "next/navigation";
 import { DASHBOARD_NAVS } from "@/src/lib/utils";
+import { useConfirm } from "@/src/context/ConfirmProvider";
 
 export default function Sidebar({
   open,
@@ -18,6 +17,7 @@ export default function Sidebar({
   setOpen: (value: boolean) => void;
 }) {
   const pathname = usePathname();
+  const confirm = useConfirm();
 
   return (
     <>
@@ -42,14 +42,9 @@ export default function Sidebar({
           md:translate-x-0
         `}
       >
-
         {/* HEADER */}
         <div className="w-auto h-[90px] flex items-center justify-between px-6 border-b border-gray-100">
-
-          <Link
-            href="/"
-            className="flex flex-col items-center mx-auto"
-          >
+          <Link href="/" className="flex flex-col items-center mx-auto">
             <Image
               src={logo}
               alt="Logo"
@@ -71,11 +66,12 @@ export default function Sidebar({
 
         {/* NAVS */}
         <nav className="flex-1 py-6 space-y-2">
-
           {DASHBOARD_NAVS.map((item) => {
             const Icon = item.icon;
 
-            const active = pathname === item.path || pathname.startsWith(`/dashboard/${item.path.split("/")[2]}`);
+            const active =
+              pathname === item.path ||
+              pathname.startsWith(`/dashboard/${item.path.split("/")[2]}`);
 
             return (
               <Link
@@ -96,26 +92,23 @@ export default function Sidebar({
                   }
                 `}
               >
-
                 {/* LEFT BORDER */}
                 {active && (
                   <div className="absolute left-0 top-0 h-full w-1 bg-[#519A09]" />
                 )}
 
-                <Icon
-                  size={20}
-                  className={active ? "text-[#519A09]" : ""}
-                />
+                <Icon size={20} className={active ? "text-[#519A09]" : ""} />
 
-                <span className={`${active ? "text-[#519A09] font-bold" : ""}`}>{item.label}</span>
+                <span className={`${active ? "text-[#519A09] font-bold" : ""}`}>
+                  {item.label}
+                </span>
               </Link>
             );
           })}
-        {/* LOGOUT */}
-        <div className="p-5">
-
-          <button
-            className="
+          {/* LOGOUT */}
+          <div className="p-5">
+            <button
+              className="
               w-full h-[50px]
               rounded-xl
               bg-[#01430D]
@@ -125,12 +118,21 @@ export default function Sidebar({
               hover:opacity-90
               transition
             "
-          >
-            Logout
-          </button>
-        </div>
+              onClick={() => {
+                confirm({
+                  title: "Logout",
+                  description: "Are you sure you want to logout?",
+                  confirmText: "Yes, Logout",
+                  onConfirm: async () => {
+                    window.alert("Logged out successfully")
+                  },
+                });
+              }}
+            >
+              Logout
+            </button>
+          </div>
         </nav>
-
       </aside>
     </>
   );

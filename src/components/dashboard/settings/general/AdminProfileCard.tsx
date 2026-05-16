@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Copy } from "lucide-react";
 
 const AdminProfileCard = () => {

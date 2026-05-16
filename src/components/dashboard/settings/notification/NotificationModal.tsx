@@ -1,7 +1,7 @@
 "use client";
 
 import { X, BellRing, CalendarDays, User2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StatusBadge } from "../../common/Dashboard";
 
 type NotificationLogModalProps = {
@@ -22,6 +22,7 @@ const NotificationLogModal = ({
   selectedLog,
 }: NotificationLogModalProps) => {
   const [show, setShow] = useState(false);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (open) {
@@ -33,10 +34,17 @@ const NotificationLogModal = ({
     }
   }, [open]);
 
+  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if(modalRef.current && !modalRef.current.contains(e.target as Node)){
+      setOpen(false);
+    }
+  }
+
   if (!open || !selectedLog) return null;
 
   return (
     <div
+    onClick={handleOutsideClick}
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300
       ${
         show
@@ -45,6 +53,7 @@ const NotificationLogModal = ({
       }`}
     >
       <div
+      ref={modalRef}
         className={`w-full max-w-2xl rounded-3xl bg-white shadow-2xl overflow-hidden transition-all duration-300
         ${
           show

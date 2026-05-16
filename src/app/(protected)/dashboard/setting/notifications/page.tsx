@@ -54,12 +54,12 @@ type notificationType = {
 };
 
 type NotificationStateType = {
-    id: string;
-    trigger: string;
-    recipient: string;
-    status: string;
-    date: string;
-  } | null;
+  id: string;
+  trigger: string;
+  recipient: string;
+  status: string;
+  date: string;
+} | null;
 
 const notificationTypes: notificationType[] = [
   {
@@ -141,57 +141,60 @@ const NotificationsPage = () => {
   );
 
   return (
-    <section>
-      {/* NOTIFICATION SETTINGS */}
-      <div className="grid grid-cols-1 gap-6">
-        {/* Notification Types */}
-        <div className="bg-white rounded-[28px] border border-[#EEF1EC] p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-          <h2 className="text-[24px] font-semibold text-[#202020] mb-8">
-            Notification Types
-          </h2>
+    <section className="space-y-6">
+      {/* Notification Types */}
+      <div className="bg-white rounded-[28px] border border-[#EEF1EC] p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+        <h2 className="text-lg font-semibold text-[#202020] mb-8">
+          Notification Types
+        </h2>
 
-          <div className="space-y-6 md:w-1/2 w-full">
-            {notificationTypes.map((item) => (
-              <div key={item.key} className="md:grid grid-cols-2 gap-2 flex justify-between items-center">
-                <p className="text-[#5B5B5B] font-medium">{item.label}</p>
+        <div className="space-y-6 md:w-1/2 w-full">
+          {notificationTypes.map((item) => (
+            <div
+              key={item.key}
+              className="md:grid grid-cols-2 gap-2 flex justify-between items-center"
+            >
+              <p className="text-[#5B5B5B] font-medium">{item.label}</p>
 
-                <ToggleSwitch
-                  enabled={enabled[item.key as keyof typeof enabled]}
-                  onToggle={() =>
-                    setEnabled((prev) => ({
-                      ...prev,
-                      [item.key]: !prev[item.key as keyof typeof prev],
-                    }))
-                  }
-                />
-              </div>
-            ))}
-          </div>
+              <ToggleSwitch
+                enabled={enabled[item.key as keyof typeof enabled]}
+                onToggle={() =>
+                  setEnabled((prev) => ({
+                    ...prev,
+                    [item.key]: !prev[item.key as keyof typeof prev],
+                  }))
+                }
+              />
+            </div>
+          ))}
         </div>
+      </div>
 
-        {/* Trigger Events */}
-        <div className="bg-white rounded-[28px] border border-[#EEF1EC] p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-          <h2 className="text-[24px] font-semibold text-[#202020] mb-8">
-            Trigger Events
-          </h2>
+      {/* Trigger Events */}
+      <div className="bg-white rounded-[28px] border border-[#EEF1EC] p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+        <h2 className="text-lg font-semibold text-[#202020] mb-8">
+          Trigger Events
+        </h2>
 
-          <div className="space-y-6 md:w-1/2 w-full">
-            {triggerEvents.map((item) => (
-              <div key={item.key} className="md:grid grid-cols-2 gap-2 flex justify-between items-center">
-                <p className="text-[#5B5B5B] font-medium">{item.label}</p>
+        <div className="space-y-6 md:w-1/2 w-full">
+          {triggerEvents.map((item) => (
+            <div
+              key={item.key}
+              className="md:grid grid-cols-2 gap-2 flex justify-between items-center"
+            >
+              <p className="text-[#5B5B5B] font-medium">{item.label}</p>
 
-                <ToggleSwitch
-                  enabled={enabled[item.key as keyof typeof enabled]}
-                  onToggle={() =>
-                    setEnabled((prev) => ({
-                      ...prev,
-                      [item.key]: !prev[item.key as keyof typeof prev],
-                    }))
-                  }
-                />
-              </div>
-            ))}
-          </div>
+              <ToggleSwitch
+                enabled={enabled[item.key as keyof typeof enabled]}
+                onToggle={() =>
+                  setEnabled((prev) => ({
+                    ...prev,
+                    [item.key]: !prev[item.key as keyof typeof prev],
+                  }))
+                }
+              />
+            </div>
+          ))}
         </div>
       </div>
 
@@ -244,6 +247,7 @@ const NotificationsPage = () => {
           </div>
         </div>
 
+          {/* NOTIFICATION LOGS  */}
         <div className="overflow-x-auto">
           <table className="w-full border-separate border-spacing-y-0">
             <thead>

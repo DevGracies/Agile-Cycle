@@ -4,7 +4,7 @@ import AddMemberModal from "@/src/components/dashboard/settings/user-management/
 import UserCard from "@/src/components/dashboard/settings/user-management/UserCard";
 import React, { useState } from "react";
 
-type Users = {
+export type Users = {
   name: string;
   role: string;
   email: string;
