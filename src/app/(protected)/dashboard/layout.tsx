@@ -10,31 +10,25 @@ const lexend = Lexend({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function DashboardLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className={`${lexend.className} flex h-screen bg-[#F2F5F3]`}>
-
+    <div className={`${lexend.className} flex h-full bg-[#F2F5F3]`}>
       {/* Sidebar */}
-      <Sidebar
-        open={sidebarOpen}
-        setOpen={setSidebarOpen}
-      />
+      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
       {/* Main area */}
       <div className="flex flex-col flex-1">
-
         {/* Navbar */}
         <Navbar setSidebarOpen={setSidebarOpen} />
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto p-4 md:ml-64">
+        <main className="flex-1 overflow-y-auto md:ml-60">
           {children}
+          <p className="text-gray-500 text-right text-sm px-10 py-4">
+            &copy; {new Date().getFullYear()} AgileCycle. All Rights Reserved.
+          </p>
         </main>
       </div>
     </div>

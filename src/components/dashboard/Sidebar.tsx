@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  X,
-} from "lucide-react";
+import { X } from "lucide-react";
 
 import { usePathname } from "next/navigation";
 import { DASHBOARD_NAVS } from "@/src/lib/utils";
+import { useConfirm } from "@/src/context/ConfirmProvider";
 
 export default function Sidebar({
   open,
@@ -17,6 +16,7 @@ export default function Sidebar({
   setOpen: (value: boolean) => void;
 }) {
   const pathname = usePathname();
+  const confirm = useConfirm();
 
   return (
     <>
@@ -32,7 +32,7 @@ export default function Sidebar({
       {/* SIDEBAR */}
       <aside
         className={`
-          fixed top-0 left-0 z-50 h-screen w-[260px]
+          fixed top-0 left-0 z-50 h-full w-[260px]
           bg-white border-r border-gray-100
           transition-transform duration-300
           flex flex-col
@@ -41,19 +41,15 @@ export default function Sidebar({
           md:translate-x-0
         `}
       >
-
         {/* HEADER */}
-        <div className="h-[90px] flex items-center justify-between px-6 border-b border-gray-100">
-
-          <Link
-            href="/"
-            className="flex flex-col items-center mx-auto"
-          >
+        <div className="w-auto h-[90px] flex items-center justify-between px-6 border-b border-gray-100">
+          <Link href="/" className="flex flex-col items-center mx-auto">
             <Image
               src="/Agile-Cycle-Logo.png"
               alt="Logo"
               width={110}
               height={110}
+              loading="eager"
               className="object-contain"
             />
           </Link>
@@ -69,16 +65,18 @@ export default function Sidebar({
 
         {/* NAVS */}
         <nav className="flex-1 py-6 space-y-2">
-
           {DASHBOARD_NAVS.map((item) => {
             const Icon = item.icon;
 
-            const active = pathname === item.path;
+            const active =
+              pathname === item.path ||
+              pathname.startsWith(`/dashboard/${item.path.split("/")[2]}`);
 
             return (
               <Link
                 key={item.id}
                 href={item.path}
+                onClick={() => setOpen(false)}
                 className={`
                   relative flex items-center gap-4
                   px-4 h-[42px]
@@ -88,46 +86,52 @@ export default function Sidebar({
 
                   ${
                     active
-                      ? "bg-linear-to-r from-[#519A09] to-white"
+                      ? "bg-linear-to-r from-[#ECFDF3] to-white"
                       : "text-gray-400 hover:bg-gray-50 hover:text-gray-700"
                   }
                 `}
               >
-
                 {/* LEFT BORDER */}
                 {active && (
-                  <div className="absolute left-0 top-0 h-full w-1 db-logout-btn" />
+                  <div className="absolute left-0 top-0 h-full w-1 bg-[#519A09]" />
                 )}
 
-                <Icon
-                  size={20}
-                  className={active ? "text-white" : ""}
-                />
+                <Icon size={20} className={active ? "text-[#519A09]" : ""} />
 
-                <span className={`${active ? "text-white font-bold" : ""}`}>{item.label}</span>
+                <span className={`${active ? "text-[#519A09] font-bold" : ""}`}>
+                  {item.label}
+                </span>
               </Link>
             );
           })}
-        </nav>
-
-        {/* LOGOUT */}
-        <div className="p-5">
-
-          <button
-            className="
+          {/* LOGOUT */}
+          <div className="p-5">
+            <button
+              className="
               w-full h-[50px]
               rounded-xl
-              db-logout-btn
+              bg-[#01430D]
               text-white
               font-semibold
               flex items-center justify-center gap-2
               hover:opacity-90
               transition
             "
-          >
-            Logout
-          </button>
-        </div>
+              onClick={() => {
+                confirm({
+                  title: "Logout",
+                  description: "Are you sure you want to logout?",
+                  confirmText: "Yes, Logout",
+                  onConfirm: async () => {
+                    window.alert("Logged out successfully")
+                  },
+                });
+              }}
+            >
+              Logout
+            </button>
+          </div>
+        </nav>
       </aside>
     </>
   );
