@@ -9,7 +9,11 @@ import { OrdersUpdateChart } from "@/src/components/dashboard/customers/OrdersUp
 import { CustomersTable } from "@/src/components/dashboard/customers/CustomersTable";
 import { Pagination } from "@/src/components/dashboard/customers/Pagination";
 import { CustomerProfileModal } from "@/src/components/dashboard/customers/CustomerProfileModal";
-import { fetchCustomerSection, type CustomerSectionResponse } from "@/src/lib/api";
+import {
+  fetchCustomerSection,
+  type CustomerSectionResponse,
+} from "@/src/lib/api";
+import type { Customer } from "@/src/store/useCustomerStore"
 
 const statCardLabels = ["Total Customers", "New Customers", "Visitors"];
 

@@ -6,7 +6,6 @@ import {
   X,
 } from "lucide-react";
 
-import logo from "@/public/Agile-Cycle-Logo.png";
 import { usePathname } from "next/navigation";
 import { DASHBOARD_NAVS } from "@/src/lib/utils";
 
@@ -51,7 +50,7 @@ export default function Sidebar({
             className="flex flex-col items-center mx-auto"
           >
             <Image
-              src={logo}
+              src="/Agile-Cycle-Logo.png"
               alt="Logo"
               width={110}
               height={110}
