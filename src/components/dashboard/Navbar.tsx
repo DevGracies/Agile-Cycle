@@ -1,6 +1,12 @@
 "use client";
 
-import { Bell, Menu, Search } from "lucide-react";
+import {
+  Bell,
+  Menu,
+  Search,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar({
   setSidebarOpen,
@@ -9,8 +15,20 @@ export default function Navbar({
 }) {
   return (
     <header className="sticky top-0 z-30 bg-white border-b border-gray-100">
-      <div className="w-auto h-[72px] px-2 md:px-8 flex items-center justify-between">
-        <div />
+
+      <div className="h-[72px] px-2 md:px-8 flex items-center justify-between">
+        <Link
+            href="/"
+            className="md:block hidden"
+          >
+            <Image
+              src="/Agile-Cycle-Logo.png"
+              alt="Logo"
+              width={70}
+              height={70}
+              className="object-contain"
+            />
+          </Link>
         <div className="flex justify-between w-full md:w-3/4 gap-4">
           {/* LEFT SIDE */}
           <div className="flex items-center gap-4">

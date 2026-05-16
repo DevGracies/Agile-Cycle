@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react";
 
-import logo from "@/public/auth/Agile-Cycle-Logo.png";
 import { usePathname } from "next/navigation";
 import { DASHBOARD_NAVS } from "@/src/lib/utils";
 import { useConfirm } from "@/src/context/ConfirmProvider";
@@ -46,7 +45,7 @@ export default function Sidebar({
         <div className="w-auto h-[90px] flex items-center justify-between px-6 border-b border-gray-100">
           <Link href="/" className="flex flex-col items-center mx-auto">
             <Image
-              src={logo}
+              src="/Agile-Cycle-Logo.png"
               alt="Logo"
               width={110}
               height={110}

@@ -1,11 +1,21 @@
 
+"use client";
+
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const noLayoutPaths = ["/email-check", "/forgot-password", "/sign-in"];
+
+  if (noLayoutPaths.includes(pathname)) {
+    return <>{children}</>;
+  }
+
   return (
     <main className="min-h-screen bg-[#F8FAF8]">
   <div className="grid min-h-screen lg:grid-cols-2">

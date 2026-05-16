@@ -12,7 +12,7 @@ import {
   fetchCustomerSection,
   type CustomerSectionResponse,
 } from "@/src/lib/api";
-import type { Customer } from "@/src/store/useCustomerStore";
+import type { Customer } from "@/src/store/useCustomerStore"
 
 const statCardLabels = ["Total Customers", "New Customers", "Visitors"];
 
