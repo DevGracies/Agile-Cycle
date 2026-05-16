@@ -7,7 +7,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/public/Agile-Cycle-Logo.png";
 
 export default function Navbar({
   setSidebarOpen,
@@ -23,7 +22,7 @@ export default function Navbar({
             className="md:block hidden"
           >
             <Image
-              src={logo}
+              src="/Agile-Cycle-Logo.png"
               alt="Logo"
               width={70}
               height={70}
