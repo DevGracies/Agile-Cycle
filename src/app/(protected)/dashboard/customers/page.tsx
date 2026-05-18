@@ -1,8 +1,9 @@
+// app/customers/page.tsx
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
+import { useEffect, useState, useCallback } from "react";
 import { Box, Typography } from "@mui/material";
+import { Toaster } from "react-hot-toast";
 import { StatCard } from "@/src/components/dashboard/customers/StatCard";
 import { OrdersUpdateChart } from "@/src/components/dashboard/customers/OrdersUpdateChart";
 import { CustomersTable } from "@/src/components/dashboard/customers/CustomersTable";
@@ -35,7 +36,7 @@ export default function CustomersPage() {
       setIsLoading(true);
       setErrorMessage(null);
       const response = await fetchCustomerSection(page, 10);
-      setSectionData(response);
+      setSectionData(response.data);
     } catch (error) {
       setSectionData(null);
       setErrorMessage(
@@ -47,16 +48,15 @@ export default function CustomersPage() {
   }, []);
 
   useEffect(() => {
-    void loadCustomerSection(currentPage);
+    loadCustomerSection(currentPage);
   }, [currentPage, loadCustomerSection]);
 
   return (
     <Box className="min-h-screen bg-[#F5F5F5] font-sans">
       <Toaster position="top-right" />
-      <CustomerProfileModal onDeleted={() => void loadCustomerSection(currentPage)} />
+      <CustomerProfileModal onDeleted={() => loadCustomerSection(currentPage)} />
 
       <Box component="main" className="mx-auto max-w-[1400px] p-4 sm:p-6 lg:p-8">
-        {/* Stat Cards */}
         <Box className="mb-6 grid grid-cols-1 gap-4 sm:mb-8 sm:grid-cols-3 sm:gap-6">
           {statCardLabels.map((title, index) => (
             <StatCard
@@ -68,21 +68,18 @@ export default function CustomersPage() {
           ))}
         </Box>
 
-        {/* Customer Overview Chart */}
         <Box className="mb-6 sm:mb-8">
           <OrdersUpdateChart overview={overviewToShow} />
         </Box>
 
-        {/* Customers Table */}
         <Box className="mb-0">
           <CustomersTable
             customers={customers}
             isLoading={isLoading}
-            onCustomerDeleted={() => void loadCustomerSection(currentPage)}
+            onCustomerDeleted={() => loadCustomerSection(currentPage)}
           />
         </Box>
 
-        {/* Pagination */}
         {sectionData?.pagination && (
           <Box className="rounded-b-lg border border-t-0 border-[#E8E8E8] bg-white">
             <Pagination
@@ -95,7 +92,6 @@ export default function CustomersPage() {
           </Box>
         )}
 
-        {/* Footer */}
         <Box className="mt-6 py-6 text-center sm:mt-8 sm:py-8">
           <Typography variant="body2" className="text-[#717378]">
             © 2026 AgileCycle. All Rights Reserved.
