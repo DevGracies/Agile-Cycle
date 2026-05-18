@@ -47,7 +47,7 @@ export const DASHBOARD_NAVS = [
   {
     id: "settings",
     label: "Settings",
-    path: "/dashboard/settings",
+    path: "/dashboard/setting",
     icon: Settings,
   },
 ]
