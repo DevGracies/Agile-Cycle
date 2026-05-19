@@ -54,22 +54,7 @@ const DigitalClock = () => {
           />
         </svg>
 
-        {/* 
-            THE DOT: Corrected Alignment
-            1. Parent div is 256px tall (w-64).
-            2. Center is 128px.
-            3. Radius is 85px.
-            4. Perfect center of the stroke is at 128 - 85 = 43px.
-            5. To center a 16px (w-4) dot on that 43px point:
-               43px - (16px / 2) = 35px.
-        */}
-        <div 
-          className="absolute left-[7rem]  w-3 h-3 bg-[#166534] rounded-full border-2 border-white shadow-md"
-          style={{ 
-            top: '33px', 
-            zIndex: 30
-          }}
-        ></div>
+        
       </div>
 
       {/* LAYER 3: The Static Center */}

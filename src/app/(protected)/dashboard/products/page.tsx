@@ -1,8 +1,8 @@
 "use client";
 import Link from 'next/link';
-import BriefProductSummary from '@/src/components/BriefProductSummary'
-import ProductCard from '@/src/components/ProductsCard';
-import RevenueDashboard from '@/src/components/RevenueAnalytics'
+import BriefProductSummary from '@/src/components/dashboard/product/BriefProductSummary'
+import ProductCard from '@/src/components/dashboard/product/ProductsCard';
+import RevenueDashboard from '@/src/components/dashboard/product/RevenueAnalytics'
 
 const dataRevenue = [100, 120, 110, 130, 140, 150, 160];
 const dataOrders = [20, 22, 21, 25, 27, 26, 28];
