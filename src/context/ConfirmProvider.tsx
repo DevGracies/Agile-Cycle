@@ -69,6 +69,7 @@ const ConfirmProvider = ({ children }: { children: ReactNode }) => {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, loading]);
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
