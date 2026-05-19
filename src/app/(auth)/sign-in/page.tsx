@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,7 +25,7 @@ export default function SignInPage() {
 
           {/* Heading */}
           <div className="mb-8">
-            <h1 className="bg-gradient-to-r from-[#01430D] to-[#519A09] bg-clip-text text-[48px] font-bold leading-[100%] tracking-[0%] text-transparent font-roboto">
+            <h1 className="bg-gradient-to-r from-[#01430D] to-[#519A09] bg-clip-text text-[48px] mb-[25px] font-bold leading-[130%] text-transparent font-roboto">
               Sign In
             </h1>
 
@@ -89,7 +91,7 @@ export default function SignInPage() {
               </label>
 
               <Link
-                href="#"
+                href="/forgot-password"
                 className="text-sm font-medium text-green-600 underline underline-offset-4"
               >
                 Forgot Password?
@@ -156,7 +158,7 @@ export default function SignInPage() {
       {/* Right Side */}
       <div className="relative hidden md:block md:w-1/2">
         <Image
-          src="/signin-bike-image.jpg"
+          src="/agile-image1.jpg"
           alt="Agile Cycle Electric Bike"
           fill
           priority

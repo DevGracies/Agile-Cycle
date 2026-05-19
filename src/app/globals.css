@@ -4,13 +4,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* globals.css */
+
+html {
+  overflow-y: scroll;
+}
 /* *{
   outline: 1 solid red;
 } */
-
-.db-logout-btn{
-  background-color: #01430D;
-}
-.db-nav-link{
-  background-color: #519A09;
-}

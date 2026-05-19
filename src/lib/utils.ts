@@ -1,3 +1,9 @@
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 import {
   Home,
   Package,
@@ -41,7 +47,7 @@ export const DASHBOARD_NAVS = [
   {
     id: "settings",
     label: "Settings",
-    path: "/dashboard/settings",
+    path: "/dashboard/setting",
     icon: Settings,
   },
 ]
