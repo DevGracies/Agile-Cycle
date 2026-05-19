@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,7 +25,7 @@ export default function SignInPage() {
 
           {/* Heading */}
           <div className="mb-8">
-            <h1 className="bg-gradient-to-r from-[#01430D] to-[#519A09] bg-clip-text text-[48px] font-bold leading-[100%] tracking-[0%] text-transparent font-roboto">
+            <h1 className="bg-gradient-to-r from-[#01430D] to-[#519A09] bg-clip-text text-[48px] mb-[25px] font-bold leading-[130%] text-transparent font-roboto">
               Sign In
             </h1>
 
