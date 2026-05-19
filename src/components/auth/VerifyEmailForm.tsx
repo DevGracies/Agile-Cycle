@@ -43,7 +43,7 @@ const VerifyEmailForm = () => {
           <span className="font-bold">
             Verify Your
           </span>{" "}
-          <span className="font-medium text-[#519A09]">
+          <span className="font-semibold text-[#01430D]">
             Email
           </span>
         </h1>
