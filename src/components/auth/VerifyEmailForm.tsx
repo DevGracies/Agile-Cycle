@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import Button from "../ui/Button";
-import Input from "../ui/Input";
+import { Input } from "../ui/Input";
 
 const VerifyEmailForm = () => {
   const [timer, setTimer] = useState(30);

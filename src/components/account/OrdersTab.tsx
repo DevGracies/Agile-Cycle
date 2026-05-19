@@ -2,15 +2,7 @@
 
 import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
-
-interface Order {
-  id: string;
-  order_number: string;
-  product_name?: string;
-  product_image?: string;
-  delivery_range?: string;
-  tracking_number?: string;
-}
+import type { Order } from "@/src/lib/api";
 
 interface OrdersTabProps {
   orders?: Order[];

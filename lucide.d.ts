@@ -15,4 +15,5 @@ declare module 'lucide-react' {
   export const Menu: Icon;
   export const Bell: Icon;
   export const X: Icon;
+  export const ChevronRight: Icon;
 }
