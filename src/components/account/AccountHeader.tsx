@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { ShoppingBag, User, Search } from "lucide-react"; 
-import logo from "@/public/Agile-Cycle-Logo.png";
-
 const NAV_ITEMS = ["Home", "E-bikes", "Accessories", "Explore", "Support", "Contact Us"];
 
 interface AccountHeaderProps {
@@ -16,7 +14,7 @@ export default function AccountHeader({ cartCount }: AccountHeaderProps) {
       <div className="relative z-10 flex min-h-[82px] w-full items-center justify-between bg-white px-4 shadow-sm md:px-[70px]">
         {/* Logo (clickable) */}
         <Link href="/" className="flex h-[62px] items-center gap-1">
-           <img src={logo.src} alt="Agile Cycle" className="h-full object-contain" />
+           <img src="/auth/Agile-Cycle-Logo.png" alt="Agile Cycle" className="h-full object-contain" />
           <div className="leading-tight">
             <div className="text-[9px] font-bold uppercase tracking-wider text-[#519A09]">AGILE</div>
             <div className="text-[9px] font-bold uppercase tracking-wider text-[#519A09]">CYCLE</div>

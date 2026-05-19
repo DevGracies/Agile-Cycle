@@ -16,4 +16,6 @@ declare module 'lucide-react' {
   export const Bell: Icon;
   export const X: Icon;
   export const ChevronRight: Icon;
+  export const ShoppingBag: Icon;
+  export const User: Icon;
 }
