@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import Button from "../ui/Button";
-import Input from "../ui/Input";
+import { Input } from "../ui/Input";
 import Image from "next/image";
 import Select from "../ui/Select";
 
@@ -20,7 +20,7 @@ const SetUpProfile = () => {
         <div>
           <h1 className="text-5xl text-[#01430D] font-bold tracking-tight">
             <span className="font-bold">Set Up Your</span>{" "}
-            <span className="font-medium text-[#519A09]">Profile</span>
+            <span className="font-semibold text-[#01430D]">Profile</span>
           </h1>
         </div>
       </div>

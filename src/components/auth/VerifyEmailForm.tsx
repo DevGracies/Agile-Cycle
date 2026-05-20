@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import Button from "../ui/Button";
-import Input from "../ui/Input";
+import { Input } from "../ui/Input";
 
 const VerifyEmailForm = () => {
   const [timer, setTimer] = useState(30);
@@ -43,7 +43,7 @@ const VerifyEmailForm = () => {
           <span className="font-bold">
             Verify Your
           </span>{" "}
-          <span className="font-medium text-[#519A09]">
+          <span className="font-semibold text-[#01430D]">
             Email
           </span>
         </h1>

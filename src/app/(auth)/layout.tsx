@@ -16,7 +16,7 @@ export default function AuthLayout({
 
         <div className="mb-10">
           <Image
-            src="/auth/Agile-Cycle-Logo.png"
+            src="/Agile-Cycle-Logo.png"
             alt="Agile Cycle"
             width={90}
             height={90}

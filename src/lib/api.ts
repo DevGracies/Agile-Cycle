@@ -67,6 +67,10 @@ export interface Order {
   shipping_address?: string;
   status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   total_amount: number;
+  product_name?: string;
+  product_image?: string;
+  delivery_range?: string;
+  tracking_number?: string;
 }
 export interface CartItem {
   id: string;
@@ -87,10 +91,10 @@ export const fetchCustomerSection = (page = 1, limit = 10) =>
   api.get<CustomerSectionResponse>(`/customer-section?page=${page}&limit=${limit}`);
 
 // ========== ACCOUNT SECTION ==========
-export const fetchUser = () => api.get<User>("/user/me");
-export const fetchAddresses = () => api.get<Address[]>("/addresses");
-export const fetchOrders = () => api.get<Order[]>("/orders");
-export const fetchCart = () => api.get<CartItem[]>("/cart");
+export const fetchUser = () => api.get<any, User>("/user/me");
+export const fetchAddresses = () => api.get<any, Address[]>("/addresses");
+export const fetchOrders = () => api.get<any, Order[]>("/orders");
+export const fetchCart = () => api.get<any, CartItem[]>("/cart");
 export const logout = () => api.post("/auth/logout");
 export const subscribeNewsletter = (email: string) =>
   api.post("/newsletter/subscribe", { email });

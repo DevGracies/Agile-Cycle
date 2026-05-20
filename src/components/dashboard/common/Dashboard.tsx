@@ -36,7 +36,7 @@ export const Pagination = ({ setCurrentPage, totalPages, currentPage }: {
           <button
           disabled={currentPage === totalPages}
             onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              setCurrentPage((prev: number) => Math.min(prev + 1, totalPages))
             }
             className="flex h-10.5 w-10.5 items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed rounded-full bg-[#52A30D] text-white"
           >

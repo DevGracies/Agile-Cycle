@@ -66,6 +66,9 @@ const MOCK_ORDERS: Order[] = [
     product_name: "Agile Comet X",
     delivery_range: "Fri 21 November and Fri 25, November",
     tracking_number: "LL04567893502",
+    order_date: "2026-05-19",
+    status: "processing",
+    total_amount: 1500,
   },
   {
     id: "2",
@@ -73,6 +76,9 @@ const MOCK_ORDERS: Order[] = [
     product_name: "Agile Comet X",
     delivery_range: "Fri 21 November and Fri 25, November",
     tracking_number: "LL04567893502",
+    order_date: "2026-05-19",
+    status: "shipped",
+    total_amount: 1500,
   },
   {
     id: "3",
@@ -80,6 +86,9 @@ const MOCK_ORDERS: Order[] = [
     product_name: "Oversize Saddle",
     delivery_range: "Fri 21 November and Fri 25, November",
     tracking_number: "LL04567893502",
+    order_date: "2026-05-19",
+    status: "pending",
+    total_amount: 50,
   },
 ];
 

@@ -16,7 +16,7 @@ const VerifyEmailForm = () => {
           <span className="font-bold">
             Welcome to Agile
           </span>{" "}
-          <span className="font-medium text-[#519A09]">
+          <span className="font-semibold text-[#01430D]">
             Cycle!
           </span>
         </h1>
