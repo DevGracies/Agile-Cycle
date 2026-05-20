@@ -305,8 +305,8 @@ const SecurityPage = () => {
       </div>
 
       {/* ACTIVITY LOGS */}
-      <div className="bg-white rounded-[28px] border border-[#EEF1EC] shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between p-6">
+      <div className="bg-white rounded-[28px] border border-[#EEF1EC] shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden p-6">
+        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <h2 className="text-[26px] font-semibold text-[#1F1F1F]">
             Activity Logs
           </h2>
@@ -366,9 +366,9 @@ const SecurityPage = () => {
                 ].map((header, idx) => (
                   <th
                     key={header}
-                    className={`px-4 py-5 text-left text-[16px] font-semibold text-[#52A30D]
+                    className={`px-4 py-5 text-left font-semibold text-[#52A30D]
                             ${idx === 0 ? "rounded-l-[14px]" : ""}
-                            ${idx === 6 ? "rounded-r-[14px]" : ""}
+                            ${idx === 5 ? "rounded-r-[14px]" : ""}
                           `}
                   >
                     {header}
@@ -379,13 +379,13 @@ const SecurityPage = () => {
             <tbody>
               {paginatedActivityLogs.map((log) => (
                 <tr key={log.id} className="border-b border-[#DDE4DB]">
-                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                     {log.id}
                   </td>
-                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                     {log.adminUser}
                   </td>
-                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                     {log.action}
                   </td>
                   <td
@@ -393,7 +393,7 @@ const SecurityPage = () => {
                   >
                     <StatusBadge status={log.status} />
                   </td>
-                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                     {log.date}
                   </td>
                   {/* Actions */}
@@ -434,7 +434,7 @@ const SecurityPage = () => {
         />
 
         {/* Count */}
-        <p className="text-[16px] text-[#555]">
+        <p className="text-[#555]">
           Showing {(currentPage - 1) * itemsPerPage + 1}-
           {Math.min(currentPage * itemsPerPage, filteredActivities.length)} of{" "}
           {filteredActivities.length}

@@ -144,7 +144,7 @@ const NotificationsPage = () => {
     <section className="space-y-6">
       {/* Notification Types */}
       <div className="bg-white rounded-[28px] border border-[#EEF1EC] p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-        <h2 className="text-lg font-semibold text-[#202020] mb-8">
+        <h2 className="text-lg text-[#202020] mb-8">
           Notification Types
         </h2>
 
@@ -172,7 +172,7 @@ const NotificationsPage = () => {
 
       {/* Trigger Events */}
       <div className="bg-white rounded-[28px] border border-[#EEF1EC] p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-        <h2 className="text-lg font-semibold text-[#202020] mb-8">
+        <h2 className="text-lg text-[#202020] mb-8">
           Trigger Events
         </h2>
 
@@ -199,9 +199,9 @@ const NotificationsPage = () => {
       </div>
 
       {/* NOTIFICATION LOGS */}
-      <div className="bg-white rounded-[28px] border border-[#EEF1EC] shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between p-6">
-          <h2 className="text-[26px] font-semibold text-[#1F1F1F]">
+      <div className="bg-white rounded-[28px] border border-[#EEF1EC] shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden p-6 ">
+        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <h2 className="text-[26px] text-[#1F1F1F]">
             Notification Logs
           </h2>
 
@@ -229,7 +229,7 @@ const NotificationsPage = () => {
 
                       {index === 0 && (
                         <span
-                          className={`rounded-full px-2 py-[2px] text-xs font-semibold transition-all duration-300
+                          className={`rounded-full px-2 py-[2px] text-xs transition-all duration-300
                 ${
                   isActive
                     ? "bg-[#52A30D] text-white"
@@ -262,9 +262,9 @@ const NotificationsPage = () => {
                 ].map((header, idx) => (
                   <th
                     key={header}
-                    className={`px-4 py-5 text-left text-[16px] font-semibold text-[#52A30D]
+                    className={`px-4 py-5 text-left text-[#52A30D]
                     ${idx === 0 ? "rounded-l-[14px]" : ""}
-                    ${idx === 6 ? "rounded-r-[14px]" : ""}
+                    ${idx === 5 ? "rounded-r-[14px]" : ""}
                   `}
                   >
                     {header}
@@ -275,21 +275,21 @@ const NotificationsPage = () => {
             <tbody>
               {paginatedNotificationLogs.map((log) => (
                 <tr key={log.id} className="border-b border-[#DDE4DB]">
-                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                     {log.id}
                   </td>
-                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                     {log.trigger}
                   </td>
-                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                     {log.recipient}
                   </td>
                   <td
-                    className={`border-b border-[#DDE4DB] px-4 py-4 text-[16px]`}
+                    className={`border-b border-[#DDE4DB] px-4 py-4 `}
                   >
                     <StatusBadge status={log.status} />
                   </td>
-                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                  <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                     {log.date}
                   </td>
                   {/* Actions */}
@@ -330,7 +330,7 @@ const NotificationsPage = () => {
         />
 
         {/* Count */}
-        <p className="text-[16px] text-[#555]">
+        <p className=" text-[#555]">
           Showing {(currentPage - 1) * itemsPerPage + 1}-
           {Math.min(currentPage * itemsPerPage, filteredNotifications.length)}{" "}
           of {filteredNotifications.length}

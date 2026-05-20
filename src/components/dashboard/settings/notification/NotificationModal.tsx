@@ -64,7 +64,7 @@ const NotificationLogModal = ({
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[#EEF1EC] px-6 py-5">
           <div>
-            <h2 className="text-2xl font-semibold text-[#111827]">
+            <h2 className="text-2xl  text-[#111827]">
               Notification Details
             </h2>
 
@@ -87,13 +87,13 @@ const NotificationLogModal = ({
             <div className="rounded-2xl bg-[#F8FAF7] border border-[#EEF1EC] p-5">
               <p className="text-sm text-gray-500 mb-2">Log ID</p>
 
-              <h3 className="font-semibold text-[#111827]">{selectedLog.id}</h3>
+              <h3 className=" text-[#111827]">{selectedLog.id}</h3>
             </div>
 
             <div className="rounded-2xl bg-[#F8FAF7] border border-[#EEF1EC] p-5">
               <p className="text-sm text-gray-500 mb-2">Status</p>
 
-              <h3 className={`font-semibold`}>
+              <h3 className={``}>
                 <StatusBadge status={selectedLog.status} />
               </h3>
             </div>

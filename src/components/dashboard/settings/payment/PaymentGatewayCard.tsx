@@ -9,13 +9,13 @@ const PaymentGatewayCard = () => {
   return (
     <div className="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm space-y-6 w-full">
       {/* HEADER */}
-      <h2 className="text-base sm:text-lg font-bold">
+      <h2 className="text-base sm:text-lg font-medium">
         Payment Gateways
       </h2>
 
        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         {["Paystack", "Flutter"].map((gateway) => (
-          // PAYMENT GATEWAY BUTTONS
+          // PAYMENT GATEWAY BUTTONS  
           <div
             key={gateway}
             className="flex flex-col items-center w-full"

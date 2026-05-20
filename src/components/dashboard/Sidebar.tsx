@@ -43,7 +43,7 @@ export default function Sidebar({
         `}
       >
         {/* HEADER */}
-        <div className="w-auto h-[90px] flex items-center justify-between px-6 border-b border-gray-100">
+        <div className="w-auto h-[90px] flex items-center justify-between px-6">
           <Link href="/" className="flex flex-col items-center mx-auto">
             <Image
               src={logo}
@@ -99,7 +99,7 @@ export default function Sidebar({
 
                 <Icon size={20} className={active ? "text-[#519A09]" : ""} />
 
-                <span className={`${active ? "text-[#519A09] font-bold" : ""}`}>
+                <span className={`${active ? "text-[#519A09]" : ""}`}>
                   {item.label}
                 </span>
               </Link>

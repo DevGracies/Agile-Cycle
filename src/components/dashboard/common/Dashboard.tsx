@@ -1,8 +1,10 @@
+"use client"
+
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded"
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded"
 
 export const Pagination = ({ setCurrentPage, totalPages, currentPage }: {
-  setCurrentPage: any; 
+  setCurrentPage?: any; 
   totalPages: number, 
   currentPage: number,
 }) => {

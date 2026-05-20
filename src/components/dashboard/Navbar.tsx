@@ -23,16 +23,16 @@ export default function Navbar({
             </button>
 
             {/* Search */}
-            <div className="relative w-full">
+            <div className="relative w-full max-w-xl mx-auto">
               <input
                 type="text"
                 placeholder="Search..."
-                className="w-full h-[40px] rounded-xl border border-[#E6ECE3] bg-[#FAFAFA] pl-5 pr-14 outline-none text-sm shadow-sm"
+                className="w-full h-10 rounded-lg border border-gray-200 bg-white/70 pl-4 pr-10 text-sm outline-none"
               />
-
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-lg bg-[#F5F7F4] flex items-center justify-center">
+              <div className="flex items-center gap-4 absolute right-3 top-1/2 -translate-y-1/2 ">
+                <span className="hidden md:block w-[1px] h-6 bg-[#78B52A]" />
                 <Search className="text-[#78B52A]" size={18} />
-              </button>
+              </div>
             </div>
           </div>
 
