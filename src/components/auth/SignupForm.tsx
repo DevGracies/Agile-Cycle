@@ -32,7 +32,7 @@ const SignupForm = () => {
         <div>
           <h1 className="text-5xl text-[#01430D] font-bold tracking-tight">
             <span className="font-bold">Sign</span>{" "}
-            <span className="font-medium text-[#519A09]">Up</span>
+            <span className="font-semibold text-[#01430D]">Up</span>
           </h1>
         </div>
 
@@ -73,8 +73,7 @@ const SignupForm = () => {
           <div className="relative">
             <Input
               type={showPassword ? "text" : "password"}
-              placeholder="@#*%"
-            />
+              placeholder="@#*%" label={""}            />
             
             <button
               type="button"
@@ -100,13 +99,10 @@ const SignupForm = () => {
 
           <div className="relative">
             <Input
-              type={
-                showConfirmPassword
-                  ? "text"
-                  : "password"
-              }
-              placeholder="@#*%"
-            />
+              type={showConfirmPassword
+                ? "text"
+                : "password"}
+              placeholder="@#*%" label={""}            />
 
             <button
               type="button"

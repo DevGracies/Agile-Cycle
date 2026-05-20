@@ -24,7 +24,7 @@ const NewsLetter = () => {
           <span className="font-bold">
             Tailor Your
           </span>{" "}
-          <span className="font-medium text-[#519A09]">
+          <span className="font-semibold text-[#01430D]">
             Ride
           </span>
         </h1>
