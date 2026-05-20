@@ -73,8 +73,7 @@ const SignupForm = () => {
           <div className="relative">
             <Input
               type={showPassword ? "text" : "password"}
-              placeholder="@#*%"
-            />
+              placeholder="@#*%" label={""}            />
             
             <button
               type="button"
@@ -100,13 +99,10 @@ const SignupForm = () => {
 
           <div className="relative">
             <Input
-              type={
-                showConfirmPassword
-                  ? "text"
-                  : "password"
-              }
-              placeholder="@#*%"
-            />
+              type={showConfirmPassword
+                ? "text"
+                : "password"}
+              placeholder="@#*%" label={""}            />
 
             <button
               type="button"
