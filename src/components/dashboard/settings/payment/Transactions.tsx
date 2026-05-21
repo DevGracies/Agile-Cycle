@@ -91,7 +91,7 @@ const Transactions = () => {
     <Box className={`rounded-3xl bg-[#F8F9F7] p-6 shadow-sm`}>
       {/* Header */}
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <h2 className="text-[20px] font-semibold text-[#1F1F1F]">
+        <h2 className="text-[20px] text-[#1F1F1F]">
           All payments
         </h2>
 
@@ -119,7 +119,7 @@ const Transactions = () => {
 
                     {index === 0 && (
                       <span
-                        className={`rounded-full px-2 py-[2px] text-xs font-semibold transition-all duration-300
+                        className={`rounded-full px-2 py-[2px] text-xs transition-all duration-300
                 ${
                   isActive
                     ? "bg-[#52A30D] text-white"
@@ -153,7 +153,7 @@ const Transactions = () => {
               ].map((header, idx) => (
                 <th
                   key={header}
-                  className={`px-4 py-5 text-left text-[16px] font-semibold text-[#52A30D]
+                  className={`px-4 py-5 text-left text-[#52A30D]
                     ${idx === 0 ? "rounded-l-[14px]" : ""}
                     ${idx === 6 ? "rounded-r-[14px]" : ""}
                   `}
@@ -169,24 +169,24 @@ const Transactions = () => {
                 key={payment.transactionId}
                 className="border-b border-[#DDE4DB]"
               >
-                <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                   {payment.transactionId}
                 </td>
-                <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                   {payment.orderId}
                 </td>
-                <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                   {payment.paymentMethod}
                 </td>
-                <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                   {payment.amount}
                 </td>
                 <td
-                  className={`border-b border-[#DDE4DB] px-4 py-4 text-[16px]`}
+                  className={`border-b border-[#DDE4DB] px-4 py-4`}
                 >
                   <StatusBadge status={payment.status} />
                 </td>
-                <td className="border-b border-[#DDE4DB] px-4 py-4 text-[16px] text-[#555]">
+                <td className="border-b border-[#DDE4DB] px-4 py-4 text-[#555]">
                   {payment.date}
                 </td>
                 {/* Actions */}
@@ -226,7 +226,7 @@ const Transactions = () => {
         />
 
         {/* Count */}
-        <p className="text-[16px] text-[#555]">
+        <p className="text-[#555]">
           Showing {(currentPage - 1) * itemsPerPage + 1}-
           {Math.min(currentPage * itemsPerPage, filteredPayments.length)} of{" "}
           {filteredPayments.length}

@@ -1,9 +1,31 @@
-import React from 'react'
+import Navbar from '@/src/components/layout/Navbar'
+import HeroSection from '@/src/components/sections/HeroSection'
+import CategorySection from '@/src/components/sections/CategorySection'
+import ServicesSection from '@/src/components/sections/ServicesSection'
+import ProductSection from '@/src/components/sections/ProductSection'
+import AccessoriesSection from '../components/sections/AccessoriesSection'
+import EnhancementsSection from '../components/sections/EnhancementsSection'
+import OurShopSection from '../components/sections/OurShopSection'
+import CommunitySection from '../components/sections/CommunitySection'
+import TestimonialSection from '../components/sections/TestimonialSection'
+import InsightsSection from '../components/sections/InsightsSection'
+import SubscribeSection from '../components/sections/SubscribeSection'
 
-const MainPage = () => {
+export default function HomePage() {
   return (
-    <div>MainPage</div>
+    <main className="bg-[#f5f7f2] overflow-hidden">
+      <Navbar />
+      <HeroSection />
+      <CategorySection />
+      <ServicesSection />
+      <ProductSection />
+      <AccessoriesSection />
+      <EnhancementsSection />
+      <OurShopSection />
+      <CommunitySection />
+      <TestimonialSection />
+      <InsightsSection />
+      <SubscribeSection />
+    </main>
   )
 }
-
-export default MainPage

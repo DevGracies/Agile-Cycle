@@ -6,7 +6,7 @@ const CurrencyPricingCard = () => {
   return (
     <div className="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm space-y-6 w-full">
       {/* HEADER */}
-      <h2 className="text-base sm:text-lg font-bold">Currency & Pricing</h2>
+      <h2 className="text-base sm:text-lg">Currency & Pricing</h2>
 
       <p className="text-sm sm:text-base text-gray-500">Default currency</p>
       <select

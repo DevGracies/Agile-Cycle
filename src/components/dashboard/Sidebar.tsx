@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react";
 
+import logo from "@/public/auth/Agile-Cycle-Logo.png";
 import { usePathname } from "next/navigation";
 import { DASHBOARD_NAVS } from "@/src/lib/utils";
 import { useConfirm } from "@/src/context/ConfirmProvider";
@@ -42,10 +43,10 @@ export default function Sidebar({
         `}
       >
         {/* HEADER */}
-        <div className="w-auto h-[90px] flex items-center justify-between px-6 border-b border-gray-100">
+        <div className="w-auto h-[90px] flex items-center justify-between px-6">
           <Link href="/" className="flex flex-col items-center mx-auto">
             <Image
-              src="/Agile-Cycle-Logo.png"
+              src={logo}
               alt="Logo"
               width={110}
               height={110}
@@ -98,7 +99,7 @@ export default function Sidebar({
 
                 <Icon size={20} className={active ? "text-[#519A09]" : ""} />
 
-                <span className={`${active ? "text-[#519A09] font-bold" : ""}`}>
+                <span className={`${active ? "text-[#519A09]" : ""}`}>
                   {item.label}
                 </span>
               </Link>
