@@ -11,7 +11,6 @@ export default function EditProductPage() {
   const searchParams = useSearchParams();
     const edit = searchParams.get("edit");
 
-  console.log(edit)
   // --- STATE ---
   const [images, setImages] = useState<(string | null)[]>([null, null, null, null]);
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
