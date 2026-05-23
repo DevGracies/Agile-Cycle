@@ -1,3 +1,4 @@
+"use client";
 import { Accessories } from "@/src/types";
 import { Maximize2, Star } from "lucide-react";
 import Image from "next/image";

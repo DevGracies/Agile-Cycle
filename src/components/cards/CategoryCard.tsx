@@ -1,9 +1,11 @@
+"use client";
 import Image from "next/image";
+import type { ImageProps } from "next/image";
 
 interface Props {
   title: string;
   description: string;
-  image: any;
+  image: ImageProps["src"];
   large?: boolean;
 }
 
