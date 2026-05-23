@@ -7,7 +7,6 @@ import { useState } from "react";
 import { ShoppingCart, User, Menu, X, Search } from "lucide-react";
 
 import Container from "./Container";
-import logo from "@/public/auth/Agile-Cycle-Logo.png";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -31,7 +30,7 @@ const Navbar = () => {
             {/* Logo */}
             <Link href="/">
               <Image
-                src={logo}
+                src="/auth/Agile-Cycle-Logo.png"
                 alt="Logo"
                 width={60}
                 height={60}
