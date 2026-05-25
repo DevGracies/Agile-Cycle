@@ -17,23 +17,34 @@ import {
   Newspaper,
 } from "lucide-react";
 
-export default function Navbar() {
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+type NavbarProps = {
+  activeDropdown: string | null;
+  setActiveDropdown: React.Dispatch<
+    React.SetStateAction<string | null>
+  >;
+};
+
+export default function Navbar({
+  activeDropdown,
+  setActiveDropdown,
+}: NavbarProps) {
   const navbarRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        navbarRef.current &&
-        !navbarRef.current.contains(event.target as Node)
-      ) {
-        setActiveDropdown(null);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  // i moved useState dropdown to parent page because its needed globally
+
+  // useEffect(() => {
+  //   function handleClickOutside(event: MouseEvent) {
+  //     if (
+  //       navbarRef.current &&
+  //       !navbarRef.current.contains(event.target as Node)
+  //     ) {
+  //       setActiveDropdown(null);
+  //     }
+  //   }
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () =>
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  // }, []);
 
   const toggleDropdown = (label: string) => {
     if (activeDropdown === label) {
@@ -45,18 +56,43 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { label: "Home", href: "/" },
-    { label: "E-bikes", hasDropdown: true },
-    { label: "Accessories", hasDropdown: true },
-    { label: "Enhancements", hasDropdown: true },
-    { label: "Explore", hasDropdown: true },
-    { label: "Support", hasDropdown: true },
-  ];
+  { label: "Home", href: "/" },
+
+  {
+    label: "Ebikes",
+    hasDropdown: true,
+    layout: "sidebar",
+  },
+
+  {
+    label: "Accessories",
+    hasDropdown: true,
+    layout: "sidebar",
+  },
+
+  {
+    label: "Enhancements",
+    hasDropdown: true,
+    layout: "sidebar",
+  },
+
+  {
+    label: "Explore",
+    hasDropdown: true,
+    layout: "simple",
+  },
+
+  {
+    label: "Support",
+    hasDropdown: true,
+    layout: "simple",
+  },
+];
 
   return (
     <nav
       ref={navbarRef}
-      className="w-full bg-white font-sans relative z-50 border-b border-gray-100"
+      className="w-full bg-white font-sans relative z-50 0"
     >
       {/* TOP BAR */}
       <div className="relative max-w-7xl mx-auto px-6 h-16 flex items-center">
@@ -138,13 +174,14 @@ export default function Navbar() {
       </div>
 
       {/* DROPDOWNS (UNCHANGED — your full mega menu stays here) */}
-      {activeDropdown && (
-        <div className="absolute top-full left-0 w-full bg-[#F5F7F5] border-t border-gray-100 shadow-xl transition-all duration-200">
+      {/* {activeDropdown && (
+        <div className=" top-full left-0 w-full bg-[#F5F7F5] border-t border-gray-100 shadow-xl transition-all duration-200">
           <div className="max-w-7xl mx-auto px-10 py-8 min-h-[420px]">
-            {/* Keep all your existing dropdown code exactly as-is */}
+            
           </div>
         </div>
-      )}
+      )} */}
+
     </nav>
   );
 }
