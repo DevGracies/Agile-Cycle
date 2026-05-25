@@ -1,6 +1,6 @@
 import { Enhancements } from "@/src/types";
-import { Maximize2, Star } from "lucide-react";
 import Image from "next/image";
+import { Expand, Star } from "lucide-react";
 
 const EnhancementsCard = (product: Enhancements) => {
   return (
@@ -41,7 +41,7 @@ const EnhancementsCard = (product: Enhancements) => {
           </button>
 
           <button className="w-12 rounded-xl cursor-pointer border border-[#01430D] flex items-center justify-center">
-            <Maximize2 className="text-[#01430D]" />
+            <Expand className="text-[#01430D]" />
           </button>
         </div>
       </div>

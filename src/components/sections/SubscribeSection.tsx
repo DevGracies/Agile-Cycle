@@ -13,29 +13,29 @@ const SubscribeSection = () => {
           className="w-full h-full object-cover"
         />
 
-        <div className="absolute inset-0 bg-linear-to-tr from-[#01430D]/95 to-[#0b4f13]/92" />
+        <div className="absolute inset-0 bg-linear-to-tr from-[#01430D]/92 to-[#519A09]/95" />
       </div>
 
-      <Container className="relative z-10 py-20 md:py-28">
+      <Container className="relative z-10 py-20 md:py-24">
         <div className="max-w-3xl text-white">
           <h2 className="text-3xl md:text-[52px] leading-tight font-bold">
             Be Part of Agile Cycle
           </h2>
 
-          <p className="mt-5 text-white/90 text-base leading-8">
+          <p className="mt-2 text-white/90 text-base leading-8">
             Subscribe to join our growing community of riders and get the
             latest updates, launches, and stories straight to your inbox.
           </p>
 
-          <div className="mt-14">
+          <div className="mt-10">
             <h3 className="text-2xl font-semibold">Subscribe & Join</h3>
 
-            <p className="mt-4 text-white/90 leading-7">
+            <p className="mt-2 text-white/90 leading-7">
               Stay connected with Agile Cycle. Get exclusive news, product
               launches, and community highlights.
             </p>
 
-            <div className="mt-6 flex flex-col md:flex-row gap-4">
+            <div className="mt-2 flex flex-col md:flex-row gap-4">
               <input
                 type="email"
                 placeholder="Your Email"
@@ -48,15 +48,15 @@ const SubscribeSection = () => {
             </div>
           </div>
 
-          <div className="mt-14">
+          <div className="mt-10">
             <h3 className="text-2xl font-semibold">Contact Us</h3>
 
-            <p className="mt-4 text-white/90 leading-7">
+            <p className="mt-2 text-white/90 leading-7">
               Have questions or need support? Our team is here to help you
               every step of the way.
             </p>
 
-            <button className="mt-6 h-[54px] px-8 rounded-xl border border-white text-white font-semibold hover:bg-white hover:text-[#519A09] transition cursor-pointer">
+            <button className="mt-2 h-[54px] px-8 rounded-xl border border-white text-white font-semibold hover:bg-white hover:text-[#519A09] transition cursor-pointer">
               Get in Touch
             </button>
           </div>

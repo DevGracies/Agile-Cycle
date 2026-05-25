@@ -15,14 +15,14 @@ const tabs = [
 const SettingsTabs = () => {
   const pathname = usePathname()
   return (
-    <div className="bg-white border border-[#EEF1EC] overflow-hidden p-2 flex xl:flex-col flex-row xl:h-full overflow-x-auto">
-      {tabs.map((tab, index) => {
+    <div className="bg-white border border-[#EEF1EC] overflow-hidden flex xl:flex-col flex-row xl:h-full overflow-x-auto max-md:mb-10">
+      {tabs.map((tab) => {
         const active = pathname === tab.path
         return(
         <Link
           key={tab.path}
           href={tab.path}
-          className={`w-full text-center md:text-left rounded-xl h-[50px] px-5 py-4 text-xs md:text-sm transition-all duration-200 
+          className={`w-full text-xs max-md:text-center md:text-sm transition-all duration-200 flex items-center px-4 py-4
             ${
               active
                 ? "bg-[#eef7ec] text-[#3c7a31] font-semibold"

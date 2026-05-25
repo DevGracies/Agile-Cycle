@@ -1,15 +1,16 @@
+"use client"
+
 import { CalendarDays } from "lucide-react";
 import { Input } from "@/src/components/ui/Input";
-
-
+import { useRef } from "react";
 
 const ProfileUpdateForm = () => {
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+  
   return (
     <div className="bg-white rounded-2xl border border-[#e7ece5] p-6 shadow-sm h-fit">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-sm font-semibold text-[#1f2937]">
-          Profile update
-        </h2>
+        <h2 className="text-sm font-semibold text-[#1f2937]">Profile update</h2>
 
         <button className="text-sm font-medium text-[#4f9b43] hover:underline">
           Edit
@@ -27,8 +28,17 @@ const ProfileUpdateForm = () => {
         </div>
 
         <div className="flex gap-3">
-          <button className="bg-[#01430D] hover:bg-[#0b4f13] text-white px-5 py-2 rounded-lg text-sm transition-colors">
+          <button 
+          onClick={() => fileInputRef.current?.click()}
+          className="bg-[#01430D] hover:bg-[#0b4f13] text-white px-5 py-2 rounded-lg text-sm transition-colors">
             Upload new
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              hidden
+              //   onChange={}
+            />
           </button>
 
           <button className="border border-[#d9dfd7] text-[#6b7280] px-5 py-2 rounded-lg text-sm hover:bg-gray-50">
@@ -66,9 +76,7 @@ const ProfileUpdateForm = () => {
 
         {/* Address */}
         <div>
-          <label className="text-xs text-[#6b7280] mb-2 block">
-            Address
-          </label>
+          <label className="text-xs text-[#6b7280] mb-2 block">Address</label>
 
           <textarea
             rows={4}

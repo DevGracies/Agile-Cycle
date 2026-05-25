@@ -4,24 +4,71 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { ShoppingCart, User, Menu, X, Search } from "lucide-react";
+import {
+  ShoppingCart,
+  User,
+  Menu,
+  X,
+  Search,
+  ChevronUp,
+  ChevronDown,
+} from "lucide-react";
 
 import Container from "./Container";
-import logo from "@/public/auth/Agile-Cycle-Logo.png";
+import logo from "@/public/Agile-Cycle-Logo.png";
 
 const navLinks = [
-  { name: "Home", path: "/" },
-  { name: "E-bikes", path: "/e-bikes" },
-  { name: "Accessories", path: "/accessories" },
-  { name: "Enhancements", path: "/enhancements" },
-  { name: "Explore", path: "/explore" },
-  { name: "Support", path: "/support" },
+  {
+    name: "Home",
+    path: "/",
+    hasDropDown: false,
+  },
+  {
+    name: "E-bikes",
+    path: "/e-bikes",
+    hasDropDown: true,
+    dropDowns: [
+      { name: "Cargo", path: "/cargo" },
+      { name: "Cruisers", path: "/cruisers" },
+    ],
+  },
+  {
+    name: "Accessories",
+    path: "/accessories",
+    hasDropDown: true,
+    dropDowns: [
+      { name: "Saddle", path: "/saddle" },
+      { name: "Pump", path: "/pump" },
+    ],
+  },
+  {
+    name: "Enhancements",
+    path: "/enhancements",
+    hasDropDown: true,
+    dropDowns: [
+      { name: "Display Control", path: "/display-control" },
+      { name: "Suspension Seat", path: "/suspension-seat" },
+    ],
+  },
+  {
+    name: "Explore",
+    path: "/explore",
+    hasDropDown: true,
+    dropDowns: [{ name: "Shop", path: "/shop" }],
+  },
+  {
+    name: "Support",
+    path: "/support",
+    hasDropDown: true,
+    dropDowns: [{ name: "help", path: "help" }],
+  },
 ];
 
 const Navbar = () => {
   const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [activeDropDown, setActiveDropDown] = useState<string | null>(null);
 
   return (
     <>
@@ -45,17 +92,42 @@ const Navbar = () => {
                 const active = pathname === item.path;
 
                 return (
-                  <Link
+                  <div
                     key={item.name}
-                    href={item.path}
-                    className={`text-sm font-medium transition ${
-                      active
-                        ? "text-[#519A09] font-semibold"
-                        : "text-gray-700 hover:text-[#519A09]"
-                    }`}
+                    onMouseEnter={() => setActiveDropDown(item.name)}
+                    onMouseLeave={() => setActiveDropDown(null)}
+                    className="relative group"
                   >
-                    {item.name}
-                  </Link>
+                    <Link
+                      key={item.name}
+                      href={item.path}
+                      className={`flex items-center gap-2 text-sm font-medium transition ${
+                        active
+                          ? "text-[#519A09] font-semibold"
+                          : "text-gray-700 hover:text-[#519A09]"
+                      }`}
+                    >
+                      {item.name}
+                      {item.hasDropDown &&
+                        (activeDropDown === item.name ? (
+                          <ChevronUp size={10} />
+                        ) : (
+                          <ChevronDown size={10} />
+                        ))}
+                    </Link>
+
+                    {item.dropDowns && 
+                      activeDropDown === item.name && (
+                        <div className="absolute top-full left-0 mt-2 w-48 text-xs bg-white shadow-md transition-all translate-y-5 group-hover:translate-y-0 duration-300 rounded-md p-4">
+                          {item.dropDowns.map((item) => (
+                          <Link key={item.name} href={item.path}>
+                            {item.name}
+                          </Link>
+                      ))}
+                        </div>
+                        )
+                    }
+                  </div>
                 );
               })}
             </nav>
@@ -65,15 +137,15 @@ const Navbar = () => {
               {/* Search toggle */}
               <button
                 onClick={() => setShowSearch((p) => !p)}
-                className="flex items-center justify-center w-9 h-9 rounded-md hover:bg-gray-100"
+                className="flex items-center justify-center w-9 h-9 rounded-md hover:bg-gray-200 cursor-pointer"
               >
-                <Search size={18} />
+                <Search className="w-4 h-4 stroke-[1.5]" />
               </button>
 
-              <User className="cursor-pointer text-gray-700" />
+              <User className="w-5 h-5 stroke-[1.5] cursor-pointer text-gray-700" />
 
               <div className="relative cursor-pointer">
-                <ShoppingCart className="text-gray-700" />
+                <ShoppingCart className="w-5 h-5 stroke-[1.5] text-gray-700" />
                 <span className="absolute -top-2 -right-2 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">
                   0
                 </span>
@@ -81,7 +153,7 @@ const Navbar = () => {
 
               {/* Mobile Menu */}
               <button onClick={() => setOpenMenu(true)} className="lg:hidden">
-                <Menu size={26} />
+                <Menu className="w-5 h-5 stroke-[1.5]" />
               </button>
             </div>
           </div>
@@ -96,7 +168,7 @@ const Navbar = () => {
                   className="w-full h-10 rounded-lg border border-gray-200 bg-white/70 pl-4 pr-10 text-sm outline-none"
                 />
                 <div className="flex items-center gap-4 absolute right-3 top-1/2 -translate-y-1/2 ">
-                  <span className="hidden md:block w-[1px] h-6 bg-[#78B52A]" />
+                  <span className="block w-[.5px] h-6 bg-[#78B52A]" />
                   <Search className="text-[#78B52A]" size={18} />
                 </div>
               </div>

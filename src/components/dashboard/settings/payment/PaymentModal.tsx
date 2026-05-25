@@ -43,7 +43,7 @@ const PaymentModal = ({ open, setOpen, selectedLog }: PaymentModalProps) => {
   return (
     <div
     onClick={handleOutsideClick}
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-3z00
       ${
         show
           ? "bg-black/60 backdrop-blur-sm opacity-100"

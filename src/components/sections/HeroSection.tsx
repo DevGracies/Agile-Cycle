@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[90vh] md:min-h-screen flex items-center mt-16 overflow-hidden">
+    <section className="relative min-h-[50vh] md:min-h-screen flex items-center mt-16 overflow-hidden">
 
       {/* Background Image */}
       <Image
@@ -23,7 +23,7 @@ const HeroSection = () => {
         <div className="relative z-10 flex justify-center md:justify-start">
 
           <div className="w-full max-w-xl md:max-w-2xl bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl 
-            p-6 sm:p-8 md:p-12 text-white shadow-2xl text-center md:text-left">
+            p-8 sm:p-8 md:p-12 text-white shadow-2xl text-center md:text-left">
 
             {/* Tagline */}
             <p className="tracking-[0.4em] sm:tracking-[0.6em] md:tracking-[0.8em] uppercase text-xs sm:text-sm text-white mb-4">
