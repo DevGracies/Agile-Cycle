@@ -1,6 +1,6 @@
-// src/components/account/AccountFooter.tsx
 "use client";
 
+// src/components/account/AccountFooter.tsx
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import FacebookIcon from "@mui/icons-material/Facebook";

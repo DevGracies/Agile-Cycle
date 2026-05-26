@@ -1,6 +1,6 @@
-// src/components/account/AccountTabs.tsx
 "use client";
 
+// src/components/account/AccountTabs.tsx
 const TABS = ["Profile", "Addresses", "Orders"];
 
 interface AccountTabsProps {

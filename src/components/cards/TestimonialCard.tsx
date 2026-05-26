@@ -1,11 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import { Bike, Grid2X2, Star } from "lucide-react";
+import type { ImageProps } from "next/image";
 
 interface TestimonialCardProps {
   name: string;
   text: string;
   date: string;
-  images: any[];
+  images: ImageProps["src"][];
 }
 
 const TestimonialCard = ({

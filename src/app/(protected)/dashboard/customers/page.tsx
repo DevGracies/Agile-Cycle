@@ -1,6 +1,6 @@
-// app/customers/page.tsx
 "use client";
 
+// app/customers/page.tsx
 import { useEffect, useState, useCallback } from "react";
 import { Box, Typography } from "@mui/material";
 import { Toaster } from "react-hot-toast";

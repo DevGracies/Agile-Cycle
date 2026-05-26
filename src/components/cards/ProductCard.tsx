@@ -1,3 +1,5 @@
+"use client";
+
 import { Product } from "@/src/types";
 import { Star, Expand } from "lucide-react";
 import Image from "next/image";

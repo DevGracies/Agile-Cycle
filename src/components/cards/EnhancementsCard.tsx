@@ -1,3 +1,5 @@
+"use client";
+
 import { Enhancements } from "@/src/types";
 import Image from "next/image";
 import { Expand, Star } from "lucide-react";
