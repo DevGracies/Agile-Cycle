@@ -10,6 +10,7 @@ import CommunitySection from '../../components/sections/CommunitySection'
 import TestimonialSection from '../../components/sections/TestimonialSection'
 import InsightsSection from '../../components/sections/InsightsSection'
 import SubscribeSection from '../../components/sections/SubscribeSection'
+import BenefitsSection from '@/src/components/sections/BenefitsSection'
 
 export default function HomePage() {
   return (
@@ -26,6 +27,7 @@ export default function HomePage() {
       <TestimonialSection />
       <InsightsSection />
       <SubscribeSection />
+      <BenefitsSection />
     </main>
   )
 }
