@@ -1,9 +1,11 @@
-import Image from "next/image";
+"use client";
 
+import Image from "next/image";
+import type { ImageProps } from "next/image";
 interface InsightCardProps {
   title: string;
   description: string;
-  image: any;
+  image: ImageProps["src"];
   date: string;
 }
 

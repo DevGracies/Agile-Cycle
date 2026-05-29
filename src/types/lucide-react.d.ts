@@ -48,4 +48,11 @@ declare module 'lucide-react' {
   export const Newspaper: Icon;
   export const PhoneCall: Icon;
   export const CircleCheckBig: Icon;
+  export const Maximize2: Icon;
+  export const Star: Icon;
+  export const Bike: Icon;
+  export const Grid2X2: Icon;
+  export const Pause: Icon;
+  export const Play: Icon;
+  export const ArrowUp: Icon;
 }

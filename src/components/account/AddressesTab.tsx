@@ -1,6 +1,6 @@
-// src/components/account/AddressesTab.tsx
 "use client";
 
+// src/components/account/AddressesTab.tsx
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { setDefaultAddress, deleteAddress } from "@/src/lib/api";
