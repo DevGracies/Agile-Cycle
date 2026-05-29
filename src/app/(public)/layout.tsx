@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div>
         <Navbar />
-        <div className="py-16">
+        <div>
             {children}
         </div>
         <SubscribeSection />

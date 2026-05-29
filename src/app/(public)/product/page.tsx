@@ -18,7 +18,7 @@ export default function ProductDetailsPage() {
   const { id } = useParams();
 
   return (
-    <main className="bg-[#f8f8f8] min-h-screen py-8 space-y-20">
+    <main className="bg-[#f8f8f8] min-h-screen py-24 space-y-20">
       <Container className="max-w-4xl">
         <BreadCrumbs />
 
