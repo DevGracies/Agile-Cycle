@@ -15,7 +15,7 @@ const CategorySection = () => {
           icon
         />
         <p className="text-gray-600 max-w-3xl leading-6 text-sm mb-14">
-          All models are available in <span className='text-[#519A09]'>Step-Through </span>(easy mount, lower frame) and <span className='text-[#519A09]'>Step-Over</span>(sportier, traditional frame)
+          All models are available in <span className='text-primary'>Step-Through </span>(easy mount, lower frame) and <span className='text-primary'>Step-Over</span>(sportier, traditional frame)
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

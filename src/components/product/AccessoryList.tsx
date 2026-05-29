@@ -9,13 +9,13 @@ export default function AccessoryList() {
           Compatible Accessories & Enhancements
         </h3>
 
-        <button className="text-[#519A09] font-semibold underline">
+        <button className="text-primary font-semibold underline">
           See All
         </button>
       </div>
 
       <p className="text-[#7e7e7e] mt-3">
-        Purchase up to 2 to get <span className="text-[#519A09]">20% off</span>
+        Purchase up to 2 to get <span className="text-primary">20% off</span>
       </p>
 
       <div className="space-y-4 mt-6">
@@ -47,11 +47,11 @@ export default function AccessoryList() {
             </div>
 
             <div className="text-right">
-              <h4 className="text-[#01430D] font-bold text-[24px]">
+              <h4 className="text-[#01430D] font-bold text-sm">
                 {item.price}
               </h4>
 
-              <button className="text-[#519A09] text-sm mt-2 underline">
+              <button className="text-primary text-sm mt-2 underline">
                 view
               </button>
             </div>

@@ -1,36 +1,45 @@
-import { Copy } from "lucide-react";
+import Image from "next/image";
 
-const AdminProfileCard = () => {
+import CopyField from "@/src/components/dashboard/settings/general/CopyField";
+import SectionCard from "@/src/components/shared/SectionCard";
+
+import { UserProfile } from "@/src/types/index";
+
+interface AdminProfileCardProps {
+  profile: UserProfile;
+}
+
+const DEFAULT_AVATAR = "/images/default-avatar.png";
+
+const AdminProfileCard = ({
+  profile,
+}: AdminProfileCardProps) => {
   return (
-    <div className="bg-white rounded-2xl border border-[#e7ece5] p-6 shadow-sm">
+    <SectionCard>
       <h2 className="text-sm font-semibold text-[#1f2937] mb-8">
         Admin profile
       </h2>
 
       <div className="flex flex-col items-center text-center">
         <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-[#f1f5ef]">
-          <img
-            src="https://i.pravatar.cc/100"
-            alt="Admin"
+          <Image
+            src={profile.avatar || DEFAULT_AVATAR}
+            alt={`${profile.firstName} ${profile.lastName}`}
+            fill
+            sizes="96px"
             className="object-cover"
           />
         </div>
 
         <h3 className="mt-4 text-lg font-semibold text-[#111827]">
-          John Doe
+          {profile.firstName} {profile.lastName}
         </h3>
 
-        <div className="flex items-center gap-1 mt-1 text-sm text-[#6b7280]">
-          <span>john.doe@example.com</span>
-          <Copy size={14} />
-        </div>
+        <CopyField value={profile.email} />
 
-        <div className="flex items-center gap-1 mt-1 text-sm text-[#6b7280]">
-          <span>08034858355</span>
-          <Copy size={14} />
-        </div>
+        <CopyField value={profile.phone} />
       </div>
-    </div>
+    </SectionCard>
   );
 };
 

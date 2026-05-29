@@ -29,7 +29,7 @@ export default function BackToTop() {
       className={`
         fixed bottom-4 right-4 z-50
         bg-white/50 hover:bg-white/80
-        text-primary p-2 rounded-full
+        text-secondary p-2 rounded-full
         backdrop-blur-md
         transition-all duration-300
         ${visible

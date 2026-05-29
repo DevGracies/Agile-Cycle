@@ -16,6 +16,7 @@ import {
 
 import Container from "./Container";
 import logo from "@/public/Agile-Cycle-Logo.png";
+import SearchInput from "../shared/SearchInput";
 
 const navLinks = [
   {
@@ -189,24 +190,10 @@ const Navbar = () => {
           {/* SEARCH BAR */}
           <div
             className={`overflow-hidden transition-all duration-300 ${
-              showSearch
-                ? "max-h-24 opacity-100 pb-4"
-                : "max-h-0 opacity-0"
+              showSearch ? "max-h-24 opacity-100 pb-4" : "max-h-0 opacity-0"
             }`}
           >
-            <div className="relative w-full max-w-2xl mx-auto">
-              <input
-                type="text"
-                placeholder="Search products..."
-                className="w-full h-12 rounded-xl border border-gray-200 bg-white px-4 pr-14 text-sm outline-none focus:border-[#78B52A]"
-              />
-
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-3">
-                <span className="w-[1px] h-5 bg-[#78B52A]" />
-
-                <Search className="text-[#78B52A]" size={18} />
-              </div>
-            </div>
+            <SearchInput placeholder="Search Products..."/>
           </div>
         </Container>
       </header>
@@ -215,9 +202,7 @@ const Navbar = () => {
       <div
         onClick={() => setOpenMenu(false)}
         className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 lg:hidden ${
-          openMenu
-            ? "opacity-100 visible"
-            : "opacity-0 invisible"
+          openMenu ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       />
 
@@ -252,19 +237,14 @@ const Navbar = () => {
             const hasDropDown = item.dropDowns?.length;
 
             return (
-              <div
-                key={item.name}
-                className="border-b border-gray-100 py-1"
-              >
+              <div key={item.name} className="border-b border-gray-100 py-1">
                 {/* TOP LINK */}
                 <div className="flex items-center justify-between">
                   <Link
                     href={item.path}
                     onClick={() => setOpenMenu(false)}
                     className={`py-3 text-[15px] font-medium ${
-                      active
-                        ? "text-[#519A09]"
-                        : "text-gray-700"
+                      active ? "text-[#519A09]" : "text-gray-700"
                     }`}
                   >
                     {item.name}
@@ -272,9 +252,7 @@ const Navbar = () => {
 
                   {hasDropDown && (
                     <button
-                      onClick={() =>
-                        toggleMobileDropdown(item.name)
-                      }
+                      onClick={() => toggleMobileDropdown(item.name)}
                       className="w-8 h-8 flex items-center justify-center"
                     >
                       {mobileDropDown === item.name ? (

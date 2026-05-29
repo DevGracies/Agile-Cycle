@@ -1,15 +1,20 @@
 import { Star } from "lucide-react";
 
-export default function RatingStars() {
+interface Props {
+  count?: number;
+}
+
+const RatingStars = ({ count = 5 }: Props) => {
   return (
     <div className="flex items-center gap-1">
-      {[...Array(5)].map((_, i) => (
+      {Array.from({ length: count }).map((_, index) => (
         <Star
-          key={i}
-          size={15}
-          className="fill-[#ffbe0b] text-[#ffbe0b]"
+          key={index}
+          className="size-3  fill-[#FFB800] text-[#FFB800]"
         />
       ))}
     </div>
   );
-}
+};
+
+export default RatingStars;

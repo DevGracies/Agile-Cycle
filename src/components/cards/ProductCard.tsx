@@ -1,64 +1,96 @@
-import { Product } from "@/src/types";
-import { Star, Expand } from "lucide-react";
+"use client";
+
 import Image from "next/image";
+import ProductPrice from "../product/ProductPrice";
+import ProductRating from "../product/ProductRating";
+import ProductActions from "../product/ProductActions";
+import { Product } from "@/src/types";
 
 
-const ProductCard = (product: Product) => {
+interface ProductCardProps {
+  product: Product;
+  onAddToCart?: (id: string) => void;
+  onView?: (id: string) => void;
+}
+
+const ProductCard = ({
+  product,
+  onAddToCart,
+  onView,
+}: ProductCardProps) => {
   return (
     <div className="bg-white rounded-xl scale-95 overflow-hidden border border-gray-100 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-xl">
+      
+      {/* IMAGE */}
       <div className="relative">
-        <Image src={product.image} alt={product.name} className="w-full h-[200px] object-cover" />
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={500}
+          height={500}
+          className="w-full h-[200px] object-cover"
+        />
 
-        <span className="absolute top-0 right-0 bg-[#519A09] text-white text-xs px-6 py-4 rounded-bl-md font-semibold">
-          E‑Bike
-        </span>
+        {product.badge && (
+          <span className="absolute top-0 right-0 bg-primary text-white text-xs px-6 py-4 rounded-bl-md font-semibold">
+            {product.badge}
+          </span>
+        )}
       </div>
 
+      {/* CONTENT */}
       <div className="p-6">
-        <h3 className="text-lg font-semibold text-center mb-5">{product.name}</h3>
+        <h3 className="text-lg font-semibold text-center mb-5">
+          {product.name}
+        </h3>
 
+        {/* PRICE + RATING */}
         <div className="flex items-center justify-between mb-5">
-          <div className="flex items-center gap-3">
-            <span className="text-[#519A09] font-black text-lg">₦{product.price}</span>
+          <ProductPrice
+            price={product.price}
+            oldPrice={product.oldPrice}
+          />
 
-            <span className="text-gray-400 line-through text-sm">
-              ₦{product.oldPrice}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="text-[#519A09] text-sm flex ">
-            {Array.from({ length: product.rating }).map((item, index) => (
-              <Star key={index} size={12} fill="#519A09" />
-            ))}
-          </div>
-          <span className="text-sm">(105)</span>
-          </div>
+          <ProductRating
+            rating={product.rating}
+            reviewCount={product.reviewCount}
+          />
         </div>
 
-        <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 leading-7 mb-8">
-          <div>
-            <p>Range: {product.range}</p>
-            <p>Material: {product.material}</p>
-            <p>Weight: {product.weight}</p>
+        {/* SPECS */}
+        {product.specs && (
+          <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 leading-7 mb-8">
+            <div>
+              {product.specs.range && (
+                <p>Range: {product.specs.range}</p>
+              )}
+              {product.specs.material && (
+                <p>Material: {product.specs.material}</p>
+              )}
+              {product.specs.weight && (
+                <p>Weight: {product.specs.weight}</p>
+              )}
+            </div>
+
+            <div>
+              {product.specs.torque && (
+                <p>Torque: {product.specs.torque}</p>
+              )}
+              {product.specs.motor && (
+                <p>Motor: {product.specs.motor}</p>
+              )}
+              {product.specs.battery && (
+                <p>Battery: {product.specs.battery}</p>
+              )}
+            </div>
           </div>
+        )}
 
-          <div>
-            <p>Torque: {product.torque}</p>
-            <p>Motor: {product.motor}</p>
-            <p>Battery: {product.battery}</p>
-          </div>
-        </div>
-
-        <div className="flex gap-3">
-          <button className="flex-1 h-12 cursor-pointer bg-[#01430D] hover:bg-[#0b4f13] transition-colors text-white rounded-md text-sm font-medium">
-            Add to cart
-          </button>
-
-          <button className="w-12 rounded-xl cursor-pointer border border-[#01430D] flex items-center justify-center">
-            <Expand className="text-[#01430D]" /> 
-          </button>
-        </div>
+        {/* ACTIONS */}
+        <ProductActions
+          onAddToCart={() => onAddToCart?.(product.id)}
+          onView={() => onView?.(product.id)}
+        />
       </div>
     </div>
   );

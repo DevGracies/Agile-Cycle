@@ -3,17 +3,12 @@
 import { X, BellRing, CalendarDays, User2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { StatusBadge } from "../../common/Dashboard";
+import { NotificationLog } from "@/src/types";
 
 type NotificationLogModalProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedLog: {
-    id: string;
-    trigger: string;
-    recipient: string;
-    status: string;
-    date: string;
-  } | null;
+  selectedLog: NotificationLog | null;
 };
 
 const NotificationLogModal = ({

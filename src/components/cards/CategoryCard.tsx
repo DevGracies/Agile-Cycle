@@ -35,7 +35,7 @@ const CategoryCard = ({ title, description, image, large }: Props) => {
           group-hover:translate-y-0
           group-hover:opacity-100
           transition-all duration-500
-          bg-white text-[#01430D] px-5 py-2 rounded-lg font-bold
+          bg-white text-secondary px-5 py-2 rounded-lg font-bold
           shadow-lg cursor-pointer z-10
         "
       >

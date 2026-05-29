@@ -1,9 +1,9 @@
 
 export const gallery = [
-  "/ebikes/Ebikes.png",
-  "/ebikes/Ebike2.png",
   "/ebikes/Ebikes3.png",
+  "/ebikes/Ebike2.png",
   "/ebikes/ebikesm.png",
+  "/ebikes/Ebikes3.png",
   "/ebikes/ebikesm.png",
 ];
 

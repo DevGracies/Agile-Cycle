@@ -1,13 +1,34 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { gallery } from "@/src/lib/product";
-import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded"
-import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded"
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
 export default function ProductGallery() {
   const [selected, setSelected] = useState(0);
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setSelected
+  //   }, 2000)
+  // }, [selected])
+
+  const handleNext = () => {
+    if (selected !== gallery.length - 1) {
+      setSelected((prev) => Math.min(gallery.length - 1, prev + 1));
+    } else {
+      setSelected(0);
+    }
+  };
+  const handlePrev = () => {
+    if (selected !== 0) {
+      setSelected((prev) => Math.max(0, prev - 1));
+    } else {
+      setSelected(gallery.length - 1);
+    }
+  };
 
   return (
     <div>
@@ -20,23 +41,21 @@ export default function ProductGallery() {
         />
 
         <button
-          onClick={() => setSelected((prev) => Math.max(0, prev - 1))}
+          onClick={handlePrev}
           className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white border border-[#82b93c] flex items-center justify-center"
         >
           <ArrowBackRoundedIcon className="text-[#82b93c]" />
         </button>
 
         <button
-          onClick={() =>
-            setSelected((prev) => Math.min(gallery.length - 1, prev + 1))
-          }
+          onClick={handleNext}
           className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white border border-[#82b93c] flex items-center justify-center"
         >
           <ArrowForwardRoundedIcon className="text-[#82b93c]" />
         </button>
       </div>
 
-      <div className="flex justify-between mt-4 overflow-x-auto">
+      <div className="flex mt-4 overflow-x-auto">
         {gallery.map((item, i) => (
           <button
             key={i}
