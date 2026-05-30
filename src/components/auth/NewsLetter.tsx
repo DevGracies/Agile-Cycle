@@ -20,15 +20,9 @@ const NewsLetter = () => {
       <div className="mb-8">
 
         {/* TITLE */}
-        <h1 className="text-5xl tracking-tight text-[#01430D]">
-          <span className="font-bold">
-            Tailor Your
-          </span>{" "}
-          <span className="font-semibold text-[#01430D]">
-            Ride
-          </span>
-        </h1>
-
+        <h1 className="text-[48px] leading-[48px] font-bold bg-[linear-gradient(90deg,#01430D_0%,#519A09_100%)] bg-clip-text text-transparent mb-8">
+           Tailor Your Ride
+          </h1>
         {/* SUBTEXT */}
         <p className="mt-4 text-sm leading-6 text-gray-500">
           Select how you’d like to stay{" "}
@@ -45,7 +39,7 @@ const NewsLetter = () => {
       >
 
         {/* CHECKBOXES */}
-        <div className="space-y-4">
+        <div className="space-y-4 ">
 
           {/* NEWSLETTER */}
           <label className="flex cursor-pointer items-center gap-3">
@@ -58,12 +52,12 @@ const NewsLetter = () => {
               }
               className="
                 
-                h-5
-                w-5
+                h-6
+                w-6
                 rounded
-                border-gray-300
+               
                 accent-[#519A09]
-                focus:ring-[#01430D]
+                
               "
             />
 
@@ -81,12 +75,12 @@ const NewsLetter = () => {
               checked={tips}
               onChange={() => setTips(!tips)}
               className="
-                h-5
-                w-5
+                h-6
+                w-6
                 rounded
-                border-gray-300
+             
                 accent-[#519A09]
-                focus:ring-[#01430D]
+               
               "
             />
 
@@ -101,7 +95,7 @@ const NewsLetter = () => {
         {/* BUTTON */}
         <Button
           type="submit"
-          className="w-full"
+          className="w-full mt-12"
         >
           Finish Setup
         </Button>
@@ -112,11 +106,10 @@ const NewsLetter = () => {
           className="
             block
             text-center
-            text-sm
+            text-[20px]
             font-medium
             text-[#519A09]
-            transition
-            hover:text-[#01430D]
+            mt-10
           "
         >
           Be part of the Agile Cycle
