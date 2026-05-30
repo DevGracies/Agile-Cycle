@@ -6,9 +6,9 @@ import { Pagination } from "../dashboard/common/Dashboard";
 
 const ProductSection = () => {
   return (
-    <section className="min-h-screen py-24">
+    <section className="py-16 sm:py-24">
       <Container>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <SectionHeader
             title="Gear That Completes the Ride"
             subtitle="Latest Launches"
@@ -19,9 +19,12 @@ const ProductSection = () => {
             currentPage={0}
           />
         </div>
-          <p className="text-gray-600 max-w-3xl leading-6 text-sm mb-14">Experience innovation at its freshest. Cutting-edge designs built to redefine your ride.</p>
+        <p className="text-gray-600 max-w-3xl leading-6 text-sm mb-10 sm:mb-14">
+          Experience innovation at its freshest. Cutting-edge designs built to
+          redefine your ride.
+        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
           {products.map((item, index) => (
             <ProductCard key={index} {...item} />
           ))}
