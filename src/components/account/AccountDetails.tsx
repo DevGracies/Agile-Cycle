@@ -2,10 +2,7 @@
 "use client";
 
 interface AccountDetailsProps {
-  user?: {
-    full_name?: string;
-    email?: string;
-  };
+  user?: { full_name?: string; email?: string };
 }
 
 export default function AccountDetails({ user }: AccountDetailsProps) {

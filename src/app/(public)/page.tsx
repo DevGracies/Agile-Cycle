@@ -1,4 +1,4 @@
-import Navbar from '@/src/components/layout/Navbar'
+// import Navbar from '@/src/components/layout/Navbar'
 import HeroSection from '@/src/components/sections/HeroSection'
 import CategorySection from '@/src/components/sections/CategorySection'
 import ServicesSection from '@/src/components/sections/ServicesSection'
@@ -9,12 +9,13 @@ import OurShopSection from '../../components/sections/OurShopSection'
 import CommunitySection from '../../components/sections/CommunitySection'
 import TestimonialSection from '../../components/sections/TestimonialSection'
 import InsightsSection from '../../components/sections/InsightsSection'
+import Navbar from '@/src/components/userBars/Navbar'
 
 export default function HomePage() {
   return (
     <main className="bg-[#f5f7f2] overflow-hidden">
-      <Navbar />
-      <HeroSection />
+      {/* <Navbar /> */}
+      {/* <HeroSection />
       <CategorySection />
       <ServicesSection />
       <ProductSection />
@@ -23,7 +24,9 @@ export default function HomePage() {
       <OurShopSection />
       <CommunitySection />
       <TestimonialSection />
-      <InsightsSection />
+      <InsightsSection /> */}
+
+      <h1>EMPTY FOR NOW</h1>
     </main>
   )
 }
