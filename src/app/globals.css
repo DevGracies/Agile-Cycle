@@ -6,8 +6,10 @@ body {
   color: #111;
 }
 
-/* globals.css */
-
+@theme {
+  --color-primary: #519A09;
+  --color-secondary: #01430D;
+}
 html {
   overflow-y: scroll;
   scroll-behavior: smooth;

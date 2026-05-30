@@ -3,13 +3,12 @@ import HeroSection from '@/src/components/sections/HeroSection'
 import CategorySection from '@/src/components/sections/CategorySection'
 import ServicesSection from '@/src/components/sections/ServicesSection'
 import ProductSection from '@/src/components/sections/ProductSection'
-import AccessoriesSection from '../components/sections/AccessoriesSection'
-import EnhancementsSection from '../components/sections/EnhancementsSection'
-import OurShopSection from '../components/sections/OurShopSection'
-import CommunitySection from '../components/sections/CommunitySection'
-import TestimonialSection from '../components/sections/TestimonialSection'
-import InsightsSection from '../components/sections/InsightsSection'
-import SubscribeSection from '../components/sections/SubscribeSection'
+import AccessoriesSection from '../../components/sections/AccessoriesSection'
+import EnhancementsSection from '../../components/sections/EnhancementsSection'
+import OurShopSection from '../../components/sections/OurShopSection'
+import CommunitySection from '../../components/sections/CommunitySection'
+import TestimonialSection from '../../components/sections/TestimonialSection'
+import InsightsSection from '../../components/sections/InsightsSection'
 
 export default function HomePage() {
   return (
@@ -25,7 +24,6 @@ export default function HomePage() {
       <CommunitySection />
       <TestimonialSection />
       <InsightsSection />
-      <SubscribeSection />
     </main>
   )
 }
