@@ -1,23 +1,14 @@
-import {
-  DataPrivacyState,
-  NavbarUser,
-  NotificationLog,
-  NotificationTab,
-  NotificationToggleState,
-  Payment,
-  PaymentSettingsState,
-  Product,
-  SecurityActivityLog,
-  SecuritySettingsState,
-  SecurityTab,
-  SecurityToggleItem,
-  User,
-  UserProfile
-} from "../types";
+
 import EbikesImage1 from "@/public/ebikes/ebikesm.png"
 import EbikesImage2 from "@/public/ebikes/Ebike2.png"
 import EbikesImage3 from "@/public/ebikes/Ebikes3.png"
 import EbikeImage from "@/public/home/product-image.png"
+import { NavbarUser, User, UserProfile } from "../types/user";
+import { Product } from "../types/product";
+import { Payment, PaymentSettingsState, PaymentStatus } from "../types/payment";
+import { NotificationLog, NotificationStatus, NotificationTab, NotificationToggleState } from "../types/notification";
+import { SecurityActivityLog, SecuritySettingsState, SecurityStatus, SecurityTab, SecurityToggleItem } from "../types/security";
+import { DataPrivacyState } from "../types/dataPrivacy";
 
 export const MOCK_NAVBAR_USER: NavbarUser = {
   name: "John Doe",
@@ -105,6 +96,7 @@ export const products: Product[] = Array.from({ length: 6 }).map((_, index) => (
   reviewCount: 105,
   category: "bike",
   badge: "E-Bike",
+  quantity: 1,
 
   specs: {
     range: "120km",
@@ -113,6 +105,8 @@ export const products: Product[] = Array.from({ length: 6 }).map((_, index) => (
     torque: "90Nm",
     motor: "750W",
     battery: "48V",
+    color: "Sage",
+    size: "Regular / 5'3 - 5'6"
   },
 }));
 
@@ -120,30 +114,30 @@ export const products: Product[] = Array.from({ length: 6 }).map((_, index) => (
 
 
 export const PAYMENTS_MOCK: Payment[] = [
-  {
-    transactionId: "#CUST001",
+  ...Array.from({ length: 3 }).map((_, i) => ({
+    transactionId: `#CUST001${i + 1}`,
     orderId: "CUST001",
     paymentMethod: "Card Payment",
     amount: 2400000,
-    status: "Successful",
+    status: "Successful" as PaymentStatus,
     date: "2026-04-12",
-  },
-  {
-    transactionId: "#CUST002",
+  })),
+  ...Array.from({ length: 3 }).map((_, i) => ({
+    transactionId: `#CUST00${i + 4}`,
     orderId: "CUST002",
     paymentMethod: "Card Payment",
     amount: 2400000,
-    status: "Pending",
+    status: "Pending" as PaymentStatus,
     date: "2026-04-12",
-  },
-  {
-    transactionId: "#CUST003",
+  })),
+  ...Array.from({ length: 10 }).map((_, i) => ({
+    transactionId: `#CUST00${i + 7}`,
     orderId: "CUST003",
     paymentMethod: "Card Payment",
     amount: 2400000,
-    status: "Failed",
+    status: "Failed" as PaymentStatus,
     date: "2026-04-12",
-  },
+  })),
 ];
 
 
@@ -155,28 +149,28 @@ export const paymentSettingsMock: PaymentSettingsState = {
 
 
 export const notificationLogs: NotificationLog[] = [
-  {
-    id: "#NTF001",
-    trigger: "New Order Placed",
-    recipient: "Customer",
-    status: "Pending",
-    date: "12 Apr 2026, 10:15",
-  },
-  {
-    id: "#NTF002",
+  ...Array.from({ length: 3 }).map((_, i) => ({
+    id: `#NTF00${i + 1}`,
     trigger: "Payment Received",
     recipient: "Customer",
-    status: "Delivered",
+    status: "Delivered" as NotificationStatus,
     date: "12 Apr 2026, 10:20",
-  },
-  {
-    id: "#NTF003",
+  })),
+  ...Array.from({ length: 3 }).map((_, i) => ({
+    id: `#NTF00${i + 4}`,
+    trigger: "New Order Placed",
+    recipient: "Customer",
+    status: "Pending" as NotificationStatus,
+    date: "11 Apr 2026, 16:45",
+  })),
+  ...Array.from({ length: 10 }).map((_, i) => ({
+    id: `#NTF00${i + 7}`,
     trigger: "Refund Processed",
     recipient: "Customer",
-    status: "Failed",
+    status: "Failed" as NotificationStatus,
     date: "11 Apr 2026, 16:45",
-  },
-];
+  })),
+]
 
 export const notificationTabs: NotificationTab[] = [
   { label: "All notifications", key: "all" },
@@ -212,39 +206,39 @@ export const defaultNotificationSettings: NotificationToggleState = {
 
 
 export const securityActivityLogs: SecurityActivityLog[] = [
-  {
-    id: "#ACT001",
+  ...Array.from({ length: 3 }).map((_, i) => ({
+    id: `#ACT00${i + 1}`,
     adminUser: "John Okon",
     action: "Logged in",
-    status: "Pending",
+    status: "Pending" as SecurityStatus,
     date: "12 Apr 2026, 10:15",
-  },
-  {
-    id: "#ACT002",
+  })),
+  ...Array.from({ length: 3 }).map((_, i) => ({
+    id: `#ACT00${i + 4}`,
     adminUser: "Mary Effiong",
     action: "Changed password policy",
-    status: "Delivered",
+    status: "Delivered" as SecurityStatus,
     date: "12 Apr 2026, 10:20",
-  },
-  {
-    id: "#ACT003",
-    adminUser: "David Udo",
+  })),
+  ...Array.from({ length: 4 }).map((_, i) => ({
+    id: `#ACT00${i + 7}`,
+    adminUser: "Mary Effiong",
     action: "Failed login attempt",
-    status: "Failed",
+    status: "Failed" as SecurityStatus,
     date: "11 Apr 2026, 16:45",
-  },
+  })),
   {
-    id: "#ACT004",
+    id: "#ACT0011",
     adminUser: "Grace Akpon",
     action: "Enabled 2FA",
-    status: "Delivered",
+    status: "Delivered" as SecurityStatus,
     date: "11 Apr 2026, 14:30",
   },
   {
-    id: "#ACT005",
+    id: "#ACT0012",
     adminUser: "Admin Team",
     action: "Viewed activity logs",
-    status: "Delivered",
+    status: "Delivered" as SecurityStatus,
     date: "10 Apr 2026, 09:00",
   },
 ];

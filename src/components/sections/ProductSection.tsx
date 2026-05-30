@@ -1,6 +1,4 @@
 import Container from "../layout/Container";
-import ProductCard from "../cards/ProductCard";
-import SectionHeader from "../shared/SectionHeader";
 import { Pagination } from "../dashboard/common/Dashboard";
 import ProductSectionLayout from "../product/ProductSectionLayout";
 import ProductGrid from "../product/ProductGrid";

@@ -2,8 +2,8 @@ import Image from "next/image";
 
 import CopyField from "@/src/components/dashboard/settings/general/CopyField";
 import SectionCard from "@/src/components/shared/SectionCard";
+import { UserProfile } from "@/src/types/user";
 
-import { UserProfile } from "@/src/types/index";
 
 interface AdminProfileCardProps {
   profile: UserProfile;

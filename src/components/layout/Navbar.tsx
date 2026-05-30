@@ -24,6 +24,8 @@ import {
 import Container from "./Container";
 import logo from "@/public/Agile-Cycle-Logo.png";
 import SearchInput from "../shared/SearchInput";
+import CartDrawer from "../cart/CartDrawer";
+import { products } from "@/src/mocks/index.mock";
 
 const navLinks = [
   {
@@ -76,6 +78,7 @@ export default function Navbar({ cartCount: cartCountProp }: NavbarProps) {
 
   const [openMenu, setOpenMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const profileRef = useRef<HTMLDivElement | null>(null);
 
@@ -170,8 +173,8 @@ export default function Navbar({ cartCount: cartCountProp }: NavbarProps) {
                       href={item.path}
                       className={`flex items-center gap-1 text-sm font-medium transition-colors duration-300 ${
                         active
-                          ? "text-[#519A09]"
-                          : "text-gray-700 hover:text-[#519A09]"
+                          ? "text-primary"
+                          : "text-gray-700 hover:text-primary"
                       }`}
                     >
                       {item.name}
@@ -201,7 +204,7 @@ export default function Navbar({ cartCount: cartCountProp }: NavbarProps) {
                             <Link
                               key={dropItem.name}
                               href={dropItem.path}
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f5f9ef] hover:text-[#519A09] transition-colors duration-200"
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f5f9ef] hover:text-primary transition-colors duration-200"
                             >
                               {dropItem.name}
                             </Link>
@@ -291,7 +294,10 @@ export default function Navbar({ cartCount: cartCountProp }: NavbarProps) {
               >
                 <Menu size={26} />
               {/* CART */}
-              <button className="relative w-9 h-9 rounded-lg hover:bg-gray-100 flex items-center justify-center transition">
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="relative w-9 h-9 rounded-lg hover:bg-gray-100 flex items-center justify-center transition"
+              >
                 <ShoppingCart className="w-5 h-5 stroke-[1.7]" />
 
                 <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center">
@@ -347,7 +353,7 @@ export default function Navbar({ cartCount: cartCountProp }: NavbarProps) {
               showSearch ? "max-h-24 opacity-100 pb-4" : "max-h-0 opacity-0"
             }`}
           >
-            <SearchInput placeholder="Search Products..."/>
+            <SearchInput placeholder="Search Products..." />
           </div>
         </Container>
       </header>
@@ -398,7 +404,7 @@ export default function Navbar({ cartCount: cartCountProp }: NavbarProps) {
                     href={item.path}
                     onClick={() => setOpenMenu(false)}
                     className={`py-3 text-[15px] font-medium ${
-                      active ? "text-[#519A09]" : "text-gray-700"
+                      active ? "text-primary" : "text-gray-700"
                     }`}
                   >
                     {item.name}
@@ -434,7 +440,7 @@ export default function Navbar({ cartCount: cartCountProp }: NavbarProps) {
                             key={dropItem.name}
                             href={dropItem.path}
                             onClick={() => setOpenMenu(false)}
-                            className="text-sm text-gray-600 hover:text-[#519A09] py-2 transition-colors"
+                            className="text-sm text-gray-600 hover:text-primary py-2 transition-colors"
                           >
                             {dropItem.name}
                           </Link>
@@ -448,6 +454,12 @@ export default function Navbar({ cartCount: cartCountProp }: NavbarProps) {
           })}
         </nav>
       </aside>
+
+        <CartDrawer
+          open={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          items={products}
+        />
     </>
   );
 }

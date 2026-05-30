@@ -34,7 +34,7 @@ const TestimonialCard = ({
             ))}
           </div>
 
-          <p className="text-[#519A09] font-medium text-sm">{name}</p>
+          <p className="text-primary font-medium text-sm">{name}</p>
         </div>
 
         <p className="text-[#2E2E2E] text-[15px] leading-7 font-medium">
@@ -55,12 +55,12 @@ const TestimonialCard = ({
         )}
 
         <div className="mt-6 border-t border-[#E8E8E8] pt-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-[#519A09]">
+          <div className="flex items-center gap-2 text-primary">
             <Bike size={16} />
             <span className="text-sm font-medium">Agile Comet X</span>
           </div>
 
-          <div className="w-7 h-7 rounded-md border border-[#D9E9BF] flex items-center justify-center text-[#519A09]">
+          <div className="w-7 h-7 rounded-md border border-[#D9E9BF] flex items-center justify-center text-primary">
             <Expand size={14} className="text-secondary" />
           </div>
         </div>

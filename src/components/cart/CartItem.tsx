@@ -1,76 +1,58 @@
-// src/components/cart/CartItem.tsx
-"use client";
-
 import Image from "next/image";
-import QuantityStepper from "./QuantityStepper";
-import { formatPrice } from "@/src/lib/utils";
+import QuantityControl from "./QuantityControl";
+import { Product } from "@/src/types/product";
 
-interface CartItemProps {
-  id: number;
-  name: string;
-  image: string;
-  attributes: { label: string; value: string }[];
-  price: number;
-  quantity: number;
-  onUpdateQuantity: (id: number, delta: number) => void;
-  onRemove: (id: number) => void;
+interface Props {
+  item: Product;
 }
+
 export default function CartItem({
-  id,
-  name,
-  image,
-  attributes,
-  price,
-  quantity,
-  onUpdateQuantity,
-  onRemove,
-}: CartItemProps) {
+  item,
+}: Props) {
   return (
-    <div className="border-b border-black/40 px-3 sm:px-4 py-4 grid grid-cols-[minmax(0,1fr)_112px_92px] sm:grid-cols-[minmax(0,1fr)_112px_120px] gap-x-2 sm:gap-4 sm:items-start">
-      <div className="flex items-start gap-2 sm:gap-3 min-w-0">
-        <div className="w-18 h-18 sm:w-20.5 sm:h-20.5 shrink-0 overflow-hidden flex items-center justify-center rounded-md bg-neutral-50">
-          <Image
-            src={image}
-            alt={name}
-            width={82}
-            height={82}
-            className="object-cover"
-          />
-        </div>
-
-        <div className="min-w-0">
-          <p className="font-roboto font-medium text-sm sm:text-base text-black leading-6 sm:leading-7 wrap-break-word">
-            {name}
-          </p>
-          {attributes.map((attr) => (
-            <p
-              key={attr.label}
-              className="font-lexend text-[11px] sm:text-xs text-neutral-300 leading-[1.4]"
-            >
-              {attr.label}: {attr.value}
-            </p>
-          ))}
-        </div>
-      </div>
-
-      <div className="justify-self-center self-start pt-0 sm:pt-0">
-        <QuantityStepper
-          quantity={quantity}
-          onDecrement={() => onUpdateQuantity(id, -1)}
-          onIncrement={() => onUpdateQuantity(id, 1)}
+    <div className="shadow rounded-xl p-3 bg-green-50">
+      <div className="flex gap-3">
+        <Image
+          src={item.image as string}
+          alt={item.name}
+          width={140}
+          height={140}
+          className="rounded-md object-cover"
         />
-      </div>
 
-      <div className="flex flex-col items-end gap-2 sm:shrink-0 sm:justify-self-end">
-        <p className="font-roboto font-semibold text-sm text-green-primary text-right leading-7">
-          {formatPrice(price * quantity)}
-        </p>
-        <button
-          onClick={() => onRemove(id)}
-          className="font-roboto text-sm text-green-light underline text-right hover:text-green-primary transition-colors"
-        >
-          Remove
-        </button>
+        <div className="flex-1">
+          <div className="flex justify-between">
+            <h4 className="font-semibold">
+              {item.name}
+            </h4>
+
+            <span className="font-semibold">
+              ₦{item.price.toLocaleString()}
+            </span>
+          </div>
+
+          <div className="text-sm text-neutral-500 mt-1">
+            Color: {item.specs?.color}
+          </div>
+
+          <div className="text-sm text-neutral-500">
+            Battery: {item.specs?.battery}
+          </div>
+
+          <div className="text-sm text-neutral-500">
+            Size: {item.specs?.size}
+          </div>
+
+          <div className="flex items-center justify-between mt-3">
+            <QuantityControl
+              quantity={item.quantity ?? 1}
+            />
+
+            <button className="text-primary text-sm cursor-pointer hover:underline">
+              Remove
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

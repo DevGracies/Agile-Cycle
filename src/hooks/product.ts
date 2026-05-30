@@ -5,7 +5,7 @@ import { productService } from "@/src/services/product.service";
 import {
     Product,
     ProductCategory,
-} from "@/src/types/index";
+} from "@/src/types/product";
 
 interface UseProductsOptions {
     category?: ProductCategory;
