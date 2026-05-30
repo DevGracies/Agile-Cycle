@@ -2,16 +2,20 @@ import AdminProfileCard from "@/src/components/dashboard/settings/general/AdminP
 import ChangePasswordCard from "@/src/components/dashboard/settings/general/ChangePasswordCard";
 import ProfileUpdateForm from "@/src/components/dashboard/settings/general/ProfileUpdateForm";
 
+import { profileService } from "@/src/services/profile.service";
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const profile = await profileService.getProfile();
+
   return (
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-6">
-            <AdminProfileCard />
-            <ChangePasswordCard />
-          </div>
+    <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="space-y-6">
+        <AdminProfileCard profile={profile} />
 
-          <ProfileUpdateForm />
-        </section>
+        <ChangePasswordCard />
+      </div>
+
+      <ProfileUpdateForm profile={profile} />
+    </section>
   );
 }

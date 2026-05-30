@@ -101,7 +101,7 @@ const ActivityLogModal = ({
 
           <div className="rounded-2xl bg-[#F8FAF7] border border-[#EEF1EC] p-5">
             <div className="flex items-center gap-3 mb-3">
-              <BellRing className="text-[#52A30D]" size={20} />
+              <BellRing className="text-primary" size={20} />
 
               <p className="font-medium text-[#111827]">Action</p>
             </div>
@@ -112,7 +112,7 @@ const ActivityLogModal = ({
           <div className="grid sm:grid-cols-2 gap-5">
             <div className="rounded-2xl bg-[#F8FAF7] border border-[#EEF1EC] p-5">
               <div className="flex items-center gap-3 mb-3">
-                <User2 className="text-[#52A30D]" size={20} />
+                <User2 className="text-primary" size={20} />
 
                 <p className="font-medium text-[#111827]">Admin User</p>
               </div>
@@ -122,7 +122,7 @@ const ActivityLogModal = ({
 
             <div className="rounded-2xl bg-[#F8FAF7] border border-[#EEF1EC] p-5">
               <div className="flex items-center gap-3 mb-3">
-                <CalendarDays className="text-[#52A30D]" size={20} />
+                <CalendarDays className="text-primary" size={20} />
 
                 <p className="font-medium text-[#111827]">Date</p>
               </div>

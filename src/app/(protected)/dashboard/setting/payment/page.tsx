@@ -1,9 +1,22 @@
+"use client"
+
 import CurrencyPricingCard from "@/src/components/dashboard/settings/payment/CurrencyPricingCard";
 import PaymentGatewayCard from "@/src/components/dashboard/settings/payment/PaymentGatewayCard";
 import Transactions from "@/src/components/dashboard/settings/payment/Transactions";
+import Loader from "@/src/components/ui/Loader";
+import { usePayment } from "@/src/hooks/payment";
 import React from "react";
 
 const PaymentPage = () => {
+  const { loading } = usePayment();
+
+  if (loading) {
+    return (
+      <div className="bg-white rounded-xl p-8">
+        <Loader text="Loading settings..." />
+      </div>
+    );
+  }
   return (
     <section className="w-full">
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 w-full">

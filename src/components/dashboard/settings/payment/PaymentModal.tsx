@@ -3,19 +3,12 @@
 import { X, BellRing, CalendarDays } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { StatusBadge } from "../../common/Dashboard";
-import { PaymentStatus } from "./Transactions";
+import { Payment } from "@/src/types";
 
 type PaymentModalProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedLog: {
-    transactionId: string;
-    orderId: string;
-    paymentMethod: string;
-    amount: string;
-    status: PaymentStatus;
-    date: string;
-  } | null;
+  selectedLog: Payment | null
 };
 
 const PaymentModal = ({ open, setOpen, selectedLog }: PaymentModalProps) => {
@@ -43,7 +36,7 @@ const PaymentModal = ({ open, setOpen, selectedLog }: PaymentModalProps) => {
   return (
     <div
     onClick={handleOutsideClick}
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-3z00
       ${
         show
           ? "bg-black/60 backdrop-blur-sm opacity-100"

@@ -3,69 +3,59 @@
 import Link from "next/link";
 
 import Button from "../ui/Button";
-import { Input } from "../ui/Input";
-import Image from "next/image";
 import Select from "../ui/Select";
 
 const SetUpProfile = () => {
-
-  const handleSubmit = async ( e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();;
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
   };
 
   return (
     <>
       {/* HEADING */}
       <div className="mb-8">
-        <div>
-          <h1 className="text-5xl text-[#01430D] font-bold tracking-tight">
-            <span className="font-bold">Set Up Your</span>{" "}
-            <span className="font-semibold text-[#01430D]">Profile</span>
-          </h1>
-        </div>
+        <h1 className="text-[48px] leading-[48px] font-bold bg-[linear-gradient(90deg,#01430D_0%,#519A09_100%)] bg-clip-text text-transparent">
+          Set Up Your Profile
+        </h1>
       </div>
 
       {/* FORM */}
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-5"
-      >
-        <Input
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {/* COUNTRY */}
+        <Select
           label="Select Country"
-          type="text"
-          placeholder="Nigeria"
+           placeholder="Nigeria"
+          options={["Nigeria", "Ghana", "Kenya", "South Africa"]}
         />
 
-        <Input
+        {/* STATE */}
+        <Select
           label="Select State"
-          type="text"
-          placeholder="Lagos"
+           placeholder="Lagos"
+          options={["Lagos", "Abuja", "Oyo", "Kano"]}
         />
 
-         <Select
-        label="Choose Riding Purpose"
-        options={[
-            "Commuting",
-            "Tricycle",
-            "Kekecycle",
-        ]}
+        {/* PURPOSE */}
+        <Select
+          label="Choose Riding Purpose"
+           placeholder="Commuting"
+          options={["Commuting", "Tricycle", "Kekecycle"]}
+          showIcon
         />
 
         {/* BUTTON */}
-        <Button
-          type="submit"
-          className="w-full"
-        >
+        <Button type="submit" className="w-full mt-10">
           Continue
         </Button>
 
         <Link
-        href="/"
-        className="block text-center text-sm text-green-600 font-medium mt-6 hover:text-[#01430D]"
+          href="/"
+          className="block text-center text-[20px] text-[#519A09] font-medium mt-10 "
         >
-        Be part of the Agile Cycle community.
+          Be part of the Agile Cycle community.
         </Link>
-        
       </form>
     </>
   );

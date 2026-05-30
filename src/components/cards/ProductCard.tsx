@@ -1,12 +1,21 @@
 "use client";
 
-import { Product } from "@/src/types";
-import { Maximize2, Star } from "lucide-react";
 import Image from "next/image";
+import ProductPrice from "../product/ProductPrice";
+import ProductRating from "../product/ProductRating";
+import ProductActions from "../product/ProductActions";
+import { Product } from "@/src/types";
 
-const ProductCard = (product: Product) => {
+
+const ProductCard = ({
+  product,
+  onAddToCart,
+  onView,
+}: ProductCardProps) => {
   return (
-    <div className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+    <div className="bg-white rounded-xl scale-95 overflow-hidden border border-gray-100 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-xl">
+      
+      {/* IMAGE */}
       <div className="relative">
         <Image
           src={product.image}
@@ -51,13 +60,65 @@ const ProductCard = (product: Product) => {
             <p>Material: {product.material}</p>
             <p>Weight: {product.weight}</p>
           </div>
+          width={500}
+          height={500}
+          className="w-full h-[200px] object-cover"
+        />
 
-          <div>
-            <p>Torque: {product.torque}</p>
-            <p>Motor: {product.motor}</p>
-            <p>Battery: {product.battery}</p>
-          </div>
+        {product.badge && (
+          <span className="absolute top-0 right-0 bg-primary text-white text-xs px-6 py-4 rounded-bl-md font-semibold">
+            {product.badge}
+          </span>
+        )}
+      </div>
+
+      {/* CONTENT */}
+      <div className="p-6">
+        <h3 className="text-lg font-semibold text-center mb-5">
+          {product.name}
+        </h3>
+
+        {/* PRICE + RATING */}
+        <div className="flex items-center justify-between mb-5">
+          <ProductPrice
+            price={product.price}
+            oldPrice={product.oldPrice}
+          />
+
+          <ProductRating
+            rating={product.rating}
+            reviewCount={product.reviewCount}
+          />
         </div>
+
+        {/* SPECS */}
+        {product.specs && (
+          <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 leading-7 mb-8">
+            <div>
+              {product.specs.range && (
+                <p>Range: {product.specs.range}</p>
+              )}
+              {product.specs.material && (
+                <p>Material: {product.specs.material}</p>
+              )}
+              {product.specs.weight && (
+                <p>Weight: {product.specs.weight}</p>
+              )}
+            </div>
+
+            <div>
+              {product.specs.torque && (
+                <p>Torque: {product.specs.torque}</p>
+              )}
+              {product.specs.motor && (
+                <p>Motor: {product.specs.motor}</p>
+              )}
+              {product.specs.battery && (
+                <p>Battery: {product.specs.battery}</p>
+              )}
+            </div>
+          </div>
+        )}
 
         <div className="flex gap-3">
           <button className="flex-1 h-11 sm:h-12 cursor-pointer bg-[#01430D] hover:bg-[#0b4f13] transition-colors text-white rounded-md text-sm font-medium">
@@ -68,6 +129,11 @@ const ProductCard = (product: Product) => {
             <Maximize2 className="text-[#01430D]" />
           </button>
         </div>
+        {/* ACTIONS */}
+        <ProductActions
+          onAddToCart={() => onAddToCart?.(product.id)}
+          onView={() => onView?.(product.id)}
+        />
       </div>
     </div>
   );

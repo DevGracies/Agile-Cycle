@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Bike, Grid2X2, Star } from "lucide-react";
-import type { ImageProps } from "next/image";
+import { Expand } from "lucide-react";
 
 interface TestimonialCardProps {
   name: string;
@@ -61,7 +61,7 @@ const TestimonialCard = ({
           </div>
 
           <div className="w-7 h-7 rounded-md border border-[#D9E9BF] flex items-center justify-center text-[#519A09]">
-            <Grid2X2 size={14} />
+            <Expand size={14} className="text-secondary" />
           </div>
         </div>
       </div>

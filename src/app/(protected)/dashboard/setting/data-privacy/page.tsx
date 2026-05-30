@@ -1,21 +1,36 @@
 "use client";
 
 import { ToggleSwitch } from "@/src/components/dashboard/common/Dashboard";
-import React, { useState } from "react";
+import Select from "@/src/components/ui/CustomSelect";
+import Loader from "@/src/components/ui/Loader";
+import { useDataPrivacy } from "@/src/hooks/dataPrivacy";
+import { Box } from "@mui/material";
+
+const buttonBase =
+  "bg-[#01430D] hover:bg-[#0b4f13] text-white px-5 py-3 rounded-lg font-medium transition w-full sm:w-auto min-w-[180px]";
 
 const DataAndPrivacyPage = () => {
-  const [backupFrequency, setBackupFrequency] = useState("weekly");
-  const [exportModule, setExportModule] = useState("orders");
-  const [enabled, setEnabled] = useState({
-    autoBackup: true,
-    gdpr: true,
-    localRules: true,
-    restrictExports: true,
-    managerView: true,
-  });
+  const {
+    loading,
+    settings,
+    handleToggle,
+    handleUpdate,
+    handleAction,
+    actionLoading,
+  } = useDataPrivacy();
+
+  if (loading) {
+    return (
+      <Box
+        className={`rounded-3xl bg-[#F8F9F7] p-6 shadow-sm flex items-center justify-center`}
+      >
+        <Loader text="Loading Data & Privacy settings..." />
+      </Box>
+    );
+  }
 
   return (
-    <div className="p-6 md:p-10 space-y-8 bg-[#F7F8F7] min-h-screen">
+    <div className="relative p-6 md:p-10 space-y-8 bg-[#F7F8F7] min-h-screen">
       {/* DATA BACKUP */}
       <div className="bg-white rounded-2xl border border-[#EEF1EC] p-6 md:p-8 shadow-sm">
         <h2 className="text-lg font-semibold text-[#202020] mb-8">
@@ -26,32 +41,29 @@ const DataAndPrivacyPage = () => {
           <p className="text-[#5B5B5B] font-medium">Enable Automatic Backups</p>
           <div className="flex items-center justify-between gap-4">
             <ToggleSwitch
-              enabled={enabled.autoBackup}
-              onToggle={() =>
-                setEnabled((prev) => ({
-                  ...prev,
-                  autoBackup: !prev.autoBackup,
-                }))
-              }
+              enabled={settings.autoBackup}
+              onToggle={() => handleToggle("autoBackup")}
             />
           </div>
 
           <p className="text-[#5B5B5B] font-medium">Backup Frequency</p>
           <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
-            <select
-              value={backupFrequency}
-              onChange={(e) => setBackupFrequency(e.target.value)}
-              className="w-full sm:w-[220px] border border-[#dfe6dc] rounded-lg px-4 py-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#2f7d32]/20 focus:border-[#2f7d32]"
-            >
-              {["Daily", "Weekly", "Monthly"].map((item) => (
-                <option key={item} value={item.toLowerCase()}>
-                  {item}
-                </option>
-              ))}
-            </select>
+            <Select
+              value={settings.backupFrequency}
+              onChange={(val) => handleUpdate("backupFrequency", val as string)}
+              options={[
+                { label: "Daily", value: "daily" },
+                { label: "Weekly", value: "weekly" },
+                { label: "Monthly", value: "monthly" },
+              ]}
+            />
 
-            <button className="bg-[#01430D] hover:bg-[#0b4f13] text-white  px-6 py-4 w-[250px] rounded-lg font-medium">
-              Run Manual Backup
+            <button className={buttonBase} onClick={handleAction.runBackup}>
+              {actionLoading.runBackup ? (
+                <Loader size={20} text="Running Backup..." />
+              ) : (
+                "Run Manual Backup"
+              )}
             </button>
           </div>
 
@@ -69,26 +81,35 @@ const DataAndPrivacyPage = () => {
         </h2>
 
         <div className="space-y-6 w-full lg:w-1/2">
-          <button className="bg-[#01430D] hover:bg-[#0b4f13] text-white px-6 py-4 w-[250px] rounded-lg font-medium">
-            Export All Data
+          <button className={buttonBase} onClick={handleAction.exportAll}>
+            {actionLoading.exportAll ? (
+              <Loader size={20} text="Exporting..." />
+            ) : (
+              "Export All Data"
+            )}
           </button>
 
           <p className="text-[#5B5B5B] font-medium">Export Specific Modules</p>
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-            <select
-              value={exportModule}
-              onChange={(e) => setExportModule(e.target.value)}
-              className="w-full sm:w-[220px] border border-[#dfe6dc] rounded-lg px-4 py-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#2f7d32]/20 focus:border-[#2f7d32]"
-            >
-              {["Orders", "Users", "Payments"].map((item) => (
-                <option key={item} value={item.toLowerCase()}>
-                  {item}
-                </option>
-              ))}
-            </select>
+            <Select
+              value={settings.exportModule}
+              onChange={(val) => handleUpdate("exportModule", val as string)}
+              options={[
+                { label: "Orders", value: "orders" },
+                { label: "Users", value: "users" },
+                { label: "Payments", value: "payments" },
+              ]}
+            />
 
-            <button className="bg-[#01430D] hover:bg-[#0b4f13] text-white px-6 py-4 w-[250px] rounded-lg font-medium">
-              Export
+            <button
+              className={buttonBase}
+              onClick={() => handleAction.exportData(settings.exportModule)}
+            >
+              {actionLoading.exportData ? (
+                <Loader size={20} text="Exporting..." />
+              ) : (
+                "Export"
+              )}
             </button>
           </div>
         </div>
@@ -104,10 +125,8 @@ const DataAndPrivacyPage = () => {
           <div className="flex items-center justify-between">
             <p className="text-[#5B5B5B] font-medium">Enable GDPR Compliance</p>
             <ToggleSwitch
-              enabled={enabled.gdpr}
-              onToggle={() =>
-                setEnabled((prev) => ({ ...prev, gdpr: !prev.gdpr }))
-              }
+              enabled={settings.gdpr}
+              onToggle={() => handleToggle("gdpr")}
             />
           </div>
 
@@ -116,19 +135,12 @@ const DataAndPrivacyPage = () => {
               Enable Local Data Protection Rules
             </p>
             <ToggleSwitch
-              enabled={enabled.localRules}
-              onToggle={() =>
-                setEnabled((prev) => ({
-                  ...prev,
-                  localRules: !prev.localRules,
-                }))
-              }
+              enabled={settings.localRules}
+              onToggle={() => handleToggle("localRules")}
             />
           </div>
 
-          <button className="bg-[#01430D] hover:bg-[#0b4f13] text-white px-6 py-4 w-[250px] rounded-lg font-medium">
-            View Compliance Report
-          </button>
+          <button className={buttonBase}>View Compliance Report</button>
         </div>
       </div>
 
@@ -144,13 +156,8 @@ const DataAndPrivacyPage = () => {
               Restrict Data Exports To Admins Only
             </p>
             <ToggleSwitch
-              enabled={enabled.restrictExports}
-              onToggle={() =>
-                setEnabled((prev) => ({
-                  ...prev,
-                  restrictExports: !prev.restrictExports,
-                }))
-              }
+              enabled={settings.restrictExports}
+              onToggle={() => handleToggle("restrictExports")}
             />
           </div>
 
@@ -159,13 +166,8 @@ const DataAndPrivacyPage = () => {
               Allow Managers To View But Not Download
             </p>
             <ToggleSwitch
-              enabled={enabled.managerView}
-              onToggle={() =>
-                setEnabled((prev) => ({
-                  ...prev,
-                  managerView: !prev.managerView,
-                }))
-              }
+              enabled={settings.managerView}
+              onToggle={() => handleToggle("managerView")}
             />
           </div>
         </div>
@@ -173,8 +175,12 @@ const DataAndPrivacyPage = () => {
 
       {/* FACTORY RESET BUTTON */}
       <div className="bg-white rounded-[28px] border border-[#EEF1EC] p-6 md:p-8 shadow-sm">
-        <button className="bg-[#01430D] hover:bg-[#0b4f13] text-white px-6 py-4 rounded-lg font-medium">
-          Restore to Factory Settings
+        <button className={buttonBase} onClick={handleAction.resetFactory}>
+          {actionLoading.resetFactory ? (
+            <Loader size={20} text="Resetting..." />
+          ) : (
+            "Restore Factory Settings"
+          )}
         </button>
       </div>
     </div>

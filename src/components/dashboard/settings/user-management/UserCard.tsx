@@ -1,36 +1,42 @@
-const roleColors: Record<string, string> = {
-  Admin: "bg-[#ecfdf3] text-[#027A48]",
-  CEO: "bg-[#eff6ff] text-[#175CD3]",
-  CTO: "bg-[#fdf2fa] text-[#C11574]",
-};
+import { ROLE_STYLES } from "@/src/constants";
+import { User } from "@/src/types";
+import Image from "next/image";
 
-const UserCard = ({ user }: any) => {
+const DEFAULT_AVATAR = "/images/default-avatar.png";
+
+interface UserCardProps {
+  user: User;
+}
+
+const UserCard = ({ user }: UserCardProps) => {
   return (
     <div className="group flex flex-col items-center bg-white border border-[#edf2ea] rounded-xl p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-      {/* Top */}
-        <div className="relative w-30 h-30 rounded-full overflow-hidden ring-4 ring-[#f4f7f3]">
-          <img
-            src={user.image}
-            alt={user.name}
-            className="object-cover"
-          />
-        </div>
+      {/* Avatar */}
+      <div className="relative w-24 h-24 rounded-full overflow-hidden ring-4 ring-[#f4f7f3]">
+        <Image
+          src={user.image || DEFAULT_AVATAR}
+          alt={`${user.firstName} ${user.lastName}` || "User Avatar"}
+          fill
+          sizes="96px"
+          className="object-cover"
+        />
+      </div>
 
-      {/* User Info */}
+      {/* Info */}
       <div className="mt-5 text-center">
         <h3 className="text-lg font-semibold text-[#111827]">
-          {user.name}
+          {user.firstName} {user.lastName}
         </h3>
 
         <div
           className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold mt-3 ${
-            roleColors[user.role]
+            ROLE_STYLES[user.role]
           }`}
         >
           {user.role}
         </div>
 
-          <p className="text-sm text-gray-500">{user.email}</p>
+        <p className="text-sm text-gray-500 mt-2">{user.email}</p>
       </div>
     </div>
   );

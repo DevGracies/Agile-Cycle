@@ -16,7 +16,7 @@ const ServicesSection = () => {
             "url(/home/categories-image.png)",
         }}
       >
-        <div className="absolute inset-0 bg-white/10" />
+        <div className="absolute inset-0 bg-white/50" />
 
         <Container>
           <div className="relative z-10">
