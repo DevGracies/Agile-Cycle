@@ -1,37 +1,33 @@
 "use client";
 
-import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
-const PasswordInput = ({
-  placeholder,
-}: {
-  placeholder: string;
-}) => {
-  const [show, setShow] = useState(false);
+import PasswordInput from "@/src/components/dashboard/settings/general/PasswordInput";
+import SectionCard from "@/src/components/shared/SectionCard";
 
-  return (
-    <div className="relative">
-      <input
-        type={show ? "text" : "password"}
-        placeholder={placeholder}
-        className="w-full border border-[#dfe6dc] bg-[#ECFDF3] rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#2f7d32]/20 focus:border-[#2f7d32]"
-      />
-
-      <button
-        type="button"
-        onClick={() => setShow(!show)}
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9ca3af]"
-      >
-        {show ? <EyeOff size={18} /> : <Eye size={18} />}
-      </button>
-    </div>
-  );
-};
+import { profileService } from "@/src/services/profile.service";
 
 const ChangePasswordCard = () => {
+  const [form, setForm] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true);
+
+      await profileService.changePassword(form);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-2xl border border-[#e7ece5] p-6 shadow-sm">
+    <SectionCard>
       <h2 className="text-sm font-semibold text-[#1f2937] mb-6">
         Change Password
       </h2>
@@ -42,9 +38,18 @@ const ChangePasswordCard = () => {
             Current Password
           </label>
 
-          <PasswordInput placeholder="Enter current password" />
+          <PasswordInput
+            placeholder="Enter current password"
+            value={form.currentPassword}
+            onChange={(value) =>
+              setForm((prev) => ({
+                ...prev,
+                currentPassword: value,
+              }))
+            }
+          />
 
-          <button className="mt-2 text-xs text-[#5f9f54] hover:underline">
+          <button className="mt-2 text-xs text-primary hover:underline">
             Forgot Current Password? Click here
           </button>
         </div>
@@ -54,7 +59,16 @@ const ChangePasswordCard = () => {
             New Password
           </label>
 
-          <PasswordInput placeholder="Enter new password" />
+          <PasswordInput
+            placeholder="Enter new password"
+            value={form.newPassword}
+            onChange={(value) =>
+              setForm((prev) => ({
+                ...prev,
+                newPassword: value,
+              }))
+            }
+          />
         </div>
 
         <div>
@@ -62,14 +76,28 @@ const ChangePasswordCard = () => {
             Re-enter Password
           </label>
 
-          <PasswordInput placeholder="Re-enter password" />
+          <PasswordInput
+            placeholder="Re-enter password"
+            value={form.confirmPassword}
+            onChange={(value) =>
+              setForm((prev) => ({
+                ...prev,
+                confirmPassword: value,
+              }))
+            }
+          />
         </div>
 
-        <button className="w-full mt-4 bg-[#01430D] hover:bg-[#0b4f13] transition-colors text-white py-3 rounded-xl text-sm font-medium">
-          Save Changes
+        <button
+          type="button"
+          disabled={isLoading}
+          onClick={handleSubmit}
+          className="w-full mt-4 bg-[#01430D] hover:bg-[#0b4f13] transition-colors text-white py-3 rounded-xl text-sm font-medium disabled:opacity-70"
+        >
+          {isLoading ? "Saving..." : "Save Changes"}
         </button>
       </div>
-    </div>
+    </SectionCard>
   );
 };
 

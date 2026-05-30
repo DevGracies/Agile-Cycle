@@ -1,0 +1,21 @@
+
+import AccountFooter from "@/src/components/account/AccountFooter";
+import Navbar from "@/src/components/layout/Navbar";
+import BenefitsSection from "@/src/components/sections/BenefitsSection";
+import SubscribeSection from "@/src/components/sections/SubscribeSection";
+import { ReactNode } from "react";
+
+export default function DashboardLayout({ children }: { children: ReactNode }) {
+
+  return (
+    <div>
+        <Navbar />
+        <div className="py-16">
+            {children}
+        </div>
+        <SubscribeSection />
+        <BenefitsSection />
+        <AccountFooter />
+    </div>
+  );
+}

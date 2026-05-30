@@ -1,6 +1,6 @@
-// src/components/account/NewsletterSection.tsx
 "use client";
 
+// src/components/account/NewsletterSection.tsx
 import { useState } from "react";
 
 interface NewsletterSectionProps {

@@ -1,6 +1,6 @@
-// app/account/page.tsx
 "use client";
 
+// app/account/page.tsx
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
