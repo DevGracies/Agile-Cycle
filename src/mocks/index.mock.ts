@@ -1,26 +1,14 @@
-import {
-  DataPrivacyState,
-  NavbarUser,
-  NotificationLog,
-  NotificationStatus,
-  NotificationTab,
-  NotificationToggleState,
-  Payment,
-  PaymentSettingsState,
-  PaymentStatus,
-  Product,
-  SecurityActivityLog,
-  SecuritySettingsState,
-  SecurityStatus,
-  SecurityTab,
-  SecurityToggleItem,
-  User,
-  UserProfile
-} from "../types";
+
 import EbikesImage1 from "@/public/ebikes/ebikesm.png"
 import EbikesImage2 from "@/public/ebikes/Ebike2.png"
 import EbikesImage3 from "@/public/ebikes/Ebikes3.png"
 import EbikeImage from "@/public/home/product-image.png"
+import { NavbarUser, User, UserProfile } from "../types/user";
+import { Product } from "../types/product";
+import { Payment, PaymentSettingsState, PaymentStatus } from "../types/payment";
+import { NotificationLog, NotificationStatus, NotificationTab, NotificationToggleState } from "../types/notification";
+import { SecurityActivityLog, SecuritySettingsState, SecurityStatus, SecurityTab, SecurityToggleItem } from "../types/security";
+import { DataPrivacyState } from "../types/dataPrivacy";
 
 export const MOCK_NAVBAR_USER: NavbarUser = {
   name: "John Doe",
@@ -108,6 +96,7 @@ export const products: Product[] = Array.from({ length: 6 }).map((_, index) => (
   reviewCount: 105,
   category: "bike",
   badge: "E-Bike",
+  quantity: 1,
 
   specs: {
     range: "120km",
@@ -116,6 +105,8 @@ export const products: Product[] = Array.from({ length: 6 }).map((_, index) => (
     torque: "90Nm",
     motor: "750W",
     battery: "48V",
+    color: "Sage",
+    size: "Regular / 5'3 - 5'6"
   },
 }));
 

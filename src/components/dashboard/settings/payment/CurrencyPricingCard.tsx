@@ -3,7 +3,7 @@
 import Select from "@/src/components/ui/CustomSelect";
 import Loader from "@/src/components/ui/Loader";
 import { usePayment } from "@/src/hooks/payment";
-import { CurrencyType } from "@/src/types/index";
+import { CurrencyType } from "@/src/types/payment";
 
 const CurrencyPricingCard = () => {
   const { settings, currencyLoading, handleCurrencyChange, currencies } =

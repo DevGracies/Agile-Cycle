@@ -1,5 +1,6 @@
 
 import AccountFooter from "@/src/components/account/AccountFooter";
+import FeaturesSection from "@/src/components/account/FeaturesSection";
 import Navbar from "@/src/components/layout/Navbar";
 import BenefitsSection from "@/src/components/sections/BenefitsSection";
 import SubscribeSection from "@/src/components/sections/SubscribeSection";
@@ -14,7 +15,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             {children}
         </div>
         <SubscribeSection />
-        <BenefitsSection />
+        <FeaturesSection />
         <AccountFooter />
     </div>
   );

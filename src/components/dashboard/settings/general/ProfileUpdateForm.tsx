@@ -7,7 +7,7 @@ import { ChangeEvent, useRef, useState } from "react";
 import { Input } from "@/src/components/ui/Input";
 import SectionCard from "@/src/components/shared/SectionCard";
 
-import { UserProfile } from "@/src/types/index";
+import { UserProfile } from "@/src/types/user";
 import { profileService } from "@/src/services/profile.service";
 import toast from "react-hot-toast";
 

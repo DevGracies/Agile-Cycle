@@ -1,62 +1,62 @@
-// components/ui/Select.tsx
-
 import { ChevronDown } from "lucide-react";
 
 type Props = {
   label?: string;
   options: string[];
+  showIcon?: boolean;
+  placeholder?: string;
 };
 
-const Select = ({ label, options }: Props) => {
+const Select = ({
+  label,
+  options,
+  showIcon = false,
+  placeholder = "Select an option",
+}: Props) => {
   return (
     <div className="w-full">
-      
       {label && (
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+        <label className="mb-2 block text-[16px] font-medium leading-[20px] tracking-[-0.15px] text-[#7A7A7A]">
           {label}
         </label>
       )}
 
       <div className="relative">
-        
         <select
+          defaultValue=""
           className="
-            h-12
             w-full
+            h-[55px]
             appearance-none
-            rounded-xl
+            rounded-[8px]
             border
-            border-gray-300
-            bg-green-50
+            border-[#CBE0CD]
+            bg-[#F7FCF7]
             px-4
             pr-12
             text-sm
             text-gray-700
             outline-none
-            transition-all
-            focus:border-[#01430D]
-           
+            shadow-[inset_0px_2px_0px_0px_#E7EBEE33]
           "
         >
+          <option value="" disabled>
+  {placeholder}
+</option>
+
           {options.map((option) => (
-            <option key={option}>
+            <option
+              key={option}
+              value={option}
+            >
               {option}
             </option>
           ))}
         </select>
 
-        {/* ICON */}
-        <ChevronDown
-          size={18}
-          className="
-            pointer-events-none
-            absolute
-            right-4
-            top-1/2
-            -translate-y-1/2
-            text-gray-500
-          "
-        />
+        {showIcon && (
+          <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#7A7A7A]" />
+        )}
       </div>
     </div>
   );

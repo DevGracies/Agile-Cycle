@@ -12,15 +12,9 @@ const VerifyEmailForm = () => {
       <div className="mb-10">
 
         {/* TITLE */}
-        <h1 className="text-4xl tracking-tight text-[#01430D] leading-tight">
-          <span className="font-bold">
-            Welcome to Agile
-          </span>{" "}
-          <span className="font-semibold text-[#01430D]">
-            Cycle!
-          </span>
-        </h1>
-
+        <h1 className="text-[38px] leading-[48px] font-bold bg-[linear-gradient(90deg,#01430D_0%,#519A09_100%)] bg-clip-text text-transparent">
+           Welcome to Agile Cycle!
+          </h1>
         {/* SUBTEXT */}
         <p className="mt-5 text-sm leading-6 text-gray-500">
           Your{" "}
@@ -63,7 +57,7 @@ const VerifyEmailForm = () => {
       {/* FOOTER TEXT */}
       <Link
         href="/"
-        className="mt-8 block  text-center text-sm font-medium text-[#519A09]  transition hover:text-[#01430D]">
+        className="mt-8 block  text-center text-[20px] font-medium text-[#519A09] ]">
         Be part of the Agile Cycle
         community.
       </Link>
