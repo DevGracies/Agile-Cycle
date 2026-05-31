@@ -1,3 +1,5 @@
+"use client";
+
 import { CalendarDays } from "lucide-react";
 import { Input } from "@/src/components/ui/Input";
 

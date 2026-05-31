@@ -1,148 +1,146 @@
 "use client";
 
-import Link from "next/link";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { ShoppingCart, User, Menu, X, Search } from "lucide-react";
+import Link from "next/link";
+import {
+  Search,
+  User,
+  ShoppingCart,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 
-import Container from "./Container";
+export default function Navbar() {
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const navbarRef = useRef<HTMLDivElement>(null);
 
-const navLinks = [
-  { name: "Home", path: "/" },
-  { name: "E-bikes", path: "/e-bikes" },
-  { name: "Accessories", path: "/accessories" },
-  { name: "Enhancements", path: "/enhancements" },
-  { name: "Explore", path: "/explore" },
-  { name: "Support", path: "/support" },
-];
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        navbarRef.current &&
+        !navbarRef.current.contains(event.target as Node)
+      ) {
+        setActiveDropdown(null);
+      }
+    }
 
-const Navbar = () => {
-  const pathname = usePathname();
-  const [openMenu, setOpenMenu] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const toggleDropdown = (label: string) => {
+    setActiveDropdown((prev) => (prev === label ? null : label));
+  };
+
+  const navItems = [
+    { label: "Home", href: "/" },
+    { label: "E-bikes", hasDropdown: true },
+    { label: "Accessories", hasDropdown: true },
+    { label: "Enhancements", hasDropdown: true },
+    { label: "Explore", hasDropdown: true },
+    { label: "Support", hasDropdown: true },
+  ];
 
   return (
-    <>
-      <header className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-gray-100">
-        <Container>
-          <div className="h-16 flex items-center justify-between gap-4">
-            {/* Logo */}
-            <Link href="/">
-              <Image
-                src="/auth/Agile-Cycle-Logo.png"
-                alt="Logo"
-                width={60}
-                height={60}
-                className="object-contain"
-              />
-            </Link>
+    <nav
+      ref={navbarRef}
+      className="w-full bg-white font-sans relative z-50"
+    >
+      {/* TOP BAR */}
+      <div className="max-w-7xl mx-auto px-6 pt-3">
+        <div className="relative h-16 flex items-center justify-between">
+          {/* LEFT: LOGO */}
+          <Link
+            href="/"
+            className="relative w-[85px] h-[65px] flex-shrink-0"
+          >
+            <Image
+              src="/Agile-Cycle-Logo.png"
+              alt="Agile Cycle Logo"
+              fill
+              priority
+              className="object-contain"
+            />
+          </Link>
 
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-6">
-              {navLinks.map((item) => {
-                const active = pathname === item.path;
-
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.path}
-                    className={`text-sm font-medium transition ${
-                      active
-                        ? "text-[#519A09] font-semibold"
-                        : "text-gray-700 hover:text-[#519A09]"
+          {/* CENTER: NAV LINKS */}
+          <div className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+            {navItems.map((item) => (
+              <div key={item.label} className="relative">
+                {item.hasDropdown ? (
+                  <button
+                    onClick={() => toggleDropdown(item.label)}
+                    className={`text-[14px] font-medium flex items-center gap-1 transition-colors duration-200 ${
+                      activeDropdown === item.label
+                        ? "text-black"
+                        : "text-[#4A4A4A] hover:text-black"
                     }`}
                   >
-                    {item.name}
+                    {item.label}
+
+                    {activeDropdown === item.label ? (
+                      <ChevronUp className="w-4 h-4" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4" />
+                    )}
+                  </button>
+                ) : (
+                  <Link
+                    href={item.href || "#"}
+                    className="text-[14px] font-medium text-[#4A4A4A] hover:text-black transition-colors duration-200"
+                  >
+                    {item.label}
                   </Link>
-                );
-              })}
-            </nav>
-
-            {/* Right Actions */}
-            <div className="flex items-center gap-3">
-              {/* Search toggle */}
-              <button
-                onClick={() => setShowSearch((p) => !p)}
-                className="flex items-center justify-center w-9 h-9 rounded-md hover:bg-gray-100"
-              >
-                <Search size={18} />
-              </button>
-
-              <User className="cursor-pointer text-gray-700" />
-
-              <div className="relative cursor-pointer">
-                <ShoppingCart className="text-gray-700" />
-                <span className="absolute -top-2 -right-2 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">
-                  0
-                </span>
+                )}
               </div>
-
-              {/* Mobile Menu */}
-              <button onClick={() => setOpenMenu(true)} className="lg:hidden">
-                <Menu size={26} />
-              </button>
-            </div>
+            ))}
           </div>
 
-          {/* Collapsible Search */}
-          {showSearch && (
-            <div className="pb-3">
-              <div className="relative w-full max-w-xl mx-auto">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="w-full h-10 rounded-lg border border-gray-200 bg-white/70 pl-4 pr-10 text-sm outline-none"
-                />
-                <div className="flex items-center gap-4 absolute right-3 top-1/2 -translate-y-1/2 ">
-                  <span className="hidden md:block w-[1px] h-6 bg-[#78B52A]" />
-                  <Search className="text-[#78B52A]" size={18} />
-                </div>
-              </div>
-            </div>
-          )}
-        </Container>
-      </header>
+          {/* RIGHT: ICONS */}
+          <div className="flex items-center gap-5 text-[#4A4A4A]">
+            <button className="hover:text-black transition-colors">
+              <User className="w-5 h-5 stroke-[1.5]" />
+            </button>
 
-      {/* Overlay */}
-      {openMenu && (
-        <div
-          onClick={() => setOpenMenu(false)}
-          className="fixed inset-0 bg-black/50 z-40"
-        />
-      )}
+            <button className="relative hover:text-black transition-colors">
+              <ShoppingCart className="w-5 h-5 stroke-[1.5]" />
 
-      {/* Mobile Sidebar */}
-      <aside
-        className={`fixed top-0 right-0 h-full w-[280px] bg-white z-50 shadow-xl p-6 transition-transform duration-300 ${
-          openMenu ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="flex items-center justify-end mb-8">
-          <button onClick={() => setOpenMenu(false)}>
-            <X />
-          </button>
+              <span className="absolute -top-1.5 -right-2 bg-[#E14B33] text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                0
+              </span>
+            </button>
+          </div>
         </div>
 
-        <nav className="flex flex-col gap-5">
-          {navLinks.map((item) => (
-            <Link
-              key={item.name}
-              href={item.path}
-              onClick={() => setOpenMenu(false)}
-              className={`text-base ${
-                pathname === item.path
-                  ? "text-[#519A09] font-semibold"
-                  : "text-gray-700"
-              }`}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-      </aside>
-    </>
-  );
-};
+        {/* SEARCH BAR */}
+        <div className="pb-4">
+          <div className="max-w-[600px] mx-auto relative">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="w-full bg-[#FAF9F5] border border-[#EDEDED] rounded-md py-2 px-4 text-sm outline-none placeholder-[#A0A0A0] text-gray-700 focus:border-gray-300 transition-all"
+            />
 
-export default Navbar;
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 text-[#7A7A7A]">
+              <span className="text-gray-300">|</span>
+
+              <Search className="w-4 h-4 hover:text-black cursor-pointer" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* DROPDOWN */}
+      {activeDropdown && (
+        <div className="absolute top-full left-0 w-full bg-[#F5F7F5] shadow-lg border-t border-gray-100">
+          <div className="max-w-7xl mx-auto px-10 py-8 min-h-[420px]">
+            {/* Keep your mega menu content here */}
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}

@@ -1,3 +1,5 @@
+"use client";
+
 // components/ui/Select.tsx
 
 import { ChevronDown } from "lucide-react";
