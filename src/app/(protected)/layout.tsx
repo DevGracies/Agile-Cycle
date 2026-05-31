@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import SubscribeSection from "@/src/components/sections/SubscribeSection";
 import BenefitsSection from "@/src/components/sections/BenefitsSection";
 import AccountFooter from "@/src/components/account/AccountFooter";
+import NavbarShell from "@/src/components/userBars/NavbarShell";
 
 export default function ProtectedLayout({
   children,
@@ -10,6 +11,7 @@ export default function ProtectedLayout({
 }) {
   return (
     <>
+    <NavbarShell />
       {children}
       <SubscribeSection />
       <BenefitsSection />

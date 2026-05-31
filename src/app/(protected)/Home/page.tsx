@@ -16,7 +16,7 @@ import NavbarShell from "@/src/components/userBars/NavbarShell";
 export default function HomePage() {
   return (
     <>
-    <NavbarShell />
+    {/* <NavbarShell /> */}
       <HeroSection />
       <CategorySection />
       <ServicesSection />
