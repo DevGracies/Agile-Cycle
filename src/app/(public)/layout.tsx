@@ -11,8 +11,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   return (
     <div>
-        <Navbar />
-        <div>
+        {/* <Navbar /> */}
+        <div className="py-16">
             {children}
         </div>
         <SubscribeSection />
