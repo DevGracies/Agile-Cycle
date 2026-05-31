@@ -3,7 +3,7 @@
 import Select from "@/src/components/ui/CustomSelect";
 import { Input } from "@/src/components/ui/Input";
 import Loader from "@/src/components/ui/Loader";
-import { CreateUserRequest } from "@/src/types/index";
+import { CreateUserRequest } from "@/src/types/user";
 import { Camera, UploadCloud, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";

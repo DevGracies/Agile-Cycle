@@ -3,6 +3,7 @@ import type { Customer } from "@/src/store/useCustomerStore";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
+  timeout: 3000, // fail fast if backend unreachable
   headers: { "Content-Type": "application/json" },
 });
 
@@ -12,7 +13,7 @@ api.interceptors.response.use(
   (error) => {
     const message = error.response?.data?.message || error.message;
     return Promise.reject(new Error(message));
-  }
+  },
 );
 
 // ========== TYPES ==========
@@ -83,12 +84,22 @@ export const deleteCustomer = (customerId: string) =>
   api.delete(`/customers/${encodeURIComponent(customerId)}`);
 export const createCustomer = (payload: Partial<Customer>) =>
   api.post<Customer>("/customers", payload);
-export const updateCustomer = (customerId: string, payload: Partial<Customer>) =>
-  api.put<Customer>(`/customers/${encodeURIComponent(customerId)}`, payload);
-export const sendCustomerEmail = (customerId: string, payload?: { subject?: string; body?: string; to?: string }) =>
-  api.post(`/customers/${encodeURIComponent(customerId)}/send-email`, payload || {});
+export const updateCustomer = (
+  customerId: string,
+  payload: Partial<Customer>,
+) => api.put<Customer>(`/customers/${encodeURIComponent(customerId)}`, payload);
+export const sendCustomerEmail = (
+  customerId: string,
+  payload?: { subject?: string; body?: string; to?: string },
+) =>
+  api.post(
+    `/customers/${encodeURIComponent(customerId)}/send-email`,
+    payload || {},
+  );
 export const fetchCustomerSection = (page = 1, limit = 10) =>
-  api.get<CustomerSectionResponse>(`/customer-section?page=${page}&limit=${limit}`);
+  api.get<CustomerSectionResponse>(
+    `/customer-section?page=${page}&limit=${limit}`,
+  );
 
 // ========== ACCOUNT SECTION ==========
 export const fetchUser = () => api.get<any, User>("/user/me");

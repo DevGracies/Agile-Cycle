@@ -4,6 +4,7 @@
 import Link from "next/link";
 
 interface Address {
+  id?: string;
   full_name?: string;
   street?: string;
   city?: string;
@@ -25,7 +26,9 @@ export default function AddressCard({ addresses = [], loading = false }: Address
   return (
     <div className="rounded-2xl border border-[#E8E8E8] bg-white p-4 shadow-sm sm:p-6">
       <div className="mb-4 flex items-center justify-between">
-        <p className="text-xs font-bold uppercase tracking-[1px] text-[#01430D] sm:text-sm">Addresses</p>
+        <p className="text-xs font-bold uppercase tracking-[1px] text-[#01430D] sm:text-sm">
+          Addresses
+        </p>
         <Link
           href="/account"
           className="text-xs font-normal text-[#519A09] underline hover:no-underline sm:text-sm"
