@@ -144,6 +144,7 @@ export default function Navbar({
               ) : (
                 <Link
                   href={item.href || "#"}
+                  onClick={() => setActiveDropdown?.(null)}
                   className="text-[#4A4A4A] hover:text-black text-[14px] font-semibold transition-colors duration-200"
                 >
                   {item.label}
