@@ -55,7 +55,7 @@ export default function Navbar() {
           {/* LEFT: LOGO */}
           <Link
             href="/"
-            className="relative w-[85px] h-[65px] flex-shrink-0"
+            className="relative w-21.25 h-16.25 shrink-0"
           >
             <Image
               src="/Agile-Cycle-Logo.png"
@@ -117,7 +117,7 @@ export default function Navbar() {
 
         {/* SEARCH BAR */}
         <div className="pb-4">
-          <div className="max-w-[600px] mx-auto relative">
+          <div className="max-w-150 mx-auto relative">
             <input
               type="text"
               placeholder="Search..."
@@ -136,7 +136,7 @@ export default function Navbar() {
       {/* DROPDOWN */}
       {activeDropdown && (
         <div className="absolute top-full left-0 w-full bg-[#F5F7F5] shadow-lg border-t border-gray-100">
-          <div className="max-w-7xl mx-auto px-10 py-8 min-h-[420px]">
+          <div className="max-w-7xl mx-auto px-10 py-8 min-h-105">
             {/* Keep your mega menu content here */}
           </div>
         </div>
