@@ -18,8 +18,8 @@ import {
 } from "lucide-react";
 
 type NavbarProps = {
-  activeDropdown: string | null;
-  setActiveDropdown: React.Dispatch<
+  activeDropdown?: string | null;
+  setActiveDropdown?: React.Dispatch<
     React.SetStateAction<string | null>
   >;
 };
@@ -46,17 +46,27 @@ export default function Navbar({
   //     document.removeEventListener("mousedown", handleClickOutside);
   // }, []);
 
+  // const toggleDropdown = (label: string) => {
+  //   if (activeDropdown === label) {
+  //     setActiveDropdown(null);
+  //   } else {
+  //     setActiveDropdown(null);
+  //     setTimeout(() => setActiveDropdown(label), 10);
+  //   }
+  // };
+
   const toggleDropdown = (label: string) => {
-    if (activeDropdown === label) {
-      setActiveDropdown(null);
-    } else {
-      setActiveDropdown(null);
-      setTimeout(() => setActiveDropdown(label), 10);
-    }
-  };
+  setActiveDropdown?.(null); // Optional chaining
+
+  if (activeDropdown !== label) {
+    setTimeout(() => {
+      setActiveDropdown?.(label);
+    }, 10);
+  }
+};
 
   const navItems = [
-  { label: "Home", href: "/" },
+  { label: "Home", href: "/Home" },
 
   {
     label: "Ebikes",

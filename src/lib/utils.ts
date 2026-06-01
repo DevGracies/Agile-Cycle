@@ -1,3 +1,9 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import {
@@ -6,7 +12,7 @@ import {
   RotateCcw,
   Settings,
   ShoppingBag,
-  Users
+  Users,
 } from "lucide-react";
 
 export function cn(...inputs: ClassValue[]) {
@@ -53,4 +59,8 @@ export const DASHBOARD_NAVS = [
     path: "/dashboard/setting",
     icon: Settings,
   },
-]
+];
+
+export function formatPrice(amount: number) {
+  return `₦${amount.toLocaleString("en-NG", { minimumFractionDigits: 2 })}`;
+}

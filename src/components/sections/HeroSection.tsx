@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[50vh] md:min-h-screen flex items-center mt-16 overflow-hidden">
+    <section className="relative min-h-[50vh] md:min-h-screen flex items-center  overflow-hidden">
 
       {/* Background Image */}
       <Image
