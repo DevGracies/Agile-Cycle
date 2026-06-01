@@ -1,26 +1,33 @@
-import { products } from "../mocks/index.mock";
-import { Product, ProductCategory } from "../types";
+import { Product } from "@/src/types/product";
+import { products } from "../mocks/product.mock";
 
 class ProductService {
   async getProducts(): Promise<Product[]> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(products);
-      }, 500);
-    });
+    return products;
   }
 
-  async getProductsByCategory(
-    category: ProductCategory,
+  async getProductById(
+    id: string,
+  ): Promise<Product> {
+    const product = products.find(
+      (item) => item.id === id,
+    );
+
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    return product;
+  }
+
+  async getRelatedProducts(
+    currentId: string,
   ): Promise<Product[]> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(
-          products.filter((item) => item.category === category),
-        );
-      }, 500);
-    });
+    return products
+      .filter((p) => p.id !== currentId)
+      .slice(0, 4);
   }
 }
 
-export const productService = new ProductService();
+export const productService =
+  new ProductService();

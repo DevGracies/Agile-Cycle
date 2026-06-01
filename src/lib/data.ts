@@ -85,22 +85,7 @@ export const services = [
   },
 ]
 
-// export const products: Product[] = Array.from({ length: 6 }).map((_, index) => ({
-//   id: `#product${index + 1}`,
-//   name: 'Agile Comet X',
-//   image: EbikeImage,
-//   price: 150000,
-//   oldPrice: 250000,
-//   range: "65 miles",
-//   material: "steel",
-//   weight: "26.7 Kg",
-//   torque: "50 Nm - 70 Nm",
-//   motor: "750W mid-drive",
-//   battery: "600Wh, 3.5hrs charge",
-//   rating: 5,
-// }));
-
-export const accessories: Product[] = [
+export const accessories = [
   {
     id: "#product1",
     name: 'Ajustable Bike Stem',

@@ -7,64 +7,87 @@ import {
   Activity,
 } from "lucide-react";
 
-const specs = [
+import { Product } from "@/src/types/product";
+
+interface ProductSpecsProps {
+  product: Product;
+}
+
+const specConfig = [
   {
+    key: "motor",
     title: "Motor",
-    value: "750W mid-drive",
     icon: Zap,
   },
   {
+    key: "batterySize",
     title: "Battery",
-    value: "600 Wh",
     icon: Battery,
   },
   {
+    key: "chargingTime",
     title: "Charging Time",
-    value: "3.5 hrs",
     icon: TimerReset,
   },
   {
+    key: "range",
     title: "Range",
-    value: "65 miles",
     icon: Activity,
   },
   {
+    key: "maxSpeed",
     title: "Max Speed",
-    value: "30 MPH",
     icon: Gauge,
   },
   {
+    key: "weight",
     title: "Weight",
-    value: "28.7 Kg",
     icon: Weight,
   },
-];
+] as const;
 
-export default function ProductSpecs() {
+export default function ProductSpecs({
+  product,
+}: ProductSpecsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {specs.map((item, i) => {
-        const Icon = item.icon;
+      {specConfig.map(
+        ({
+          key,
+          title,
+          icon: Icon,
+        }) => {
+          const value =
+            product.specs[
+              key
+            ];
 
-        return (
-          <div
-            key={i}
-            className="bg-white border border-[#ececec] p-7"
-          >
-            <div className="flex items-center gap-4">
-              <Icon />
+          if (!value) {
+            return null;
+          }
 
-              <div>
-                <h4 className="uppercase text-[#6fa720] font-bold tracking-wide">
-                  {item.title}
-                </h4>
+          return (
+            <div
+              key={key}
+              className="bg-white border border-[#ececec] p-7"
+            >
+              <div className="flex items-center gap-4">
+                <Icon />
 
-                <p className="mt-1 text-[#555]">{item.value}</p>
+                <div>
+                  <h4 className="uppercase text-primary font-bold tracking-wide">
+                    {title}
+                  </h4>
+
+                  <p className="mt-1 text-[#555]">
+                    {value}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        },
+      )}
     </div>
   );
 }

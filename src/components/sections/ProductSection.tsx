@@ -1,10 +1,13 @@
+"use client"
+
 import Container from "../layout/Container";
 import { Pagination } from "../dashboard/common/Dashboard";
 import ProductSectionLayout from "../product/ProductSectionLayout";
 import ProductGrid from "../product/ProductGrid";
-import { products } from "@/src/mocks/index.mock";
+import { useProduct } from "@/src/hooks/useProduct";
 
 const ProductSection = () => {
+  const {products} = useProduct();
   return (
     <section className="min-h-screen py-24">
       <Container>

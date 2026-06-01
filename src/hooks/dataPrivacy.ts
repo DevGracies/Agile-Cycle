@@ -1,7 +1,7 @@
 import { dataPrivacyService } from "@/src/services/dataPrivacy.service";
-import { DataPrivacyState, DataPrivacyToggleKeys } from "@/src/types";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { DataPrivacyState, DataPrivacyToggleKeys } from "../types/dataPrivacy";
 
 export const useDataPrivacy = () => {
     const [settings, setSettings] = useState<any>(null);

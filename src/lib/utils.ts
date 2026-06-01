@@ -16,10 +16,6 @@ export function cn(...inputs: ClassValue[]) {
 export const delay = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
-export const formatPrice = (value: number) => {
-  return new Intl.NumberFormat("en-NG").format(value);
-};
-
 export const DASHBOARD_NAVS = [
   {
     id: "dashboard",

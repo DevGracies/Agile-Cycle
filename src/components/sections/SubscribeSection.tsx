@@ -13,7 +13,7 @@ const SubscribeSection = () => {
           className="w-full h-full object-cover"
         />
 
-        <div className="absolute inset-0 bg-linear-to-tr from-[#01430D]/92 to-[#519A09]/95" />
+        <div className="absolute inset-0 bg-linear-to-tr from-secondary/92 to-primary/95" />
       </div>
 
       <Container className="relative z-10 py-20 md:py-24">

@@ -18,7 +18,8 @@ import Container from "./Container";
 import logo from "@/public/Agile-Cycle-Logo.png";
 import SearchInput from "../shared/SearchInput";
 import CartDrawer from "../cart/CartDrawer";
-import { products } from "@/src/mocks/index.mock";
+import { useProduct } from "@/src/hooks/useProduct";
+import { useCart } from "@/src/context/CartProvider";
 
 const navLinks = [
   {
@@ -77,6 +78,9 @@ const Navbar = () => {
   const toggleMobileDropdown = (name: string) => {
     setMobileDropDown((prev) => (prev === name ? null : name));
   };
+  const { products } = useProduct();
+
+  const {items} = useCart();
 
   return (
     <>
@@ -179,7 +183,7 @@ const Navbar = () => {
                 <ShoppingCart className="w-5 h-5 stroke-[1.7]" />
 
                 <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center">
-                  0
+                  {items.length}
                 </span>
               </button>
 
@@ -301,11 +305,7 @@ const Navbar = () => {
         </nav>
       </aside>
 
-        <CartDrawer
-          open={isCartOpen}
-          onClose={() => setIsCartOpen(false)}
-          items={products}
-        />
+      <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>
   );
 };

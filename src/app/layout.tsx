@@ -4,6 +4,7 @@ import "./globals.css";
 import ConfirmProvider from "../context/ConfirmProvider";
 import BackToTop from "../components/shared/BackToTop";
 import { Toaster } from "react-hot-toast";
+import { CartProvider } from "../context/CartProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,8 +39,10 @@ export default function RootLayout({
       <body className={`${lexend.className} min-h-full flex flex-col`}>
         <Toaster position="top-right" />
         <ConfirmProvider>
+          <CartProvider>
           {children}
           <BackToTop />
+          </CartProvider>
         </ConfirmProvider>
       </body>
     </html>
