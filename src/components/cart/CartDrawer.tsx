@@ -13,11 +13,11 @@ import { useCart } from "@/src/context/CartProvider";
 interface Props {
   open: boolean;
   onClose: () => void;
-  items: CartItems[];
+  items?: CartItems[];
 }
 
 export default function CartDrawer({ open, onClose, }: Props) {
-  const { items, removeFromCart, updateQuantity } = useCart();
+  const { items, removeFromCart, updateQuantity, isAdded } = useCart();
 
   useEffect(() => {
     if (!open) return;
@@ -74,7 +74,9 @@ export default function CartDrawer({ open, onClose, }: Props) {
             <EmptyCart />
           ) : (
             <>
-              <CartSuccessBanner />
+              {isAdded && (
+                <CartSuccessBanner />
+              )}
 
               <div className="mt-5 space-y-4">
                 {items.map((item) => (

@@ -41,8 +41,6 @@ export default function ProductDetailsPage() {
     loading,
   } = useProduct(productId);
 
-  console.log("Product", product);
-
   if (loading.product) {
     return (
       <div className="h-screen flex items-center justify-center">

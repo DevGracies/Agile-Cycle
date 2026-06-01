@@ -37,7 +37,7 @@ export default function RootLayout({
       className={`  ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className={`${lexend.className} min-h-full flex flex-col`}>
-        <Toaster position="top-right" />
+        <Toaster position="top-center" />
         <ConfirmProvider>
           <CartProvider>
           {children}
