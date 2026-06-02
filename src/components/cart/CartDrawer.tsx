@@ -16,8 +16,8 @@ interface Props {
   items?: CartItems[];
 }
 
-export default function CartDrawer({ open, onClose, }: Props) {
-  const { items, removeFromCart, updateQuantity, isAdded } = useCart();
+export default function CartDrawer({ open, onClose }: Props) {
+  const { items, removeFromCart, updateQuantity } = useCart();
 
   useEffect(() => {
     if (!open) return;
@@ -74,9 +74,7 @@ export default function CartDrawer({ open, onClose, }: Props) {
             <EmptyCart />
           ) : (
             <>
-              {isAdded && (
-                <CartSuccessBanner />
-              )}
+              <CartSuccessBanner />
 
               <div className="mt-5 space-y-4">
                 {items.map((item) => (

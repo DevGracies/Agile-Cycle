@@ -107,17 +107,17 @@ export interface Product {
 
   availabilityStatus: ProductAvailability;
 
-  specs: ProductSpecs;
+  specs?: ProductSpecs;
 
   colors: ProductColor[];
 
-  batteryOptions: ProductBatteryOption[];
+  batteryOptions?: ProductBatteryOption[];
 
-  variants: ProductVariant[];
+  variants?: ProductVariant[];
 
-  accessories: ProductAccessory[];
+  accessories?: ProductAccessory[];
 
-  features: ProductFeature[];
+  features?: ProductFeature[];
 
-  reviews: ProductReview[];
+  reviews?: ProductReview[];
 }

@@ -57,10 +57,7 @@ export default function ProductSpecs({
           title,
           icon: Icon,
         }) => {
-          const value =
-            product.specs[
-              key
-            ];
+          const value = product?.specs?.[key];
 
           if (!value) {
             return null;

@@ -55,7 +55,7 @@ export default function ProductVariants({
         </h4>
 
         <div className="flex gap-3 mt-4 flex-wrap">
-          {product.batteryOptions.map((battery) => (
+          {product?.batteryOptions?.map((battery) => (
             <button
               key={battery.id}
               onClick={() => onSelectBattery(battery.id)}
@@ -83,7 +83,7 @@ export default function ProductVariants({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-        {product.variants.map((variant) => {
+        {product?.variants?.map((variant) => {
           const isActive = selectedVariant === variant.id;
 
           return (

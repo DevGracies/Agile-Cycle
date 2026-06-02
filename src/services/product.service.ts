@@ -1,10 +1,11 @@
 import { apiRequest } from "./api.service";
 import { Product } from "@/src/types/product";
 import { products as productMock } from "../mocks/product.mock";
+import { accessories, enhancements } from "../lib/data";
 
 const USE_MOCK = true;
 
-let productsDb: Product[] = structuredClone(productMock);
+let productsDb: Product[] = structuredClone([...productMock, ...enhancements, ...accessories]);
 
 export const productService = {
   getProducts(): Promise<Product[]> {

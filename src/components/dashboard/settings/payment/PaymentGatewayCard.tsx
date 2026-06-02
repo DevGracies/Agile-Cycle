@@ -29,7 +29,7 @@ const PaymentGatewayCard = () => {
               }`}
               >
                 {isLoadingGateway ? (
-                  <Loader size={18} text="Updating..." />
+                  <Loader size={18} />
                 ) : (
                   gateway
                 )}

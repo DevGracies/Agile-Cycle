@@ -4,7 +4,7 @@ import AddMemberModal from "@/src/components/dashboard/settings/user-management/
 import UserCard from "@/src/components/dashboard/settings/user-management/UserCard";
 import Loader from "@/src/components/ui/Loader";
 import { userManagementService } from "@/src/services/user-management.service";
-import { User } from "@/src/types/user";
+import { CreateUserRequest, User } from "@/src/types/user";
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -26,7 +26,7 @@ const UserManagementPage = () => {
     fetchUsers();
   }, []);
 
-  const handleCreateUser = async (payload: any) => {
+  const handleCreateUser = async (payload: CreateUserRequest): Promise<User> => {
     setCreatingUser(true);
     try {
       const newUser = await userManagementService.createUser(payload);

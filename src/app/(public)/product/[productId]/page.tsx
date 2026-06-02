@@ -1,31 +1,17 @@
 "use client";
-
 import { useParams } from "next/navigation";
-
 import Container from "@/src/components/layout/Container";
-
 import Loader from "@/src/components/ui/Loader";
-
 import BreadCrumbs from "@/src/components/shared/product/BreadCrumbs";
-
 import ProductGallery from "@/src/components/product/ProductGallery";
-
 import ProductInfo from "@/src/components/product/ProductInfo";
-
 import DescriptionCard from "@/src/components/product/DescriptionCard";
-
 import ProductSpecs from "@/src/components/product/ProductSpecs";
-
 import BulkOrderCard from "@/src/components/product/BulkOrderCard";
-
 import AccessoryList from "@/src/components/product/AccessoryList";
-
 import FeatureSection from "@/src/components/product/FeatureSection";
-
 import VideoSection from "@/src/components/product/VideoSections";
-
 import CustomerReviews from "@/src/components/reviews/CustomerReviews";
-
 import RecentlyViewed from "@/src/components/product/RecentlyViewed";
 import { useProduct } from "@/src/hooks/useProduct";
 
@@ -96,7 +82,7 @@ export default function ProductDetailsPage() {
       <div className="overflow-hidden bg-white py-20">
         <VideoSection />
 
-        {product.features.map(
+        {product.features?.map(
           (feature, index) => (
             <FeatureSection
               key={feature.id}
