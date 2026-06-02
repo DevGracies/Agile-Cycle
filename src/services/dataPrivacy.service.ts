@@ -1,81 +1,128 @@
-import { delay } from "../lib/utils";
+import { apiRequest } from "./api.service";
 import { dataPrivacySettings } from "../mocks/index.mock";
-import { DataPrivacyState } from "../types";
+import { DataPrivacyState } from "../types/dataPrivacy";
 
-let state: DataPrivacyState = { ...dataPrivacySettings };
+const USE_MOCK = true;
+
+let settingsDb: DataPrivacyState = structuredClone(dataPrivacySettings);
 
 export const dataPrivacyService = {
-    async getSettings(): Promise<DataPrivacyState> {
-        await delay(300);
-        return { ...state };
-    },
+  getSettings(): Promise<DataPrivacyState> {
+    return apiRequest<DataPrivacyState>({
+      endpoint: "/data-privacy",
+      mockData: settingsDb,
+      useMock: USE_MOCK,
+      delay: 300,
+    });
+  },
 
-    async toggleSetting(
-        key: keyof DataPrivacyState,
-        value: boolean,
-    ): Promise<DataPrivacyState> {
-        await delay(200);
+  toggleSetting(
+    key: keyof DataPrivacyState,
+    value: boolean,
+  ): Promise<DataPrivacyState> {
+    settingsDb = {
+      ...settingsDb,
+      [key]: value,
+    };
 
-        state = {
-            ...state,
-            [key]: value,
-        };
+    return apiRequest<DataPrivacyState>({
+      endpoint: "/data-privacy/settings",
+      method: "PATCH",
+      body: {
+        [key]: value,
+      },
+      mockData: settingsDb,
+      useMock: USE_MOCK,
+      delay: 200,
+    });
+  },
 
-        return { ...state };
-    },
+  updateBackupFrequency(
+    value: string,
+  ): Promise<DataPrivacyState> {
+    settingsDb = {
+      ...settingsDb,
+      backupFrequency: value,
+    };
 
-    async updateBackupFrequency(value: string) {
-        await delay(200);
+    return apiRequest<DataPrivacyState>({
+      endpoint: "/data-privacy/backup-frequency",
+      method: "PATCH",
+      body: {
+        backupFrequency: value,
+      },
+      mockData: settingsDb,
+      useMock: USE_MOCK,
+      delay: 200,
+    });
+  },
 
-        state.backupFrequency = value;
+  updateField<K extends keyof DataPrivacyState>(
+    key: K,
+    value: DataPrivacyState[K],
+  ): Promise<DataPrivacyState> {
+    settingsDb = {
+      ...settingsDb,
+      [key]: value,
+    };
 
-        return { ...state };
-    },
+    return apiRequest<DataPrivacyState>({
+      endpoint: "/data-privacy",
+      method: "PATCH",
+      body: {
+        [key]: value,
+      },
+      mockData: settingsDb,
+      useMock: USE_MOCK,
+      delay: 200,
+    });
+  },
 
-    async updateField<K extends keyof DataPrivacyState>(
-        key: K,
-        value: DataPrivacyState[K]
-    ): Promise<DataPrivacyState> {
-        await delay(200);
+  runBackup(): Promise<string> {
+    return apiRequest<string>({
+      endpoint: "/data-privacy/backup",
+      method: "POST",
+      mockData: "Backup completed",
+      useMock: USE_MOCK,
+      delay: 800,
+    });
+  },
 
-        state = {
-            ...state,
-            [key]: value,
-        };
+  exportAll(): Promise<string> {
+    return apiRequest<string>({
+      endpoint: "/data-privacy/export-all",
+      method: "POST",
+      mockData: "Export completed",
+      useMock: USE_MOCK,
+      delay: 800,
+    });
+  },
 
-        return { ...state };
-    },
+  exportData(module: string): Promise<string> {
+    return apiRequest<string>({
+      endpoint: `/data-privacy/export/${module}`,
+      method: "POST",
+      mockData: `Exported data for module ${module} successfully`,
+      useMock: USE_MOCK,
+      delay: 800,
+    });
+  },
 
-    async runBackup() {
-        await delay(800);
-        return "Backup completed";
-    },
+  restoreFactory(): Promise<{
+    message: string;
+    settings: DataPrivacyState;
+  }> {
+    settingsDb = structuredClone(dataPrivacySettings);
 
-    async exportAll() {
-        await delay(800);
-        return "Export completed";
-    },
-
-    async exportData(module: string) {
-        await delay(800);
-        return `Exported data for module ${module} successfully`;
-    },
-    async restoreFactory() {
-        await delay(1000);
-
-        state = {
-            autoBackup: false,
-            gdpr: false,
-            localRules: false,
-            restrictExports: false,
-            managerView: false,
-            backupFrequency: "weekly",
-            exportModule: "orders",
-        };
-
-        return {
-            message: "Settings restored to factory defaults",
-            settings: { ...state }
-        };
-    },
+    return apiRequest({
+      endpoint: "/data-privacy/restore",
+      method: "POST",
+      mockData: {
+        message: "Settings restored to factory defaults",
+        settings: settingsDb,
+      },
+      useMock: USE_MOCK,
+      delay: 1000,
+    });
+  },
 };

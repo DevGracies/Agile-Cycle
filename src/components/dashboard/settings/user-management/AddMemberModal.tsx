@@ -7,6 +7,7 @@ import { CreateUserRequest } from "@/src/types/user";
 import { Camera, UploadCloud, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 type AddMemberModalProps = {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -58,8 +59,8 @@ const AddMemberModal = ({
       setLoading(true);
       await onCreate(form);
       setModal(false);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+       toast.error(error);
     } finally {
       setLoading(false);
     }

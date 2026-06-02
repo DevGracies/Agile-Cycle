@@ -123,6 +123,7 @@ export default function ProductInfo({
       <div className="mt-10 w-full">
         <ProductActions
           product={product}
+          quantity={quantity}
         />
       </div>
       </div>

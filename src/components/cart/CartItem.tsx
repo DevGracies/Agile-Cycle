@@ -1,6 +1,5 @@
 import Image from "next/image";
 import QuantityControl from "./QuantityControl";
-import { Product } from "@/src/types/product";
 import { formatPrice } from "@/src/utils/product";
 import { CartItem as CartItemType } from "@/src/types/cart";
 
@@ -28,7 +27,7 @@ export default function CartItem({ item, onRemove, onChangeQty }: Props) {
             <h4 className="font-semibold">{product.name}</h4>
 
             <span className="font-semibold">
-              {formatPrice(product.originalPrice ?? 0).toLocaleString()}
+              {formatPrice(product.currentPrice ?? 0).toLocaleString()}
             </span>
           </div>
 

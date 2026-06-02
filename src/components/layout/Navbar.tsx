@@ -78,7 +78,7 @@ const Navbar = () => {
     setMobileDropDown((prev) => (prev === name ? null : name));
   };
 
-  const {items} = useCart();
+  const {cartCount} = useCart();
 
   return (
     <>
@@ -181,7 +181,7 @@ const Navbar = () => {
                 <ShoppingCart className="w-5 h-5 stroke-[1.7]" />
 
                 <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center">
-                  {items.length}
+                  {cartCount > 99 ? "99+" : cartCount}
                 </span>
               </button>
 

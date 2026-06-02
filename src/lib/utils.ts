@@ -1,9 +1,4 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import {
@@ -61,6 +56,3 @@ export const DASHBOARD_NAVS = [
   },
 ];
 
-export function formatPrice(amount: number) {
-  return `₦${amount.toLocaleString("en-NG", { minimumFractionDigits: 2 })}`;
-}
