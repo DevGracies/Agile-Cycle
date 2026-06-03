@@ -39,7 +39,7 @@ const testimonials = [
 
 const TestimonialSection = () => {
   return (
-    <section className="pt-16 md:pt-24">
+    <section className="pt-10 md:pt-10">
       <Container>
         <div className="flex items-start justify-between gap-5 flex-wrap mb-10">
           <div>

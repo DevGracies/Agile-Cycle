@@ -24,7 +24,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           alt={product.name}
           width={500}
           height={500}
-          className="w-full h-[200px] object-cover"
+          className="w-full h-[300px] object-cover"
         />
 
         {product.badge && (

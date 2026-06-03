@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { ReviewRatingStars } from "../reviews/modal/ReviewRating";
 
 interface ProductRatingProps {
   rating: number;
@@ -8,11 +8,7 @@ interface ProductRatingProps {
 const ProductRating = ({ rating, reviewCount }: ProductRatingProps) => {
   return (
     <div className="flex items-center gap-2">
-      <div className="flex text-primary">
-        {Array.from({ length: rating }).map((_, index) => (
-          <Star key={index} size={12} fill="#519A09" />
-        ))}
-      </div>
+      <ReviewRatingStars rating={rating} />
 
       {reviewCount && (
         <span className="text-sm">({reviewCount})</span>

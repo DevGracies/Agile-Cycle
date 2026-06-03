@@ -45,7 +45,7 @@ export default function ProductDetailsPage() {
 
   return (
     <main className="bg-[#f8f8f8] min-h-screen py-24 space-y-20">
-      <Container className="max-w-4xl">
+      <Container >
         <BreadCrumbs product={product} />
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-6">

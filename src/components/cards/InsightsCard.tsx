@@ -36,7 +36,7 @@ const InsightCard = ({
 
         <p className="mt-5 text-[#9A9A9A] text-sm">{date}</p>
 
-        <button className="mt-5 h-[38px] px-4 text-sm rounded-md border border-[#519A09] text-[#519A09] font-medium hover:bg-[#F7F7F7] transition">
+        <button className="mt-5 h-[34px] px-4 text-sm rounded-md border border-primary text-primary font-medium hover:bg-[#F7F7F7] transition">
           Read More
         </button>
       </div>

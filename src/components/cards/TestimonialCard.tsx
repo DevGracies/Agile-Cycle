@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
-import { Bike, Grid2X2, Star } from "lucide-react";
-import { Expand } from "lucide-react";
+import Image, { ImageProps } from "next/image";
+import { Bike, Star, Expand } from "lucide-react";
 
 interface TestimonialCardProps {
   name: string;

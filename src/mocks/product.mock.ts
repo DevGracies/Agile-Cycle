@@ -297,7 +297,57 @@ export const products: Product[] = [
     variants: [],
     accessories: [],
     reviews: [],
-    features: [],
+    features: [
+      {
+        id: "feature-1",
+
+        title: "Powerful Motor",
+
+        subtitle:
+          "Effortless acceleration for every ride",
+
+        description:
+          "High-performance motor engineered for power.",
+
+        image: "/home/explore.png",
+
+        specs: [
+          {
+            label: "Motor",
+            value: "750W",
+          },
+          {
+            label: "Torque",
+            value: "90Nm",
+          },
+        ],
+      },
+
+      {
+        id: "feature-2",
+
+        title: "Long Lasting Battery",
+
+        subtitle:
+          "Go further on a single charge",
+
+        description:
+          "Reliable battery system for long journeys.",
+
+        image: "/home/explore.png",
+
+        specs: [
+          {
+            label: "Range",
+            value: "120km",
+          },
+          {
+            label: "Battery",
+            value: "48V",
+          },
+        ],
+      },
+    ],
   },
 
   {
@@ -372,7 +422,57 @@ export const products: Product[] = [
     variants: [],
     accessories: [],
     reviews: [],
-    features: [],
+    features: [
+      {
+        id: "feature-1",
+
+        title: "Powerful Motor",
+
+        subtitle:
+          "Effortless acceleration for every ride",
+
+        description:
+          "High-performance motor engineered for power.",
+
+        image: "/home/explore.png",
+
+        specs: [
+          {
+            label: "Motor",
+            value: "750W",
+          },
+          {
+            label: "Torque",
+            value: "90Nm",
+          },
+        ],
+      },
+
+      {
+        id: "feature-2",
+
+        title: "Long Lasting Battery",
+
+        subtitle:
+          "Go further on a single charge",
+
+        description:
+          "Reliable battery system for long journeys.",
+
+        image: "/home/explore.png",
+
+        specs: [
+          {
+            label: "Range",
+            value: "120km",
+          },
+          {
+            label: "Battery",
+            value: "48V",
+          },
+        ],
+      },
+    ],
   },
 
   {
@@ -447,7 +547,57 @@ export const products: Product[] = [
     variants: [],
     accessories: [],
     reviews: [],
-    features: [],
+    features: [
+      {
+        id: "feature-1",
+
+        title: "Powerful Motor",
+
+        subtitle:
+          "Effortless acceleration for every ride",
+
+        description:
+          "High-performance motor engineered for power.",
+
+        image: "/home/explore.png",
+
+        specs: [
+          {
+            label: "Motor",
+            value: "750W",
+          },
+          {
+            label: "Torque",
+            value: "90Nm",
+          },
+        ],
+      },
+
+      {
+        id: "feature-2",
+
+        title: "Long Lasting Battery",
+
+        subtitle:
+          "Go further on a single charge",
+
+        description:
+          "Reliable battery system for long journeys.",
+
+        image: "/home/explore.png",
+
+        specs: [
+          {
+            label: "Range",
+            value: "120km",
+          },
+          {
+            label: "Battery",
+            value: "48V",
+          },
+        ],
+      },
+    ],
   },
 
   {
@@ -522,7 +672,57 @@ export const products: Product[] = [
     variants: [],
     accessories: [],
     reviews: [],
-    features: [],
+    features: [
+      {
+        id: "feature-1",
+
+        title: "Powerful Motor",
+
+        subtitle:
+          "Effortless acceleration for every ride",
+
+        description:
+          "High-performance motor engineered for power.",
+
+        image: "/home/explore.png",
+
+        specs: [
+          {
+            label: "Motor",
+            value: "750W",
+          },
+          {
+            label: "Torque",
+            value: "90Nm",
+          },
+        ],
+      },
+
+      {
+        id: "feature-2",
+
+        title: "Long Lasting Battery",
+
+        subtitle:
+          "Go further on a single charge",
+
+        description:
+          "Reliable battery system for long journeys.",
+
+        image: "/home/explore.png",
+
+        specs: [
+          {
+            label: "Range",
+            value: "120km",
+          },
+          {
+            label: "Battery",
+            value: "48V",
+          },
+        ],
+      },
+    ],
   },
 
   {
@@ -597,6 +797,56 @@ export const products: Product[] = [
     variants: [],
     accessories: [],
     reviews: [],
-    features: [],
+    features: [
+      {
+        id: "feature-1",
+
+        title: "Powerful Motor",
+
+        subtitle:
+          "Effortless acceleration for every ride",
+
+        description:
+          "High-performance motor engineered for power.",
+
+        image: "/home/explore.png",
+
+        specs: [
+          {
+            label: "Motor",
+            value: "750W",
+          },
+          {
+            label: "Torque",
+            value: "90Nm",
+          },
+        ],
+      },
+
+      {
+        id: "feature-2",
+
+        title: "Long Lasting Battery",
+
+        subtitle:
+          "Go further on a single charge",
+
+        description:
+          "Reliable battery system for long journeys.",
+
+        image: "/home/explore.png",
+
+        specs: [
+          {
+            label: "Range",
+            value: "120km",
+          },
+          {
+            label: "Battery",
+            value: "48V",
+          },
+        ],
+      },
+    ],
   },
 ];

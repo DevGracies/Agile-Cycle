@@ -108,7 +108,7 @@ export const accessories: Product[] = [
 
     stock: 20,
 
-    rating: 5,
+    rating: 4.5,
     reviewCount: 12,
 
     isFeatured: false,
@@ -143,7 +143,7 @@ export const accessories: Product[] = [
 
     stock: 18,
 
-    rating: 5,
+    rating: 4.8,
     reviewCount: 10,
 
     isFeatured: false,
@@ -178,7 +178,7 @@ export const accessories: Product[] = [
 
     stock: 12,
 
-    rating: 5,
+    rating: 4.9,
     reviewCount: 8,
 
     isFeatured: true,
@@ -283,7 +283,7 @@ export const accessories: Product[] = [
 
     stock: 14,
 
-    rating: 5,
+    rating: 4.2,
     reviewCount: 9,
 
     isFeatured: false,
@@ -318,7 +318,7 @@ export const enhancements: Product[] = [
 
     stock: 15,
 
-    rating: 5,
+    rating: 4.6,
     reviewCount: 8,
 
     isFeatured: true,
@@ -352,7 +352,7 @@ export const enhancements: Product[] = [
 
   stock: 20,
 
-  rating: 5,
+  rating: 4.8,
   reviewCount: 11,
 
   isFeatured: true,
@@ -387,7 +387,7 @@ export const enhancements: Product[] = [
 
   stock: 18,
 
-  rating: 5,
+  rating: 4.5,
   reviewCount: 6,
 
   isFeatured: false,
@@ -422,7 +422,7 @@ export const enhancements: Product[] = [
 
   stock: 25,
 
-  rating: 5,
+  rating: 4.9,
   reviewCount: 14,
 
   isFeatured: true,
@@ -492,7 +492,7 @@ export const enhancements: Product[] = [
 
   stock: 22,
 
-  rating: 5,
+  rating: 4.0,
   reviewCount: 10,
 
   isFeatured: false,

@@ -3,7 +3,7 @@
 import { X, BellRing, CalendarDays } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { StatusBadge } from "../../common/Dashboard";
-import { Payment } from "@/src/types";
+import { Payment } from "@/src/types/payment";
 
 type PaymentModalProps = {
   open: boolean;
