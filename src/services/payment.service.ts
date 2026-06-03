@@ -1,88 +1,106 @@
 import { delay } from "../lib/utils";
-import { PAYMENTS_MOCK, paymentSettingsMock } from "../mocks/index.mock";
-import { CurrencyType, Payment, PaymentGateway, PaymentSettingsState, PaymentStatus } from "../types";
+import {
+  PAYMENTS_MOCK,
+  paymentSettingsMock,
+} from "../mocks/index.mock";
+import {
+  CurrencyType,
+  Payment,
+  PaymentGateway,
+  PaymentSettingsState,
+  PaymentStatus,
+} from "../types/payment";
 
-const paymentsDB: Payment[] = [...PAYMENTS_MOCK];
+const paymentsState: Payment[] = structuredClone(PAYMENTS_MOCK);
 
-let settings: PaymentSettingsState = {
-  ...paymentSettingsMock,
-};
+let settingsState: PaymentSettingsState =
+  structuredClone(paymentSettingsMock);
+
 
 export const paymentSettingsService = {
-  // GET ALL PAYMENTS
+
   async getPayments(): Promise<Payment[]> {
     await delay(400);
-    return [...paymentsDB];
+    return structuredClone(paymentsState);
   },
 
-  // GET ONE PAYMENT DETAIL
-  async getPaymentLog(id: string): Promise<Payment | null> {
+  async getPaymentLog(
+    id: string
+  ): Promise<Payment | null> {
     await delay(300);
 
-    return paymentsDB.find((item) => item.transactionId === id) ?? null;
+    const payment =
+      paymentsState.find(
+        (item) => item.transactionId === id
+      ) ?? null;
+
+    return payment
+      ? structuredClone(payment)
+      : null;
   },
 
-  // GET PAYMENT BY STATUS
-  async getPaymentsByStatus(status?: PaymentStatus): Promise<Payment[]> {
+  async getPaymentsByStatus(
+    status?: PaymentStatus
+  ): Promise<Payment[]> {
     await delay(300);
 
-    if (!status) return [...paymentsDB];
+    const filtered = status
+      ? paymentsState.filter(
+          (p) => p.status === status
+        )
+      : paymentsState;
 
-    return paymentsDB.filter((p) => p.status === status);
+    return structuredClone(filtered);
   },
 
-  //  UPDATE PAYMENT STATUS
   async updatePaymentStatus(
     id: string,
-    status: PaymentStatus,
+    status: PaymentStatus
   ): Promise<Payment | null> {
     await delay(200);
 
-    const index = paymentsDB.findIndex((log) => log.transactionId === id);
+    const index = paymentsState.findIndex(
+      (log) => log.transactionId === id
+    );
 
-    if (index === -1) {
-      return null;
-    }
+    if (index === -1) return null;
 
-    paymentsDB[index] = {
-      ...paymentsDB[index],
+    paymentsState[index] = {
+      ...paymentsState[index],
       status,
     };
 
-    return paymentsDB[index];
+    return structuredClone(paymentsState[index]);
   },
 
-  // FETCH SETTINGS
   async getPaymentSettings(): Promise<PaymentSettingsState> {
     await delay(200);
-    return settings;
+    return structuredClone(settingsState);
   },
 
-  // UPDATE PAYMENT GATEWAY
   async updateGateway(
-    gateway: PaymentGateway,
+    gateway: PaymentGateway
   ): Promise<PaymentSettingsState> {
     await delay(300);
 
-    settings = {
-      ...settings,
+    settingsState = {
+      ...settingsState,
       activeGateway: gateway,
     };
 
-    return settings;
+    return structuredClone(settingsState);
   },
 
-  // UPDATE CURRENCY
   async updateCurrency(
-    currency: CurrencyType,
+    currency: CurrencyType
   ): Promise<PaymentSettingsState> {
     await delay(300);
 
-    settings = {
-      ...settings,
+    settingsState = {
+      ...settingsState,
       defaultCurrency: currency,
     };
 
-    return settings;
+    return structuredClone(settingsState);
   },
 };

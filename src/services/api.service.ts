@@ -1,8 +1,16 @@
+type HttpMethod =
+  | "GET"
+  | "POST"
+  | "PUT"
+  | "PATCH"
+  | "DELETE";
+
 type ApiRequestConfig<T> = {
   endpoint?: string;
-  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  method?: HttpMethod;
   body?: unknown;
   mockData?: T;
+  headers?: HeadersInit;
   useMock?: boolean;
   delay?: number;
 };
@@ -12,11 +20,16 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
+export const API_CONFIG = {
+  useMock: true,
+};
+
 export async function apiRequest<T>({
   endpoint,
   method = "GET",
   body,
   mockData,
+  headers={},
   useMock = false,
   delay = 500,
 }: ApiRequestConfig<T>): Promise<T> {
@@ -32,12 +45,17 @@ export async function apiRequest<T>({
   }
 
   try {
+    const isFormData = body instanceof FormData;
+    
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: body ? JSON.stringify(body) : undefined,
+      headers: isFormData
+      ? headers
+      : {
+          "Content-Type": "application/json",
+          ...headers,
+        },
+      body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
     });
 
     if (!response.ok) {

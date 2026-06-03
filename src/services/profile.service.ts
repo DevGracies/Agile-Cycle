@@ -1,38 +1,47 @@
 import { MOCK_PROFILE } from "../mocks/index.mock";
-import { UserProfile } from "../types";
+import { UserProfile } from "../types/user";
 import { apiRequest } from "./api.service";
 
+const USE_MOCK = true;
+
 export const profileService = {
-  async getProfile(): Promise<UserProfile> {
+  getProfile(): Promise<UserProfile> {
     return apiRequest<UserProfile>({
       endpoint: "/profile",
-      method: "GET",
       mockData: MOCK_PROFILE,
-      useMock: true,
+      useMock: USE_MOCK,
     });
   },
 
-  async updateProfile(
+  updateProfile(
     payload: Partial<UserProfile>,
   ): Promise<UserProfile> {
     return apiRequest<UserProfile>({
       endpoint: "/profile",
       method: "PATCH",
       body: payload,
-
       mockData: {
         ...MOCK_PROFILE,
         ...payload,
       },
-
-      useMock: true,
+      useMock: USE_MOCK,
     });
   },
+
+  //   uploadAvatar(file: File): Promise<{ url: string }> {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+
+  //   return apiRequest<{ url: string }>({
+  //     endpoint: "/profile/avatar",
+  //     method: "POST",
+  //     body: formData,
+  //   });
+  // }
 
   async uploadAvatar(file: File): Promise<string> {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // MOCK IMAGE URL
     return URL.createObjectURL(file);
   },
 };

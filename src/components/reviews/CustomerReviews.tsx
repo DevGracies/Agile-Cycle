@@ -8,8 +8,8 @@ import ReviewsCarousel from "./ReviewsCarousel";
 import PaginationControls from "./PaginationControls";
 import Container from "../layout/Container";
 import { useState } from "react";
-import { Tab } from "@mui/material";
 import { ChevronDown } from "lucide-react";
+import { Product } from "@/src/types/product";
 
 type StateType = "reviews" | "questions";
 
@@ -18,7 +18,7 @@ const reviewTabs = [
   { title: "Questions", key: "questions", count: 0 },
 ];
 
-const CustomerReviews = () => {
+const CustomerReviews = ({product}: {product: Product}) => {
   const [state, setState] = useState<StateType>("reviews");
 
   return (
@@ -52,7 +52,7 @@ const CustomerReviews = () => {
 
         {state === "reviews" && (
           <>
-            <ReviewFilters />
+            <ReviewFilters product={product} />
             <ReviewsCarousel />
           </>
         )}

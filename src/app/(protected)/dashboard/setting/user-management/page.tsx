@@ -4,7 +4,7 @@ import AddMemberModal from "@/src/components/dashboard/settings/user-management/
 import UserCard from "@/src/components/dashboard/settings/user-management/UserCard";
 import Loader from "@/src/components/ui/Loader";
 import { userManagementService } from "@/src/services/user-management.service";
-import { User } from "@/src/types";
+import { CreateUserRequest, User } from "@/src/types/user";
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -15,7 +15,6 @@ const UserManagementPage = () => {
   const [loading, setLoading] = useState(true);
   const [creatingUser, setCreatingUser] = useState<boolean>(false);
 
-  // Fetch users (API-ready)
   useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
@@ -27,16 +26,16 @@ const UserManagementPage = () => {
     fetchUsers();
   }, []);
 
-  // Handle user creation from modal
-  const handleCreateUser = async (payload: any) => {
+  const handleCreateUser = async (payload: CreateUserRequest): Promise<User> => {
     setCreatingUser(true);
     try {
       const newUser = await userManagementService.createUser(payload);
       setUsers((prev) => [newUser, ...prev]);
       toast.success("User created successfully");
+      return newUser;
     } catch (error) {
-      console.error("Error creating user:", error);
-      toast.error("Failed to create user");
+      const errorMessage = error instanceof Error ? error.message : "Incomplete or invalid fields";
+      throw errorMessage;
     } finally {
       setCreatingUser(false);
     }

@@ -10,7 +10,7 @@ interface Props {
 const SectionHeader = ({ title, subtitle, section, icon }: Props) => {
   return (
     <div className="">
-      <h2 className="text-xl md:text-3xl font-black mb-5">
+      <h2 className="text-xl md:text-4xl font-semibold mb-5">
         {title}
       </h2>
       <p className="text-primary font-semibold mb-4 flex items-center gap-4">

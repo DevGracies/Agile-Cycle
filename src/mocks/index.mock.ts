@@ -86,30 +86,218 @@ export const USERS_MOCK: User[] = [
 
 
 
-export const products: Product[] = Array.from({ length: 6 }).map((_, index) => ({
-  id: `#product${index + 1}`,
-  name: "AeroX E-Bike",
-  image: "/home/product-image.png",
-  price: 240000,
-  oldPrice: 280000,
-  rating: 5,
-  reviewCount: 105,
-  category: "bike",
-  badge: "E-Bike",
-  quantity: 1,
+// export const products: Product[] = [
+//   {
+//     id: "product1",
+//     name: "AeroX E-Bike",
+//     description:
+//       "Agile Comet X is designed for urban adventurers and daily commuters. It features a powerful 500W Peak motor ensuring smooth and efficient driving on city streets. The removable 48V lithium-ion battery provides reliable performance and long-range riding capability.",
+//     shortDescription: "Easy to Maneuver. Built for Power.",
+//     image: [
+//       "/home/product-image.png",
+//       "/ebikes/Ebikes.png",
+//       "/ebikes/Ebike2.png",
+//       "/ebikes/Ebikes3.png",
+//     ],
+//     currentPrice: 240000,
+//     originalPrice: 280000,
+//     rating: 4.8,
+//     stock: 10,
+//     reviewCount: 105,
+//     category: "bike",
+//     badge: "E-Bike",
+//     quantity: 1,
+//     specs: {
+//       range: "120km",
+//       material: "Carbon",
+//       weight: "15kg",
+//       torque: "90Nm",
+//       motor: "750W",
+//       batterySize: "48V",
+//       batteryAh: "12Ah",
+//       extraBatteryAh: "15Ah",
+//       color: "Sage",
+//       size: "Regular / 5'3 - 5'6",
+//     },
+//   },
 
-  specs: {
-    range: "120km",
-    material: "Carbon",
-    weight: "15kg",
-    torque: "90Nm",
-    motor: "750W",
-    battery: "48V",
-    color: "Sage",
-    size: "Regular / 5'3 - 5'6"
-  },
-}));
+//   {
+//     id: "product2",
+//     name: "VoltRunner Pro",
+//     description:
+//       "Built for high-performance commuting, VoltRunner Pro combines a powerful motor with responsive handling and a durable aluminum frame. Perfect for city riders seeking speed and comfort.",
+//     shortDescription: "Fast, Responsive & Reliable.",
+//     image: [
+//       "/ebikes/Ebikes.png",
+//       "/ebikes/Ebike2.png",
+//       "/home/product-image.png",
+//       "/ebikes/Ebikes3.png",
+//     ],
+//     currentPrice: 310000,
+//     originalPrice: 350000,
+//     rating: 4.9,
+//     stock: 15,
+//     reviewCount: 182,
+//     category: "bike",
+//     badge: "Best Seller",
+//     quantity: 1,
+//     specs: {
+//       range: "140km",
+//       material: "Aluminum Alloy",
+//       weight: "18kg",
+//       torque: "95Nm",
+//       motor: "1000W",
+//       batterySize: "52V",
+//       batteryAh: "24Ah",
+//       extraBatteryAh: "30Ah",
+//       color: "Matte Black",
+//       size: "Large / 5'7 - 6'2",
+//     },
+//   },
 
+//   {
+//     id: "product3",
+//     name: "TrailBlazer X",
+//     description:
+//       "Designed for off-road adventures, TrailBlazer X delivers exceptional power and suspension performance. Conquer trails, hills, and rugged terrain with confidence.",
+//     shortDescription: "Conquer Every Trail.",
+//     image: [
+//       "/ebikes/Ebike2.png",
+//       "/ebikes/Ebikes3.png",
+//       "/home/product-image.png",
+//       "/ebikes/Ebikes.png",
+//     ],
+//     currentPrice: 420000,
+//     originalPrice: 470000,
+//     rating: 4.7,
+//     stock: 7,
+//     reviewCount: 94,
+//     category: "bike",
+//     badge: "Off-Road",
+//     quantity: 1,
+//     specs: {
+//       range: "100km",
+//       material: "Carbon Fiber",
+//       weight: "20kg",
+//       torque: "110Nm",
+//       motor: "1200W",
+//       batterySize: "60V",
+//       batteryAh: "25Ah",
+//       extraBatteryAh: "30Ah",
+//       color: "Forest Green",
+//       size: "Medium / 5'5 - 5'11",
+//     },
+//   },
+
+//   {
+//     id: "product4",
+//     name: "Urban Glide S",
+//     description:
+//       "Urban Glide S is engineered for daily city commuting. Its lightweight design, integrated lighting system, and efficient battery make it a dependable companion for everyday travel.",
+//     shortDescription: "Smooth City Commutes.",
+//     image: [
+//       "/ebikes/Ebikes3.png",
+//       "/home/product-image.png",
+//       "/ebikes/Ebike2.png",
+//       "/ebikes/Ebikes.png",
+//     ],
+//     currentPrice: 195000,
+//     originalPrice: 230000,
+//     rating: 4.5,
+//     stock: 20,
+//     reviewCount: 76,
+//     category: "bike",
+//     badge: "City Rider",
+//     quantity: 1,
+//     specs: {
+//       range: "90km",
+//       material: "Aluminum",
+//       weight: "14kg",
+//       torque: "70Nm",
+//       motor: "500W",
+//       batterySize: "36V",
+//       batteryAh: "12Ah",
+//       extraBatteryAh: "18Ah",
+//       color: "Pearl White",
+//       size: "Regular / 5'2 - 5'8",
+//     },
+//   },
+
+//   {
+//     id: "product5",
+//     name: "ThunderBolt GT",
+//     description:
+//       "ThunderBolt GT combines raw power with premium comfort. Featuring a high-capacity battery and advanced braking system, it's built for long-distance riders.",
+//     shortDescription: "Long Range. Extreme Power.",
+//     image: [
+//       "/home/product-image.png",
+//       "/ebikes/Ebikes3.png",
+//       "/ebikes/Ebikes.png",
+//       "/ebikes/Ebike2.png",
+//     ],
+//     currentPrice: 550000,
+//     originalPrice: 620000,
+//     rating: 5,
+//     stock: 5,
+//     reviewCount: 221,
+//     category: "bike",
+//     badge: "Premium",
+//     quantity: 1,
+//     specs: {
+//       range: "180km",
+//       material: "Carbon Fiber",
+//       weight: "22kg",
+//       torque: "130Nm",
+//       motor: "1500W",
+//       batterySize: "72V",
+//       batteryAh: "30Ah",
+//       extraBatteryAh: "40Ah",
+//       color: "Crimson Red",
+//       size: "Large / 5'8 - 6'4",
+//     },
+//   },
+
+//   {
+//     id: "product6",
+//     name: "EcoRide Mini",
+//     description:
+//       "EcoRide Mini is a compact foldable e-bike ideal for urban dwellers. Easy to store and transport while still delivering excellent range and efficiency.",
+//     shortDescription: "Compact. Foldable. Efficient.",
+//     image: [
+//       "/ebikes/Ebike2.png",
+//       "/home/product-image.png",
+//       "/ebikes/Ebikes3.png",
+//       "/ebikes/Ebikes.png",
+//     ],
+//     currentPrice: 160000,
+//     originalPrice: 190000,
+//     rating: 4.6,
+//     stock: 25,
+//     reviewCount: 68,
+//     category: "bike",
+//     badge: "Foldable",
+//     quantity: 1,
+//     specs: {
+//       range: "75km",
+//       material: "Aluminum",
+//       weight: "12kg",
+//       torque: "60Nm",
+//       motor: "350W",
+//       batterySize: "36V",
+//       batteryAh: "12Ah",
+//       extraBatteryAh: "18Ah",
+//       color: "Ocean Blue",
+//       size: "One Size Fits Most",
+//     },
+//   },
+// ];
+
+// slug: string;
+// sku: string;
+// isFeatured: boolean;
+// isNewArrival: boolean;
+// discountPercentage: number;
+// availabilityStatus: "in-stock" | "low-stock" | "out-of-stock";
 
 
 

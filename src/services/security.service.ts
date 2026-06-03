@@ -1,4 +1,4 @@
-import { delay } from "../lib/utils";
+import { apiRequest } from "./api.service";
 import {
   defaultSecuritySettings,
   securityActivityLogs,
@@ -11,89 +11,119 @@ import {
   SecurityStatus,
 } from "../types/security";
 
-const logsDb: SecurityActivityLog[] = [
-  ...securityActivityLogs,
-];
+const USE_MOCK = true;
 
-let settingsDb: SecuritySettingsState = {
-  ...defaultSecuritySettings,
-};
+const logsDb: SecurityActivityLog[] = structuredClone(securityActivityLogs);
 
-let configurationsDb: SecurityConfigurations = {
-  passwordLength: 8,
-  methodSupported: "Email",
-  loginAttempts: 3,
-  timeDuration: 15,
-};
+let settingsDb: SecuritySettingsState =
+  structuredClone(defaultSecuritySettings);
+
+let configurationsDb: SecurityConfigurations =
+  structuredClone({
+    passwordLength: 8,
+    methodSupported: "Email",
+    loginAttempts: 3,
+    timeDuration: 15,
+  });
 
 export const securityService = {
-  async getActivityLogs(): Promise<
-    SecurityActivityLog[]
-  > {
-    await delay(300);
 
-    return [...logsDb];
+  getActivityLogs(): Promise<SecurityActivityLog[]> {
+    return apiRequest<SecurityActivityLog[]>({
+      endpoint: "/security/logs",
+      mockData: logsDb,
+      useMock: USE_MOCK,
+      delay: 300,
+    });
   },
 
-  async getActivityLog(
-    id: string,
-  ): Promise<SecurityActivityLog | null> {
-    await delay(300);
+  getActivityLog(id: string): Promise<SecurityActivityLog | null> {
+    const log = logsDb.find((l) => l.id === id) ?? null;
 
-    return logsDb.find((log) => log.id === id) ?? null;
+    return apiRequest<SecurityActivityLog | null>({
+      endpoint: `/security/logs/${id}`,
+      mockData: log,
+      useMock: USE_MOCK,
+      delay: 300,
+    });
   },
 
-  async getActivityLogsByStatus(
+  getActivityLogsByStatus(
     status?: SecurityStatus,
   ): Promise<SecurityActivityLog[]> {
-    await delay(300);
+    const filtered = status
+      ? logsDb.filter((log) => log.status === status)
+      : logsDb;
 
-    if (!status) {
-      return [...logsDb];
-    }
-
-    return logsDb.filter(
-      (log) => log.status === status,
-    );
+    return apiRequest<SecurityActivityLog[]>({
+      endpoint: status
+        ? `/security/logs?status=${status}`
+        : "/security/logs",
+      mockData: filtered,
+      useMock: USE_MOCK,
+      delay: 300,
+    });
   },
 
-  async getSecuritySettings(): Promise<SecuritySettingsState> {
-    await delay(200);
-
-    return { ...settingsDb };
+  getSecuritySettings(): Promise<SecuritySettingsState> {
+    return apiRequest<SecuritySettingsState>({
+      endpoint: "/security/settings",
+      mockData: settingsDb,
+      useMock: USE_MOCK,
+      delay: 200,
+    });
   },
 
-  async updateSecuritySetting(
+  updateSecuritySetting(
     key: keyof SecuritySettingsState,
     value: boolean,
   ): Promise<SecuritySettingsState> {
-    await delay(200);
-
     settingsDb = {
       ...settingsDb,
       [key]: value,
     };
 
-    return { ...settingsDb };
+    return apiRequest<SecuritySettingsState>({
+      endpoint: "/security/settings",
+      method: "PATCH",
+      body: {
+        key,
+        value,
+      },
+      mockData: settingsDb,
+      useMock: USE_MOCK,
+      delay: 200,
+    });
   },
 
-  async getConfigurations(): Promise<SecurityConfigurations> {
-    await delay(200);
-
-    return { ...configurationsDb };
+  getConfigurations(): Promise<SecurityConfigurations> {
+    return apiRequest<SecurityConfigurations>({
+      endpoint: "/security/configurations",
+      mockData: configurationsDb,
+      useMock: USE_MOCK,
+      delay: 200,
+    });
   },
 
-  async updateConfigurations<K extends keyof SecurityConfigurations>(
+  updateConfigurations<K extends keyof SecurityConfigurations>(
     key: K,
-    value: SecurityConfigurations[K]
+    value: SecurityConfigurations[K],
   ): Promise<SecurityConfigurations> {
-    await delay(200);
-
     configurationsDb = {
       ...configurationsDb,
       [key]: value,
     };
 
-    return { ...configurationsDb };
+    return apiRequest<SecurityConfigurations>({
+      endpoint: "/security/configurations",
+      method: "PATCH",
+      body: {
+        key,
+        value,
+      },
+      mockData: configurationsDb,
+      useMock: USE_MOCK,
+      delay: 200,
+    });
   },
 };

@@ -7,19 +7,18 @@ import CartFooter from "./CartFooter";
 import CartItem from "./CartItem";
 import CartSuccessBanner from "./CartSuccessBanner";
 import CartHeader from "./CartHeader";
-import { CartItemType } from "@/src/types/cart";
+import { CartItem as CartItems } from "@/src/types/cart";
+import { useCart } from "@/src/context/CartProvider";
 
 interface Props {
   open: boolean;
   onClose: () => void;
-  items: CartItemType[];
+  items?: CartItems[];
 }
 
-export default function CartDrawer({
-  open,
-  onClose,
-  items,
-}: Props) {
+export default function CartDrawer({ open, onClose }: Props) {
+  const { items, removeFromCart, updateQuantity } = useCart();
+
   useEffect(() => {
     if (!open) return;
 
@@ -37,27 +36,25 @@ export default function CartDrawer({
     };
   }, [open, onClose]);
 
-  const subtotal = items.reduce(    
-    (acc, item) => acc + item.price * item.quantity,
-    0
+  const subtotal = items.reduce(
+    (acc, item) => acc + item.product?.currentPrice * item.quantity,
+    0,
   );
 
   return (
     <>
       <div
-  className={`
+        className={`
     fixed inset-0 z-40
     bg-black/55
     backdrop-blur-[2px]
     transition-all duration-300 ease-out
     ${
-      open
-        ? "opacity-100 pointer-events-auto"
-        : "opacity-0 pointer-events-none"
+      open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
     }
   `}
-  onClick={onClose}
-/>
+        onClick={onClose}
+      />
 
       <aside
         role="dialog"
@@ -82,8 +79,10 @@ export default function CartDrawer({
               <div className="mt-5 space-y-4">
                 {items.map((item) => (
                   <CartItem
-                    key={item.id}
+                    key={item.product.id}
                     item={item}
+                    onRemove={() => removeFromCart(item.product.id)}
+                    onChangeQty={(q) => updateQuantity(item.product.id, q)}
                   />
                 ))}
               </div>
@@ -91,10 +90,7 @@ export default function CartDrawer({
           )}
         </div>
 
-        <CartFooter
-          subtotal={subtotal}
-          isEmpty={!items.length}
-        />
+        <CartFooter subtotal={subtotal} isEmpty={!items.length} />
       </aside>
     </>
   );

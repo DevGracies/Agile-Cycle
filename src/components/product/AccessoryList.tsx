@@ -5,7 +5,7 @@ export default function AccessoryList() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h3 className="uppercase text-[#01430D] tracking-wide font-bold">
+        <h3 className="uppercase text-secondary tracking-wide font-bold">
           Compatible Accessories & Enhancements
         </h3>
 
@@ -47,7 +47,7 @@ export default function AccessoryList() {
             </div>
 
             <div className="text-right">
-              <h4 className="text-[#01430D] font-bold text-sm">
+              <h4 className="text-secondary font-bold text-sm">
                 {item.price}
               </h4>
 

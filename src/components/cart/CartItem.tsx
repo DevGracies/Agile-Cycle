@@ -1,20 +1,22 @@
 import Image from "next/image";
 import QuantityControl from "./QuantityControl";
-import { Product } from "@/src/types/product";
+import { formatPrice } from "@/src/utils/product";
+import { CartItem as CartItemType } from "@/src/types/cart";
 
 interface Props {
-  item: Product;
+  item: CartItemType;
+  onRemove: () => void;
+  onChangeQty: (q: number) => void;
 }
 
-export default function CartItem({
-  item,
-}: Props) {
+export default function CartItem({ item, onRemove, onChangeQty }: Props) {
+  const product = item.product;
   return (
     <div className="shadow rounded-xl p-3 bg-green-50">
       <div className="flex gap-3">
         <Image
-          src={item.image as string}
-          alt={item.name}
+          src={product.images?.[0]?.url || "/fallback.png"}
+          alt={product.images?.[0]?.alt || product.name}
           width={140}
           height={140}
           className="rounded-md object-cover"
@@ -22,33 +24,31 @@ export default function CartItem({
 
         <div className="flex-1">
           <div className="flex justify-between">
-            <h4 className="font-semibold">
-              {item.name}
-            </h4>
+            <h4 className="font-semibold">{product.name}</h4>
 
             <span className="font-semibold">
-              ₦{item.price.toLocaleString()}
+              {formatPrice(product.currentPrice ?? 0).toLocaleString()}
             </span>
           </div>
 
           <div className="text-sm text-neutral-500 mt-1">
-            Color: {item.specs?.color}
+            Color: {product.specs?.color}
           </div>
 
           <div className="text-sm text-neutral-500">
-            Battery: {item.specs?.battery}
+            Battery: {product.specs?.batteryAh}
           </div>
 
           <div className="text-sm text-neutral-500">
-            Size: {item.specs?.size}
+            Size: {product.specs?.size}
           </div>
 
           <div className="flex items-center justify-between mt-3">
-            <QuantityControl
-              quantity={item.quantity ?? 1}
-            />
+            <QuantityControl quantity={item.quantity} onChange={onChangeQty} />
 
-            <button className="text-primary text-sm cursor-pointer hover:underline">
+            <button 
+            onClick={onRemove}
+            className="text-primary text-sm cursor-pointer hover:underline">
               Remove
             </button>
           </div>

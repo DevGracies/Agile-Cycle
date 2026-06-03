@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react";
-import { NotificationLog, NotificationToggleState } from "@/src/types";
+import { NotificationLog, NotificationToggleState } from "@/src/types/notification";
 import {
     defaultNotificationSettings,
     notificationTabs,
@@ -63,7 +63,7 @@ export const useNotification = () => {
         const previousValue = enabled[key];
         const nextValue = !previousValue;
 
-        console.log(`Toggling ${key} from ${previousValue} to ${nextValue}`);
+        console.log(`Toggling ${String(key)} from ${previousValue} to ${nextValue}`);
         // Optimistic update
         setEnabled((prev) => ({
             ...prev,
@@ -75,7 +75,7 @@ export const useNotification = () => {
                 await notificationsService.toggleNotificationSetting(key, nextValue);
             setEnabled(updatedSettings);
             toast.success(
-                `${key} ${nextValue ? "enabled" : "disabled"} successfully`,
+                `${String(key)} ${nextValue ? "enabled" : "disabled"} successfully`,
             );
         } catch (error) {
             // Rollback if API call fails
