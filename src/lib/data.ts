@@ -15,7 +15,7 @@ import enhancement3 from "@/public/enhancement/enhancement3.png"
 import enhancement4 from "@/public/enhancement/enhancement4.png"
 import enhancement5 from "@/public/enhancement/enhancement5.png"
 import enhancement6 from "@/public/enhancement/enhancement6.png"
-import { Accessories, Enhancements, Product } from "../types"
+import { Product } from "../types/product"
 
 
 export const categories = [

@@ -1,6 +1,6 @@
+// src/components/account/AddressesTab.tsx
 "use client";
 
-// src/components/account/AddressesTab.tsx
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { setDefaultAddress, deleteAddress } from "@/src/lib/api";
@@ -20,7 +20,7 @@ interface Address {
 interface AddressesTabProps {
   addresses?: Address[];
   loading?: boolean;
-  onAddressUpdate?: () => void; // callback to refresh the list
+  onAddressUpdate?: () => void;
 }
 
 export default function AddressesTab({
@@ -37,7 +37,7 @@ export default function AddressesTab({
       await setDefaultAddress(addressId);
       toast.success("Default address updated");
       if (onAddressUpdate) onAddressUpdate();
-    } catch (error) {
+    } catch {
       toast.error("Failed to set default address");
     } finally {
       setUpdatingDefault(null);
@@ -51,7 +51,7 @@ export default function AddressesTab({
       await deleteAddress(addressId);
       toast.success("Address deleted");
       if (onAddressUpdate) onAddressUpdate();
-    } catch (error) {
+    } catch {
       toast.error("Failed to delete address");
     } finally {
       setDeleting(null);
@@ -102,6 +102,9 @@ export default function AddressesTab({
               {addr.postal_code && <p className="text-sm text-[#5F6368]">Postal code: {addr.postal_code}</p>}
               {addr.phone && <p className="text-sm text-[#5F6368]">{addr.phone}</p>}
               <div className="mt-3 flex gap-2">
+                <button className="rounded-lg bg-[#519A09] px-4 py-1.5 text-xs font-medium text-white hover:bg-[#457f07]">
+                  Edit
+                </button>
                 <button
                   onClick={() => handleDelete(addr.id)}
                   disabled={deleting === addr.id}

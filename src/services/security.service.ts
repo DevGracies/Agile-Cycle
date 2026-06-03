@@ -9,7 +9,7 @@ import {
   SecurityConfigurations,
   SecuritySettingsState,
   SecurityStatus,
-} from "../types/index";
+} from "../types/security";
 
 const logsDb: SecurityActivityLog[] = [
   ...securityActivityLogs,

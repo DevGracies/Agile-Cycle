@@ -3,7 +3,7 @@ import { USERS_MOCK } from "../mocks/index.mock";
 import {
   CreateUserRequest,
   User,
-} from "@/src/types/index";
+} from "@/src/types/user";
 
 let usersDB: User[] = [...USERS_MOCK];
 
