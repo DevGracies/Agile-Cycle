@@ -1,17 +1,21 @@
+
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 import {
   Home,
   Package,
   RotateCcw,
   Settings,
   ShoppingBag,
-  Users
+  Users,
 } from "lucide-react";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export const delay = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
 
 export const DASHBOARD_NAVS = [
   {
@@ -50,4 +54,5 @@ export const DASHBOARD_NAVS = [
     path: "/dashboard/setting",
     icon: Settings,
   },
-]
+];
+

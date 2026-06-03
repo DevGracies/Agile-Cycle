@@ -1,48 +1,49 @@
 "use client";
 
+import Loader from "@/src/components/ui/Loader";
+import { usePayment } from "@/src/hooks/payment";
 import { ChevronUp } from "lucide-react";
-import React, { useState } from "react";
+
 
 const PaymentGatewayCard = () => {
-  const [isActive, setIsActive] = useState<string | null>("Paystack");
+  const {gateways, settings, gatewayLoading, handleGatewayChange} = usePayment();
 
   return (
     <div className="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm space-y-6 w-full">
-      {/* HEADER */}
-      <h2 className="text-base sm:text-lg font-bold">
-        Payment Gateways
-      </h2>
+      <h2 className="text-base sm:text-lg font-medium">Payment Gateways</h2>
 
-       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-        {["Paystack", "Flutter"].map((gateway) => (
-          // PAYMENT GATEWAY BUTTONS
-          <div
-            key={gateway}
-            className="flex flex-col items-center w-full"
-          >
-            <button
-              onClick={() => setIsActive(gateway)}
-              className={`w-full px-4 sm:px-6 lg:px-12 py-4 rounded-lg text-sm font-medium transition-all duration-300
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        {gateways.map((gateway) => {
+          const isActive = settings?.activeGateway === gateway;
+          const isLoadingGateway = gatewayLoading === gateway;
+          return (
+            <div key={gateway} className="flex flex-col items-center w-full">
+              <button
+                disabled={isLoadingGateway}
+                onClick={() => handleGatewayChange(gateway)}
+                className={`w-full px-4 sm:px-6 lg:px-12 py-4 rounded-lg text-sm font-medium transition-all duration-300
               ${
-                isActive === gateway
-                  ? "bg-[#01430D] hover:bg-[#0b4f13] text-white shadow-md"
-                  : "border border-[#0b4f13] text-[#6b7280] bg-gray-100 hover:bg-gray-200"
+                isActive
+                  ? "bg-secondary text-white shadow-md"
+                  : "border border-secondary text-gray-500 bg-gray-100 hover:bg-gray-200"
               }`}
-            >
-              {gateway}
-            </button>
+              >
+                {isLoadingGateway ? (
+                  <Loader size={18} />
+                ) : (
+                  gateway
+                )}
+              </button>
 
-                {/* ACTIVE GATEWAY INDICATOR */}
-            {isActive === gateway && (
-              <div className="flex flex-col items-center text-sm mt-2">
-                <ChevronUp className="text-[#519A09] w-4 h-4" />
-                <p className="text-[#519A09] font-medium">
-                  Active
-                </p>
-              </div>
-            )}
-          </div>
-        ))}
+              {isActive && (
+                <div className="flex flex-col items-center text-sm mt-2">
+                  <ChevronUp className="text-secondary w-4 h-4" />
+                  <p className="text-secondary font-medium">Active</p>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

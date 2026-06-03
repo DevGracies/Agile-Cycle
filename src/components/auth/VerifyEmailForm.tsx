@@ -39,17 +39,12 @@ const VerifyEmailForm = () => {
       <div className="mb-8">
 
         {/* TITLE */}
-        <h1 className="text-5xl tracking-tight text-[#01430D]">
-          <span className="font-bold">
-            Verify Your
-          </span>{" "}
-          <span className="font-semibold text-[#01430D]">
-            Email
-          </span>
-        </h1>
+        <h1 className="text-[48px] leading-[48px] font-bold bg-[linear-gradient(90deg,#01430D_0%,#519A09_100%)] bg-clip-text text-transparent">
+           Verify Your Email
+          </h1>
 
         {/* SUBTEXT */}
-        <p className="mt-4 text-sm leading-6 text-gray-500">
+        <p className="mt-4 text-[17px] leading-6 text-gray-500">
           We have sent a verification code to{" "}
           <span className="font-medium text-[#519A09]">
             example@gmail.com
@@ -85,11 +80,9 @@ const VerifyEmailForm = () => {
                 type="button"
                 onClick={handleResend}
                 className="
-                  text-sm
+                  text-[16px]
                   font-medium
                   text-[#519A09]
-                  transition
-                  hover:text-[#01430D]
                 "
               >
                 Resend Code
@@ -100,22 +93,12 @@ const VerifyEmailForm = () => {
         </div>
 
         <label className="flex cursor-pointer items-center gap-3">
-
-            <input
-              type="checkbox"
-              checked={newsletter}
-              onChange={() =>
-                setNewsletter(!newsletter)
-              }
-              className="
-                h-5
-                w-5
-                rounded
-                border-gray-300
-                accent-[#519A09]
-                focus:ring-[#01430D]
-              "
-            />
+<input
+  type="checkbox"
+  checked={newsletter}
+  onChange={() => setNewsletter(!newsletter)}
+  className="w-6 h-6 rounded-[6px] border border-gray-300 accent-[#519A09] focus:ring-0 focus:outline-none"
+/>
 
             <div className="text-sm font-semibold text-gray-600">
               I agree to{" "}
@@ -134,11 +117,11 @@ const VerifyEmailForm = () => {
           </label>
 
         {/* SUBMIT BUTTON */}
-        <Button
+        <Button 
           type="submit"
           className="w-full"
         >
-          Verify and Continue
+          Verify & Continue
         </Button>
 
         {/* FOOTER TEXT */}
@@ -149,11 +132,9 @@ const VerifyEmailForm = () => {
             className="
               
               block
-              text-sm
+              text-[20px]
               font-medium
               text-[#519A09]
-              transition
-              hover:text-[#01430D]
             "
           >
             Be part of the Agile Cycle

@@ -8,10 +8,7 @@ interface AccountTabsProps {
   onTabChange: (tab: string) => void;
 }
 
-export default function AccountTabs({
-  activeTab,
-  onTabChange,
-}: AccountTabsProps) {
+export default function AccountTabs({ activeTab, onTabChange }: AccountTabsProps) {
   return (
     <div className="mb-10 flex gap-[30px] overflow-x-auto pb-2">
       {TABS.map((tab) => (
@@ -31,9 +28,7 @@ export default function AccountTabs({
           </span>
           <span
             className={`h-1.5 w-2.5 transition-opacity ${
-              activeTab === tab
-                ? "opacity-100"
-                : "opacity-0 group-hover:opacity-50"
+              activeTab === tab ? "opacity-100" : "opacity-0 group-hover:opacity-50"
             }`}
           >
             <span className="block h-full w-full rounded-full bg-[#519A09]" />

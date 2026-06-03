@@ -1,6 +1,6 @@
-// app/customers/page.tsx
 "use client";
 
+// app/customers/page.tsx
 import { useEffect, useState, useCallback } from "react";
 import { Box, Typography } from "@mui/material";
 import { Toaster } from "react-hot-toast";
@@ -13,7 +13,7 @@ import {
   fetchCustomerSection,
   type CustomerSectionResponse,
 } from "@/src/lib/api";
-import type { Customer } from "@/src/store/useCustomerStore"
+import type { Customer } from "@/src/store/useCustomerStore";
 
 const statCardLabels = ["Total Customers", "New Customers", "Visitors"];
 

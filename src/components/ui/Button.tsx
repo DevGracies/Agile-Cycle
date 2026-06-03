@@ -1,10 +1,8 @@
-
 import { ButtonHTMLAttributes } from "react";
 
 type Props =
   ButtonHTMLAttributes<HTMLButtonElement> & {
     children: React.ReactNode;
-    isLoading?: boolean;
 
     variant?:
       | "primary"
@@ -16,7 +14,6 @@ type Props =
 
 const Button = ({
   children,
-  isLoading,
   className = "",
   variant = "primary",
   size = "md",
@@ -25,13 +22,13 @@ const Button = ({
 
   const variants = {
     primary:
-      "bg-[#01430D] text-white hover:bg-[#519A09]",
+      "bg-[#01430D] text-[#F7FAFC] text-[20px] ",
 
     outline:
-      "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50",
+      "border border-gray-300 bg-white text-gray-700",
 
     ghost:
-      "bg-transparent text-[#01430D] hover:bg-green-50",
+      "bg-transparent text-[#01430D]",
   };
 
   const sizes = {
@@ -47,7 +44,7 @@ const Button = ({
       {...props}
       className={`
         flex items-center justify-center
-        rounded-xl font-semibold transition
+        rounded-xl font-semibold
         disabled:cursor-not-allowed
         disabled:opacity-70
 
@@ -56,9 +53,7 @@ const Button = ({
         ${className}
       `}
     >
-      {isLoading
-        ? "Loading..."
-        : children}
+      {children}
     </button>
   );
 };
