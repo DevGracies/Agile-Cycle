@@ -16,6 +16,7 @@ export default function ProtectedLayout({
       <SubscribeSection />
       <BenefitsSection />
       <AccountFooter />
+      
     </>
   );
 }

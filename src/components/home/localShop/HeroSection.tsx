@@ -1,47 +1,91 @@
-import React from "react";
 import Image from "next/image";
-import shopImage from "@/public/home/our-shop.png";
-import Container from "../../layout/Container";
+import Link from "next/link";
 
-const OurShopSection = () => {
+export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] md:min-h-screen mt-16 overflow-hidden">
-      <Image
-        src={shopImage}
-        alt="Our Shop Image"
-        fill
-        priority
-        className="object-cover object-center"
-      />
-      <div className="absolute inset-0 bg-black/60" />
-      <Container className="relative space-y-6 mt-20 z-10 text-white">
-        <h2 className="text-4xl font-bold">Our Shop</h2>
-        <p className="text-sm text-gray-300">
-          Visit us in person at our physical shop to experience Agile Cycle
-          firsthand. Explore our full range of e-bikes, accessories, and
-          services. Whether you&apos;re test-riding, getting expert advice, or
-          selecting the perfect gear, our team is here to help you find the
-          perfect fit
-        </p>
-      </Container>
+    <section className="relative w-full">
+      <div className="relative h-[941px] w-full">
 
-      <div className="absolute bottom-10 right-20 bg-gray-200/70 backdrop-blur-md max-w-[320px] p-4 rounded-xl space-y-6">
-        <div className="space-y-2 text-sm">
-          <h2 className="text-[#519A09] font-semibold">Location</h2>
-          <p>Speedway House, Araromi Street Of Moloney/Mcarthy Stree, Onikan Lagos, Nigeria</p>
+        <Image
+          src="/home/our-shop.png"
+          alt="Agile Cycle Shop"
+          fill
+          priority
+          className="object-cover"
+        />
+
+        {/* Content */}
+        <div className="absolute inset-0 max-w-7xl mx-auto px-6 py-10">
+
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-3 text-[14px] text-[#01430D]">
+
+            <Link href="/Home">Home</Link>
+
+            <span>{">"}</span>
+
+            <span>Agile Cycle Shop</span>
+
+          </div>
+
+          {/* Heading */}
+          <h1 className="mt-4 text-[42px] font-bold text-black">
+            Agile Cycle Shop
+          </h1>
+
+          {/* Description */}
+          <p className="mt-6 max-w-[640px] text-[16px] leading-8 text-black">
+            Visit us in person ot our physical shop to experience Agile Cycle firsthand. Explore
+our full range of e-bikes, accessories, and services. Whether you're test-riding,
+getting expert advice, or selecting the perfect gear, our team is here to help you
+find the perfect fit.
+          </p>
+
+          {/* Info Card */}
+          <div className="absolute bottom-12 right-0 w-[398px] h-[450px] rounded-3xl bg-white/90 backdrop-blur-md p-8 shadow-lg">
+
+            <div>
+              <h3 className="text-[#519A09] font-semibold text-lg">
+                Location
+              </h3>
+
+              <p className="mt-2 text-sm leading-7">
+                Speedway House, Aromire Street <br />
+                Off Moloney/McCarthy Street, Onikan <br />
+                Lagos, Nigeria
+              </p>
+            </div>
+
+            <div className="mt-6">
+              <h3 className="text-[#519A09] font-semibold text-lg">
+                Open Hours
+              </h3>
+
+              <p className="mt-2 text-sm leading-7">
+                Monday to Friday: 9:00 AM - 6:00 PM
+                <br />
+                Saturday: 10:00 AM - 4:00 PM
+              </p>
+            </div>
+
+            <div className="mt-6">
+              <h3 className="text-[#519A09] font-semibold text-lg">
+                Phone No
+              </h3>
+
+              <p className="mt-2 text-[16px]">
+                +234 802 290 8726
+              </p>
+            </div>
+
+            <button className="mt-6 w-full h-12 border border-[#01430D] rounded-lg text-[#01430D] font-semibold">
+              Get Directions
+            </button>
+
+          </div>
+
         </div>
-        <div className="space-y-2 text-sm">
-          <h2 className="text-[#519A09] font-semibold">Open Hours</h2>
-          <p>Monday to Friday, 9:00AM - 6:00PM, Saturday, 10:00 AM - 4:00PM</p>
-        </div>
-        <div className="space-y-2 text-sm">
-          <h2 className="text-[#519A09] font-semibold">Phone Number</h2>
-          <p>+234 802 290 8726</p>
-        </div>
-        <button className="border-2 border-[#01430D] w-full rounded-md bg-white/50 p-2 text-[#01430D] text-sm">Get Directions</button>
       </div>
     </section>
   );
-};
-
-export default OurShopSection;
+}

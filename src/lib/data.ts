@@ -188,3 +188,116 @@ export const enhancements: Product[] = [
     rating: 5,
   },
 ]
+
+// Insights data for the Home Agile Cycle Shop section and blog page
+export const insights = [
+  {
+  id: 1,
+  image: "/home/insight.png",
+  title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+  description:
+    "Keeping your eBike in great shape doesn't have to be complicated.",
+  date: "January 22, 2026",
+  author: "Admin",
+  likes: 24,
+  comments: 12,
+  content: `
+    Keeping your e-bike in top condition is essential for safety,
+    performance, and extending its lifespan.
+
+    One of the most important maintenance habits is keeping the bike clean.
+    Dirt and debris can build up around moving parts and affect performance.
+
+    Battery care is equally important. Avoid exposing your battery to
+    extreme temperatures and always use the recommended charger.`,
+},
+  {
+    id: 2,
+    image: "/home/insight2.png",
+    title: "Nigeria's Push for Greener Mobility",
+    description:
+      "How e-bikes are becoming part of the national conversation on eco-friendly transport.",
+    // date: "January 22, 2026",
+  },
+  {
+    id: 3,
+    image: "/home/insight3.png",
+    title: "Agile Riders Meetup in Lagos",
+    description:
+      "A look back at our latest community ride, connecting cyclists across the city.",
+    date: "January 22, 2026",
+  },
+  {
+    id: 4,
+    image: "/home/insight.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description:
+      "Keeping your eBike in great shape doesn't have to be complicated. With regular cleaning, proper battery care...",
+    date: "January 22, 2026",
+  },
+  {
+    id: 5,
+    image: "/home/insight2.png",
+    title: "Nigeria's Push for Greener Mobility",
+    description:
+      "How e-bikes are becoming part of the national conversation on eco-friendly transport.",
+    // date: "January 22, 2026",
+  },
+  {
+    id: 6,
+    image: "/home/insight3.png",
+    title: "Agile Riders Meetup in Lagos",
+    description:
+      "A look back at our latest community ride, connecting cyclists across the city.",
+    date: "January 22, 2026",
+  },
+  {
+    id: 7,
+    image: "/home/insight.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description:
+      "Keeping your eBike in great shape doesn't have to be complicated. With regular cleaning, proper battery care...",
+    date: "January 22, 2026",
+  },
+  {
+    id: 8,
+    image: "/home/insight2.png",
+    title: "Nigeria's Push for Greener Mobility",
+    description:
+      "How e-bikes are becoming part of the national conversation on eco-friendly transport.",
+    
+  },
+  {
+    id: 9,
+    image: "/home/insight3.png",
+    title: "Agile Riders Meetup in Lagos",
+    description:
+      "A look back at our latest community ride, connecting cyclists across the city.",
+    date: "January 22, 2026",
+  },
+  {
+    id: 10,
+    image: "/home/insight.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description:
+      "Keeping your eBike in great shape doesn't have to be complicated. With regular cleaning, proper battery care...",
+    date: "January 22, 2026",
+  },
+  {
+    id: 11,
+    image: "/home/insight2.png",
+    title: "Nigeria's Push for Greener Mobility",
+    description:
+      "How e-bikes are becoming part of the national conversation on eco-friendly transport.",
+   
+  },
+  {
+    id: 12,
+    image: "/home/insight3.png",
+    title: "Agile Riders Meetup in Lagos",
+    description:
+      "A look back at our latest community ride, connecting cyclists across the city.",
+    date: "January 22, 2026",
+  },
+];
+/********************* END OF Insights data for the Home Agile Cycle Shop section and blog page******************* */
