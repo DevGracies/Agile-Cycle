@@ -7,8 +7,8 @@ interface ProductPriceProps {
 
 const ProductPrice = ({ price, oldPrice }: ProductPriceProps) => {
   return (
-    <div className="flex items-center gap-3">
-      <span className="text-primary font-black text-sm">
+    <div className="flex flex-wrap items-center gap-1">
+      <span className="text-primary font-bold text-sm">
         {formatPrice(price)}
       </span>
 

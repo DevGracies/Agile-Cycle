@@ -26,7 +26,7 @@ export default function ProductActions({ product, card, quantity }: Props) {
           href={`/product/${product.id}`}
           className="w-12 rounded-xl border border-secondary flex items-center justify-center"
         >
-          <Expand className="text-secondary" />
+          <Expand size={20} className="text-secondary" />
         </Link>
       )}
     </div>

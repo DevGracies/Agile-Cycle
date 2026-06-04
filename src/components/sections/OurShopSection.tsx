@@ -20,7 +20,7 @@ const OurShopSection = () => {
           firsthand. Explore our full range of e-bikes, accessories, and
           services. Whether you&apos;re test-riding, getting expert advice, or
           selecting the perfect gear, our team is here to help you find the
-          perfect fit
+          perfect fit.
         </p>
       </Container>
 
