@@ -19,19 +19,19 @@ export default function QuantitySelector({
     <div className="flex items-center border border-[#c9c9c9] w-fit">
       <button
         onClick={onDecrease}
-        className="w-8 h-8 flex items-center justify-center"
+        className="px-3 py-2"
       >
         <Minus size={18} />
       </button>
 
-      <div className="w-14 text-center font-semibold">
+      <div className="w-10 h-full flex items-center justify-center">
         {quantity}
       </div>
 
       <button
         onClick={onIncrease}
         disabled={max !== undefined && quantity >= max}
-        className="w-8 h-8 flex items-center justify-center disabled:opacity-40"
+        className="px-3 py-2"
       >
         <Plus size={18} />
       </button>
