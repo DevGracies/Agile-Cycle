@@ -14,13 +14,15 @@ export default function CartItem({ item, onRemove, onChangeQty }: Props) {
   return (
     <div className="shadow rounded-xl p-3 bg-green-50">
       <div className="flex gap-3">
-        <Image
+        <div className="relative w-[130px] h-auto">
+          <Image
           src={product.images?.[0]?.url || "/fallback.png"}
           alt={product.images?.[0]?.alt || product.name}
           width={140}
           height={140}
-          className="rounded-md object-cover"
+          className="w-full rounded-md object-cover"
         />
+        </div>
 
         <div className="flex-1">
           <div className="flex justify-between">
