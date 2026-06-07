@@ -1,5 +1,4 @@
 import { Product } from "@/src/types/product";
-import { getAvailabilityStatus } from "@/src/utils/product";
 
 const accessories = [
   {
@@ -63,6 +62,58 @@ const reviews = [
   },
 ];
 
+const features = [
+  {
+    id: "feature-1",
+
+    title: "Powerful Motor",
+
+    subtitle:
+      "Effortless acceleration for every ride",
+
+    description:
+      "High-performance motor engineered for power.",
+
+    image: "/home/explore.png",
+
+    specs: [
+      {
+        label: "Motor",
+        value: "750W",
+      },
+      {
+        label: "Torque",
+        value: "90Nm",
+      },
+    ],
+  },
+
+  {
+    id: "feature-2",
+
+    title: "Long Lasting Battery",
+
+    subtitle:
+      "Go further on a single charge",
+
+    description:
+      "Reliable battery system for long journeys.",
+
+    image: "/home/explore.png",
+
+    specs: [
+      {
+        label: "Range",
+        value: "120km",
+      },
+      {
+        label: "Battery",
+        value: "48V",
+      },
+    ],
+  },
+]
+
 export const products: Product[] = [
   {
     id: "product1",
@@ -89,12 +140,12 @@ export const products: Product[] = [
       },
       {
         id: "img2",
-        url: "/ebikes/Ebikes.png",
+        url: "/agile-image1.jpg",
         alt: "AeroX Side View",
       },
       {
         id: "img3",
-        url: "/ebikes/Ebike2.png",
+        url: "/agile-image2.jpg ",
         alt: "AeroX Detail View",
       },
       {
@@ -110,8 +161,6 @@ export const products: Product[] = [
 
     stock: 10,
 
-    availabilityStatus:
-      getAvailabilityStatus(10),
 
     rating: 4.8,
 
@@ -173,57 +222,7 @@ export const products: Product[] = [
 
     reviews,
 
-    features: [
-      {
-        id: "feature-1",
-
-        title: "Powerful Motor",
-
-        subtitle:
-          "Effortless acceleration for every ride",
-
-        description:
-          "High-performance motor engineered for power.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Motor",
-            value: "750W",
-          },
-          {
-            label: "Torque",
-            value: "90Nm",
-          },
-        ],
-      },
-
-      {
-        id: "feature-2",
-
-        title: "Long Lasting Battery",
-
-        subtitle:
-          "Go further on a single charge",
-
-        description:
-          "Reliable battery system for long journeys.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Range",
-            value: "120km",
-          },
-          {
-            label: "Battery",
-            value: "48V",
-          },
-        ],
-      },
-    ],
+    features: features,
   },
   {
     id: "product2",
@@ -243,13 +242,13 @@ export const products: Product[] = [
       },
       {
         id: "img2",
-        url: "/ebikes/Ebike2.png",
-        alt: "VoltRunner Side View",
+        url: "/agile-image1.jpg",
+        alt: "AeroX Side View",
       },
       {
         id: "img3",
-        url: "https://i.pravatar.cc/600?img=12",
-        alt: "VoltRunner Rider Preview",
+        url: "/agile-image2.jpg ",
+        alt: "AeroX Detail View",
       },
       {
         id: "img4",
@@ -261,7 +260,6 @@ export const products: Product[] = [
     currentPrice: 310000,
     originalPrice: 360000,
     stock: 15,
-    availabilityStatus: getAvailabilityStatus(15),
     rating: 4.7,
     reviewCount: 189,
     badge: "Best Seller",
@@ -297,57 +295,7 @@ export const products: Product[] = [
     variants: [],
     accessories: [],
     reviews: [],
-    features: [
-      {
-        id: "feature-1",
-
-        title: "Powerful Motor",
-
-        subtitle:
-          "Effortless acceleration for every ride",
-
-        description:
-          "High-performance motor engineered for power.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Motor",
-            value: "750W",
-          },
-          {
-            label: "Torque",
-            value: "90Nm",
-          },
-        ],
-      },
-
-      {
-        id: "feature-2",
-
-        title: "Long Lasting Battery",
-
-        subtitle:
-          "Go further on a single charge",
-
-        description:
-          "Reliable battery system for long journeys.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Range",
-            value: "120km",
-          },
-          {
-            label: "Battery",
-            value: "48V",
-          },
-        ],
-      },
-    ],
+    features: features,
   },
 
   {
@@ -386,7 +334,6 @@ export const products: Product[] = [
     currentPrice: 420000,
     originalPrice: 470000,
     stock: 7,
-    availabilityStatus: getAvailabilityStatus(7),
     rating: 4.6,
     reviewCount: 98,
     badge: "Off-Road",
@@ -422,57 +369,7 @@ export const products: Product[] = [
     variants: [],
     accessories: [],
     reviews: [],
-    features: [
-      {
-        id: "feature-1",
-
-        title: "Powerful Motor",
-
-        subtitle:
-          "Effortless acceleration for every ride",
-
-        description:
-          "High-performance motor engineered for power.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Motor",
-            value: "750W",
-          },
-          {
-            label: "Torque",
-            value: "90Nm",
-          },
-        ],
-      },
-
-      {
-        id: "feature-2",
-
-        title: "Long Lasting Battery",
-
-        subtitle:
-          "Go further on a single charge",
-
-        description:
-          "Reliable battery system for long journeys.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Range",
-            value: "120km",
-          },
-          {
-            label: "Battery",
-            value: "48V",
-          },
-        ],
-      },
-    ],
+    features: features,
   },
 
   {
@@ -493,13 +390,13 @@ export const products: Product[] = [
       },
       {
         id: "img2",
-        url: "/ebikes/Ebike2.png",
-        alt: "Urban Glide Side View",
+        url: "/agile-image1.jpg",
+        alt: "AeroX Side View",
       },
       {
         id: "img3",
-        url: "https://i.pravatar.cc/600?img=47",
-        alt: "Urban Rider Lifestyle",
+        url: "/agile-image2.jpg ",
+        alt: "AeroX Detail View",
       },
       {
         id: "img4",
@@ -511,7 +408,6 @@ export const products: Product[] = [
     currentPrice: 195000,
     originalPrice: 230000,
     stock: 22,
-    availabilityStatus: getAvailabilityStatus(22),
     rating: 4.4,
     reviewCount: 72,
     badge: "City Rider",
@@ -547,57 +443,7 @@ export const products: Product[] = [
     variants: [],
     accessories: [],
     reviews: [],
-    features: [
-      {
-        id: "feature-1",
-
-        title: "Powerful Motor",
-
-        subtitle:
-          "Effortless acceleration for every ride",
-
-        description:
-          "High-performance motor engineered for power.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Motor",
-            value: "750W",
-          },
-          {
-            label: "Torque",
-            value: "90Nm",
-          },
-        ],
-      },
-
-      {
-        id: "feature-2",
-
-        title: "Long Lasting Battery",
-
-        subtitle:
-          "Go further on a single charge",
-
-        description:
-          "Reliable battery system for long journeys.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Range",
-            value: "120km",
-          },
-          {
-            label: "Battery",
-            value: "48V",
-          },
-        ],
-      },
-    ],
+    features: features,
   },
 
   {
@@ -618,13 +464,13 @@ export const products: Product[] = [
       },
       {
         id: "img2",
-        url: "/ebikes/Ebikes.png",
-        alt: "ThunderBolt Side View",
+        url: "/agile-image1.jpg",
+        alt: "AeroX Side View",
       },
       {
         id: "img3",
-        url: "https://i.pravatar.cc/600?img=15",
-        alt: "ThunderBolt Rider",
+        url: "/agile-image2.jpg ",
+        alt: "AeroX Detail View",
       },
       {
         id: "img4",
@@ -636,7 +482,6 @@ export const products: Product[] = [
     currentPrice: 550000,
     originalPrice: 620000,
     stock: 5,
-    availabilityStatus: getAvailabilityStatus(5),
     rating: 5,
     reviewCount: 230,
     badge: "Premium",
@@ -672,57 +517,7 @@ export const products: Product[] = [
     variants: [],
     accessories: [],
     reviews: [],
-    features: [
-      {
-        id: "feature-1",
-
-        title: "Powerful Motor",
-
-        subtitle:
-          "Effortless acceleration for every ride",
-
-        description:
-          "High-performance motor engineered for power.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Motor",
-            value: "750W",
-          },
-          {
-            label: "Torque",
-            value: "90Nm",
-          },
-        ],
-      },
-
-      {
-        id: "feature-2",
-
-        title: "Long Lasting Battery",
-
-        subtitle:
-          "Go further on a single charge",
-
-        description:
-          "Reliable battery system for long journeys.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Range",
-            value: "120km",
-          },
-          {
-            label: "Battery",
-            value: "48V",
-          },
-        ],
-      },
-    ],
+    features: features,
   },
 
   {
@@ -741,15 +536,15 @@ export const products: Product[] = [
         url: "/ebikes/Ebike2.png",
         alt: "EcoRide Folded View",
       },
-      {
+     {
         id: "img2",
-        url: "/ebikes/Ebikes3.png",
-        alt: "EcoRide Side View",
+        url: "/agile-image1.jpg",
+        alt: "AeroX Side View",
       },
       {
         id: "img3",
-        url: "https://i.pravatar.cc/600?img=22",
-        alt: "EcoRide Lifestyle Shot",
+        url: "/agile-image2.jpg ",
+        alt: "AeroX Detail View",
       },
       {
         id: "img4",
@@ -761,7 +556,6 @@ export const products: Product[] = [
     currentPrice: 160000,
     originalPrice: 190000,
     stock: 30,
-    availabilityStatus: getAvailabilityStatus(30),
     rating: 4.5,
     reviewCount: 64,
     badge: "Foldable",
@@ -797,56 +591,185 @@ export const products: Product[] = [
     variants: [],
     accessories: [],
     reviews: [],
-    features: [
-      {
-        id: "feature-1",
-
-        title: "Powerful Motor",
-
-        subtitle:
-          "Effortless acceleration for every ride",
-
-        description:
-          "High-performance motor engineered for power.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Motor",
-            value: "750W",
-          },
-          {
-            label: "Torque",
-            value: "90Nm",
-          },
-        ],
-      },
-
-      {
-        id: "feature-2",
-
-        title: "Long Lasting Battery",
-
-        subtitle:
-          "Go further on a single charge",
-
-        description:
-          "Reliable battery system for long journeys.",
-
-        image: "/home/explore.png",
-
-        specs: [
-          {
-            label: "Range",
-            value: "120km",
-          },
-          {
-            label: "Battery",
-            value: "48V",
-          },
-        ],
-      },
-    ],
+    features: features,
   },
 ];
+
+
+
+
+export const accessories2: Product = {
+  id: "oversize-saddle",
+
+  name: "Oversize Saddle",
+
+  currentPrice: 73000,
+
+  rating: 4.6,
+
+  reviewCount: 135,
+
+  shippingDuration: "2",
+
+  images: [
+    {
+      id: "img1",
+      url: "/accessories/accessory2.png",
+      alt: "AeroX Front View",
+    },
+    {
+      id: "img2",
+      url: "/accessories/accessory1.png",
+      alt: "AeroX Side View",
+    },
+    {
+      id: "img3",
+      url: "/accessories/accessory3.png",
+      alt: "AeroX Detail View",
+    },
+    {
+      id: "img4",
+      url: "/accessories/accessory4.png",
+      alt: "AeroX Rear View",
+    },
+  ],
+
+  compatibleModels: [
+    {
+      id: "agile-comet-x",
+      name: "Agile Comet X",
+    },
+
+    {
+      id: "agile-pro",
+      name: "Agile Pro",
+    },
+
+    {
+      id: "agile-explorer",
+      name: "Agile Explorer",
+    },
+
+    {
+      id: "agile-sport",
+      name: "Agile Sport",
+    },
+
+    {
+      id: "agile-city",
+      name: "Agile City",
+    },
+
+    {
+      id: "agile-urban",
+      name: "Agile Urban",
+    },
+
+    {
+      id: "agile-lite",
+      name: "Agile Lite",
+    },
+
+    {
+      id: "agile-mountain",
+      name: "Agile Mountain",
+    },
+
+    {
+      id: "agile-x",
+      name: "Agile X",
+    },
+  ],
+
+  compatibilityTable: [
+    {
+      id: "bike-1",
+      image: "/agile-image1.jpg",
+      bikeName: "Agile Comet X",
+      model: "F26F",
+      wheelSize: '26"',
+    },
+
+    {
+      id: "bike-2",
+      image: "/agile-image2.jpg",
+      bikeName: "Agile Pro",
+      model: "F26F",
+      wheelSize: '26"',
+    },
+
+    {
+      id: "bike-3",
+      image: "/agile-image3.jpg",
+      bikeName: "Agile Explorer",
+      model: "F28X",
+      wheelSize: '28"',
+    },
+
+    {
+      id: "bike-4",
+      image: "/agile-image1.jpg",
+      bikeName: "Agile Sport",
+      model: "S24R",
+      wheelSize: '24"',
+    },
+
+    {
+      id: "bike-5",
+      image: "/agile-image2.jpg",
+      bikeName: "Agile City",
+      model: "C26U",
+      wheelSize: '26"',
+    },
+
+    {
+      id: "bike-6",
+      image: "/agile-image3.jpg",
+      bikeName: "Agile Urban",
+      model: "U27T",
+      wheelSize: '27.5"',
+    },
+  ],
+
+  features: [
+    {
+      id: "feature-1",
+      title: "Extra Wide Soft Seat",
+      description:
+        "Designed with high-density foam and dual suspension to relieve pressure and improve riding comfort.",
+    },
+
+    {
+      id: "feature-2",
+      title: "Universal Fit",
+      description:
+        "Compatible with mountain bikes, cruisers, exercise bikes, and e-bikes.",
+    },
+
+    {
+      id: "feature-3",
+      title: "Ergonomic Design",
+      description:
+        "Ventilated structure reduces pressure and improves comfort.",
+    },
+
+    {
+      id: "feature-4",
+      title: "Waterproof Surface",
+      description:
+        "Scratch-resistant microfiber leather protects against rain.",
+    },
+
+    {
+      id: "feature-5",
+      title: "Reflective Safety Belt",
+      description:
+        "Improves visibility during night rides.",
+    },
+  ],
+
+  packageContents: ["1 × Universal Bike Soft Saddle"],
+
+  note:
+    "Due to monitor differences, actual colours may vary slightly from the product images.",
+};

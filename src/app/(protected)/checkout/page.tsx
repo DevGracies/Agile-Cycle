@@ -1,100 +1,165 @@
 "use client";
 
-import Image from "next/image";
-import { ShoppingBasket } from "lucide-react";
-
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckoutFormValues, checkoutSchema } from "@/src/schema/checkout";
 import CheckoutLayout from "@/src/components/checkout/CheckoutLayout";
 import OrderSummary from "@/src/components/checkout/OrderSummary";
 import CustomerInformation from "@/src/components/checkout/CustomerInformation";
-import { checkoutItems } from "@/src/mocks/checkout.mock";
 import ShippingMethod from "@/src/components/checkout/ShippingMethod";
 import PaymentForm from "@/src/components/checkout/PaymentForm";
 import CheckoutFooter from "@/src/components/checkout/CheckoutFooter";
-import Container from "@/src/components/layout/Container";
+
 import Select from "@/src/components/ui/CustomSelect";
+
+import { checkoutItems } from "@/src/mocks/checkout.mock";
+
+import { checkoutSchema, CheckoutFormValues } from "@/src/schema/checkout";
+import { ShoppingCart } from "lucide-react";
+import Image from "next/image";
+import Container from "@/src/components/layout/Container";
+import Link from "next/link";
 
 export default function CheckoutPage() {
   const [shippingMethod, setShippingMethod] = useState<
     "local" | "express" | "pickup"
   >("local");
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [carrier, setCarrier] = useState<string | null>(null);
 
-  const form = useForm<CheckoutFormValues>({
-    resolver: zodResolver(checkoutSchema),
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    defaultValues: {
-      email: "example@gmail.com",
-      country: "Nigeria",
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof CheckoutFormValues, string>>
+  >({});
 
-      firstName: "",
-      lastName: "",
+  const [formData, setFormData] = useState<CheckoutFormValues>({
+    email: "example@gmail.com",
 
-      address: "",
-      addressLine2: "",
+    country: "Nigeria",
 
-      city: "",
-      state: "",
-      zipCode: "",
+    firstName: "",
+    lastName: "",
 
-      phone: "",
+    address: "",
+    addressLine2: "",
 
-      cardNumber: "",
-      expiry: "",
-      cvv: "",
+    city: "",
+    state: "",
+    zipCode: "",
 
-      saveCard: false,
-    },
+    phone: "",
+
+    cardNumber: "",
+    expiry: "",
+    cvv: "",
+
+    saveCard: false,
   });
 
-  const onSubmit = async (data: CheckoutFormValues) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value, type } = e.target;
+
+    const checked =
+      type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
+
+    setFormData((prev) => ({
+      ...prev,
+
+      [name]: type === "checkbox" ? checked : value,
+    }));
+
+    if (errors[name as keyof CheckoutFormValues]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: undefined,
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const result = checkoutSchema.safeParse(formData);
+
+    if (result.success) {
+      setErrors({});
+      return true;
+    }
+
+    const formattedErrors: Partial<Record<keyof CheckoutFormValues, string>> =
+      {};
+
+    result.error.issues.forEach((error) => {
+      const field = error.path[0] as keyof CheckoutFormValues;
+
+      formattedErrors[field] = error.message;
+    });
+
+    setErrors(formattedErrors);
+
+    return false;
+  };
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const isValid = validateForm();
+
+    if (!isValid) return;
+
     try {
       setIsSubmitting(true);
 
       console.log({
-        ...data,
+        ...formData,
         shippingMethod,
+        carrier,
       });
 
       await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      /*
+      success actions here:
+      - redirect
+      - clear cart
+      - toast success
+      */
+    } catch (error) {
+      console.error(error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
       {/* HEADER */}
 
-      <header className="sticky top-0 z-40 border-b border-gray-200 bg-white p-2">
+      <header className="w-full sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-gray-200 bg-white p-2">
         <Container className="items-center flex justify-between">
-          <Image
-            src="/Agile-Cycle-Logo.png"
-            alt="Agile Cycle"
-            width={80}
-            height={60}
-            priority
-          />
+          <Link href="/">
+            <Image
+              src="/Agile-Cycle-Logo.png"
+              alt="Agile Cycle"
+              width={60}
+              height={60}
+              priority
+            />
+          </Link>
 
           <button className="rounded-xl p-2 transition hover:bg-neutral-100">
-            <ShoppingBasket size={22} className="text-[#5BAE2E]" />
+            <ShoppingCart size={22} className="text-[#5BAE2E]" />
           </button>
         </Container>
       </header>
-
       <CheckoutLayout summary={<OrderSummary items={checkoutItems} />}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* CUSTOMER INFO */}
-
-          <CustomerInformation control={form.control} />
-
-          {/* SHIPPING */}
+        <form onSubmit={onSubmit} className="space-y-6">
+          <CustomerInformation
+            formData={formData}
+            onChange={handleChange}
+            errors={errors}
+          />
 
           <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
             <ShippingMethod
@@ -109,40 +174,41 @@ export default function CheckoutPage() {
                 </label>
 
                 <Select
-                  value={carrier as string}
-                  onChange={(val) => setCarrier(val as string)}
+                  value={carrier ?? ""}
+                  onChange={(value) => setCarrier(value as string)}
                   placeholder="Select Carrier"
                   options={[
-                    { label: "GIG Logistics", value: "gigLogistics" },
-                    { label: "DHL", value: "dhl" },
-                    { label: "FedEx", value: "fedex" },
+                    {
+                      label: "GIG Logistics",
+                      value: "gigLogistics",
+                    },
+
+                    {
+                      label: "DHL",
+                      value: "dhl",
+                    },
+
+                    {
+                      label: "FedEx",
+                      value: "fedex",
+                    },
                   ]}
-                  className="w-full"
+                  className="w-full!"
                 />
               </div>
             )}
           </section>
 
-          {/* PAYMENT */}
-
-          <PaymentForm control={form.control} isSubmitting={isSubmitting} />
-
-          {/* FOOTER */}
+          <PaymentForm
+            formData={formData}
+            onChange={handleChange}
+            errors={errors}
+            isSubmitting={isSubmitting}
+          />
 
           <CheckoutFooter />
         </form>
       </CheckoutLayout>
-
-      {/* MOBILE STICKY CTA */}
-
-      <div className="fixed bottom-0 left-0 right-0 border-t bg-white p-4 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] lg:hidden">
-        <button
-          type="button"
-          className="h-14 w-full rounded-xl bg-secondary/90 font-medium text-white"
-        >
-          Pay Now
-        </button>
-      </div>
-    </div>
+    </>
   );
 }

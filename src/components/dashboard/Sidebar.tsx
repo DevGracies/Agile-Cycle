@@ -8,6 +8,7 @@ import logo from "@/public/Agile-Cycle-Logo.png";
 import { usePathname } from "next/navigation";
 import { DASHBOARD_NAVS } from "@/src/lib/utils";
 import { useConfirm } from "@/src/context/ConfirmProvider";
+import toast from "react-hot-toast";
 
 export default function Sidebar({
   open,
@@ -94,12 +95,12 @@ export default function Sidebar({
               >
                 {/* LEFT BORDER */}
                 {active && (
-                  <div className="absolute left-0 top-0 h-full w-1 bg-[#519A09]" />
+                  <div className="absolute left-0 top-0 h-full w-1 bg-primary" />
                 )}
 
-                <Icon size={20} className={active ? "text-[#519A09]" : ""} />
+                <Icon size={20} className={active ? "text-primary" : ""} />
 
-                <span className={`${active ? "text-[#519A09]" : ""}`}>
+                <span className={`${active ? "text-primary" : ""}`}>
                   {item.label}
                 </span>
               </Link>
@@ -111,7 +112,7 @@ export default function Sidebar({
               className="
               w-full h-[50px]
               rounded-xl
-              bg-[#01430D]
+              bg-secondary
               text-white
               font-semibold
               flex items-center justify-center gap-2
@@ -124,7 +125,7 @@ export default function Sidebar({
                   description: "Are you sure you want to logout?",
                   confirmText: "Yes, Logout",
                   onConfirm: async () => {
-                    window.alert("Logged out successfully")
+                    toast.success("Logged out successfully")
                   },
                 });
               }}

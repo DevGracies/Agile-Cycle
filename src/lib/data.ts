@@ -114,8 +114,6 @@ export const accessories: Product[] = [
     isFeatured: false,
     isNewArrival: true,
 
-    availabilityStatus: "in-stock",
-
     colors: [],
   },
 
@@ -148,8 +146,6 @@ export const accessories: Product[] = [
 
     isFeatured: false,
     isNewArrival: false,
-
-    availabilityStatus: "in-stock",
 
     colors: [],
   },
@@ -184,8 +180,6 @@ export const accessories: Product[] = [
     isFeatured: true,
     isNewArrival: false,
 
-    availabilityStatus: "in-stock",
-
     colors: [],
   },
 
@@ -218,8 +212,6 @@ export const accessories: Product[] = [
 
     isFeatured: true,
     isNewArrival: true,
-
-    availabilityStatus: "in-stock",
 
     colors: [],
   },
@@ -254,8 +246,6 @@ export const accessories: Product[] = [
     isFeatured: false,
     isNewArrival: true,
 
-    availabilityStatus: "in-stock",
-
     colors: [],
   },
 
@@ -288,8 +278,6 @@ export const accessories: Product[] = [
 
     isFeatured: false,
     isNewArrival: false,
-
-    availabilityStatus: "in-stock",
 
     colors: [],
   },
@@ -324,183 +312,171 @@ export const enhancements: Product[] = [
     isFeatured: true,
     isNewArrival: false,
 
-    availabilityStatus: "in-stock",
-
     colors: [],
   },
   {
-  id: "product14",
-  slug: "smart-display-console",
-  sku: "ENH-002",
+    id: "product14",
+    slug: "smart-display-console",
+    sku: "ENH-002",
 
-  name: "Smart Display Console",
-  description: "Advanced LCD display with real-time ride metrics",
-  shortDescription: "Ride data smart display",
+    name: "Smart Display Console",
+    description: "Advanced LCD display with real-time ride metrics",
+    shortDescription: "Ride data smart display",
 
-  category: "enhancement",
+    category: "enhancement",
 
-  images: [
-    {
-      id: "img-1",
-      url: enhancement2.src,
-      alt: "Smart Display Console",
-    },
-  ],
+    images: [
+      {
+        id: "img-1",
+        url: enhancement2.src,
+        alt: "Smart Display Console",
+      },
+    ],
 
-  currentPrice: 73000,
-  originalPrice: 88000,
+    currentPrice: 73000,
+    originalPrice: 88000,
 
-  stock: 20,
+    stock: 20,
 
-  rating: 4.8,
-  reviewCount: 11,
+    rating: 4.8,
+    reviewCount: 11,
 
-  isFeatured: true,
-  isNewArrival: true,
+    isFeatured: true,
+    isNewArrival: true,
 
-  availabilityStatus: "in-stock",
+    colors: [],
+  },
 
-  colors: [],
-},
+  {
+    id: "product15",
+    slug: "suspension-seat-post",
+    sku: "ENH-003",
 
-{
-  id: "product15",
-  slug: "suspension-seat-post",
-  sku: "ENH-003",
+    name: "Suspension Seat Post",
+    description: "Improves comfort by absorbing road shocks",
+    shortDescription: "Shock-absorbing seat post",
 
-  name: "Suspension Seat Post",
-  description: "Improves comfort by absorbing road shocks",
-  shortDescription: "Shock-absorbing seat post",
+    category: "enhancement",
 
-  category: "enhancement",
+    images: [
+      {
+        id: "img-1",
+        url: enhancement3.src,
+        alt: "Suspension Seat Post",
+      },
+    ],
 
-  images: [
-    {
-      id: "img-1",
-      url: enhancement3.src,
-      alt: "Suspension Seat Post",
-    },
-  ],
+    currentPrice: 73000,
+    originalPrice: 85000,
 
-  currentPrice: 73000,
-  originalPrice: 85000,
+    stock: 18,
 
-  stock: 18,
+    rating: 4.5,
+    reviewCount: 6,
 
-  rating: 4.5,
-  reviewCount: 6,
+    isFeatured: false,
+    isNewArrival: true,
 
-  isFeatured: false,
-  isNewArrival: true,
+    colors: [],
+  },
 
-  availabilityStatus: "in-stock",
+  {
+    id: "product16",
+    slug: "led-lighting-system",
+    sku: "ENH-004",
 
-  colors: [],
-},
+    name: "Integrated LED Lighting System",
+    description: "Front and rear LED lighting for enhanced night visibility",
+    shortDescription: "Full bike LED lighting kit",
 
-{
-  id: "product16",
-  slug: "led-lighting-system",
-  sku: "ENH-004",
+    category: "enhancement",
 
-  name: "Integrated LED Lighting System",
-  description: "Front and rear LED lighting for enhanced night visibility",
-  shortDescription: "Full bike LED lighting kit",
+    images: [
+      {
+        id: "img-1",
+        url: enhancement4.src,
+        alt: "LED Lighting System",
+      },
+    ],
 
-  category: "enhancement",
+    currentPrice: 73000,
+    originalPrice: 82000,
 
-  images: [
-    {
-      id: "img-1",
-      url: enhancement4.src,
-      alt: "LED Lighting System",
-    },
-  ],
+    stock: 25,
 
-  currentPrice: 73000,
-  originalPrice: 82000,
+    rating: 4.9,
+    reviewCount: 14,
 
-  stock: 25,
+    isFeatured: true,
+    isNewArrival: false,
 
-  rating: 4.9,
-  reviewCount: 14,
+    colors: [],
+  },
 
-  isFeatured: true,
-  isNewArrival: false,
+  {
+    id: "product17",
+    slug: "cargo-rear-rack",
+    sku: "ENH-005",
 
-  availabilityStatus: "in-stock",
+    name: "Cargo Rear Rack with Panniers",
+    description: "Heavy-duty rear rack with storage panniers for long rides",
+    shortDescription: "Storage rack system",
 
-  colors: [],
-},
+    category: "enhancement",
 
-{
-  id: "product17",
-  slug: "cargo-rear-rack",
-  sku: "ENH-005",
+    images: [
+      {
+        id: "img-1",
+        url: enhancement5.src,
+        alt: "Cargo Rear Rack",
+      },
+    ],
 
-  name: "Cargo Rear Rack with Panniers",
-  description: "Heavy-duty rear rack with storage panniers for long rides",
-  shortDescription: "Storage rack system",
+    currentPrice: 73000,
+    originalPrice: 89000,
 
-  category: "enhancement",
+    stock: 12,
 
-  images: [
-    {
-      id: "img-1",
-      url: enhancement5.src,
-      alt: "Cargo Rear Rack",
-    },
-  ],
+    rating: 5,
+    reviewCount: 7,
 
-  currentPrice: 73000,
-  originalPrice: 89000,
+    isFeatured: false,
+    isNewArrival: false,
 
-  stock: 12,
+    colors: [],
+  },
 
-  rating: 5,
-  reviewCount: 7,
+  {
+    id: "product18",
+    slug: "ergonomic-gel-saddle",
+    sku: "ENH-006",
 
-  isFeatured: false,
-  isNewArrival: false,
+    name: "Ergonomic Gel Saddle",
+    description: "Premium gel saddle designed for maximum riding comfort",
+    shortDescription: "Comfort gel seat",
 
-  availabilityStatus: "in-stock",
+    category: "enhancement",
 
-  colors: [],
-},
+    images: [
+      {
+        id: "img-1",
+        url: enhancement6.src,
+        alt: "Ergonomic Gel Saddle",
+      },
+    ],
 
-{
-  id: "product18",
-  slug: "ergonomic-gel-saddle",
-  sku: "ENH-006",
+    currentPrice: 73000,
+    originalPrice: 87000,
 
-  name: "Ergonomic Gel Saddle",
-  description: "Premium gel saddle designed for maximum riding comfort",
-  shortDescription: "Comfort gel seat",
+    stock: 22,
 
-  category: "enhancement",
+    rating: 4.0,
+    reviewCount: 10,
 
-  images: [
-    {
-      id: "img-1",
-      url: enhancement6.src,
-      alt: "Ergonomic Gel Saddle",
-    },
-  ],
+    isFeatured: false,
+    isNewArrival: true,
 
-  currentPrice: 73000,
-  originalPrice: 87000,
-
-  stock: 22,
-
-  rating: 4.0,
-  reviewCount: 10,
-
-  isFeatured: false,
-  isNewArrival: true,
-
-  availabilityStatus: "in-stock",
-
-  colors: [],
-},
+    colors: [],
+  },
 
 ];

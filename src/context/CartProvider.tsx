@@ -43,7 +43,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const updated = await cartService.addToCart(product, quantity);
 
       setItems(updated);
-      toast.success("Item added to cart");
+      toast.success(`${quantity} ${quantity > 1 ? "items" : "item"} added to cart`);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to add item to cart";

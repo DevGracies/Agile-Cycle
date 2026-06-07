@@ -29,7 +29,7 @@ export const useProductPurchase = (
 
   const isLowStock =
     product.stock > 0 &&
-    product.stock < 5;
+    product.stock < 5;1
 
   const canAddToCart = useMemo(() => {
     return !isOutOfStock;
@@ -61,7 +61,7 @@ export const useProductPurchase = (
     );
     setSelectedBattery(
       product.batteryOptions?.[0]?.id ??
-        null,
+      null,
     );
   };
 

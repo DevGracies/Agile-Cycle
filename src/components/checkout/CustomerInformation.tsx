@@ -1,28 +1,23 @@
 "use client";
 
-import { Control, Controller } from "react-hook-form";
+import Select from "../ui/CustomSelect";
 import { Input } from "../ui/Input";
-import { Check } from "lucide-react";
-
-export interface CheckoutFormValues {
-  email: string;
-  country: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  addressLine2: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  phone: string;
-}
+import { CheckoutFormValues } from "@/src/schema/checkout";
 
 interface CustomerInformationProps {
-  control: Control<CheckoutFormValues>;
+  formData: CheckoutFormValues;
+
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => void;
+
+  errors: Partial<Record<keyof CheckoutFormValues, string>>;
 }
 
 export default function CustomerInformation({
-  control,
+  formData,
+  onChange,
+  errors,
 }: CustomerInformationProps) {
   return (
     <section className="space-y-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -31,20 +26,20 @@ export default function CustomerInformation({
       <div className="space-y-2">
         <div
           className="
-                flex items-center gap-4
-                overflow-hidden
-                rounded-lg
-                border border-[#E7F4E4]
-                bg-gray-100
-              "
+            flex items-center gap-4
+            overflow-hidden
+            rounded-lg
+            border border-[#E7F4E4]
+            bg-gray-100
+          "
         >
           <div
             className="
-                  bg-secondary
-                  text-white
-                  text-sm
-                  p-4
-                "
+              bg-secondary
+              text-white
+              text-sm
+              p-4
+            "
             style={{
               clipPath: "polygon(0 0, 100% 0, 70% 100%, 0% 100%)",
               minWidth: "220px",
@@ -54,9 +49,7 @@ export default function CustomerInformation({
           </div>
 
           <div className="flex-1">
-            <p className="text-sm font-medium">
-              example@gmail.com
-            </p>
+            <p className="text-sm font-medium">{formData.email}</p>
           </div>
         </div>
       </div>
@@ -64,40 +57,45 @@ export default function CustomerInformation({
       {/* COUNTRY */}
 
       <div className="space-y-2">
-        <label className="text-sm font-medium text-gray-500">Country / Region</label>
+        <label className="text-sm font-medium text-gray-500">
+          Country / Region
+        </label>
 
-        {/* <Controller
-          control={control}
-          name="country"
-          render={({ field }) => (
-            <Select
-              value={field.value}
-              onValueChange={field.onChange}
-            >
-              <SelectTrigger className="h-12">
-                <SelectValue placeholder="Select Country" />
-              </SelectTrigger>
+        <Select
+          value={formData.country ?? ""}
+          onChange={(value) => {
+            const event = {
+              target: { name: "country", value },
+            } as React.ChangeEvent<HTMLSelectElement>;
+            onChange(event);
+          }}
+          placeholder="Select Country"
+          options={[
+            {
+              label: "Nigeria",
+              value: "nigeria",
+            },
 
-              <SelectContent>
-                <SelectItem value="Nigeria">
-                  Nigeria
-                </SelectItem>
+            {
+              label: "Ghana",
+              value: "ghana",
+            },
 
-                <SelectItem value="Ghana">
-                  Ghana
-                </SelectItem>
+            {
+              label: "Kenya",
+              value: "kenya",
+            },
+            {
+              label: "South Africa",
+              value: "south-africa",
+            },
+          ]}
+          className="w-full!"
+        />
 
-                <SelectItem value="Kenya">
-                  Kenya
-                </SelectItem>
-
-                <SelectItem value="South Africa">
-                  South Africa
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          )}
-        /> */}
+        {errors.country && (
+          <p className="text-sm text-red-500">{errors.country}</p>
+        )}
       </div>
 
       {/* NAME */}
@@ -106,21 +104,33 @@ export default function CustomerInformation({
         <div className="space-y-2">
           <label className="text-sm font-medium">First Name</label>
 
-          <Controller
-            control={control}
+          <Input
             name="firstName"
-            render={({ field }) => <Input {...field} placeholder="John"  className="h-12" />}
+            value={formData.firstName}
+            onChange={onChange}
+            placeholder="John"
+            className="h-12"
           />
+
+          {errors.firstName && (
+            <p className="text-sm text-red-500">{errors.firstName}</p>
+          )}
         </div>
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Last Name</label>
 
-          <Controller
-            control={control}
+          <Input
             name="lastName"
-            render={({ field }) => <Input {...field} placeholder="Doe" className="h-12" />}
+            value={formData.lastName}
+            onChange={onChange}
+            placeholder="Doe"
+            className="h-12"
           />
+
+          {errors.lastName && (
+            <p className="text-sm text-red-500">{errors.lastName}</p>
+          )}
         </div>
       </div>
 
@@ -129,30 +139,32 @@ export default function CustomerInformation({
       <div className="space-y-2">
         <label className="text-sm font-medium">Address</label>
 
-        <Controller
-          control={control}
+        <Input
           name="address"
-          render={({ field }) => (
-            <Input
-              {...field}
-              placeholder="House number and street name"
-              className="h-12"
-            />
-          )}
+          value={formData.address}
+          onChange={onChange}
+          placeholder="House number and street name"
+          className="h-12"
         />
+
+        {errors.address && (
+          <p className="text-sm text-red-500">{errors.address}</p>
+        )}
       </div>
 
-      <Controller
-        control={control}
-        name="addressLine2"
-        render={({ field }) => (
-          <Input
-            {...field}
-            className="h-12"
-            placeholder="Apartment, suite, unit, etc. (optional)"
-          />
+      <div className="space-y-2">
+        <Input
+          name="addressLine2"
+          value={formData.addressLine2 ?? ""}
+          onChange={onChange}
+          className="h-12"
+          placeholder="Apartment, suite, unit, etc. (optional)"
+        />
+
+        {errors.addressLine2 && (
+          <p className="text-sm text-red-500">{errors.addressLine2}</p>
         )}
-      />
+      </div>
 
       {/* LOCATION */}
 
@@ -160,31 +172,47 @@ export default function CustomerInformation({
         <div className="space-y-2">
           <label className="text-sm font-medium">City</label>
 
-          <Controller
-            control={control}
+          <Input
             name="city"
-            render={({ field }) => <Input {...field} placeholder="Gwarinpa" className="h-12" />}
+            value={formData.city}
+            onChange={onChange}
+            placeholder="Gwarinpa"
+            className="h-12"
           />
+
+          {errors.city && <p className="text-sm text-red-500">{errors.city}</p>}
         </div>
 
         <div className="space-y-2">
           <label className="text-sm font-medium">State</label>
 
-          <Controller
-            control={control}
+          <Input
             name="state"
-            render={({ field }) => <Input {...field} placeholder="Abuja" className="h-12" />}
+            value={formData.state}
+            onChange={onChange}
+            placeholder="Abuja"
+            className="h-12"
           />
+
+          {errors.state && (
+            <p className="text-sm text-red-500">{errors.state}</p>
+          )}
         </div>
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Zip Code</label>
 
-          <Controller
-            control={control}
+          <Input
             name="zipCode"
-            render={({ field }) => <Input {...field} placeholder="1009823" className="h-12" />}
+            value={formData.zipCode}
+            onChange={onChange}
+            placeholder="1009823"
+            className="h-12"
           />
+
+          {errors.zipCode && (
+            <p className="text-sm text-red-500">{errors.zipCode}</p>
+          )}
         </div>
       </div>
 
@@ -193,11 +221,15 @@ export default function CustomerInformation({
       <div className="space-y-2">
         <label className="text-sm font-medium">Phone</label>
 
-        <Controller
-          control={control}
+        <Input
           name="phone"
-          render={({ field }) => <Input {...field} placeholder="08012345678" className="h-12" />}
+          value={formData.phone}
+          onChange={onChange}
+          placeholder="08012345678"
+          className="h-12"
         />
+
+        {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
 
         <p className="text-xs text-primary">
           In case we need to contact you about your order

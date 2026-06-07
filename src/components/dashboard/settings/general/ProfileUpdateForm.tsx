@@ -84,7 +84,7 @@ const ProfileUpdateForm = ({ profile }: ProfileUpdateFormProps) => {
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="bg-[#01430D] hover:bg-[#0b4f13] text-white px-5 py-2 rounded-lg text-sm transition-colors"
+            className="bg-secondary hover:bg-[#0b4f13] text-white px-5 py-2 rounded-lg text-sm transition-colors"
           >
             Upload new
           </button>
@@ -159,7 +159,7 @@ const ProfileUpdateForm = ({ profile }: ProfileUpdateFormProps) => {
                   dateOfBirth: e.target.value,
                 }))
               }
-              className="w-full border border-[#dfe6dc] rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              className="w-full border border-[#dfe6dc] bg-[#F7FCF7] rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
             />
 
             <CalendarDays
@@ -181,7 +181,7 @@ const ProfileUpdateForm = ({ profile }: ProfileUpdateFormProps) => {
                 address: e.target.value,
               }))
             }
-            className="w-full border border-[#dfe6dc] rounded-lg bg-[#ECFDF3] px-4 py-3 text-sm outline-none resize-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+            className="w-full border border-[#dfe6dc] rounded-lg bg-[#F7FCF7] px-4 py-3 text-sm outline-none resize-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
           />
         </div>
 
@@ -189,7 +189,7 @@ const ProfileUpdateForm = ({ profile }: ProfileUpdateFormProps) => {
           type="button"
           disabled={isLoading}
           onClick={handleSubmit}
-          className="w-full bg-[#01430D] hover:bg-[#0b4f13] transition-colors text-white py-3 rounded-xl text-sm font-medium disabled:opacity-70"
+          className="w-full bg-secondary hover:bg-[#0b4f13] transition-colors text-white py-3 rounded-xl text-sm font-medium disabled:opacity-70"
         >
           {isLoading ? "Updating..." : "Update Profile"}
         </button>

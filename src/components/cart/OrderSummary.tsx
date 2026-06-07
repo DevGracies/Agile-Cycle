@@ -1,6 +1,6 @@
-// src/components/cart/OrderSummary.tsx
 "use client";
 
+import { formatPrice } from "@/src/utils/product";
 import { useState } from "react";
 
 interface OrderSummaryProps {
@@ -10,7 +10,6 @@ interface OrderSummaryProps {
   onCheckout?: () => void;
 }
 
-import { formatPrice } from "@/src/lib/utils";
 
 export default function OrderSummary({
   subtotal,
@@ -37,7 +36,7 @@ export default function OrderSummary({
         </div>
         <button
           onClick={() => onApplyDiscount?.(discountCode)}
-          className="h-12 px-5 rounded-lg border border-[#519A09] bg-white font-lexend font-medium text-sm text-[#519A09] hover:bg-[#519A09] hover:text-white transition-colors whitespace-nowrap"
+          className="h-12 px-5 rounded-lg border border-primary bg-white font-lexend font-medium text-sm text hover:bg-primary/90 hover:text-white transition-colors whitespace-nowrap"
         >
           Apply
         </button>
@@ -48,17 +47,17 @@ export default function OrderSummary({
         <span className="font-lexend font-bold text-base text-black">
           Subtotal
         </span>
-        <span className="font-roboto font-bold text-2xl text-[#01430D]">
+        <span className="font-roboto font-bold text-2xl text-secondary">
           {formatPrice(subtotal)}
         </span>
       </div>
       {savings > 0 && subtotal > 0 && (
-        <p className="font-lexend font-semibold text-sm text-[#519A09] -mt-4">
+        <p className="font-lexend font-semibold text-sm text-primary -mt-4">
           You saved {formatPrice(savings)}!
         </p>
       )}
 
-      <div className="w-full h-px bg-[#519A09]/30" />
+      <div className="w-full h-px bg-primary/30" />
 
       {/* Order Instructions */}
       <div className="flex flex-col gap-4">
@@ -92,23 +91,23 @@ export default function OrderSummary({
             value={orderInstructions}
             onChange={(e) => setOrderInstructions(e.target.value)}
             rows={4}
-            className="w-full rounded-lg border border-[#519A09]/30 outline-none font-lexend text-sm text-black p-3 resize-none"
+            className="w-full rounded-lg border border-primary/30 outline-none font-lexend text-sm text-black p-3 resize-none"
             placeholder="Add any special instructions for your order..."
           />
         )}
       </div>
 
-      <div className="w-full h-px bg-[#519A09]/30" />
+      <div className="w-full h-px bg-primary/30" />
 
       {/* Checkout */}
       <div className="flex flex-col gap-6">
         <p className="font-lexend text-base text-black">
-          Taxes and <span className="text-[#519A09]">shipping</span> calculated
+          Taxes and <span className="text-primary">shipping</span> calculated
           at checkout
         </p>
         <button
           onClick={onCheckout}
-          className="w-full h-14 rounded-lg bg-[#01430D] text-white font-lexend font-medium text-base hover:bg-[#013009] transition-opacity"
+          className="w-full h-14 rounded-lg bg-s text-white font-lexend font-medium text-base hover:bg-[#013009] transition-opacity"
         >
           Checkout
         </button>

@@ -15,17 +15,12 @@ import CustomerReviews from "@/src/components/reviews/CustomerReviews";
 import RecentlyViewed from "@/src/components/product/RecentlyViewed";
 import { useProduct } from "@/src/hooks/useProduct";
 
-
 export default function ProductDetailsPage() {
   const params = useParams();
 
-  const productId =
-    params.productId as string;
+  const productId = params.productId as string;
 
-  const {
-    product,
-    loading,
-  } = useProduct(productId);
+  const { product, loading } = useProduct(productId);
 
   if (loading.product) {
     return (
@@ -45,36 +40,21 @@ export default function ProductDetailsPage() {
 
   return (
     <main className="bg-[#f8f8f8] min-h-screen py-24 space-y-20">
-      <Container >
+      <Container>
         <BreadCrumbs product={product} />
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-6">
-          <div>
-            <ProductGallery product={product} />
+          <ProductGallery product={product} />
+          <ProductInfo product={product} />
 
-            <div className="mt-8">
-              <DescriptionCard product={product} />
-            </div>
-
-            <div className="mt-6">
-              <ProductSpecs product={product} />
-            </div>
-
-            <div className="mt-6">
-              <BulkOrderCard />
-            </div>
+          <div className="space-y-4">
+            <DescriptionCard product={product} />
+            <ProductSpecs product={product} />
+            <BulkOrderCard />
           </div>
 
-          <div>
-            <ProductInfo product={product} />
-
-            <div className="mt-10">
-              <AccessoryList
-                accessories={
-                  product.accessories
-                }
-              />
-            </div>
+          <div className="mt-10">
+            <AccessoryList accessories={product.accessories} />
           </div>
         </div>
       </Container>
@@ -82,35 +62,23 @@ export default function ProductDetailsPage() {
       <div className="overflow-hidden bg-white py-20">
         <VideoSection />
 
-        {product.features?.map(
-          (feature, index) => (
-            <FeatureSection
-              key={feature.id}
-              title={feature.title}
-              subtitle={feature.subtitle}
-              description={
-                feature.description
-              }
-              image={feature.image}
-              specs={feature.specs}
-              reverse={
-                index % 2 !== 0
-              }
-            />
-          ),
-        )}
+        {product.features?.map((feature, index) => (
+          <FeatureSection
+            key={feature.id}
+            title={feature.title}
+            subtitle={feature.subtitle}
+            description={feature.description}
+            image={feature.image}
+            specs={feature.specs}
+            reverse={index % 2 !== 0}
+          />
+        ))}
       </div>
 
       <Container>
-        <CustomerReviews
-          product={product}
-        />
+        <CustomerReviews product={product} />
 
-        <RecentlyViewed
-          currentProductId={
-            product.id
-          }
-        />
+        <RecentlyViewed currentProductId={product.id} />
       </Container>
     </main>
   );
