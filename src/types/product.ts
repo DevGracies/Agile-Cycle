@@ -40,10 +40,10 @@ export interface ProductFeatureSpec {
 export interface ProductFeature {
   id: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   description: string;
-  image: string;
-  specs: ProductFeatureSpec[];
+  image?: string;
+  specs?: ProductFeatureSpec[];
 }
 
 export interface ProductReview {
@@ -94,6 +94,7 @@ export interface Product {
 
   currentPrice: number;
   originalPrice?: number;
+  shippingDuration?: string;
 
   stock: number;
 
@@ -104,8 +105,6 @@ export interface Product {
 
   isFeatured: boolean;
   isNewArrival: boolean;
-
-  availabilityStatus: ProductAvailability;
 
   specs?: ProductSpecs;
 
@@ -120,4 +119,24 @@ export interface Product {
   features?: ProductFeature[];
 
   reviews?: ProductReview[];
+
+  compatibleModels?: CompatibleModel[];
+  compatibilityTable?: ProductCompatibility[];
+  packageContents?: string[];
+  note?: string;
+}
+
+
+export interface CompatibleModel {
+  id: string;
+  name: string;
+  selected?: boolean;
+}
+
+export interface ProductCompatibility {
+  id: string;
+  image: string;
+  bikeName: string;
+  model: string;
+  wheelSize: string;
 }

@@ -24,12 +24,15 @@ export default function ProductVariants({
   onSelectedVariant,
 }: Props) {
   const productColor = product.colors.find((col) => col.id === selectedColor);
+  console.log("ProductVariants", product);
   return (
     <div className="space-y-7">
       {/* COLORS */}
       <div>
-        <h4 className="text-[13px] uppercase text-[#7e7e7e] font-semibold">
-          Colour <span className={`text-black`}>{productColor?.name}</span>
+        <h4 className="flex items-center gap-2 text-[13px] uppercase text-[#7e7e7e] font-semibold">
+          Colour
+          <div className="w-1 h-1 rounded-full bg-black" />
+          <span className={`text-black`}>{productColor?.name}</span>
         </h4>
 
         <div className="flex gap-4 mt-4">
@@ -37,8 +40,10 @@ export default function ProductVariants({
             <div
               key={color.id}
               onClick={() => onSelectColor(color.id)}
-              className={`w-10 h-10 rounded cursor-pointer ${
-                selectedColor === color.id ? "ring-2 ring-primary" : "ring-1 ring-gray-300"
+              className={`w-8 h-8 rounded cursor-pointer transition-all duration-300 ${
+                selectedColor === color.id
+                  ? "ring-2 ring-primary border-3 border-gray-200"
+                  : ""
               }`}
               style={{
                 backgroundColor: color.value,
@@ -50,8 +55,10 @@ export default function ProductVariants({
 
       {/* BATTERY */}
       <div>
-        <h4 className="text-[13px] uppercase text-[#7e7e7e] font-semibold">
+        <h4 className="flex items-center gap-2 text-[13px] uppercase text-[#7e7e7e] font-semibold">
           Battery Size
+          <div className="w-1 h-1 rounded-full bg-black" />
+          <p className="text-black">{product?.batteryOptions?.[0]?.label}</p>
         </h4>
 
         <div className="flex gap-3 mt-4 flex-wrap">
@@ -73,12 +80,14 @@ export default function ProductVariants({
 
       {/* SIZE */}
       <div>
-        <h4 className="text-[13px] uppercase text-[#7e7e7e] font-semibold">
-          Size <span className="text-black">{product.specs?.size}</span>
+        <h4 className="flex items-center gap-2 text-[13px] uppercase text-[#7e7e7e] font-semibold">
+          Size 
+          <div className="w-1 h-1 rounded-full bg-black"/>
+          <span className="text-black">{product.specs?.size}</span>
         </h4>
 
         <button className="mt-4 bg-primary text-white px-6 h-12 rounded-md font-semibold">
-          {product.specs?.size}
+          {product.specs?.size?.split(" ")[0]}
         </button>
       </div>
 
@@ -133,7 +142,7 @@ export default function ProductVariants({
             ${isActive ? "opacity-100 scale-100" : "opacity-0 scale-75"}
           `}
               >
-                  <Check size={14} className="text-primary" />
+                <Check size={14} className="text-primary" />
               </div>
 
               {/* ACTIVE BORDER GLOW EFFECT */}

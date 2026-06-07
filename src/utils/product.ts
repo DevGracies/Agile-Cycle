@@ -1,4 +1,4 @@
-import { Product } from "@/src/types/product";
+import { Product, ProductAvailability } from "@/src/types/product";
 
 export const calculateDiscountPercentage = (
   currentPrice: number,
@@ -11,14 +11,14 @@ export const calculateDiscountPercentage = (
   );
 };
 
-export const getAvailabilityStatus = (
+export const getStockStatus = (
   stock: number,
-): Product["availabilityStatus"] => {
+): ProductAvailability => {
   if (stock <= 0) {
     return "out-of-stock";
   }
 
-  if (stock < 5) {
+  if (stock > 0 && stock < 5) {
     return "low-stock";
   }
 

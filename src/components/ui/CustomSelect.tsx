@@ -45,7 +45,7 @@ export default function Select({
   }, []);
 
   return (
-    <div ref={containerRef} className={`relative w-full sm:w-[300px] ${className}`}>
+    <div ref={containerRef} className={` ${className} relative w-full sm:w-[300px]`}>
       {/* Trigger */}
       <button
         type="button"

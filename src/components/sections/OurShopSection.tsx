@@ -1,9 +1,13 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import shopImage from "@/public/home/our-shop.png";
 import Container from "../layout/Container";
+import { useRouter } from "next/navigation";
 
 const OurShopSection = () => {
+  const router = useRouter();
   return (
     <section className="relative min-h-[90vh] md:min-h-screen mt-16 overflow-hidden">
       <Image
@@ -37,7 +41,9 @@ const OurShopSection = () => {
           <h2 className="text-primary font-semibold">Phone Number</h2>
           <p>+234 802 290 8726</p>
         </div>
-        <button className="border-2 border-secondary w-full rounded-md bg-white/50 p-2 text-[#01430D] text-sm">Get Directions</button>
+        <button 
+        onClick={() => router.push("/support")}
+        className="border-2 border-secondary w-full rounded-md bg-white/50 p-2 text-secondary text-sm cursor-pointer">Get Directions</button>
       </div>
     </section>
   );
