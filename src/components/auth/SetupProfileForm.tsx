@@ -16,7 +16,7 @@ const SetUpProfile = () => {
     <>
       {/* HEADING */}
       <div className="mb-8">
-        <h1 className="text-[48px] leading-[48px] font-bold bg-[linear-gradient(90deg,#01430D_0%,#519A09_100%)] bg-clip-text text-transparent">
+        <h1 className="text-[45px] leading-[48px] font-bold bg-[linear-gradient(90deg,#01430D_0%,#519A09_100%)] bg-clip-text text-transparent">
           Set Up Your Profile
         </h1>
       </div>
@@ -52,7 +52,7 @@ const SetUpProfile = () => {
 
         <Link
           href="/"
-          className="block text-center text-[20px] text-[#519A09] font-medium mt-10 "
+          className="block text-center text-[20px] text-[#519A09] font-medium mt-10 pb-10"
         >
           Be part of the Agile Cycle community.
         </Link>

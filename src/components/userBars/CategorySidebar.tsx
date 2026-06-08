@@ -7,7 +7,7 @@ type SidebarProps = {
 };
 
 const sidebarData = {
-  Ebikes: [
+  "E-bikes": [
     "Cruisers",
     "Commuters",
     "Cargo Bikes",
@@ -61,7 +61,7 @@ export default function CategorySidebar({
       : activeDropdown;
 
   return (
-    <aside className="w-[230px] shrink-0 pt-1">
+    <aside className="w-full lg:w-[230px] shrink-0 pt-1">
 
       {/* TITLE */}
       <h2 className="text-[20px] leading-[44px] font-medium text-[#01430DCC] tracking-tight mb-8">
@@ -71,7 +71,10 @@ export default function CategorySidebar({
       {/* CATEGORIES */}
       {currentCategories.length > 0 && (
 
-        <div className="flex flex-col gap-[15px]">
+        <div className="
+  flex gap-3 overflow-x-auto pb-2
+  lg:flex-col lg:gap-[15px] lg:overflow-visible
+">
 
           {currentCategories.map((category) => (
 
@@ -79,20 +82,23 @@ export default function CategorySidebar({
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={`
-                w-[210px]
-                h-[52px]
-                px-[10px]
-                py-[4px]
-                text-left
-                transition-all
-                duration-200
-                text-[20px]
-                ${
-                  selectedCategory === category
-                    ? "bg-[linear-gradient(90deg,#519A09_0%,rgba(221,238,225,0)_100%)] text-black/80 font-normal"
-                    : "text-[#666666] hover:bg-gray-100 hover:text-[#01430D]"
-                }
-              `}
+              min-w-fit
+              lg:w-[210px]
+              h-[52px]
+              px-[16px]
+              py-[4px]
+              text-left
+              transition-all
+              duration-200
+              text-[16px]
+              lg:text-[20px]
+              whitespace-nowrap
+              ${
+                selectedCategory === category
+                  ? "bg-[linear-gradient(90deg,#519A09_0%,rgba(221,238,225,0)_100%)] text-black/80"
+                  : "text-[#666666] hover:bg-gray-100 hover:text-[#01430D]"
+              }
+            `}
             >
               {category}
             </button>
@@ -101,7 +107,7 @@ export default function CategorySidebar({
 
           {/* ALL BUTTON */}
           {activeDropdown !== "Support" && (
-            <button className="h-[52px] px-[10px] py-[4px] flex items-center gap-4">
+            <button className="h-[52px] px-[10px] py-[4px] flex items-center gap-3 whitespace-nowrap">
              <span className="text-[20px] leading-[44px] font-bold text-black/80 whitespace-nowrap">
                 All {activeDropdown}
               </span>

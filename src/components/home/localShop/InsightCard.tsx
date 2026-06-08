@@ -1,13 +1,8 @@
+import { InsightCardProp } from "@/src/types";
 import Image from "next/image";
 import Link from "next/link";
 
-type InsightCardProps = {
-  id: number;
-  image: string;
-  title: string;
-  description: string;
-  date: string;
-};
+type InsightCardProps = InsightCardProp;
 
 export default function InsightCard({
   image,
@@ -32,11 +27,11 @@ export default function InsightCard({
      {/* CONTENT */}
 <div className="flex flex-col flex-1">
 
-  <h3 className="mt-4 text-[22px] font-semibold text-[#000000] leading-tight line-clamp-1 overflow-hidden text-ellipsis min-h-[28px]">
+  <h3 className="mt-4 text-[22px] font-semibold text-[#000000] leading-tight line-clamp-1  min-h-[28px]">
     {title}
   </h3>
 
-  <p className="mt-3 text-[#000000] text-[14px] leading-7 line-clamp-2 overflow-hidden text-ellipsis min-h-[14px]">
+  <p className="mt-3 text-[#000000] text-[14px] leading-7 line-clamp-2  min-h-[14px]">
     {description}
   </p>
 

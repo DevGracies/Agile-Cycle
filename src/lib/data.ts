@@ -15,7 +15,9 @@ import enhancement3 from "@/public/enhancement/enhancement3.png"
 import enhancement4 from "@/public/enhancement/enhancement4.png"
 import enhancement5 from "@/public/enhancement/enhancement5.png"
 import enhancement6 from "@/public/enhancement/enhancement6.png"
-import { Product } from "../types/product"
+// import { Product } from "../types/product"
+import { Accessories, Enhancements, Product } from "../types"
+import { Insight} from "../types";
 
 
 export const categories = [
@@ -190,114 +192,277 @@ export const enhancements: Product[] = [
 ]
 
 // Insights data for the Home Agile Cycle Shop section and blog page
-export const insights = [
+export const insights: Insight[] = [
   {
-  id: 1,
-  image: "/home/insight.png",
-  title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
-  description:
-    "Keeping your eBike in great shape doesn't have to be complicated.",
-  date: "January 22, 2026",
-  author: "Admin",
-  likes: 24,
-  comments: 12,
-  content: `
-    Keeping your e-bike in top condition is essential for safety,
-    performance, and extending its lifespan.
-
-    One of the most important maintenance habits is keeping the bike clean.
-    Dirt and debris can build up around moving parts and affect performance.
-
-    Battery care is equally important. Avoid exposing your battery to
-    extreme temperatures and always use the recommended charger.`,
-},
+    id: 1,
+    image: "/home/insight.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+      {
+          id: 2,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog3.png",
+      },
+      {
+          id: 3,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog4.png",
+      },
+       {
+          id: 4,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog5.png",
+      },
+       {
+          id: 5,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog6.png",
+      },
+       {
+          id: 6,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog7.png",
+      },
+       {
+          id: 7,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog8.png",
+      },
+       {
+          id: 8,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog9.png",
+      },
+    ],
+  },
   {
     id: 2,
     image: "/home/insight2.png",
-    title: "Nigeria's Push for Greener Mobility",
-    description:
-      "How e-bikes are becoming part of the national conversation on eco-friendly transport.",
-    // date: "January 22, 2026",
+    heroImage: "/home/blog2.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+          id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog3.png",
+      },
+    ],
   },
   {
     id: 3,
     image: "/home/insight3.png",
-    title: "Agile Riders Meetup in Lagos",
-    description:
-      "A look back at our latest community ride, connecting cyclists across the city.",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
   },
   {
     id: 4,
     image: "/home/insight.png",
+    heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
-    description:
-      "Keeping your eBike in great shape doesn't have to be complicated. With regular cleaning, proper battery care...",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+          id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
   },
   {
     id: 5,
     image: "/home/insight2.png",
-    title: "Nigeria's Push for Greener Mobility",
-    description:
-      "How e-bikes are becoming part of the national conversation on eco-friendly transport.",
-    // date: "January 22, 2026",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+          id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
   },
   {
     id: 6,
     image: "/home/insight3.png",
-    title: "Agile Riders Meetup in Lagos",
-    description:
-      "A look back at our latest community ride, connecting cyclists across the city.",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+          id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
   },
   {
     id: 7,
     image: "/home/insight.png",
+    heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
-    description:
-      "Keeping your eBike in great shape doesn't have to be complicated. With regular cleaning, proper battery care...",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
   },
   {
     id: 8,
     image: "/home/insight2.png",
-    title: "Nigeria's Push for Greener Mobility",
-    description:
-      "How e-bikes are becoming part of the national conversation on eco-friendly transport.",
-    
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
   },
   {
     id: 9,
     image: "/home/insight3.png",
-    title: "Agile Riders Meetup in Lagos",
-    description:
-      "A look back at our latest community ride, connecting cyclists across the city.",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
   },
   {
     id: 10,
     image: "/home/insight.png",
+    heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
-    description:
-      "Keeping your eBike in great shape doesn't have to be complicated. With regular cleaning, proper battery care...",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
   },
   {
     id: 11,
     image: "/home/insight2.png",
-    title: "Nigeria's Push for Greener Mobility",
-    description:
-      "How e-bikes are becoming part of the national conversation on eco-friendly transport.",
-   
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
   },
-  {
+   {
     id: 12,
     image: "/home/insight3.png",
-    title: "Agile Riders Meetup in Lagos",
-    description:
-      "A look back at our latest community ride, connecting cyclists across the city.",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
   },
+
 ];
 /********************* END OF Insights data for the Home Agile Cycle Shop section and blog page******************* */

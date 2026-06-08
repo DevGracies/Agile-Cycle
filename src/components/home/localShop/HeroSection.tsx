@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function HeroSection() {
   return (
     <section className="relative w-full">
-      <div className="relative h-[941px] w-full">
+      <div className="relative min-h-[750px] lg:min-h-[941px] w-full">
 
         <Image
           src="/home/our-shop.png"
@@ -15,10 +15,10 @@ export default function HeroSection() {
         />
 
         {/* Content */}
-        <div className="absolute inset-0 max-w-7xl mx-auto px-6 py-10">
+        <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 py-8 lg:py-10">
 
           {/* Breadcrumb */}
-          <div className="flex items-center gap-3 text-[14px] text-[#01430D]">
+          <div className="flex items-center gap-2 text-[12px] sm:text-[14px] text-[#01430D]">
 
             <Link href="/Home">Home</Link>
 
@@ -29,20 +29,33 @@ export default function HeroSection() {
           </div>
 
           {/* Heading */}
-          <h1 className="mt-4 text-[42px] font-bold text-black">
+          <h1 className="mt-4 text-[30px] lg:text-[42px] font-bold text-black">
             Agile Cycle Shop
           </h1>
 
           {/* Description */}
-          <p className="mt-6 max-w-[640px] text-[16px] leading-8 text-black">
+          <p className="mt-4 lg:mt-6 max-w-[640px] text-[14px] sm:text-[16px] leading-7 lg:leading-8 text-black">
             Visit us in person ot our physical shop to experience Agile Cycle firsthand. Explore
-our full range of e-bikes, accessories, and services. Whether you're test-riding,
-getting expert advice, or selecting the perfect gear, our team is here to help you
-find the perfect fit.
+            our full range of e-bikes, accessories, and services. Whether you're test-riding,
+            getting expert advice, or selecting the perfect gear, our team is here to help you
+            find the perfect fit.
           </p>
 
           {/* Info Card */}
-          <div className="absolute bottom-12 right-0 w-[398px] h-[450px] rounded-3xl bg-white/90 backdrop-blur-md p-8 shadow-lg">
+          <div className="
+  mt-12
+  lg:mt-0
+  lg:absolute
+  lg:bottom-12
+  lg:right-0
+  w-full
+  max-w-[398px]
+  rounded-3xl
+  bg-white/90
+  backdrop-blur-md
+  p-6 lg:p-8
+  shadow-lg
+">
 
             <div>
               <h3 className="text-[#519A09] font-semibold text-lg">
@@ -78,7 +91,7 @@ find the perfect fit.
               </p>
             </div>
 
-            <button className="mt-6 w-full h-12 border border-[#01430D] rounded-lg text-[#01430D] font-semibold">
+            <button className="mt-6 w-full h-12 border border-[#01430D] rounded-lg text-[#01430D] text-sm sm:text-base font-semibold">
               Get Directions
             </button>
 
