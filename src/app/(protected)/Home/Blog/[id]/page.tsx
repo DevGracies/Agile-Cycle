@@ -85,12 +85,12 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
         />
       </div>
 
-      <div className="mx-auto max-w-[1200px] w-full">
+      <div className="mx-auto max-w-[1100px] w-full">
 
       
 
       {/* Divider */}
-      <div className="h-px bg-[#519A09] mt-[40px]" />
+      <div className="h-px bg-[#519A09] mt-[40px] " />
 
       {/* Share */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between py-[24px]">
