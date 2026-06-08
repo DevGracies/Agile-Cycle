@@ -7,7 +7,7 @@ import ProductGrid from "../product/ProductGrid";
 
 const EnhancementsSection = () => {
   return (
-    <section className="min-h-screen">
+    <section className="min-h-screen mb-35">
       <Container>
         <ProductSectionLayout
           subtitle="Enhancements"

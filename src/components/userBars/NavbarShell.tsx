@@ -31,9 +31,7 @@ export default function NavbarShell() {
   useEffect(() => {
     if (activeDropdown) {
       setSelectedCategory(
-        defaultCategories[
-          activeDropdown as keyof typeof defaultCategories
-        ]
+        defaultCategories[activeDropdown as keyof typeof defaultCategories]
       );
     }
   }, [activeDropdown]);
@@ -57,8 +55,8 @@ export default function NavbarShell() {
 
     {showSidebar && (
       <div className="max-w-7xl w-full mx-auto px-6 py-10">
-        <div className="flex flex-col lg:flex-row gap-10">
-          <div className="hidden lg:block w-[240px]">
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className=" lg:block w-[270px]">
             <CategorySidebar
               activeDropdown={activeDropdown}
               selectedCategory={selectedCategory}

@@ -5,6 +5,10 @@ import ConfirmProvider from "../context/ConfirmProvider";
 import BackToTop from "../components/shared/BackToTop";
 import { Toaster } from "react-hot-toast";
 import { CartProvider } from "../context/CartProvider";
+import NavbarShell from "../components/userBars/NavbarShell";
+import SubscribeSection from "../components/sections/SubscribeSection";
+import FeaturesSection from "../components/sections/FeatureBanner";
+import Footer from "../components/layout/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,11 +44,17 @@ export default function RootLayout({
         <Toaster position="top-center" />
         <ConfirmProvider>
           <CartProvider>
+            <NavbarShell />
+     
           {children}
+           <SubscribeSection />
+            <FeaturesSection />
+            <Footer />
           <BackToTop />
           </CartProvider>
         </ConfirmProvider>
       </body>
+     
     </html>
   );
 }

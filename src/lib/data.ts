@@ -16,6 +16,8 @@ import enhancement4 from "@/public/enhancement/enhancement4.png"
 import enhancement5 from "@/public/enhancement/enhancement5.png"
 import enhancement6 from "@/public/enhancement/enhancement6.png"
 import { Product } from "../types/product"
+// import { Accessories, Enhancements, Product } from "../types"
+import { Insight} from "../types";
 
 
 export const categories = [
@@ -478,5 +480,282 @@ export const enhancements: Product[] = [
 
     colors: [],
   },
+]
+
+// Insights data for the Home Agile Cycle Shop section and blog page
+export const insights: Insight[] = [
+  {
+    id: 1,
+    image: "/home/insight.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+      {
+          id: 2,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog3.png",
+      },
+      {
+          id: 3,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog4.png",
+      },
+       {
+          id: 4,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog5.png",
+      },
+       {
+          id: 5,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog6.png",
+      },
+       {
+          id: 6,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog7.png",
+      },
+       {
+          id: 7,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog8.png",
+      },
+       {
+          id: 8,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog9.png",
+      },
+    ],
+  },
+  {
+    id: 2,
+    image: "/home/insight2.png",
+    heroImage: "/home/blog2.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+          id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog3.png",
+      },
+    ],
+  },
+  {
+    id: 3,
+    image: "/home/insight3.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
+  },
+  {
+    id: 4,
+    image: "/home/insight.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+          id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
+  },
+  {
+    id: 5,
+    image: "/home/insight2.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+          id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
+  },
+  {
+    id: 6,
+    image: "/home/insight3.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+          id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
+  },
+  {
+    id: 7,
+    image: "/home/insight.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
+  },
+  {
+    id: 8,
+    image: "/home/insight2.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
+  },
+  {
+    id: 9,
+    image: "/home/insight3.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
+  },
+  {
+    id: 10,
+    image: "/home/insight.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
+  },
+  {
+    id: 11,
+    image: "/home/insight2.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
+  },
+   {
+    id: 12,
+    image: "/home/insight3.png",
+    heroImage: "/home/blog.png",
+    title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
+    description: "Keeping your eBike in great shape doesn't have to be complicated.",
+    date: "January 22, 2026",
+    author: "Agile Cycle",
+    likes: 24,
+    comments: 12,
+    sections: [
+      {
+        id: 1,
+        title: "Keep the battery charged",
+        content: "The battery is the most critical component...",
+        image: "/home/blog2.png",
+      },
+    ],
+  },
 
 ];
+/********************* END OF Insights data for the Home Agile Cycle Shop section and blog page******************* */
+
+
