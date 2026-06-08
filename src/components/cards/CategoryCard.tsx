@@ -38,7 +38,7 @@ const CategoryCard = ({ title, description, image, large }: Props) => {
           group-hover:opacity-100
           transition-all duration-500
           bg-white text-secondary px-5 py-2 rounded-lg font-bold
-          shadow-lg cursor-pointer z-10
+          shadow-lg cursor-pointer z-20
         "
       >
         Shop Now

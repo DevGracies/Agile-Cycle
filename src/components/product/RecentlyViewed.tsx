@@ -1,6 +1,4 @@
-import { products } from "@/src/mocks/index.mock";
-import ProductGrid from "./ProductGrid";
-import { accessories } from "@/src/lib/data";
+import { products } from "@/src/mocks/product.mock";
 import ProductCard from "../cards/ProductCard";
 
 

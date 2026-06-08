@@ -25,7 +25,7 @@ const SettingsTabs = () => {
           className={`w-full text-xs max-md:text-center md:text-sm transition-all duration-200 flex items-center px-4 py-4
             ${
               active
-                ? "bg-[#eef7ec] text-[#3c7a31] font-semibold"
+                ? "bg-[#eef7ec] text-secondary font-semibold"
                 : "hover:bg-gray-100 text-[#6b7280]"
             }`}
         >

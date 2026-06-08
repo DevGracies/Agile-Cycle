@@ -1,72 +1,119 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { gallery } from "@/src/lib/product";
+
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
-export default function ProductGallery() {
-  const [selected, setSelected] = useState(0);
+import { Product } from "@/src/types/product";
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setSelected
-  //   }, 2000)
-  // }, [selected])
+interface ProductGalleryProps {
+  product: Product;
+}
 
-  const handleNext = () => {
-    if (selected !== gallery.length - 1) {
-      setSelected((prev) => Math.min(gallery.length - 1, prev + 1));
-    } else {
-      setSelected(0);
-    }
+export default function ProductGallery({
+  product,
+}: ProductGalleryProps) {
+  const [selected, setSelected] =
+    useState(0);
+
+  useEffect(() => {
+    setSelected(0);
+  }, [product.id]);
+
+  const images =
+    product.images;
+
+  const nextImage = () => {
+    setSelected(
+      (prev) =>
+        (prev + 1) %
+        images.length,
+    );
   };
-  const handlePrev = () => {
-    if (selected !== 0) {
-      setSelected((prev) => Math.max(0, prev - 1));
-    } else {
-      setSelected(gallery.length - 1);
-    }
+
+  const previousImage = () => {
+    setSelected(
+      (prev) =>
+        prev === 0
+          ? images.length - 1
+          : prev - 1,
+    );
   };
 
   return (
     <div>
       <div className="relative bg-[#d9d9d9] rounded-sm overflow-hidden w-full h-[500px]">
         <Image
-          src={gallery[selected]}
-          alt="Bike"
           fill
+          priority
+          src={
+            images[selected].url
+          }
+          alt={
+            images[selected].alt
+          }
           className="object-cover"
         />
 
         <button
-          onClick={handlePrev}
-          className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white border border-[#82b93c] flex items-center justify-center"
+          aria-label="Previous image"
+          onClick={
+            previousImage
+          }
+          className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white border border-primary flex items-center justify-center"
         >
-          <ArrowBackRoundedIcon className="text-[#82b93c]" />
+          <ArrowBackRoundedIcon className="text-primary" />
         </button>
 
         <button
-          onClick={handleNext}
-          className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white border border-[#82b93c] flex items-center justify-center"
+          aria-label="Next image"
+          onClick={nextImage}
+          className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white border border-primary flex items-center justify-center"
         >
-          <ArrowForwardRoundedIcon className="text-[#82b93c]" />
+          <ArrowForwardRoundedIcon className="text-primary" />
         </button>
       </div>
 
       <div className="flex mt-4 overflow-x-auto">
-        {gallery.map((item, i) => (
-          <button
-            key={i}
-            onClick={() => setSelected(i)}
-            className={`relative w-[80px] h-[80px] md:min-w-[110px] md:h-[90px] border-2 ${
-              selected === i ? "border-[#82b93c]" : "border-transparent"
-            }`}
-          >
-            <Image src={item} alt="" fill className="object-cover" />
-          </button>
-        ))}
+        {images.map(
+          (
+            image,
+            index,
+          ) => (
+            <button
+              key={image.id}
+              onClick={() =>
+                setSelected(
+                  index,
+                )
+              }
+              className={`relative w-[80px] h-[80px] md:min-w-[110px] md:h-[90px] border-2 ${
+                selected ===
+                index
+                  ? "border-primary"
+                  : "border-transparent"
+              }`}
+            >
+              <Image
+                fill
+                src={
+                  image.url
+                }
+                alt={
+                  image.alt
+                }
+                className="object-cover"
+              />
+            </button>
+          ),
+        )}
       </div>
     </div>
   );

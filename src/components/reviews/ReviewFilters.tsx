@@ -1,11 +1,17 @@
 "use client";
 
+import { useReview } from "@/src/hooks/useReview";
 import SearchInput from "../shared/SearchInput";
 import Select from "../ui/CustomSelect";
 import { useState } from "react";
+import { ReviewModal } from "./modal/ReviewModal";
+import { Product } from "@/src/types/product";
 
-const ReviewFilters = () => {
+const ReviewFilters = ({product}: {product: Product}) => {
   const [date, setDate] = useState<string>("");
+  const {open, setOpen} = useReview();
+
+  console.log("Product", product)
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 justify-between mt-10 mb-8">
@@ -31,10 +37,18 @@ const ReviewFilters = () => {
           Ask a question
         </button>
 
-        <button className="border-[2px] border-primary rounded-lg px-6 py-3 font-semibold hover:bg-[#2D7A1F] cursor-pointer hover:text-white transition">
+        <button 
+        onClick={() => setOpen(true)}
+        className="border-[2px] border-primary rounded-lg px-6 py-3 font-semibold hover:bg-[#2D7A1F] cursor-pointer hover:text-white transition">
           Write a Review
         </button>
       </div>
+
+      <ReviewModal 
+        open={open}
+        product={product}
+        setOpen={setOpen}
+      />
     </div>
   );
 };

@@ -86,33 +86,6 @@ export const USERS_MOCK: User[] = [
 
 
 
-export const products: Product[] = Array.from({ length: 6 }).map((_, index) => ({
-  id: `#product${index + 1}`,
-  name: "AeroX E-Bike",
-  image: "/home/product-image.png",
-  price: 240000,
-  oldPrice: 280000,
-  rating: 5,
-  reviewCount: 105,
-  category: "bike",
-  badge: "E-Bike",
-  quantity: 1,
-
-  specs: {
-    range: "120km",
-    material: "Carbon",
-    weight: "15kg",
-    torque: "90Nm",
-    motor: "750W",
-    battery: "48V",
-    color: "Sage",
-    size: "Regular / 5'3 - 5'6"
-  },
-}));
-
-
-
-
 export const PAYMENTS_MOCK: Payment[] = [
   ...Array.from({ length: 3 }).map((_, i) => ({
     transactionId: `#CUST001${i + 1}`,

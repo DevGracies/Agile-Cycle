@@ -4,6 +4,7 @@ import Specifications from "./Specifications";
 import BackgroundLines from "./BackgroundLines";
 import Container from "../layout/Container";
 import SectionImage from "./SectionImage";
+import Image from "next/image";
 
 type Spec = {
   label: string;
@@ -37,12 +38,7 @@ export default function FeatureSection({
             reverse ? "lg:[&>*:first-child]:order-2" : ""
           }`}
         >
-          <div
-          // initial={{ opacity: 0, x: reverse ? 50 : -50 }}
-          // whileInView={{ opacity: 1, x: 0 }}
-          // viewport={{ once: true }}
-          // transition={{ duration: 0.8 }}
-          >
+          <div>
             <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black">
               {title}
             </h2>
@@ -58,7 +54,15 @@ export default function FeatureSection({
             <Specifications specs={specs} />
           </div>
 
-          <SectionImage image={image} />
+          <div className="relative mx-auto w-[400px] h-[400px] md:h-[500px] md:w-[500px] overflow-hidden rounded-[45%]">
+            <Image
+              src={image}
+              alt="Bike"
+              width={500}
+              height={500}
+              className="h-full w-full object-cover"
+            />
+          </div>
           <svg
             className="absolute left-1/2 top-1/3 -translate-y-1/2  hidden lg:block"
             width="250"

@@ -47,7 +47,7 @@ const InsightsSection = () => {
             </p>
           </div>
 
-          <button className="mt-5 h-[38px] px-6 text-sm rounded-md border border-[#519A09] text-[#519A09] font-medium hover:bg-[#F7F7F7] transition">
+          <button className="mt-5 h-[38px] px-6 text-sm rounded-md border border-primary text-primary font-medium hover:bg-[#F7F7F7] transition">
             View All
           </button>
         </div>

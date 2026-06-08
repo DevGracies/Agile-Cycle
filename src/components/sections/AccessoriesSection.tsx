@@ -7,22 +7,22 @@ import ProductSectionLayout from "../product/ProductSectionLayout";
 
 const AccessoriesSection = () => {
   return (
-    <section className="min-h-screen py-24">
       <Container>
         <ProductSectionLayout
           subtitle="Accessories & Essentials"
           description="Helmets, smart locks, chargers, panniers, and other premium
               accessories to enhance every journey."
+          rightContent={
+            <Pagination
+              // setCurrentPage={(prev: number) => 1}
+              totalPages={1}
+              currentPage={0}
+            />
+          }
         >
-          {/* <Pagination
-            // setCurrentPage={(prev: number) => 1}
-            totalPages={1}
-            currentPage={0}
-          /> */}
           <ProductGrid products={accessories} />
         </ProductSectionLayout>
       </Container>
-    </section>
   );
 };
 

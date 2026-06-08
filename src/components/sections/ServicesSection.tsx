@@ -5,25 +5,45 @@ import { services } from "@/src/lib/data";
 
 const ServicesSection = () => {
   return (
-    <section className="min-h-screen py-24">
+    <section className="min-h-screen">
       <Container>
-        <SectionHeader title="Services" subtitle="Categories" section="Services" icon />
+        <SectionHeader
+          title="Services"
+          subtitle="Categories"
+          section="Services"
+          icon
+        />
       </Container>
       <div
         className="relative py-24 bg-cover bg-center"
         style={{
-          backgroundImage:
-            "url(/home/categories-image.png)",
+          backgroundImage: "url(/home/categories-image.png)",
         }}
       >
         <div className="absolute inset-0 bg-white/50" />
 
         <Container>
           <div className="relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((item, index) => (
-                <ServiceCard key={index} {...item} />
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
+              <div className="lg:col-span-2">
+                <ServiceCard {...services[0]} />
+              </div>
+
+              <div className="lg:col-span-2">
+                <ServiceCard {...services[1]} />
+              </div>
+
+              <div className="lg:col-span-2">
+                <ServiceCard {...services[2]} />
+              </div>
+
+              <div className="lg:col-start-1 lg:col-span-3">
+                <ServiceCard {...services[3]} />
+              </div>
+
+              <div className="lg:col-start-4 lg:col-span-3">
+                <ServiceCard {...services[4]} />
+              </div>
             </div>
           </div>
         </Container>

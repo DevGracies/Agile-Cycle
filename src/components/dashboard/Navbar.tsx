@@ -1,9 +1,9 @@
 "use client";
 
-import { Bell, Menu, Search } from "lucide-react";
+import { Bell, Menu } from "lucide-react";
 
 import Avatar from "@/src/components/shared/Avatar";
-import { NavbarProps } from "@/src/types";
+import { NavbarProps } from "@/src/types/user";
 import SearchInput from "../shared/SearchInput";
 
 export default function Navbar({ setSidebarOpen, user }: NavbarProps) {

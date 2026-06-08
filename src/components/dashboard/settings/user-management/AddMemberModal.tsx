@@ -3,14 +3,15 @@
 import Select from "@/src/components/ui/CustomSelect";
 import { Input } from "@/src/components/ui/Input";
 import Loader from "@/src/components/ui/Loader";
-import { CreateUserRequest } from "@/src/types/user";
+import { CreateUserRequest, User } from "@/src/types/user";
 import { Camera, UploadCloud, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 type AddMemberModalProps = {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
-  onCreate: (payload: CreateUserRequest) => Promise<void>;
+  onCreate: (payload: CreateUserRequest) => Promise<User>;
   creatingUser: boolean;
 };
 
@@ -49,7 +50,7 @@ const AddMemberModal = ({
     };
   }, [imagePreview]);
 
-  const handleChange = (key: keyof CreateUserRequest, value: any) => {
+  const handleChange = (key: keyof CreateUserRequest, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -58,8 +59,8 @@ const AddMemberModal = ({
       setLoading(true);
       await onCreate(form);
       setModal(false);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+       toast.error(error);
     } finally {
       setLoading(false);
     }
@@ -212,7 +213,7 @@ const AddMemberModal = ({
               </label>
               <Select
                 value={form.gender}
-                onChange={(val) => handleChange("gender", val)}
+                onChange={(val) => handleChange("gender", val as string)}
                 options={[
                   { label: "Male", value: "male" },
                   { label: "Female", value: "female" },

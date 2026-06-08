@@ -1,4 +1,5 @@
-import { delay } from "../lib/utils";
+import { API_CONFIG, apiRequest } from "./api.service";
+
 import {
   defaultNotificationSettings,
   notificationLogs,
@@ -8,71 +9,93 @@ import {
   NotificationLog,
   NotificationStatus,
   NotificationToggleState,
-} from "../types";
+} from "../types/notification";
 
-const logsDb: NotificationLog[] = [...notificationLogs];
+const logsDb = structuredClone(notificationLogs);
 
-let notificationSettingsDb: NotificationToggleState = {
-  ...defaultNotificationSettings,
-};
+let settingsDb: NotificationToggleState =
+  structuredClone(defaultNotificationSettings);
 
 export const notificationsService = {
-  async getNotificationLogs(): Promise<NotificationLog[]> {
-    await delay(300);
-
-    return [...logsDb];
+  getNotificationLogs(): Promise<NotificationLog[]> {
+    return apiRequest<NotificationLog[]>({
+      endpoint: "/notifications",
+      mockData: logsDb,
+      useMock: API_CONFIG.useMock,
+      delay: 300,
+    });
   },
 
-  async getNotificationLog(
+  getNotificationLog(
     id: string,
   ): Promise<NotificationLog | null> {
-    await delay(300);
-
-    return logsDb.find((item) => item.id === id) ?? null;
+    return apiRequest<NotificationLog | null>({
+      endpoint: `/notifications/${id}`,
+      mockData:
+        logsDb.find((item) => item.id === id) ?? null,
+      useMock: API_CONFIG.useMock,
+      delay: 300,
+    });
   },
 
-  async getNotificationByStatus(
+  getNotificationByStatus(
     status?: NotificationStatus,
   ): Promise<NotificationLog[]> {
-    await delay(300);
-
-    if (!status) {
-      return [...logsDb];
-    }
-
-    return logsDb.filter((log) => log.status === status);
+    return apiRequest<NotificationLog[]>({
+      endpoint: status
+        ? `/notifications?status=${status}`
+        : "/notifications",
+      mockData: status
+        ? logsDb.filter(
+          (item) => item.status === status,
+        )
+        : logsDb,
+      useMock: API_CONFIG.useMock,
+      delay: 300,
+    });
   },
 
-  async getNotificationSettings(): Promise<NotificationToggleState> {
-    await delay(200);
-
-    return { ...notificationSettingsDb };
+  getNotificationSettings():
+    Promise<NotificationToggleState> {
+    return apiRequest<NotificationToggleState>({
+      endpoint: "/notification-settings",
+      mockData: settingsDb,
+      useMock: API_CONFIG.useMock,
+      delay: 200,
+    });
   },
 
-  async toggleNotificationSetting(
+  toggleNotificationSetting(
     key: keyof NotificationToggleState,
     value: boolean,
   ): Promise<NotificationToggleState> {
-    await delay(200);
-
-    notificationSettingsDb = {
-      ...notificationSettingsDb,
+    settingsDb = {
+      ...settingsDb,
       [key]: value,
     };
 
-    return { ...notificationSettingsDb };
+    return apiRequest<NotificationToggleState>({
+      endpoint: "/notification-settings",
+      method: "PATCH",
+      body: {
+        [key]: value,
+      },
+      mockData: settingsDb,
+      useMock: API_CONFIG.useMock,
+      delay: 200,
+    });
   },
 
-  async updateNotificationStatus(
+  updateNotificationStatus(
     id: string,
     status: NotificationStatus,
   ): Promise<NotificationLog | null> {
-    await delay(200);
-
-    const index = logsDb.findIndex((log) => log.id === id);
+    const index = logsDb.findIndex(
+      (item) => item.id === id,
+    );
 
     if (index === -1) {
-      return null;
+      return Promise.resolve(null);
     }
 
     logsDb[index] = {
@@ -80,6 +103,15 @@ export const notificationsService = {
       status,
     };
 
-    return logsDb[index];
+    return apiRequest<NotificationLog>({
+      endpoint: `/notifications/${id}/status`,
+      method: "PATCH",
+      body: {
+        status,
+      },
+      mockData: logsDb[index],
+      useMock: API_CONFIG.useMock,
+      delay: 200,
+    });
   },
 };

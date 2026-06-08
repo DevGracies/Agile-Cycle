@@ -1,17 +1,18 @@
 import Image from "next/image";
 import { accessories } from "@/src/lib/product";
+import Link from "next/link";
 
 export default function AccessoryList() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h3 className="uppercase text-[#01430D] tracking-wide font-bold">
+        <h3 className="uppercase text-secondary tracking-wide font-bold">
           Compatible Accessories & Enhancements
         </h3>
 
-        <button className="text-primary font-semibold underline">
+        <Link href="/products" className="w-[100px] text-primary font-semibold underline max-md:text-xs">
           See All
-        </button>
+        </Link>
       </div>
 
       <p className="text-[#7e7e7e] mt-3">
@@ -36,24 +37,21 @@ export default function AccessoryList() {
               />
 
               <div>
-                <h4 className="font-semibold text-[#1d1d1d]">
-                  {item.name}
-                </h4>
+                <h4 className="font-semibold text-[#1d1d1d]">{item.name}</h4>
 
-                <p className="text-sm text-[#8f8f8f] mt-1">
-                  {item.desc}
-                </p>
+                <p className="text-sm text-[#8f8f8f] mt-1">{item.desc}</p>
               </div>
             </div>
 
             <div className="text-right">
-              <h4 className="text-[#01430D] font-bold text-sm">
-                {item.price}
-              </h4>
+              <h4 className="text-secondary font-bold text-sm">{item.price}</h4>
 
-              <button className="text-primary text-sm mt-2 underline">
+              <Link
+                href="/accessories"
+                className="text-primary text-sm mt-2 underline"
+              >
                 view
-              </button>
+              </Link>
             </div>
           </div>
         ))}

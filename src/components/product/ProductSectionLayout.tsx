@@ -16,14 +16,14 @@ const ProductSectionLayout = ({
   rightContent,
 }: Props) => {
   return (
-    <section className="min-h-screen py-24">
-      <div className="container mx-auto px-4">
+    <section className="min-h-screen py-16">
+      <div className="container mx-auto">
         
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex items-center justify-between px-2">
+          <div className="space-y-6">
 
             {title && (
-              <h2 className="text-xl font-semibold">
+              <h2 className="text:xl md:text-4xl font-semibold">
                 {title}
               </h2>
             )}
