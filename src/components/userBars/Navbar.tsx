@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,89 +12,25 @@ import {
   Menu,
   X
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
-type NavbarProps = {
-  activeDropdown?: string | null;
-  setActiveDropdown?: React.Dispatch< React.SetStateAction<string | null>>;
-};
-
-export default function Navbar({activeDropdown,setActiveDropdown,}: NavbarProps) {
-  const navbarRef = useRef<HTMLDivElement>(null);
-
-  // i moved useState dropdown to parent page because its needed globally
-
-  const toggleDropdown = (label: string) => {
-  setActiveDropdown?.(null); // First close any open dropdown
-
-  if (activeDropdown !== label) {
-    setTimeout(() => {      // Then open the clicked one
-      setActiveDropdown?.(label);
-    }, 10);
-  }
-};
-
-useEffect(() => {
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      navbarRef.current &&
-      !navbarRef.current.contains(event.target as Node)
-    ) {
-      setActiveDropdown?.(null);
-    }
-  };
-
-  document.addEventListener(
-    "mousedown",
-    handleClickOutside
-  );
-
-  return () => {
-    document.removeEventListener(
-      "mousedown",
-      handleClickOutside
-    );
-  };
-}, [setActiveDropdown]);
-
+export default function Navbar() {
+ 
 const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const pathname = usePathname();
 
   const navItems = [
   { label: "Home", href: "/Home" },
-
-  {
-    label: "E-bikes",
-    hasDropdown: true,
-    layout: "sidebar",
-  },
-
-  {
-    label: "Accessories",
-    hasDropdown: true,
-    layout: "sidebar",
-  },
-
-  {
-    label: "Enhancements",
-    hasDropdown: true,
-    layout: "sidebar",
-  },
-
-  {
-    label: "Explore",
-    hasDropdown: true,
-    layout: "simple",
-  },
-
-  {
-    label: "Support",
-    hasDropdown: true,
-    layout: "simple",
-  },
+  { label: "E-bikes", href: "/bikes" },
+  { label: "Accessories", href: "/acessories" },
+  { label: "Enhancements", href: "/enhancement" },
+  { label: "Explore", href: "/explore" },
+  { label: "Support", href: "/support" },
 ];
 
   return (
     
-    <nav ref={navbarRef} className="w-full bg-white font-sans relative z-50 0">
+    <nav className="w-full bg-white font-sans relative z-50 0">
 
       {/* TOP BAR */}
       <div className="max-w-7xl mx-auto px-4 lg:px-6 h-16 flex items-center justify-between">
@@ -117,36 +53,41 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
         {/* NAV LINKS */}
         <div className="hidden md:flex items-center gap-6 xl:gap-8">
-          {navItems.map((item) => (
-            <div key={item.label} className="relative">
-              {item.hasDropdown ? (
-                <button
-                  onClick={() => toggleDropdown(item.label)}
-                  className={`whitespace-nowrap text-[14px] font-semibold flex items-center gap-1.5 transition-colors duration-200 ${
-                    activeDropdown === item.label
+         {navItems.map((item) => {
+            const isActive = pathname === item.href;
+
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`
+                  whitespace-nowrap
+                  text-[14px]
+                  font-semibold
+                  flex
+                  items-center
+                  gap-1.5
+                  transition-colors
+                  duration-200
+                  ${
+                    isActive
                       ? "text-[#4CA832]"
                       : "text-[#4A4A4A] hover:text-black"
-                  }`}
-                >
-                  {item.label}
+                  }
+                `}
+              >
+                {item.label}
 
-                  {activeDropdown === item.label ? (
-                    <ChevronUp className="w-4 h-4 pt-1 text-[#4CA832]" />
+                {item.label !== "Home" && (
+                  isActive ? (
+                    <ChevronUp className="w-4 h-4 text-[#4CA832]" />
                   ) : (
-                    <ChevronDown className="w-4 h-4 pt-1 text-[#7A7A7A]" />
-                  )}
-                </button>
-              ) : (
-                <Link
-                  href={item.href || "#"}
-                  onClick={() => setActiveDropdown?.(null)}
-                  className="whitespace-nowrap text-[#4A4A4A] hover:text-black text-[14px] font-semibold transition-colors duration-200"
-                >
-                  {item.label}
-                </Link>
-              )}
-            </div>
-          ))}
+                    <ChevronDown className="w-4 h-4 text-[#7A7A7A]" />
+                  )
+                )}
+              </Link>
+            );
+          })}
         </div>
 
         {/* RIGHT ICONS */}
@@ -208,29 +149,25 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
         <div className="lg:hidden border-t border-gray-200 bg-white">
           <div className="flex flex-col py-4">
 
-            {navItems.map((item) => (
-              <button
-                key={item.label}
-                onClick={() => {
-                  if (item.hasDropdown) {
-                    toggleDropdown(item.label);
-                  } else {
-                    setActiveDropdown?.(null);
-                    setMobileMenuOpen(false);
-                  }
-                }}
-                className={`
-                  w-full px-6 py-3 text-left font-medium transition-colors
-                  ${
-                    activeDropdown === item.label
-                      ? "bg-[#F1F8EC] text-[#4CA832]"
-                      : "text-[#4A4A4A] hover:bg-gray-50"
-                  }
-                `}
-              >
-                {item.label}
-              </button>
-            ))}
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className="
+                w-full
+                px-6
+                py-3
+                text-left
+                font-medium
+                text-[#4A4A4A]
+                hover:bg-gray-50
+                block
+              "
+            >
+              {item.label}
+            </Link>
+          ))}
 
           </div>
         </div>

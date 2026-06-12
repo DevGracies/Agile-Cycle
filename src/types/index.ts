@@ -293,3 +293,14 @@ export type InsightCardProp = {
 };
 
 // end of src/types/insight.ts
+
+// types/navbar.ts
+
+export type BikeCategory =
+  | "Cruisers"
+  | "Commuters"
+  | "Cargo Bikes"
+  | "Folding Bikes"
+  | "Utility Bikes"
+  | "Trikes"
+  | "Ride share";

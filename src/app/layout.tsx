@@ -9,6 +9,7 @@ import NavbarShell from "../components/userBars/NavbarShell";
 import SubscribeSection from "../components/sections/SubscribeSection";
 import FeaturesSection from "../components/sections/FeatureBanner";
 import Footer from "../components/layout/Footer";
+import Navbar from "../components/userBars/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,7 +45,8 @@ export default function RootLayout({
         <Toaster position="top-center" />
         <ConfirmProvider>
           <CartProvider>
-            <NavbarShell />
+            {/* <NavbarShell /> */}
+            <Navbar />
      
           {children}
            <SubscribeSection />
