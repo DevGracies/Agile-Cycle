@@ -97,7 +97,11 @@ export const navbarData= {
     ],
   },
 
-  Explore: {},
+ Explore: [
+  "New Arrivals",
+  "Featured",
+  "Promotions",
+],
 
   Support: {
     Services: [],

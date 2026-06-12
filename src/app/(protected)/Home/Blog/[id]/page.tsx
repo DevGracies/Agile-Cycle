@@ -87,8 +87,6 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
 
       <div className="mx-auto max-w-[1100px] w-full">
 
-      
-
       {/* Divider */}
       <div className="h-px bg-[#519A09] mt-[40px] " />
 

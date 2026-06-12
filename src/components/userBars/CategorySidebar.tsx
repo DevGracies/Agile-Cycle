@@ -1,3 +1,4 @@
+import { BikeCategory } from "@/src/types";
 import { ArrowRight } from "lucide-react";
 
 type SidebarProps = {
@@ -38,10 +39,16 @@ const sidebarData = {
 
   Explore: [],
 
-  Support: [
-    "Services",
-  ],
+  Support: ["Services"],
 };
+
+interface CategorySidebarProps {
+  selectedCategory: BikeCategory;
+  setSelectedCategory: React.Dispatch<
+    React.SetStateAction<BikeCategory>
+  >;
+}
+
 
 export default function CategorySidebar({
   activeDropdown,
