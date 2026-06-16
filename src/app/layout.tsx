@@ -5,7 +5,6 @@ import ConfirmProvider from "../context/ConfirmProvider";
 import BackToTop from "../components/shared/BackToTop";
 import { Toaster } from "react-hot-toast";
 import { CartProvider } from "../context/CartProvider";
-import NavbarShell from "../components/userBars/NavbarShell";
 import SubscribeSection from "../components/sections/SubscribeSection";
 import FeaturesSection from "../components/sections/FeatureBanner";
 import Footer from "../components/layout/Footer";
@@ -14,6 +13,7 @@ import Navbar from "../components/userBars/Navbar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+ 
 });
 
 const geistMono = Geist_Mono({
@@ -28,35 +28,26 @@ export const metadata: Metadata = {
 
 const lexend = Lexend({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: [ "400", "500", "600", "700"],
 });
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html
-      lang="en"
-      className={`  ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className={`${lexend.className} min-h-full flex flex-col`}>
+    <html lang="en">
+      <body className={lexend.className}>
         <Toaster position="top-center" />
+
         <ConfirmProvider>
           <CartProvider>
-            {/* <NavbarShell /> */}
-            <Navbar />
-     
-          {children}
-           <SubscribeSection />
-            <FeaturesSection />
-            <Footer />
-          <BackToTop />
+            {children}
+            <BackToTop />
           </CartProvider>
         </ConfirmProvider>
       </body>
-     
     </html>
   );
 }

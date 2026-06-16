@@ -258,7 +258,7 @@ export default function AccountPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F5F5F5]">
-      <Navbar cartCount={cartCount} />
+      {/* <Navbar cartCount={cartCount} /> */}
 
       <main className="flex-1 px-4 md:px-17.5 py-6 md:py-8">
         <div className="mb-8 flex items-center gap-2">
