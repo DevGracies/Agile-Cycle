@@ -70,7 +70,7 @@ export const footers = [
       },
       {
         title: "Local Shop",
-        href: "/shop",
+        href: "/Home/local-shop",
       },
       {
         title: "Blog",

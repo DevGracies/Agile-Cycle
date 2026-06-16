@@ -1,5 +1,5 @@
 export const navbarData= {
-  Ebikes: {
+  "E-bikes": {
     Cruisers: [
       {
         id: 1,
@@ -97,7 +97,11 @@ export const navbarData= {
     ],
   },
 
-  Explore: {},
+ Explore: [
+  "New Arrivals",
+  "Featured",
+  "Promotions",
+],
 
   Support: {
     Services: [],
@@ -181,7 +185,7 @@ export const supportItems = [
 ];
 
 export const defaultCategories = {
-  Ebikes: "Cruisers",
+  "E-bikes": "Cruisers",
   Accessories: "Lights",
   Enhancements: "Performance",
   Explore: "New Arrivals",

@@ -24,15 +24,15 @@ export default function NavSection({
   return (
     <>
       {/* HEADER */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
 
-        <h2 className="text-[20px] leading-[44px] font-normal text-black/80">
+        <h2 className="text-[18px] sm:text-[20px] leading-normal font-normal text-black/80">
           Most popular
         </h2>
 
-        <button className="h-[52px] py-[4px] flex items-center gap-4">
+        <button className="h-auto py-1 flex items-center gap-3 self-start sm:self-auto">
 
-          <span className="text-[20px] leading-[44px] font-bold text-black/80 whitespace-nowrap">
+          <span className="text-[16px] sm:text-[20px] leading-normal font-bold text-black/80 whitespace-nowrap">
             {activeDropdown === "Enhancements"
               ? `All ${selectedCategory} Enhancements`
               : `All ${selectedCategory}`}
@@ -49,7 +49,7 @@ export default function NavSection({
       {/* PRODUCTS */}
       {currentProducts.length > 0 ? (
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
 
           {currentProducts.map((product) => (
 

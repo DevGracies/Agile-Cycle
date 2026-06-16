@@ -113,26 +113,26 @@ export default function Footer() {
             <h3 className="font-roboto font-bold text-sm tracking-widest uppercase mb-6 text-white">
               More
             </h3>
-            <ul className="space-y-4">
-              {[
-                "Search",
-                "Local Shop",
-                "Blog",
-                "About Us",
-                "Warranty",
-                "Payment",
-                "Contact Us",
-              ].map((item) => (
-                <li key={item}>
-                  <Link
-                    href="#"
-                    className="font-roboto text-sm text-[#b0b0b0] hover:text-white transition-colors"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <ul className="space-y-4">
+            {[
+              { name: "Search", href: "/search" },
+              { name: "Local Shop", href: "/Home/local-shop" },     
+              { name: "Blog", href: "/Home/Blog" },
+              { name: "About Us", href: "/Home/About-us" },
+              { name: "Warranty", href: "/warranty" },
+              { name: "Payment", href: "/payment" },
+              { name: "Contact Us", href: "/contact" },
+            ].map((item) => (
+              <li key={item.name}>
+                <Link
+                  href={item.href}
+                  className="font-roboto text-sm text-[#b0b0b0] hover:text-white transition-colors"
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
           </div>
           {/* Legal */}
           <div>

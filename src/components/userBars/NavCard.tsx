@@ -14,7 +14,7 @@ export default function NavCard({
   oldPrice,
 }: NavCardProps) {
   return (
-    <div className="w-full max-w-[317px] mx-auto rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200">
+    <div className="w-full max-w-[317px] rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200">
 
       {/* IMAGE */}
       <div className="relative w-full aspect-[4/5] bg-white">
@@ -29,9 +29,9 @@ export default function NavCard({
       </div>
 
       {/* CONTENT */}
-      <div className="p-4 space-y-2">
+      <div className="p-3 sm:p-4 space-y-2">
 
-        <h3 className="text-[16px] sm:text-[18px] font-semibold text-black leading-snug line-clamp-2">
+        <h3 className="text-[15px] sm:text-[18px] font-semibold text-black leading-snug line-clamp-2">
           {title}
         </h3>
 

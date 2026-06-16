@@ -8,15 +8,11 @@ import OurShopSection from "@/src/components/sections/OurShopSection";
 import CommunitySection from "@/src/components/sections/CommunitySection";
 import TestimonialSection from "@/src/components/sections/TestimonialSection";
 import InsightsSection from "@/src/components/sections/InsightsSection";
-import Navbar from "@/src/components/layout/Navbar";
-import SubscribeSection from "@/src/components/sections/SubscribeSection";
-import FeaturesSection from "@/src/components/sections/FeatureBanner";
-import Footer from "@/src/components/layout/Footer";
 
 export default function HomePage() {
   return (
     <>
-      <Navbar />
+   
       <HeroSection />
       <CategorySection />
       <ServicesSection />
@@ -27,9 +23,6 @@ export default function HomePage() {
       <CommunitySection />
       <TestimonialSection />
       <InsightsSection />
-      <SubscribeSection />
-      <FeaturesSection />
-      <Footer />
     </>
   );
 }

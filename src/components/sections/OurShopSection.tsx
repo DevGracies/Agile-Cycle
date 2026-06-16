@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 const OurShopSection = () => {
   const router = useRouter();
   return (
-    <section className="relative min-h-[90vh] md:min-h-screen mt-16 overflow-hidden">
+    <section className="relative min-h-[90vh] md:min-h-screen mt-52 overflow-hidden">
       <Image
         src={shopImage}
         alt="Our Shop Image"
