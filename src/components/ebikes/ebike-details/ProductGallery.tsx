@@ -11,10 +11,10 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
-import { Product } from "@/src/types/product";
+import { Accessories } from "@/src/types/product";
 
 interface ProductGalleryProps {
-  product: Product;
+  product: Accessories;
 }
 
 export default function ProductGallery({

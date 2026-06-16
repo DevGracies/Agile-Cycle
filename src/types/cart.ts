@@ -1,7 +1,7 @@
-import { Product } from "@/src/types/product";
+import { Accessories, Product } from "@/src/types/product";
 
 export interface CartItem {
-  product: Product;
+  product: Product | Accessories;
   quantity: number;
   selectedColor?: string;
   selectedBattery?: string;

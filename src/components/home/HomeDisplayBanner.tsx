@@ -1,8 +1,9 @@
 import React from 'react'
+import { DisplayType } from '../shared/product/ProductPage'
 
-const HomeDisplayBanner = () => {
+const HomeDisplayBanner = ({ display }: {display: DisplayType}) => {
   return (
-     <section className="relative overflow-hidden rounded-lg bg-[url('https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=1200')] bg-cover bg-center text-white shadow-md">
+     <section className={`relative overflow-hidden rounded-lg bg-[url(${display.image})] bg-cover bg-center text-white shadow-md`}>
           {/* Background image & gradient overlay combo */}
           <div className="absolute inset-0 z-0 "></div>
           
@@ -13,12 +14,10 @@ const HomeDisplayBanner = () => {
             minWidth: '108.5px'
           }}>
               <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-                Electric Bikes
+                {display.title}
               </h1>
               <p className="text-emerald-100 max-w-md leading-relaxed text-sm md:text-base">
-                Affordable e-bikes for every lifestyle: cruisers, commuters, cargo, folding, utility, and trikes. 
-                From mountain trails to city streets, Agile Cycle has the ride for your adventure. Enjoy the 
-                journey with family and friends.
+                {display.description}
               </p>
             </div>
             {/* Right side empty on small screens, lets background show on larger */}

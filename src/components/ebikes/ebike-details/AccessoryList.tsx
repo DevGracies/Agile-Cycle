@@ -26,7 +26,7 @@ export default function AccessoryList() {
             className="bg-white p-5 rounded-lg flex items-center justify-between gap-5"
           >
             <div className="flex items-center gap-5">
-              <input type="checkbox" className="w-5 h-5" />
+              <input type="checkbox" className="w-5 h-5 accent-primary" />
 
               <Image
                 src={item.image}

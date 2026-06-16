@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Expand } from "lucide-react";
-import { Product } from "@/src/types/product";
 import { useCart } from "@/src/context/CartProvider";
+import { Product } from "@/src/types/product";
 
 interface Props {
   product: Product;
@@ -23,7 +23,7 @@ export default function ProductActions({ product, card, quantity }: Props) {
 
       {card && (
         <Link
-          href={`/products/${product.id}`}
+          href={`/ebikes/${product.id}`}
           className="w-12 rounded-xl border border-secondary flex items-center justify-center"
         >
           <Expand size={20} className="text-secondary" />

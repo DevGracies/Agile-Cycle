@@ -1,5 +1,5 @@
 import { products } from "@/src/mocks/product.mock";
-import ProductCard from "../cards/ProductCard";
+import ProductCard from "../../cards/ProductCard";
 
 
 const RecentlyViewed = () => {

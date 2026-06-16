@@ -1,4 +1,4 @@
-import { ReviewRatingStars } from "../reviews/modal/ReviewRating";
+import { ReviewRatingStars } from "../../reviews/modal/ReviewRating";
 
 interface ProductRatingProps {
   rating: number;

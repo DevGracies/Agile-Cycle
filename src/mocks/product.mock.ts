@@ -1,4 +1,4 @@
-import { Product } from "@/src/types/product";
+import { Accessories, Product } from "@/src/types/product";
 
 const accessories = [
   {
@@ -598,7 +598,7 @@ export const products: Product[] = [
 
 
 
-export const accessories2: Product = {
+export const accessories2: Accessories = {
   id: "oversize-saddle",
 
   name: "Oversize Saddle",
@@ -610,6 +610,7 @@ export const accessories2: Product = {
   reviewCount: 135,
 
   shippingDuration: "2",
+  stock: 2,
 
   images: [
     {
