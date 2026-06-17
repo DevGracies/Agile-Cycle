@@ -16,7 +16,7 @@ export default function CartFooter({
           Subtotal
         </span>
 
-        <span className="font-bold text-primary">
+        <span className="font-bold text-[#17AF26]">
           ₦{subtotal.toLocaleString()}
         </span>
       </div>

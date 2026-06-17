@@ -11,7 +11,7 @@ interface Props {
 
 export function ReviewHeader({ title, subtitle, onClose, disabled }: Props) {
   return (
-    <div className="sticky top-0 bg-white text-center py-6">
+    <div className="sticky top-0 bg-white text-center py-6 z-10">
       <button
         onClick={onClose}
         disabled={disabled}

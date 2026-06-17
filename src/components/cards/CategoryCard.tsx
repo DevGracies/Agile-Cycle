@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import type { ImageProps } from "next/image";
+import Link from "next/link";
 
 interface Props {
   title: string;
@@ -12,9 +13,8 @@ interface Props {
 const CategoryCard = ({ title, description, image, large }: Props) => {
   return (
     <div
-      className={`group relative overflow-hidden rounded-xl min-h-[320px] ${
-        large ? "md:col-span-3" : ""
-      }`}
+      className={`group relative overflow-hidden rounded-xl min-h-[320px] ${large ? "md:col-span-3" : ""
+        }`}
     >
       {/* Image */}
       <Image
@@ -29,7 +29,8 @@ const CategoryCard = ({ title, description, image, large }: Props) => {
       <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent group-hover:bg-black/60 transition-colors duration-500" />
 
       {/* Hover Button */}
-      <button
+      <Link
+        href="/ebikes"
         className="
           absolute left-1/2 top-1/2
           -translate-x-1/2 translate-y-10
@@ -42,7 +43,7 @@ const CategoryCard = ({ title, description, image, large }: Props) => {
         "
       >
         Shop Now
-      </button>
+      </Link>
 
       {/* Content */}
       <div className="absolute bottom-0 p-6 text-white z-10 w-full">

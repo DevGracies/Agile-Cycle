@@ -1,11 +1,20 @@
+import Footer from "@/src/components/layout/Footer";
+import Navbar from "@/src/components/layout/Navbar";
+import FeaturesSection from "@/src/components/sections/FeatureBanner";
+import SubscribeSection from "@/src/components/sections/SubscribeSection";
+// import Navbar from "@/src/components/userBars/Navbar";
 import { ReactNode } from "react";
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
     <>
-    <div className="max-w-7xl w-full mx-auto px-3 py-7">
-      {children}
-    </div>
+      <div>
+        <Navbar />
+        {children}
+        <SubscribeSection />
+        <FeaturesSection />
+        <Footer />
+      </div>
     </>
   );
 }
