@@ -1,6 +1,6 @@
-export type BlogStatus = "Active" | "Inactive";
+export type ClubStatus = "Active" | "Inactive";
 
-export interface BlogLog {
+export interface ClubLog {
   id: string;
   title: string;
   image?: string;
@@ -9,11 +9,11 @@ export interface BlogLog {
   comments: number;
   likes: number;
   views?: number;
-  status: BlogStatus;
+  status: ClubStatus;
   createdAt: Date;
 }
 
-export interface CreateBlogPayload {
+export interface CreateClubPayload {
   title: string;
   image?: string;
   info?: string;
@@ -21,11 +21,11 @@ export interface CreateBlogPayload {
   comments: number;
   likes: number;
   views?: number;
-  status: BlogStatus;
+  status: ClubStatus;
   createdAt: Date;
 }
 
-export interface UpdateBlogPayload {
+export interface UpdateClubPayload {
   title?: string;
   image?: string;
   info?: string;
@@ -33,29 +33,29 @@ export interface UpdateBlogPayload {
   comments?: number;
   likes?: number;
   views?: number;
-  status?: BlogStatus;
+  status?: ClubStatus;
 }
 
-export type BlogToggleKey =
+export type ClubToggleKey =
   | "Manual"
   | "Automatic";
 
-export interface BlogToggleState {
+export interface ClubToggleState {
   Manual: boolean;
   Automatic: boolean;
 }
 
-export type BlogTabKey =
+export type ClubTabKey =
   | "this-week"
   | "last-week";
 
-export interface BlogTab {
+export interface ClubTab {
   label: string;
-  key: BlogTabKey;
+  key: ClubTabKey;
 }
 
-export interface BlogMetrics {
-  totalBlogs: number;
+export interface ClubMetrics {
+  totalClubs: number;
   totalComments: number;
   totalVisitors: number;
 }

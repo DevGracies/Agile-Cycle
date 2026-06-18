@@ -10,6 +10,7 @@ import { NotificationLog, NotificationStatus, NotificationTab, NotificationToggl
 import { SecurityActivityLog, SecuritySettingsState, SecurityStatus, SecurityTab, SecurityToggleItem } from "../types/security";
 import { DataPrivacyState } from "../types/dataPrivacy";
 import { BlogLog, BlogMetrics, BlogStatus, BlogTab, BlogToggleState } from "../types/blog";
+import { ClubLog, ClubMetrics, ClubTab, ClubToggleState } from "../types/club.";
 
 export const MOCK_NAVBAR_USER: NavbarUser = {
   name: "John Doe",
@@ -162,6 +163,7 @@ export const blogLogs: BlogLog[] = [
     comments: 25,
     likes: 345,
     status: "Active",
+    image: "/lifestyle/lifestyle1.png",
     createdAt: daysAgo(1),
   },
   {
@@ -171,6 +173,7 @@ export const blogLogs: BlogLog[] = [
     comments: 18,
     likes: 220,
     status: "Active",
+    image: "/lifestyle/lifestyle2.png",
     createdAt: daysAgo(2),
   },
   {
@@ -180,6 +183,7 @@ export const blogLogs: BlogLog[] = [
     comments: 30,
     likes: 410,
     status: "Inactive",
+    image: "/lifestyle/lifestyle3.png",
     createdAt: daysAgo(3),
   },
   {
@@ -189,6 +193,7 @@ export const blogLogs: BlogLog[] = [
     comments: 15,
     likes: 175,
     status: "Active",
+    image: "/lifestyle/lifestyle4.png",
     createdAt: daysAgo(5),
   },
 
@@ -251,6 +256,110 @@ export const blogTabs: BlogTab[] = [
 ];
 
 export const defaultBlogSettings: BlogToggleState = {
+  Manual: true,
+  Automatic: false,
+}
+export const clubLogs: ClubLog[] = [
+  {
+    id: "1",
+    title: "Tips and Tricks for Keeping Your Home Clean",
+    category: "Tips & Maintenance",
+    comments: 25,
+    likes: 345,
+    status: "Active",
+    image: "/lifestyle/lifestyle1.png",
+    createdAt: daysAgo(1),
+  },
+  {
+    id: "2",
+    title: "How to Improve Product Performance",
+    category: "Business",
+    comments: 18,
+    likes: 220,
+    status: "Active",
+    image: "/lifestyle/lifestyle2.png",
+    createdAt: daysAgo(2),
+  },
+  {
+    id: "3",
+    title: "The Future of Digital Commerce",
+    category: "Technology",
+    comments: 30,
+    likes: 410,
+    status: "Inactive",
+    image: "/lifestyle/lifestyle3.png",
+    createdAt: daysAgo(3),
+  },
+  {
+    id: "4",
+    title: "Understanding Modern Customer Behaviour",
+    category: "Marketing",
+    comments: 15,
+    likes: 175,
+    status: "Active",
+    image: "/lifestyle/lifestyle4.png",
+    createdAt: daysAgo(5),
+  },
+
+  // Last Week
+  {
+    id: "5",
+    title: "Why Branding Matters in 2026",
+    category: "Branding",
+    comments: 12,
+    likes: 150,
+    status: "Active",
+    createdAt: daysAgo(8),
+  },
+  {
+    id: "6",
+    title: "Building Trust Through Content Marketing",
+    category: "Marketing",
+    comments: 9,
+    likes: 120,
+    status: "Inactive",
+    createdAt: daysAgo(10),
+  },
+  {
+    id: "7",
+    title: "Best Practices for E-commerce Growth",
+    category: "Business",
+    comments: 22,
+    likes: 260,
+    status: "Active",
+    createdAt: daysAgo(12),
+  },
+  {
+    id: "8",
+    title: "Improving Customer Retention Strategies",
+    category: "Business",
+    comments: 14,
+    likes: 180,
+    status: "Active",
+    createdAt: daysAgo(13),
+  },
+];
+
+export const clubMetrics: ClubMetrics = {
+  totalClubs: 15500,
+  totalComments: 3200,
+  totalVisitors: 9000,
+};
+
+export const clubChartData = {
+  clubs: [100, 120, 110, 130, 140, 150, 160],
+
+  comments: [20, 22, 21, 25, 27, 26, 28],
+
+  visitors: [15, 18, 17, 16, 18, 19, 17],
+};
+
+export const clubTabs: ClubTab[] = [
+  { label: "This week", key: "this-week" },
+  { label: "Last week", key: "last-week" },
+];
+
+export const defaultClubSettings: ClubToggleState = {
   Manual: true,
   Automatic: false,
 }

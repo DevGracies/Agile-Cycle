@@ -1,28 +1,28 @@
 "use client";
 
-import { BlogLog } from "@/src/types/blog";
+import { ClubLog } from "@/src/types/club";
 import { X, ImageIcon, RedoIcon, ArrowLeftIcon, Trash } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../../reviews/Input";
 import { StatusBadge } from "../common/Dashboard";
 import Image from "next/image";
 
-type BlogLogModalProps = {
+type ClubLogModalProps = {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    selectedLog: BlogLog | null;
+    selectedLog: ClubLog | null;
     mode: "create" | "edit";
 };
 
-const BlogDetailsModal = ({
+const ClubDetailsModal = ({
     open,
     setOpen,
     selectedLog,
     mode,
-}: BlogLogModalProps) => {
+}: ClubLogModalProps) => {
     const [show, setShow] = useState(false);
     const modalRef = useRef<HTMLDivElement | null>(null);
-    const [isBlogInfoActive, setIsBlogInfoActive] = useState(false);
+    const [isClubInfoActive, setIsClubInfoActive] = useState(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [formData, setFormData] = useState({
@@ -123,7 +123,7 @@ const BlogDetailsModal = ({
         },
         {
             title: "views",
-            count: (selectedLog as BlogLog)?.views ?? 0,
+            count: (selectedLog as ClubLog)?.views ?? 0,
         },
     ];
 
@@ -172,8 +172,11 @@ const BlogDetailsModal = ({
             >
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-[#EEF1EC] px-6 py-5 sticky top-0 bg-white z-10">
-                    <h2 className="text-lg text-[#111827] font-semibold">
-                        {mode === "create" ? "Create Blog" : "Edit Blog"}
+                    <h2 className="flex items-center gap-4 text-lg text-[#111827] font-semibold">
+                        {mode === "create" ? "Create Post" : "Edit Post Details"}
+                        {mode === "create" && (
+                            <div className="flex items-center justify-center bg-secondary p-1 text-sm text-white rounded-md w-12">NEW</div>
+                        )}
                     </h2>
 
                     <button
@@ -188,7 +191,7 @@ const BlogDetailsModal = ({
                 <div className="p-6 space-y-16">
                     {/* TITLE */}
                     <Input
-                        label="Blog Title"
+                        label="Post Title"
                         value={
                             formData.title ||
                             selectedLog?.title ||
@@ -204,19 +207,19 @@ const BlogDetailsModal = ({
                     />
 
                     <div>
-                        {isBlogInfoActive ? (
+                        {isClubInfoActive ? (
                             <div className="space-y-4">
                                 <div className="w-full h-[2px] bg-secondary rounded" />
                                 <button
                                     className="flex items-center gap-2 cursor-pointer"
-                                    onClick={() => setIsBlogInfoActive(false)}
+                                    onClick={() => setIsClubInfoActive(false)}
                                 >
                                     <ArrowLeftIcon size={16} /> Go back
                                 </button>
                                 <textarea
                                     value={formData.info || selectedLog?.info || ""}
                                     onChange={(e) => setFormData((prev) => ({ ...prev, info: e.target.value }))}
-                                    placeholder="Click to start creating your blog"
+                                    placeholder="Click to start creating your club"
                                     className={`w-full h-[400px] rounded border border-[#CBE0CD] bg-[#F7FCF7] p-4 text-sm outline-none shadow-[inset_0px_2px_0px_0px_#E7EBEE33] focus:border-primary focus:outline-none `}
 
                                 />
@@ -226,11 +229,11 @@ const BlogDetailsModal = ({
                                 {/* IMAGE UPLOAD */}
                                 <div>
                                     <label className="mb-2 block text-[16px] font-medium leading-[20px] tracking-[-0.15px] text-[#7A7A7A]">
-                                        Blog Cover Image
+                                        Images & Video (Optional)
                                     </label>
 
                                     <div
-                                        className="relative w-full h-[250px] p-4 rounded-md border-2 bg-[#F7FCF7] border-gray-200 flex items-center justify-center overflow-hidden"
+                                        className="relative w-full h-[250px] rounded-md border-2 bg-[#F7FCF7] border-gray-200 flex items-center justify-center overflow-hidden"
                                     >
                                         {displayImage ? (
                                             <Image
@@ -238,7 +241,7 @@ const BlogDetailsModal = ({
                                                 width={500}
                                                 height={500}
                                                 alt="Preview"
-                                                className="w-full h-full object-contain rounded-md"
+                                                className="w-full h-full object-cover rounded-md"
                                             />
                                         ) : (
                                             <div className="flex flex-col items-center gap-4">
@@ -287,21 +290,24 @@ const BlogDetailsModal = ({
                                 {/* INFO */}
                                 <div className="space-y-4">
                                     <label className="mb-2 block text-[16px] font-medium leading-[20px] tracking-[-0.15px] text-[#7A7A7A]">
-                                        Blog Info
+                                        Post Info
                                     </label>
 
                                     <div className="relative w-full h-[150px] p-4 rounded-md border-2 bg-[#F7FCF7] border-gray-200 flex items-center justify-center">
                                         <p className="text-gray-500">
-                                            Blog Info preview will appear here
+                                            Club Info preview will appear here
                                         </p>
                                     </div>
 
                                     <div className="flex justify-between items-center">
-                                        <button
-                                            onClick={() => setIsBlogInfoActive(true)}
-                                            className="h-[50px] px-12 py-4 rounded-lg bg-secondary text-white font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition">
-                                            {mode === "create" ? "Open to Add" : "Open to Edit"}
-                                        </button>
+                                        <div className="space-y-3">
+                                            <p>Tag</p>
+                                            <button
+                                                onClick={() => setIsClubInfoActive(true)}
+                                                className="h-[50px] px-12 py-4 rounded-lg bg-secondary text-white font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition">
+                                                Questions
+                                            </button>
+                                        </div>
 
                                         <p className="text-primary">
                                             Date published:{" "}
@@ -348,7 +354,7 @@ const BlogDetailsModal = ({
                         {mode === "edit" ? (
                             <>
                                 <button className="h-[50px] px-12 py-4 rounded-lg bg-secondary text-white font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition">
-                                    {isBlogInfoActive ? "Publish" : "Approve Blog"}
+                                    {isClubInfoActive ? "Publish" : "Approve Club"}
                                 </button>
 
                                 <button className="h-[50px] px-12 py-4 rounded-lg bg-gray-200 border border-secondary text-secondary font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition">
@@ -358,7 +364,7 @@ const BlogDetailsModal = ({
                         ) : (
                             <>
                                 <button className="h-[50px] px-12 py-4 rounded-lg bg-secondary text-white font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition">
-                                    {isBlogInfoActive ? "Publish" : "Create Blog"}
+                                    {isClubInfoActive ? "Publish" : "Create Club"}
                                 </button>
 
                                 <button className="h-[50px] px-12 py-4 rounded-lg bg-gray-200 border border-secondary text-secondary font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition">
@@ -373,4 +379,4 @@ const BlogDetailsModal = ({
     );
 };
 
-export default BlogDetailsModal;
+export default ClubDetailsModal;

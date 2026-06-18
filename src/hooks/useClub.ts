@@ -2,42 +2,42 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { blogService } from "../services/blog.service";
+import { clubService } from "../services/club.service";
 
 import {
-    BlogLog,
-    BlogMetrics,
-    BlogTabKey,
-    BlogToggleState,
-} from "../types/blog";
+    ClubLog,
+    ClubMetrics,
+    ClubTabKey,
+    ClubToggleState,
+} from "../types/club";
 
-import { defaultBlogSettings } from "../mocks/index.mock";
+import { defaultClubSettings } from "../mocks/index.mock";
 
 import {
     isLastWeek,
     isThisWeek,
 } from "../utils/blog";
 
-export const useBlog = () => {
+export const useClub = () => {
     const [loading, setLoading] =
         useState(true);
 
     const [enabled, setEnabled] =
-        useState<BlogToggleState>(
-            defaultBlogSettings,
+        useState<ClubToggleState>(
+            defaultClubSettings,
         );
 
     const [logs, setLogs] = useState<
-        BlogLog[]
+        ClubLog[]
     >([]);
 
     const [metrics, setMetrics] =
-        useState<BlogMetrics | null>(
+        useState<ClubMetrics | null>(
             null,
         );
 
     const [selectedTab, setSelectedTab] =
-        useState<BlogTabKey>(
+        useState<ClubTabKey>(
             "this-week",
         );
 
@@ -48,7 +48,7 @@ export const useBlog = () => {
         useState(false);
 
     const [selectedLog, setSelectedLog] =
-        useState<BlogLog | null>(null);
+        useState<ClubLog | null>(null);
 
     const [
         isFetchingLogDetails,
@@ -78,7 +78,7 @@ export const useBlog = () => {
     const itemsPerPage = 10;
 
 
-    const initializeBlogs =
+    const initializeClubs =
         useCallback(async () => {
             try {
                 setLoading(true);
@@ -88,9 +88,9 @@ export const useBlog = () => {
                     settingsData,
                     metricsData,
                 ] = await Promise.all([
-                    blogService.getBlogLogs(),
-                    blogService.getBlogSettings(),
-                    blogService.getBlogMetrics(),
+                    clubService.getClubLogs(),
+                    clubService.getClubSettings(),
+                    clubService.getClubMetrics(),
                 ]);
 
                 setLogs(logsData);
@@ -100,7 +100,7 @@ export const useBlog = () => {
                 console.error(error);
 
                 toast.error(
-                    "Failed to load blogs",
+                    "Failed to load clubs",
                 );
             } finally {
                 setLoading(false);
@@ -108,8 +108,8 @@ export const useBlog = () => {
         }, []);
 
     useEffect(() => {
-        initializeBlogs();
-    }, [initializeBlogs]);
+        initializeClubs();
+    }, [initializeClubs]);
 
 
     const fetchSelectedLogDetails =
@@ -119,19 +119,19 @@ export const useBlog = () => {
                     true,
                 );
 
-                const blog = await blogService.getBlogLog(id);
+                const club = await clubService.getClubLog(id);
 
-                if (!blog) {
-                    toast.error("Blog not found");
+                if (!club) {
+                    toast.error("Club not found");
                     return;
                 }
 
-                setSelectedLog(blog);
+                setSelectedLog(club);
             } catch (error) {
                 console.error(error);
 
                 toast.error(
-                    "Failed to load blog",
+                    "Failed to load club",
                 );
             } finally {
                 setIsFetchingLogDetails(
@@ -140,10 +140,10 @@ export const useBlog = () => {
             }
         };
 
-    const toggleBlogSetting = async (
-        key: keyof BlogToggleState,
+    const toggleClubSetting = async (
+        key: keyof ClubToggleState,
     ) => {
-        const updatedState: BlogToggleState = {
+        const updatedState: ClubToggleState = {
             Manual: key === "Manual",
             Automatic: key === "Automatic",
         };
@@ -152,16 +152,16 @@ export const useBlog = () => {
         toast.success(`${key} enabled successfully`)
 
         try {
-            const updated = await blogService.toggleBlogSetting(key);
+            const updated = await clubService.toggleClubSetting(key);
             setEnabled(updated);
         } catch (error) {
             console.error(error);
-            initializeBlogs();
+            initializeClubs();
             toast.error("Unable to update setting");
         }
     };
 
-    const filteredBlogs =
+    const filteredClubs =
         useMemo(() => {
             if (
                 selectedTab ===
@@ -181,12 +181,12 @@ export const useBlog = () => {
     const totalPages = Math.max(
         1,
         Math.ceil(
-            filteredBlogs.length /
+            filteredClubs.length /
             itemsPerPage,
         ),
     );
 
-    const paginatedBlogLogs =
+    const paginatedClubLogs =
         useMemo(() => {
             const start =
                 (currentPage - 1) *
@@ -195,12 +195,12 @@ export const useBlog = () => {
             const end =
                 start + itemsPerPage;
 
-            return filteredBlogs.slice(
+            return filteredClubs.slice(
                 start,
                 end,
             );
         }, [
-            filteredBlogs,
+            filteredClubs,
             currentPage,
         ]);
 
@@ -210,7 +210,7 @@ export const useBlog = () => {
         metrics,
 
         enabled,
-        toggleBlogSetting,
+        toggleClubSetting,
 
         logs,
 
@@ -222,11 +222,11 @@ export const useBlog = () => {
 
         itemsPerPage,
 
-        filteredBlogs,
+        filteredClubs,
 
         totalPages,
 
-        paginatedBlogLogs,
+        paginatedClubLogs,
 
         fetchSelectedLogDetails,
 
@@ -237,7 +237,7 @@ export const useBlog = () => {
 
         selectedLog,
 
-        refreshBlogs: initializeBlogs,
+        refreshClubs: initializeClubs,
         openCreateModal,
         openEditModal,
         modalMode,

@@ -1,61 +1,61 @@
 import {
-    blogLogs,
-    defaultBlogSettings,
-    blogMetrics,
+    clubLogs,
+    defaultClubSettings,
+    clubMetrics,
 } from "../mocks/index.mock";
 
 import {
-    BlogLog,
-    BlogMetrics,
-    BlogStatus,
-    BlogToggleState,
-} from "../types/blog";
+    ClubLog,
+    ClubMetrics,
+    ClubStatus,
+    ClubToggleState,
+} from "../types/club";
 
 import {
     API_CONFIG,
     apiRequest,
 } from "./api.service";
 
-let logsDb: BlogLog[] =
-    structuredClone(blogLogs);
+let logsDb: ClubLog[] =
+    structuredClone(clubLogs);
 
-let settingsDb: BlogToggleState =
-    structuredClone(defaultBlogSettings);
+let settingsDb: ClubToggleState =
+    structuredClone(defaultClubSettings);
 
-export const blogService = {
-    // Get all blogs
+export const clubService = {
+    // Get all clubs
 
-    async getBlogLogs(): Promise<BlogLog[]> {
-        return apiRequest<BlogLog[]>({
-            endpoint: "/blogs",
+    async getClubLogs(): Promise<ClubLog[]> {
+        return apiRequest<ClubLog[]>({
+            endpoint: "/clubs",
             mockData: logsDb,
             useMock: API_CONFIG.useMock,
             delay: 300,
         });
     },
 
-    // Get single blog
+    // Get single club
 
-    async getBlogLog(
+    async getClubLog(
         id: string,
-    ): Promise<BlogLog | null> {
-        return apiRequest<BlogLog | null>({
-            endpoint: `/blogs/${id}`,
+    ): Promise<ClubLog | null> {
+        return apiRequest<ClubLog | null>({
+            endpoint: `/clubs/${id}`,
             mockData:
                 logsDb.find(
-                    (blog) => blog.id === id,
+                    (club) => club.id === id,
                 ) ?? null,
             useMock: API_CONFIG.useMock,
             delay: 300,
         });
     },
 
-    // Blog Metrics
+    // Club Metrics
 
-    async getBlogMetrics(): Promise<BlogMetrics> {
-        return apiRequest<BlogMetrics>({
-            endpoint: "/blogs/metrics",
-            mockData: blogMetrics,
+    async getClubMetrics(): Promise<ClubMetrics> {
+        return apiRequest<ClubMetrics>({
+            endpoint: "/clubs/metrics",
+            mockData: clubMetrics,
             useMock: API_CONFIG.useMock,
             delay: 200,
         });
@@ -63,9 +63,9 @@ export const blogService = {
 
     // Settings
 
-    async getBlogSettings(): Promise<BlogToggleState> {
-        return apiRequest<BlogToggleState>({
-            endpoint: "/blogs/settings",
+    async getClubSettings(): Promise<ClubToggleState> {
+        return apiRequest<ClubToggleState>({
+            endpoint: "/clubs/settings",
             mockData: settingsDb,
             useMock: API_CONFIG.useMock,
             delay: 200,
@@ -74,17 +74,17 @@ export const blogService = {
 
     // Toggle Settings
 
-    async toggleBlogSetting(
-        key: keyof BlogToggleState,
-    ): Promise<BlogToggleState> {
+    async toggleClubSetting(
+        key: keyof ClubToggleState,
+    ): Promise<ClubToggleState> {
 
         settingsDb = {
             Manual: key === "Manual",
             Automatic: key === "Automatic",
         };
 
-        return apiRequest<BlogToggleState>({
-            endpoint: "/blogs/settings",
+        return apiRequest<ClubToggleState>({
+            endpoint: "/clubs/settings",
             method: "PATCH",
             body: settingsDb,
             mockData: settingsDb,
@@ -93,97 +93,97 @@ export const blogService = {
         });
     },
 
-    // Update Blog Status
+    // Update Club Status
 
-    async updateBlogStatus(
+    async updateClubStatus(
         id: string,
-        status: BlogStatus,
-    ): Promise<BlogLog | null> {
-        const blog =
+        status: ClubStatus,
+    ): Promise<ClubLog | null> {
+        const club =
             logsDb.find(
                 (item) => item.id === id,
             ) ?? null;
 
-        if (!blog) {
+        if (!club) {
             return null;
         }
 
-        const updatedBlog: BlogLog = {
-            ...blog,
+        const updatedClub: ClubLog = {
+            ...club,
             status,
         };
 
         logsDb = logsDb.map((item) =>
             item.id === id
-                ? updatedBlog
+                ? updatedClub
                 : item,
         );
 
-        return apiRequest<BlogLog>({
-            endpoint: `/blogs/${id}/status`,
+        return apiRequest<ClubLog>({
+            endpoint: `/clubs/${id}/status`,
             method: "PATCH",
             body: {
                 status,
             },
-            mockData: updatedBlog,
+            mockData: updatedClub,
             useMock: API_CONFIG.useMock,
             delay: 200,
         });
     },
 
-    // Create Blog
+    // Create Club
 
-    async createBlog(
-        blog: Omit<BlogLog, "id">,
-    ): Promise<BlogLog> {
-        const newBlog: BlogLog = {
-            ...blog,
+    async createClub(
+        club: Omit<ClubLog, "id">,
+    ): Promise<ClubLog> {
+        const newClub: ClubLog = {
+            ...club,
             id: crypto.randomUUID(),
         };
 
         logsDb = [
-            newBlog,
+            newClub,
             ...logsDb,
         ];
 
-        return apiRequest<BlogLog>({
-            endpoint: "/blogs",
+        return apiRequest<ClubLog>({
+            endpoint: "/clubs",
             method: "POST",
-            body: blog,
-            mockData: newBlog,
+            body: club,
+            mockData: newClub,
             useMock: API_CONFIG.useMock,
             delay: 300,
         });
     },
 
-    // Update Blog
+    // Update Club
 
-    async updateBlog(
+    async updateClub(
         id: string,
-        payload: Partial<BlogLog>,
-    ): Promise<BlogLog | null> {
+        payload: Partial<ClubLog>,
+    ): Promise<ClubLog | null> {
         const existing =
             logsDb.find(
-                (blog) => blog.id === id,
+                (club) => club.id === id,
             ) ?? null;
 
         if (!existing) {
             return null;
         }
 
-        const updated: BlogLog = {
+        const updated: ClubLog = {
             ...existing,
             ...payload,
         };
 
-        logsDb = logsDb.map((blog) =>
-            blog.id === id
+        logsDb = logsDb.map((club) =>
+            club.id === id
                 ? updated
-                : blog,
+                : club,
         );
 
-        return apiRequest<BlogLog>({
-            endpoint: `/blogs/${id}`,
+        return apiRequest<ClubLog>({
+            endpoint: `/clubs/${id}`,
             method: "PATCH",
             body: payload,
             mockData: updated,
@@ -192,17 +192,17 @@ export const blogService = {
         });
     },
 
-    // Delete Blog
+    // Delete Club
 
-    async deleteBlog(
+    async deleteClub(
         id: string,
     ): Promise<boolean> {
         logsDb = logsDb.filter(
-            (blog) => blog.id !== id,
+            (club) => club.id !== id,
         );
 
         await apiRequest({
-            endpoint: `/blogs/${id}`,
+            endpoint: `/clubs/${id}`,
             method: "DELETE",
             mockData: true,
             useMock: API_CONFIG.useMock,

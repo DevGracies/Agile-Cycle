@@ -1,4 +1,3 @@
-import { BlogLog } from "../types/blog";
 
 export const isThisWeek = (date: Date) => {
   const now = new Date();

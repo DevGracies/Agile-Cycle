@@ -4,9 +4,9 @@ import React from "react";
 
 import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
 import { Box, IconButton } from "@mui/material";
-import { Plus } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 
-import BlogKPIMetrics from "@/src/components/dashboard/blog/BlogKPIMetrics";
+import ClubKPIMetrics from "@/src/components/dashboard/blog/BlogKPIMetrics";
 
 import {
   Pagination,
@@ -14,26 +14,25 @@ import {
   ToggleSwitch,
 } from "@/src/components/dashboard/common/Dashboard";
 
-import { useBlog } from "@/src/hooks/useBlog";
+import { useClub } from "@/src/hooks/useClub";
 
 import {
-  blogTabs,
-  blogChartData,
+  clubTabs,
+  clubChartData,
   approvalMethods,
 } from "@/src/mocks/index.mock";
 
-import { BlogLog, BlogToggleState } from "@/src/types/blog";
+import { ClubLog, ClubToggleState } from "@/src/types/club";
 import Loader from "@/src/components/ui/Loader";
-import BlogDetailsModal from "@/src/components/dashboard/blog/BlogDetailsModal";
-import { Trash } from "lucide-react";
+import ClubDetailsModal from "@/src/components/dashboard/club/ClubDetailsModal";
 import toast from "react-hot-toast";
 
-const AdminBlogPage = () => {
+const AdminClubPage = () => {
   const {
     loading,
     enabled,
     metrics,
-    toggleBlogSetting,
+    toggleClubSetting,
 
     selectedTab,
     setSelectedTab,
@@ -41,8 +40,8 @@ const AdminBlogPage = () => {
     currentPage,
     setCurrentPage,
 
-    paginatedBlogLogs,
-    filteredBlogs,
+    paginatedClubLogs,
+    filteredClubs,
 
     totalPages,
     itemsPerPage,
@@ -58,14 +57,14 @@ const AdminBlogPage = () => {
     modalMode,
     openCreateModal,
     openEditModal,
-  } = useBlog();
+  } = useClub();
 
   if (loading) {
     return (
       <Box
         className={`rounded-3xl bg-[#F8F9F7] p-6 shadow-sm flex items-center justify-center`}
       >
-        <Loader text="Loading Blog Settings..." />
+        <Loader text="Loading Club Settings..." />
       </Box>
     );
   }
@@ -73,18 +72,18 @@ const AdminBlogPage = () => {
   return (
     <section className='px-10 space-y-8'>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <BlogKPIMetrics
-          title="Total Blogs"
+        <ClubKPIMetrics
+          title="Total Clubs"
           amount={
-            metrics?.totalBlogs?.toLocaleString() ??
+            metrics?.totalClubs?.toLocaleString() ??
             "0"
           }
           percentage="22"
           sign="+"
-          data={blogChartData.blogs}
+          data={clubChartData.clubs}
         />
 
-        <BlogKPIMetrics
+        <ClubKPIMetrics
           title="Total Comments"
           amount={
             metrics?.totalComments?.toLocaleString() ??
@@ -92,10 +91,10 @@ const AdminBlogPage = () => {
           }
           percentage="22"
           sign="+"
-          data={blogChartData.comments}
+          data={clubChartData.comments}
         />
 
-        <BlogKPIMetrics
+        <ClubKPIMetrics
           title="Visitors"
           amount={
             metrics?.totalVisitors?.toLocaleString() ??
@@ -103,7 +102,7 @@ const AdminBlogPage = () => {
           }
           percentage="18"
           sign="+"
-          data={blogChartData.visitors}
+          data={clubChartData.visitors}
         />
       </div>
 
@@ -117,7 +116,7 @@ const AdminBlogPage = () => {
               minWidth: "280px",
             }}
           >
-            Add a new blog
+            Add a new club
           </div>
 
           {/* Plus Icon */}
@@ -132,18 +131,18 @@ const AdminBlogPage = () => {
 
         {/* Right Text */}
         <p className="max-sm:px-4 text-gray-500 text-sm sm:text-base font-medium lg:pr-10">
-          Create a new blog entry in the system
+          Create a new club entry in the system
         </p>
       </div>
 
 
       <div className="bg-white rounded-[28px] border border-[#EEF1EC] shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden p-6 ">
         <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <h2 className="text-[26px] text-[#1F1F1F]">All Blogs</h2>
+          <h2 className="text-[26px] text-[#1F1F1F]">All Clubs</h2>
 
           <div className="overflow-x-auto">
             <div className="inline-flex min-w-full rounded-2xl bg-[#01430D14] p-1.5 sm:p-2 gap-1">
-              {blogTabs.map((tab) => {
+              {clubTabs.map((tab) => {
                 const isActive =
                   selectedTab === tab.key;
 
@@ -169,7 +168,7 @@ const AdminBlogPage = () => {
                             : "bg-white text-primary"
                           }`}
                       >
-                        {filteredBlogs.length}
+                        {filteredClubs.length}
                       </span>
                     </span>
                   </button>
@@ -181,14 +180,14 @@ const AdminBlogPage = () => {
 
         {/* NOTIFICATION LOGS  */}
         {loading ? (
-          <Loader text="Loading blogs..." />
+          <Loader text="Loading clubs..." />
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full border-separate border-spacing-y-0">
               <thead>
                 <tr className="bg-[#ECEFEC]">
                   {[
-                    "Blog Title",
+                    "Club Title",
                     "Category",
                     "No of comments",
                     "No of likes",
@@ -208,18 +207,18 @@ const AdminBlogPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedBlogLogs.length === 0 ? (
+                {paginatedClubLogs.length === 0 ? (
                   <tr>
                     <td
                       colSpan={6}
                       className="py-10 text-center text-gray-500"
                     >
-                      No blogs found
+                      No clubs found
                     </td>
                   </tr>
                 ) : (
-                  paginatedBlogLogs.map(
-                    (log: BlogLog) => (
+                  paginatedClubLogs.map(
+                    (log: ClubLog) => (
                       <tr
                         key={log.id}
                         className="border-b border-[#DDE4DB]"
@@ -279,7 +278,7 @@ const AdminBlogPage = () => {
 
           <p className="text-[#555]">
             Showing{" "}
-            {filteredBlogs.length === 0
+            {filteredClubs.length === 0
               ? 0
               : (currentPage - 1) *
               itemsPerPage +
@@ -288,19 +287,19 @@ const AdminBlogPage = () => {
             {Math.min(
               currentPage *
               itemsPerPage,
-              filteredBlogs.length,
+              filteredClubs.length,
             )}{" "}
-            of {filteredBlogs.length}
+            of {filteredClubs.length}
           </p>
         </div>
       </div>
 
       {isFetchingLogDetails ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 space-x-6">
-          <Loader text="Loading blog details..." />
+          <Loader text="Loading club details..." />
         </div>
       ) : (
-        <BlogDetailsModal
+        <ClubDetailsModal
           open={openModal}
           setOpen={setOpenModal}
           selectedLog={selectedLog}
@@ -321,10 +320,10 @@ const AdminBlogPage = () => {
               <p className="text-[#5B5B5B] font-medium">{item.label}</p>
 
               <ToggleSwitch
-                enabled={enabled[item.key as keyof BlogToggleState]}
+                enabled={enabled[item.key as keyof ClubToggleState]}
                 onToggle={() =>
-                  toggleBlogSetting(
-                    item.key as keyof BlogToggleState,
+                  toggleClubSetting(
+                    item.key as keyof ClubToggleState,
                   )
                 }
               />
@@ -337,4 +336,4 @@ const AdminBlogPage = () => {
   )
 }
 
-export default AdminBlogPage
+export default AdminClubPage
