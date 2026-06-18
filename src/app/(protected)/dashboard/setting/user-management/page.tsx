@@ -6,6 +6,7 @@ import Loader from "@/src/components/ui/Loader";
 import { userManagementService } from "@/src/services/user-management.service";
 import { CreateUserRequest, User } from "@/src/types/user";
 import { Box } from "@mui/material";
+import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -44,13 +45,13 @@ const UserManagementPage = () => {
   return (
     <section className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 bg-white ">
         {/* Left CTA */}
-        <div className="max-sm:mx-4 bg-white rounded-xl flex items-center h-[72px] sm:h-20 overflow-hidden pr-4 w-full lg:w-fit">
+        <div className="max-sm:mx-4 bg-white rounded-xl flex items-center h-[72px] sm:h-20 overflow-hidden pr-8 w-full lg:w-fit">
           <div
             className="h-full flex items-center pl-5 sm:pl-8 pr-10 sm:pr-12 bg-gradient-to-r from-secondary to-primary text-white font-semibold text-sm sm:text-base"
             style={{
-              clipPath: "polygon(0 0, 100% 0, 80% 100%, 0% 100%)",
+              clipPath: "polygon(0 0, 100% 0, 75% 100%, 0% 100%)",
               minWidth: "220px",
             }}
           >
@@ -60,10 +61,10 @@ const UserManagementPage = () => {
           {/* Plus Icon */}
           <button
             onClick={() => setModal(true)}
-            className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-secondary to-primary rounded-tl-lg rounded-br-lg flex items-center justify-center text-white text-lg sm:text-xl font-bold shadow-md ml-3"
-            style={{ transform: "skewX(-30deg)" }}
+            className="w-12 h-12 sm:w-16 sm:h-12 bg-primary rounded-tl-lg rounded-br-lg flex items-center justify-center text-white text-lg sm:text-xl font-bold shadow-md"
+            style={{ transform: "skewX(-40deg)" }}
           >
-            <span style={{ transform: "skewX(24deg)" }}>+</span>
+            <span style={{ transform: "skewX(36deg)" }}><Plus size={18} /></span>
           </button>
         </div>
 

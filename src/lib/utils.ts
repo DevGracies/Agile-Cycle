@@ -8,6 +8,7 @@ import {
   Settings,
   ShoppingBag,
   Users,
+  Podcast,
 } from "lucide-react";
 
 export function cn(...inputs: ClassValue[]) {
@@ -40,6 +41,18 @@ export const DASHBOARD_NAVS = [
     id: "customers",
     label: "Customers",
     path: "/dashboard/customers",
+    icon: Users,
+  },
+  {
+    id: "blog",
+    label: "Blog",
+    path: "/dashboard/blog",
+    icon: Podcast,
+  },
+  {
+    id: "club",
+    label: "Club",
+    path: "/dashboard/club",
     icon: Users,
   },
   {

@@ -69,9 +69,9 @@ export const StatusBadge = ({ status }: { status: string }) => {
   return (
     <span
       className={`font-semibold ${
-        status === "Failed"
+        status === "Failed" || status === "Inactive"
           ? "text-[#F04438]"
-          : status === "Delivered" || status === "Successful"
+          : status === "Delivered" || status === "Successful" || status === "Active"
             ? "text-primary"
             : "text-[#FFA000]"
       }`}

@@ -262,7 +262,6 @@ export type DataPrivacyToggleKeys =
   | "restrictExports"
   | "managerView";
 
-  // src/types/insight.ts
 
 export interface BlogSection {
   id: number;
