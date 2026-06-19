@@ -9,7 +9,7 @@ const HomeDisplayBanner = ({ display }: {display: DisplayType}) => {
           
           <div className="relative z-10 grid md:grid-cols-2 items-center">
             {/* Left Content */}
-            <div className="p-6 md:p-8 lg:p-12 bg-gradient-to-r from-[#01430d] to-[#519a09] opacity-[0.8]" style={{ 
+            <div className="p-6 md:p-8 lg:p-14 bg-gradient-to-r from-[#01430d] to-[#519a09] opacity-[0.8]" style={{ 
             clipPath: 'polygon(0% 0%, 100% 0, 85% 100%, 0% 100%)',
             minWidth: '108.5px'
           }}>

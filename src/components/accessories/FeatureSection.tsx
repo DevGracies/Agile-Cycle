@@ -1,5 +1,4 @@
 import React from "react";
-import { CheckCircle } from "lucide-react";
 import { ProductFeature } from "@/src/types/product";
 
 

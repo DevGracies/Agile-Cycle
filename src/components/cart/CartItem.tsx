@@ -10,7 +10,9 @@ interface Props {
 }
 
 export default function CartItem({ item, onRemove, onChangeQty }: Props) {
-  const product = item.product;
+  const product = item?.product;
+
+  if(!product) return;
   return (
     <div className="shadow rounded-xl p-3 bg-green-50">
       <div className="flex gap-3">
@@ -33,17 +35,21 @@ export default function CartItem({ item, onRemove, onChangeQty }: Props) {
             </span>
           </div>
 
-          <div className="text-xs text-neutral-500 mt-1">
-            Color: {product.specs?.color}
-          </div>
+          {product && "specs" in product && (
+            <>
+              <div className="text-xs text-neutral-500 mt-1">
+                Color: {product.specs?.color}
+              </div>
 
-          <div className="text-xs text-neutral-500">
-            Battery: {product.specs?.batteryAh}
-          </div>
+              <div className="text-xs text-neutral-500">
+                Battery: {product.specs?.batteryAh}
+              </div>
 
-          <div className="text-xs text-neutral-500">
-            Size: {product.specs?.size}
-          </div>
+              <div className="text-xs text-neutral-500">
+                Size: {product.specs?.size}
+              </div>
+            </>
+          )}
 
           <div className="flex items-center justify-between mt-3">
             <QuantityControl quantity={item.quantity} onChange={onChangeQty} />

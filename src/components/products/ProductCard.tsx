@@ -8,9 +8,12 @@ interface ProductCardProps {
   name: string;
   image: string;
   price: string;
-  originalPrice: string;
-  rating: string;
-  specs: { label: string; value: string }[];
+  originalPrice?: string;
+  rating?: string;
+  specs: {
+    label: string;
+    value: string;
+  }[];
   onAddToCart?: (id: number) => void;
 }
 
@@ -44,9 +47,11 @@ export default function ProductCard({
             <span className="font-roboto font-semibold text-green-primary text-sm">
               {price}
             </span>
-            <span className="font-roboto text-xs text-neutral-300 line-through">
-              {originalPrice}
-            </span>
+            {originalPrice && (
+              <span className="font-roboto text-xs text-neutral-300 line-through">
+                {originalPrice}
+              </span>
+            )}
             <div className="flex items-center gap-2 ml-auto">
               <div className="flex items-center gap-1">
                 {/* star icons based on rating value (show 5 static stars for now) */}
@@ -96,9 +101,11 @@ export default function ProductCard({
                   <path d="M12 .587l3.668 7.431L23.327 9.6l-5.659 5.512L18.334 24 12 19.897 5.666 24l.666-8.888L.673 9.6l7.659-1.582L12 .587z" />
                 </svg>
               </div>
-              <span className="font-roboto text-xs text-green-primary">
-                {rating}
-              </span>
+              {rating && (
+                <span className="font-roboto text-xs text-green-primary">
+                  {rating}
+                </span>
+              )}
             </div>
           </div>
           <div className="space-y-2">

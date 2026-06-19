@@ -55,4 +55,24 @@ declare module 'lucide-react' {
   export const Pause: Icon;
   export const Play: Icon;
   export const ArrowUp: Icon;
+  export const Plus: Icon;
+  export const Trash: Icon;
+  export const CheckCircle: Icon;
+  export const Expand: Icon;
+  export const ShoppingBasket: Icon;
+  export const Minus: Icon;
+  export const ImageIcon: Icon;
+  export const RedoIcon: Icon;
+  export const ArrowLeftIcon: Icon;
+  export const ChevronLeft: Icon;
+  export const Undo: Icon;
+  export const ArrowDownRight: Icon;
+  export const Battery: Icon;
+  export const Gauge: Icon;
+  export const TimerReset: Icon;
+  export const Weight: Icon;
+  export const Zap: Icon;
+  export const Activity: Icon;
+  export const BadgeCheckIcon: Icon;
+  export const UserRoundCheck: Icon;
 }

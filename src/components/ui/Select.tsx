@@ -41,8 +41,8 @@ const Select = ({
           "
         >
           <option value="" disabled>
-  {placeholder}
-</option>
+            {placeholder}
+          </option>
 
           {options.map((option) => (
             <option

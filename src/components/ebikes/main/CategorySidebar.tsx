@@ -53,7 +53,7 @@ export default function CategorySidebar({ filters }: Props) {
   };
 
   return (
-    <aside className="rounded-xl border border-gray-200 bg-white p-3">
+    <aside className="sticky top-0 rounded-xl border border-gray-200 bg-white p-3">
       <div className="mb-10">
         <h2 className="mb-6 text-lg font-semibold">{filters.name}</h2>
 

@@ -3,7 +3,6 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { Camera } from "lucide-react";
-import toast from "react-hot-toast";
 
 import { ReviewProduct } from "@/src/types/review";
 import { Input } from "../../ui/Input";

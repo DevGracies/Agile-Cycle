@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Expand } from "lucide-react";
 import { useCart } from "@/src/context/CartProvider";
-import { Product } from "@/src/types/product";
+import { Accessories, Product } from "@/src/types/product";
 
 interface Props {
-  product: Product;
+  product: Product | Accessories;
   card?: boolean;
   quantity?: number;
 }
@@ -15,7 +15,7 @@ export default function ProductActions({ product, card, quantity }: Props) {
   return (
     <div className="flex gap-3">
       <button
-        onClick={() => addToCart(product, quantity ?? 1)}
+        onClick={() => addToCart(product as Product, quantity ?? 1)}
         className="flex-1 w-full h-12 bg-secondary hover:bg-secondary/90 cursor-pointer transition-colors text-white rounded-md text-sm font-medium disabled:opacity-50"
       >
         Add to cart
