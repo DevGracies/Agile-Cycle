@@ -5,7 +5,6 @@ import { useState } from "react";
 import CategorySidebar from "@/src/components/userBars/CategorySidebar";
 import NavSection from "@/src/components/userBars/NavSection";
 import { navbarData,} from "@/src/lib/homeData";
-import PublicLayout from "../../layout";
 
 type BikeCategory = keyof typeof navbarData.Enhancements
 
@@ -16,7 +15,7 @@ export default function EnhancementPage() {
     navbarData.Enhancements[selectedCategory];
 
   return (
-   <PublicLayout >
+     <div className="max-w-7xl w-full mx-auto px-3 py-7">
     <div className="flex flex-col lg:flex-row gap-8">
       <div className="w-[270px] shrink-0">
         <CategorySidebar
@@ -36,6 +35,6 @@ export default function EnhancementPage() {
         />
       </div>
     </div>
-  </PublicLayout>
+    </div>
 );
 }
