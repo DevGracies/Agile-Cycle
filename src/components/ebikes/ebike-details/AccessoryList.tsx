@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { accessories } from "@/src/lib/product";
+import { ProductAccessory } from "@/src/types/product";
 import Link from "next/link";
 
-export default function AccessoryList() {
+export default function AccessoryList({accessories}: {accessories: ProductAccessory[]}) {
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -39,7 +40,7 @@ export default function AccessoryList() {
               <div>
                 <h4 className="font-semibold text-[#1d1d1d]">{item.name}</h4>
 
-                <p className="text-sm text-[#8f8f8f] mt-1">{item.desc}</p>
+                <p className="text-sm text-[#8f8f8f] mt-1">{item.description}</p>
               </div>
             </div>
 

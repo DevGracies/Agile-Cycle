@@ -52,7 +52,7 @@ export default function EbikeDetailsPage() {
           </div>
 
           <div className="mt-10">
-            <AccessoryList accessories={product.accessories} />
+            <AccessoryList accessories={product.accessories ?? []} />
           </div>
         </div>
       </Container>
@@ -64,10 +64,10 @@ export default function EbikeDetailsPage() {
           <FeatureSection
             key={feature.id}
             title={feature.title}
-            subtitle={feature.subtitle}
+            subtitle={feature.subtitle ?? ""}
             description={feature.description}
-            image={feature.image}
-            specs={feature.specs}
+            image={feature.image ?? ""}
+            specs={feature.specs ?? []}
             reverse={index % 2 !== 0}
           />
         ))}
@@ -76,7 +76,7 @@ export default function EbikeDetailsPage() {
       <Container>
         <CustomerReviews product={product} />
 
-        <RecentlyViewed currentProductId={product.id} />
+        <RecentlyViewed />
       </Container>
     </main>
   );

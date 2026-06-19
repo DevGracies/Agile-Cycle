@@ -50,7 +50,10 @@ const AddMemberModal = ({
     };
   }, [imagePreview]);
 
-  const handleChange = (key: keyof CreateUserRequest, value: string) => {
+  const handleChange = (
+    key: keyof CreateUserRequest,
+    value: string | File | null
+  ) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 

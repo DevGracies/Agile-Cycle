@@ -4,13 +4,12 @@ import EbikesImage2 from "@/public/ebikes/Ebike2.png"
 import EbikesImage3 from "@/public/ebikes/Ebikes3.png"
 import EbikeImage from "@/public/home/product-image.png"
 import { NavbarUser, User, UserProfile } from "../types/user";
-import { Product } from "../types/product";
 import { Payment, PaymentSettingsState, PaymentStatus } from "../types/payment";
 import { NotificationLog, NotificationStatus, NotificationTab, NotificationToggleState } from "../types/notification";
 import { SecurityActivityLog, SecuritySettingsState, SecurityStatus, SecurityTab, SecurityToggleItem } from "../types/security";
 import { DataPrivacyState } from "../types/dataPrivacy";
-import { BlogLog, BlogMetrics, BlogStatus, BlogTab, BlogToggleState } from "../types/blog";
-import { ClubLog, ClubMetrics, ClubTab, ClubToggleState } from "../types/club.";
+import { BlogLog, BlogMetrics, BlogTab, BlogToggleState } from "../types/blog";
+import { ClubLog, ClubMetrics, ClubTab, ClubToggleState } from "../types/club";
 
 export const MOCK_NAVBAR_USER: NavbarUser = {
   name: "John Doe",

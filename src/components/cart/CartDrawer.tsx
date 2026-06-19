@@ -1,6 +1,5 @@
 "use client";
 
-import { X } from "lucide-react";
 import { useEffect } from "react";
 import EmptyCart from "./EmptyCart";
 import CartFooter from "./CartFooter";

@@ -223,10 +223,10 @@ export default function AccountPage() {
     Promise.allSettled([loadUser(), loadAddresses(), loadOrders(), loadCart()]);
   }, [loadUser, loadAddresses, loadOrders, loadCart]);
 
-  const cartCount = cartItems.reduce(
-    (sum, item) => sum + (item.quantity || 1),
-    0,
-  );
+  // const cartCount = cartItems.reduce(
+  //   (sum, item) => sum + (item.quantity || 1),
+  //   0,
+  // );
 
   const handleLogout = async () => {
     try {
@@ -258,7 +258,7 @@ export default function AccountPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F5F5F5]">
-      <Navbar cartCount={cartCount} />
+      <Navbar />
 
       <main className="flex-1 px-4 md:px-17.5 py-6 md:py-8">
         <div className="mb-8 flex items-center gap-2">

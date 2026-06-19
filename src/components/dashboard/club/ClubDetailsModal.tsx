@@ -1,14 +1,12 @@
 "use client";
 
 import { ClubLog } from "@/src/types/club";
-import { X, ImageIcon, RedoIcon, ArrowLeftIcon, Trash, ChevronRight, Check } from "lucide-react";
+import { X, ImageIcon, RedoIcon, ArrowLeftIcon, Trash, ChevronLeft, ChevronRight, Check, Undo } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../../reviews/Input";
 import { StatusBadge } from "../common/Dashboard";
 import Image from "next/image";
 import { comments } from "@/src/mocks/index.mock";
-import { Undo } from "lucide-react";
-import { ChevronLeft } from "lucide-react";
 
 type ClubLogModalProps = {
     open: boolean;
@@ -170,7 +168,7 @@ const ClubDetailsModal = ({
         >
             <div
                 ref={modalRef}
-                className={`w-full max-w-5xl max-h-[95vh] overflow-y-auto rounded-xl bg-white shadow-2xl transition-all duration-300 mx-auto
+                className={`w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-xl bg-white shadow-2xl transition-all duration-300 mx-auto
 
                 ${show
                         ? "opacity-100 scale-100 translate-y-0"
@@ -180,7 +178,7 @@ const ClubDetailsModal = ({
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-gray-300 px-4 sm:px-6 py-4 sm:py-5 sticky top-0 bg-white z-10">
                     <h2 className="text-base sm:text-lg md:text-xl text-[#111827] font-semibold">
-                        {mode === "create" ? "Create Club" : "Edit Club"}
+                        Post Details
                     </h2>
 
                     <button
@@ -263,7 +261,7 @@ const ClubDetailsModal = ({
                                                     fileInputRef.current?.click()
                                                 }
                                                 className="absolute bottom-2 left-4 cursor-pointer flex items-center gap-2 bg-white border border-gray-200 shadow-md px-4 py-2 rounded-md text-gray-600 hover:text-black">
-                                                <ImageIcon size={16} alt="Browse Image Icon" /> Browse
+                                                <ImageIcon size={16} /> Browse
                                             </button>
                                         ) : (
                                             <div className="flex flex-col sm:flex-row gap-2">

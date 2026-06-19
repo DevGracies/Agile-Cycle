@@ -6,6 +6,7 @@ import ProductGrid from "@/src/components/ebikes/ebike-details/ProductGrid";
 import CategorySidebar from "@/src/components/ebikes/main/CategorySidebar";
 import { Product } from "@/src/types/product";
 import RecentlyViewed from "../../ebikes/ebike-details/RecentlyViewed";
+import Container from "../../layout/Container";
 
 export interface DisplayType {
   title: string;
@@ -27,7 +28,7 @@ export default function ProductPage({
   display,
 }: ProductPageProps) {
   return (
-    <main className="bg-[#F8F8F8] mx-auto max-w-8xl py-16">
+    <Container className="py-24">
       <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
         <span>HOME</span>
         <span>&gt;</span>
@@ -52,6 +53,6 @@ export default function ProductPage({
         </section>
       </div>
       <RecentlyViewed />
-    </main>
+    </Container>
   );
 }

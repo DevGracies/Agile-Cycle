@@ -3,7 +3,6 @@
 import Specifications from "./Specifications";
 import BackgroundLines from "./BackgroundLines";
 import Container from "../../layout/Container";
-import SectionImage from "./SectionImage";
 import Image from "next/image";
 
 type Spec = {

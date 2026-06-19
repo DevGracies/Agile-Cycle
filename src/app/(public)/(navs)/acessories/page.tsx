@@ -5,7 +5,7 @@ import { useState } from "react";
 import CategorySidebar from "@/src/components/userBars/CategorySidebar";
 import NavSection from "@/src/components/userBars/NavSection";
 import { navbarData,} from "@/src/lib/homeData";
-import PublicLayout from "../layout";
+import PublicLayout from "../../layout";
 
 type BikeCategory = keyof typeof navbarData.Accessories
 

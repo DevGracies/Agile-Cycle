@@ -4,7 +4,7 @@ import React from "react";
 
 import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
 import { Box, IconButton } from "@mui/material";
-import { Plus } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 
 import BlogKPIMetrics from "@/src/components/dashboard/blog/BlogKPIMetrics";
 
@@ -25,7 +25,6 @@ import {
 import { BlogLog, BlogToggleState } from "@/src/types/blog";
 import Loader from "@/src/components/ui/Loader";
 import BlogDetailsModal from "@/src/components/dashboard/blog/BlogDetailsModal";
-import { Trash } from "lucide-react";
 import toast from "react-hot-toast";
 
 const AdminBlogPage = () => {

@@ -23,7 +23,7 @@ const ReviewCard = ({ review }: Props) => {
 
         {review.images.length > 0 && (
           <div className="flex items-center gap-2 mt-5 flex-wrap">
-            {review.images.map((image, index) => (
+            {review.images.map((image: string, index: number) => (
               <div
                 key={index}
                 className="relative w-[52px] h-[52px] rounded-lg overflow-hidden"
