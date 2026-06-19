@@ -6,7 +6,6 @@ import productImage4 from "@/public/ebikes/Ebikes.png"
 
 const CategorySection = () => {
   return (
-    <section className="min-h-screen py-16">
       <Container>
         <SectionHeader
           title="Choose the Ride That Moves You"
@@ -31,7 +30,6 @@ const CategorySection = () => {
           />
         </div>
       </Container>
-    </section>
   )
 }
 

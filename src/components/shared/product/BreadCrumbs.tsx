@@ -19,7 +19,7 @@ export default function BreadCrumbs({ product }: BreadCrumbsProps) {
       <span className="text-[#9d9d9d]">{">"}</span>
 
       <Link
-        href={`/products?category=${product.category}`}
+        href={`/ebikes?category=${product.category}`}
         className="text-[#9d9d9d]"
       >
         {product.category}

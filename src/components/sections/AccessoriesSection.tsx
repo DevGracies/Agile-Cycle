@@ -2,8 +2,8 @@ import React from "react";
 import { accessories } from "@/src/lib/data";
 import Container from "../layout/Container";
 import { Pagination } from "../dashboard/common/Dashboard";
-import ProductGrid from "../product/ProductGrid";
-import ProductSectionLayout from "../product/ProductSectionLayout";
+import ProductGrid from "../ebikes/ebike-details/ProductGrid";
+import ProductSectionLayout from "../ebikes/ebike-details/ProductSectionLayout";
 
 const AccessoriesSection = () => {
   return (

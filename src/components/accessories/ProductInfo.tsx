@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
-import { Check, ChevronRight, Star } from "lucide-react";
-import { Product } from "@/src/types/product";
+import React, { useState } from "react";
+import { Check, ChevronRight } from "lucide-react";
+import { Accessories } from "@/src/types/product";
 import { formatPrice, getStockStatus } from "@/src/utils/product";
-import QuantitySelector from "../product/QuantitySelector";
-import { useCart } from "@/src/context/CartProvider";
+import QuantitySelector from "../ebikes/ebike-details/QuantitySelector";
 import RatingStars from "../shared/product/RatingStars";
-import ProductActions from "../product/ProductActions";
+import ProductActions from "../ebikes/ebike-details/ProductActions";
 
 interface ProductInformationProps {
-  product: Product;
+  product: Accessories;
 }
 
 const ProductInformation = ({ product }: ProductInformationProps) => {
@@ -19,30 +18,24 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
   );
 
   const [quantity, setQuantity] = useState(1);
-  const { addToCart } = useCart();
-
-  const filledStars = useMemo(
-    () => Math.round(product.rating),
-    [product.rating],
-  );
 
   if (!product) return;
 
-  const stockStatus = getStockStatus(product.stock);
+  const stockStatus = getStockStatus(product.stock); console.log(product.stock)
 
   const stockDisplay = () => {
     if (stockStatus === "low-stock") {
-      return "In stock";
+      return "Low stock";
     } else if (stockStatus === "out-of-stock") {
       return "Out of stock";
     } else return "In stock";
   };
   const stockColor = () => {
     if (stockStatus === "low-stock") {
-      return "text-yellow-500";
+      return "yellow-500";
     } else if (stockStatus === "out-of-stock") {
-      return "text-red-500";
-    } else return "text-primary";
+      return "red-500";
+    } else return "primary";
   };
 
   return (
@@ -72,9 +65,9 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
 
         <div className="flex justify-between items-center">
           <p
-            className={`flex items-center gap-2 mt-2 text-sm font-semibold uppercase ${stockColor()}`}
+            className={`flex items-center gap-2 mt-2 text-sm font-semibold uppercase text-${stockColor()}`}
           >
-            <span className="w-1 h-1 rounded-full bg-primary" />{" "}
+            <span className={`w-1 h-1 rounded-full bg-${stockColor()} border`} />{" "}
             {stockDisplay()}
           </p>
           <p className="text-sm text-primary">

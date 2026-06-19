@@ -75,13 +75,15 @@ export function ReviewForm({ product, onSuccess }: Props) {
     <div className="space-y-6">
       {/* PRODUCT HEADER */}
       <div className="flex items-center gap-4">
-        <Image
+        <div className="relative w-[100px] h-[80px]">
+          <Image
           src={product?.images?.[0]?.url || "/placeholder.png"}
           width={100}
           height={100}
           alt={product?.images?.[0]?.alt || "Product image"}
-          className="object-cover rounded-md"
+          className="w-full h-full object-cover rounded-md"
         />
+        </div>
 
         <div className="space-y-2">
           <h2 className="text-xl font-medium">

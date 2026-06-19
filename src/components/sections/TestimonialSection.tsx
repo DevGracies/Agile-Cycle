@@ -39,34 +39,32 @@ const testimonials = [
 
 const TestimonialSection = () => {
   return (
-    <section className="pt-10 md:pt-10">
-      <Container>
-        <div className="flex items-start justify-between gap-5 flex-wrap mb-10">
-          <div>
-            <h2 className="text-xl md:text-3xl leading-tight font-bold text-black">
-              Agile Journeys
-            </h2>
+    <Container>
+      <div className="flex items-start justify-between gap-5 flex-wrap mb-10">
+        <div>
+          <h2 className="text-xl md:text-3xl leading-tight font-bold text-black">
+            Agile Journeys
+          </h2>
 
-            <p className="mt-3 text-[#6B6B6B] text-sm md:text-base">
-              Real stories from riders who’ve embraced the Agile Cycle
-              lifestyle.
-            </p>
-          </div>
-
-          <Pagination
-            // setCurrentPage={(prev: number) => 1}
-            totalPages={1}
-            currentPage={0}
-          />
+          <p className="mt-3 text-[#6B6B6B] text-sm md:text-base">
+            Real stories from riders who’ve embraced the Agile Cycle
+            lifestyle.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
-          {testimonials.map((item) => (
-            <TestimonialCard key={item.id} {...item} />
-          ))}
-        </div>
-      </Container>
-    </section>
+        <Pagination
+          // setCurrentPage={(prev: number) => 1}
+          totalPages={1}
+          currentPage={0}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+        {testimonials.map((item) => (
+          <TestimonialCard key={item.id} {...item} />
+        ))}
+      </div>
+    </Container>
   );
 };
 

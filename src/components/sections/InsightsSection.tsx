@@ -33,32 +33,30 @@ const insights = [
 
 const InsightsSection = () => {
   return (
-    <section className="py-20 md:py-28">
-      <Container>
-        <div className="flex items-end justify-between gap-5 flex-wrap mb-12">
-          <div>
-            <h2 className="text-xl md:text-3xl leading-tight font-bold text-black">
-              Latest Insights
-            </h2>
+    <Container>
+      <div className="flex items-end justify-between gap-5 flex-wrap mb-12">
+        <div>
+          <h2 className="text-xl md:text-3xl leading-tight font-bold text-black">
+            Latest Insights
+          </h2>
 
-            <p className="mt-4 text-[#6B6B6B] max-w-3xl text-sm">
-              Stay up to date with Agile Cycle. Product launches, riding tips
-              to community highlights, industry news and more
-            </p>
-          </div>
-
-          <button className="mt-5 h-[38px] px-6 text-sm rounded-md border border-primary text-primary font-medium hover:bg-[#F7F7F7] transition">
-            View All
-          </button>
+          <p className="mt-4 text-[#6B6B6B] max-w-3xl text-sm">
+            Stay up to date with Agile Cycle. Product launches, riding tips
+            to community highlights, industry news and more
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
-          {insights.map((item) => (
-            <InsightCard key={item.id} {...item} />
-          ))}
-        </div>
-      </Container>
-    </section>
+        <button className="mt-5 h-[38px] px-6 text-sm rounded-md border border-primary text-primary font-medium hover:bg-[#F7F7F7] transition">
+          View All
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+        {insights.map((item) => (
+          <InsightCard key={item.id} {...item} />
+        ))}
+      </div>
+    </Container>
   );
 };
 

@@ -1,4 +1,4 @@
-import RatingStars from "../shared/product/RatingStars";
+import RatingStars from "../../shared/product/RatingStars";
 import ProductVariants from "./ProductVariants";
 import QuantitySelector from "./QuantitySelector";
 import ProductActions from "./ProductActions";

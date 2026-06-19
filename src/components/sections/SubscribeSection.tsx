@@ -4,7 +4,7 @@ import image from "@/public/home/categories-image.png"
 
 const SubscribeSection = () => {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden mt-20">
       <div className="absolute inset-0">
         <Image
           src={image}

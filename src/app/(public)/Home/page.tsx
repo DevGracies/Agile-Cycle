@@ -11,8 +11,7 @@ import InsightsSection from "@/src/components/sections/InsightsSection";
 
 export default function HomePage() {
   return (
-    <>
-   
+    <div className="space-y-16">
       <HeroSection />
       <CategorySection />
       <ServicesSection />
@@ -23,6 +22,6 @@ export default function HomePage() {
       <CommunitySection />
       <TestimonialSection />
       <InsightsSection />
-    </>
+    </div>
   );
 }

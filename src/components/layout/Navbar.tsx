@@ -27,7 +27,7 @@ const navLinks = [
   },
   {
     name: "E-bikes",
-    path: "/e-bikes",
+    path: "/ebikes",
     dropDowns: [
       { name: "Cargo", path: "/cargo" },
       { name: "Cruisers", path: "/cruisers" },

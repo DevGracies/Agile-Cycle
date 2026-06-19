@@ -4,7 +4,7 @@ export default function CartSuccessBanner() {
   return (
     <div
       className="
-        flex items-center gap-20
+        flex items-center gap-12
         overflow-hidden
         rounded-lg
         border border-[#E7F4E4]
@@ -28,7 +28,7 @@ export default function CartSuccessBanner() {
       </div>
 
       <div className="flex-1 px-4">
-        <p className="text-sm font-medium text-primary">
+        <p className="text-sm font-medium text-center text-primary">
           Product added to cart successfully
         </p>
       </div>

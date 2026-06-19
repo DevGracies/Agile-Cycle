@@ -2,8 +2,8 @@
 
 import Container from "../layout/Container";
 import { Pagination } from "../dashboard/common/Dashboard";
-import ProductSectionLayout from "../product/ProductSectionLayout";
-import ProductGrid from "../product/ProductGrid";
+import ProductSectionLayout from "../ebikes/ebike-details/ProductSectionLayout";
+import ProductGrid from "../ebikes/ebike-details/ProductGrid";
 import { useProduct } from "@/src/hooks/useProduct";
 
 const ProductSection = () => {
