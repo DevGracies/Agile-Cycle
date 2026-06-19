@@ -8,7 +8,8 @@ import {
   Settings,
   ShoppingBag,
   Users,
-  Podcast,
+  Newspaper,
+  UserRoundCheck,
 } from "lucide-react";
 
 export function cn(...inputs: ClassValue[]) {
@@ -47,13 +48,13 @@ export const DASHBOARD_NAVS = [
     id: "blog",
     label: "Blog",
     path: "/dashboard/blog",
-    icon: Podcast,
+    icon: Newspaper,
   },
   {
     id: "club",
     label: "Club",
     path: "/dashboard/club",
-    icon: Users,
+    icon: UserRoundCheck,
   },
   {
     id: "return",

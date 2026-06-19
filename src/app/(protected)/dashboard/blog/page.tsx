@@ -47,7 +47,7 @@ const AdminBlogPage = () => {
     totalPages,
     itemsPerPage,
 
-    fetchSelectedLogDetails,
+    // fetchSelectedLogDetails,
 
     isFetchingLogDetails,
 

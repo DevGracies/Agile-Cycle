@@ -160,6 +160,7 @@ export const blogLogs: BlogLog[] = [
     id: "1",
     title: "Tips and Tricks for Keeping Your Home Clean",
     category: "Tips & Maintenance",
+    info: "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door! I recomment them to all my friends and family for their ebike needs.",
     comments: 25,
     likes: 345,
     status: "Active",
@@ -254,6 +255,37 @@ export const blogTabs: BlogTab[] = [
   { label: "This week", key: "this-week" },
   { label: "Last week", key: "last-week" },
 ];
+
+export const comments = [
+  {
+    id: "1",
+    name: "Chiamaka Favour",
+    comment: "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door! I recomment them to all my friends and family for their ebike needs.",
+    isApproved: false,
+    createdAt: daysAgo(1),
+  },
+  {
+    id: "2",
+    name: "Chiamaka Favour",
+    comment: "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door! I recomment them to all my friends and family for their ebike needs.",
+    isApproved: true,
+    createdAt: daysAgo(2),
+  },
+  {
+    id: "3",
+    name: "Chiamaka Favour",
+    comment: "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door! I recomment them to all my friends and family for their ebike needs.",
+    isApproved: false,
+    createdAt: daysAgo(3),
+  },
+  {
+    id: "4",
+    name: "Chiamaka Favour",
+    comment: "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door! I recomment them to all my friends and family for their ebike needs.",
+    isApproved: false,
+    createdAt: daysAgo(3),
+  },
+]
 
 export const defaultBlogSettings: BlogToggleState = {
   Manual: true,
