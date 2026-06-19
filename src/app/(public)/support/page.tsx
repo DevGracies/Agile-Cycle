@@ -6,7 +6,6 @@ import CategorySidebar from "@/src/components/userBars/CategorySidebar";
 
 import { supportItems } from "@/src/lib/homeData";
 
-import PublicLayout from "../layout";
 import SupportSection from "@/src/components/userBars/SupportSection";
 
 export default function SupportPage() {
@@ -14,7 +13,7 @@ export default function SupportPage() {
     useState("");
 
   return (
-    <PublicLayout>
+     <div className="max-w-7xl w-full mx-auto px-3 py-7">
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="w-[270px] shrink-0">
           <CategorySidebar
@@ -30,6 +29,6 @@ export default function SupportPage() {
           />
         </div>
       </div>
-    </PublicLayout>
+      </div>
   );
 }

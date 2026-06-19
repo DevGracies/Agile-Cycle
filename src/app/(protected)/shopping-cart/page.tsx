@@ -99,7 +99,7 @@ export default function ShoppingCart() {
 
   return (
     <div className="min-h-screen flex flex-col bg-linear-to-b from-white via-page-bg to-page-bg">
-      <Navbar cartCount={cartCount} />
+      {/* <Navbar cartCount={cartCount} /> */}
 
       <main className="flex-1 px-3 sm:px-4 lg:px-10 py-8 lg:py-12">
         {/* Breadcrumb */}
@@ -135,14 +135,14 @@ export default function ShoppingCart() {
               </span>
             </div>
 
-            {items.map((item) => (
+            {/* {items.map((item) => (
               <CartItem
                 key={item.id}
                 {...item}
                 onUpdateQuantity={updateQuantity}
                 onRemove={removeItem}
               />
-            ))}
+            ))} */}
 
             {items.length === 0 && (
               <div className="px-4 py-12 text-center">

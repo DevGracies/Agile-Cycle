@@ -5,7 +5,16 @@ import SubscribeSection from "@/src/components/sections/SubscribeSection";
 // import Navbar from "@/src/components/userBars/Navbar";
 import { ReactNode } from "react";
 
-export default function PublicLayout({ children }: { children: ReactNode }) {
+import Navbar from "@/src/components/userBars/Navbar";
+import Footer from "@/src/components/layout/Footer";
+import SubscribeSection from "@/src/components/sections/SubscribeSection";
+import FeaturesSection from "@/src/components/sections/FeatureBanner";
+
+export default function PublicLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <div>

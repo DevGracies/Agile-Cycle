@@ -7,14 +7,12 @@ import ExploreSection from "@/src/components/userBars/ExploreSection";
 
 import { exploreServices } from "@/src/lib/homeData";
 
-import PublicLayout from "../layout";
-
 export default function ExplorePage() {
   const [selectedCategory, setSelectedCategory] =
     useState("");
 
   return (
-    <PublicLayout>
+     <div className="max-w-7xl w-full mx-auto px-3 py-7">
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="w-[270px] shrink-0">
           <CategorySidebar
@@ -30,6 +28,6 @@ export default function ExplorePage() {
           />
         </div>
       </div>
-    </PublicLayout>
+      </div>
   );
 }
