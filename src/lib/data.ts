@@ -494,6 +494,46 @@ export const insights: Insight[] = [
     author: "Agile Cycle",
     likes: 24,
     comments: 12,
+
+    commentsData: [
+    {
+      id: 1,
+      name: "Chimako Favour",
+      time: "5 hrs ago",
+      likes: 12,
+      content:
+        "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door!",
+      replies: [
+        {
+          id: 11,
+          name: "Admin",
+          time: "3 hrs ago",
+          likes: 2,
+          content: "Thanks for your feedback."
+        },
+        {
+          id: 12,
+          name: "Samuel",
+          time: "2 hrs ago",
+          likes: 1,
+          content: "Great article."
+        }
+      ]
+    },
+
+    {
+      id: 2,
+      name: "Samuel",
+      time: "1 hr ago",
+      likes: 8,
+      content:
+        "This article was really helpful. Looking forward to more updatesss.",
+      replies: [
+        
+      ]
+    }
+  ],
+
     sections: [
       {
         id: 1,
@@ -555,6 +595,52 @@ export const insights: Insight[] = [
     author: "Agile Cycle",
     likes: 24,
     comments: 12,
+
+     commentsData: [
+    {
+      id: 1,
+      name: "Chimako Favour",
+      time: "5 hrs ago",
+      likes: 12,
+      content:
+        "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door!",
+      replies: [
+        {
+          id: 11,
+          name: "User",
+          time: "3 hrs ago",
+          likes: 2,
+          content: "Thanks for your feedback."
+        },
+        {
+          id: 12,
+          name: "Samuel",
+          time: "2 hrs ago",
+          likes: 1,
+          content: "Great article."
+        }
+      ]
+    },
+
+    {
+      id: 2,
+      name: "Samuel",
+      time: "1 hr ago",
+      likes: 8,
+      content:
+        "This article was really helpful. Looking forward to more updates.",
+      replies: [
+         {
+          id: 10,
+          name: "User",
+          time: "3 hrs ago",
+          likes: 2,
+          content: "Thanks for your feedback."
+        },
+      ]
+    }
+  ],
+  
     sections: [
       {
           id: 1,
@@ -755,7 +841,88 @@ export const insights: Insight[] = [
     ],
   },
 
+  
+
 ];
 /********************* END OF Insights data for the Home Agile Cycle Shop section and blog page******************* */
 
 
+export const clubPosts = [
+  {
+    id: 1,
+    image: "/home/blog2.png",
+    title: "Best Affordable Bike Brands for Students sammy?",
+    author: "Anitin Seggs",
+    time: "23 hrs ago",
+    comments: 78,
+    likes: 22,
+    category: "Questions",
+    featured: true,
+  },
+  {
+    id: 2,
+    image: "/club/lifestyle.jpg",
+    title: "Cycling as a Sustainable Lifestyle Choice",
+    author: "Gunns Johnson",
+    time: "13 hrs ago",
+    comments: 94,
+    likes: 19,
+    category: "Lifestyle",
+    featured: false,
+  },
+  {
+    id: 3,
+    image: "/club/news.jpg",
+    title: "Cycling Events in Lagos This Month",
+    author: "Ada Jones",
+    time: "13 hrs ago",
+    comments: 94,
+    likes: 19,
+    category: "News",
+    featured: false,
+  },
+];
+
+export const comments = [
+  {
+    id: 1,
+    author: "Chimaka Favour",
+    time: "5 hrs ago",
+    content: "Absolutely love Agile Cycle. Affordable and reliable.",
+    replies: [
+      {
+        id: 11,
+        author: "Samuel",
+        time: "4 hrs ago",
+        content: "Thanks for sharing your experience.",
+      },
+      {
+        id: 12,
+        author: "Ese",
+        time: "2 hrs ago",
+        content: "You welcome .",
+      },
+    ],
+  },
+  {
+    id: 2,
+    author: "John Doe",
+    time: "2 hrs ago",
+    content:
+      "I've been using their services for months now.",
+   replies: [
+      {
+        id: 11,
+        author: "Samuel",
+        time: "4 hrs ago",
+        content: "Thanks for sharing your experience.",
+      },
+      {
+        id: 12,
+        author: "Ese",
+        time: "2 hrs ago",
+        content: "You welcome .",
+      },
+    ],
+  },
+];

@@ -7,7 +7,8 @@ type Props =
     variant?:
       | "primary"
       | "outline"
-      | "ghost";
+      | "ghost"
+      | "light";
 
     size?: "sm" | "md" | "lg";
   };
@@ -29,6 +30,9 @@ const Button = ({
 
     ghost:
       "bg-transparent text-[#01430D]",
+
+      light: 
+      "bg-[#519A09] text-[#F7FAFC]  ",
   };
 
   const sizes = {

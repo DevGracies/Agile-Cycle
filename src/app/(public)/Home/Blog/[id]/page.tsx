@@ -13,6 +13,7 @@ import youtubeIcon from "@/public/home/Youtube.png";
 import twitterIcon from "@/public/home/Twitter.png";
 import leftArrowIcon from "@/public/home/Left-arrow.png";
 import rightArrowIcon from "@/public/home/Right-arrow.png";
+import CommentsTrigger from "@/src/components/home/localShop/CommentsTrigger";
 
 interface PageProps {
   params: Promise<{id: string;}>; 
@@ -102,12 +103,12 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
         <img  src={youtubeIcon.src} alt="YouTube" className="w-5 h-5" />
          </div>
 
-        <div>
-          <img src={commentsIcon.src} alt="Comments" className="w-5 h-5 inline-block mr-3" />
-          <span>
-            {blog.comments} comments
-          </span>
-        </div>
+        <CommentsTrigger
+          comments={blog.comments}
+          blogTitle={blog.title}
+          icon={commentsIcon.src}
+          blogId={blog.id}
+        />
       </div>
 
       {/* Description */}
