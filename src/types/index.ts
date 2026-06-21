@@ -220,6 +220,7 @@ export interface Insight {
   author: string;
   likes: number;
   comments: number;
+    commentsData?: Comment[];
   sections: BlogSection[];
 }
 
@@ -243,3 +244,12 @@ export type BikeCategory =
   | "Utility Bikes"
   | "Trikes"
   | "Ride share";
+
+  export interface Comment {
+  id: number;
+  name: string;
+  time: string;
+  likes: number;
+  content: string;
+  replies?: Comment[];
+}

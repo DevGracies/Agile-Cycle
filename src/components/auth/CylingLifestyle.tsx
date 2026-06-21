@@ -1,164 +1,86 @@
 "use client";
 
 import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
 
 import Button from "../ui/Button";
+import Select from "../ui/Select";
 import { Input } from "../ui/Input";
 
-const SignupForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  // ✅ NEW: password state
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+const SetUpProfile = () => {
+  const handleSubmit = async ( e: React.FormEvent<HTMLFormElement> ) => {
     e.preventDefault();
-
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
   };
 
   return (
     <>
       {/* HEADING */}
-      <div className="mb-8">
-        <h1 className="text-[48px] leading-[48px] font-bold bg-[linear-gradient(90deg,#01430D_0%,#519A09_100%)] bg-clip-text text-transparent pb-8">
-          Sign Up
+      <div className="mb-8 space-y-8">
+        <h1 className="text-[45px] leading-[48px] font-bold bg-[linear-gradient(90deg,#01430D_0%,#519A09_100%)] bg-clip-text text-transparent">
+          Cycling Lifestyle
         </h1>
 
         <p className="text-sm text-gray-600 text-[18px]">
-          Already have an account?{" "}
-          <Link href="/login" className="text-[#519A09] border-b">
-            Log in here
+          Help us know your {" "}
+          <Link href="/login" className="text-[#519A09] ">
+            cycling habits.
           </Link>
         </p>
       </div>
 
       {/* FORM */}
       <form onSubmit={handleSubmit} className="space-y-5">
-        <Input
-          label="Full Name"
-          type="text"
-          placeholder="John Doe"
+
+        {/* PURPOSE */}
+        <Select
+          label=". Do you have electric bicycle or a regular bicycle?"
+           placeholder="Electric Bicycle"
+          options={["Commuting", "Tricycle", "Kekecycle"]}
+          
+          showIcon
         />
 
-        <Input
-          label="E-mail"
-          type="email"
-          placeholder="example@gmail.com"
-        />
+         <Input
+                  label="If you do, what brand?"
+                  type="text"
+                  placeholder="Enter brand name"
+                  
+                />
 
-        {/* PASSWORD */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
-            Password
-          </label>
+         <div>
+          <p>. Do you belong to any cycling club?</p>
 
-          <div className="relative">
-            <Input
-              type={showPassword ? "text" : "password"}
-              placeholder="@#*%"
-              label={""}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-0 top-1/2 flex h-[40px] w-[54px] -translate-y-1/2 items-center justify-center text-gray-500 transition hover:text-green-700"
-            >
-              <div className="flex h-10 items-center border-l border-l-gray-200 pl-3 px-5">
-                {showPassword ? (
-                  <EyeOff size={20} />
-                ) : (
-                  <Eye size={20} />
-                )}
-              </div>
-            </button>
+          <div className="flex gap-10 mt-3">
+            <Button variant="light"  className="w-29">
+            Yes
+            </Button>
+            <Button variant="outline" className="w-29">
+            No
+            </Button>
           </div>
+          </div>   
 
-         
-        </div>
-
-        {/* CONFIRM PASSWORD */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
-            Confirm Password
-          </label>
-
-          <div className="relative">
-            <Input
-              type={showConfirmPassword ? "text" : "password"}
-              placeholder="@#*%"
-              label={""}
-            />
-
-            <button
-              type="button"
-              onClick={() =>
-                setShowConfirmPassword(!showConfirmPassword)
-              }
-              className="absolute right-0 top-1/2 flex h-[40px] w-[54px] -translate-y-1/2 items-center justify-center text-gray-500 transition hover:text-green-700"
-            >
-              <div className="flex h-10 items-center border-l border-l-gray-200 pl-3 px-5">
-                {showConfirmPassword ? (
-                  <EyeOff size={20} />
-                ) : (
-                  <Eye size={20} />
-                )}
-              </div>
-            </button>
-          </div>
-           {/* ✅ CONDITIONAL HINT */}
-          {password.length > 0 && password.length < 8 && (
-            <p className="mt-2 text-xs text-[#01430D]">
-              Use 8+ characters with a mix of uppercase, number, and symbol
-            </p>
-          )}
-        </div>
+          <Input
+                    label="If yes, which one?"
+                    type="text"
+                    placeholder="Enter club name"
+                    
+                  />
+    
 
         {/* BUTTON */}
-        <Button type="submit" className="w-full">
-          Sign Up
+        <Button type="submit" className="w-full mt-10">
+          Finish Setup
         </Button>
 
-       {/* DIVIDER */}
-<div className="flex items-center gap-4 py-2">
-  <div className="h-px flex-1 bg-[#7A7A7A]" />
-
-  <span className="text-[12px] font-medium text-[#7A7A7A]">
-    OR
-  </span>
-
-  <div className="h-px flex-1 bg-[#7A7A7A]" />
-</div>
-
-        {/* GOOGLE BUTTON */}
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full h-12 flex items-center px-4 gap-3"
+        <Link
+          href="/"
+          className="block text-center text-[20px] text-[#519A09] font-medium mt-10 pb-10"
         >
-          <img
-            src="/auth/google-icon.png"
-            alt="Google"
-            className="w-5 h-5 shrink-0"
-          />
-          <span className="flex-1 text-center font-medium text-[18px]">
-            Continue with Google
-          </span>
-        </Button>
+          Be part of the Agile Cycle community.
+        </Link>
       </form>
     </>
   );
 };
 
-export default SignupForm;
+export default SetUpProfile;
