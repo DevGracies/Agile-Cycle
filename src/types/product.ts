@@ -119,13 +119,31 @@ export interface Product {
   features?: ProductFeature[];
 
   reviews?: ProductReview[];
+}
 
+
+
+
+
+
+
+export interface Accessories {
+  id: string;
+  name: string;
+  description?: string;
+  currentPrice: number;
+  originalPrice?: number;
+  rating: number;
+  reviewCount: number;
+  stock: number;
+  shippingDuration?: string;
+  images: ProductImage[];
   compatibleModels?: CompatibleModel[];
   compatibilityTable?: ProductCompatibility[];
+  features: ProductFeature[];
   packageContents?: string[];
   note?: string;
 }
-
 
 export interface CompatibleModel {
   id: string;

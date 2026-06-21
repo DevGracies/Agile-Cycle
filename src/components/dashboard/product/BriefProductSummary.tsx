@@ -1,4 +1,4 @@
-import React from 'react'
+  import React from 'react'
 import { SparkLineChart } from "@mui/x-charts/SparkLineChart";
 
 interface IBriefProduct {

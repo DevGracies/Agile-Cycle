@@ -27,7 +27,7 @@ const navLinks = [
   },
   {
     name: "E-bikes",
-    path: "/e-bikes",
+    path: "/bikes",
     dropDowns: [
       { name: "Cargo", path: "/cargo" },
       { name: "Cruisers", path: "/cruisers" },
@@ -35,7 +35,7 @@ const navLinks = [
   },
   {
     name: "Accessories",
-    path: "/accessories",
+    path: "/acessories",
     dropDowns: [
       { name: "Saddle", path: "/saddle" },
       { name: "Pump", path: "/pump" },
@@ -43,7 +43,7 @@ const navLinks = [
   },
   {
     name: "Enhancements",
-    path: "/enhancements",
+    path: "/enhancement",
     dropDowns: [
       { name: "Display Control", path: "/display-control" },
       { name: "Suspension Seat", path: "/suspension-seat" },

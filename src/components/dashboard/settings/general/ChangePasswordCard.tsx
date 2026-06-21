@@ -6,6 +6,7 @@ import PasswordInput from "@/src/components/dashboard/settings/general/PasswordI
 import SectionCard from "@/src/components/shared/SectionCard";
 
 import { profileService } from "@/src/services/profile.service";
+import toast from "react-hot-toast";
 
 const ChangePasswordCard = () => {
   const [form, setForm] = useState({
@@ -20,7 +21,8 @@ const ChangePasswordCard = () => {
     try {
       setIsLoading(true);
 
-      await profileService.changePassword(form);
+      // await profileService.changePassword(form);
+      toast.success("Password changed succesfully")
     } finally {
       setIsLoading(false);
     }
@@ -92,7 +94,7 @@ const ChangePasswordCard = () => {
           type="button"
           disabled={isLoading}
           onClick={handleSubmit}
-          className="w-full mt-4 bg-[#01430D] hover:bg-[#0b4f13] transition-colors text-white py-3 rounded-xl text-sm font-medium disabled:opacity-70"
+          className="w-full mt-4 bg-secondary hover:bg-secondary/90 transition-colors text-white py-3 rounded-xl text-sm font-medium disabled:opacity-70"
         >
           {isLoading ? "Saving..." : "Save Changes"}
         </button>

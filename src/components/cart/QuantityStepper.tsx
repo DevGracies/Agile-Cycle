@@ -16,7 +16,7 @@ export default function QuantityStepper({ quantity, onDecrement, onIncrement }: 
         aria-label="Decrease quantity"
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 8H12" stroke="#060709" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M4 8H12" stroke="#060709" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
       <div className="flex w-9 h-9 items-center justify-center border-t border-b border-black bg-neutral-50">
@@ -28,8 +28,8 @@ export default function QuantityStepper({ quantity, onDecrement, onIncrement }: 
         aria-label="Increase quantity"
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 8H12" stroke="#060709" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M8 12V4" stroke="#060709" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M4 8H12" stroke="#060709" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M8 12V4" stroke="#060709" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
     </div>

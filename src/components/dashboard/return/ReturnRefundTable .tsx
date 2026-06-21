@@ -12,7 +12,6 @@ import {
 import {
   ArrowLeft,
   ArrowRight,
-  ArrowUpRight,
   Check,
   X,
 } from "lucide-react";

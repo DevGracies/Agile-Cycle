@@ -8,7 +8,6 @@ import Navbar from "../../../components/layout/Navbar";
 import Footer from "@/src/components/layout/Footer";
 import SubscribeSection from "@/src/components/sections/SubscribeSection";
 import FeatureBanner from "@/src/components/sections/FeatureBanner";
-import CartItem from "@/src/components/cart/CartItem";
 import OrderSummary from "@/src/components/cart/OrderSummary";
 import RecentlyViewed from "@/src/components/products/RecentlyViewed";
 import { useProductStore } from "@/src/store/useProductStore";
@@ -99,7 +98,7 @@ export default function ShoppingCart() {
 
   return (
     <div className="min-h-screen flex flex-col bg-linear-to-b from-white via-page-bg to-page-bg">
-      {/* <Navbar cartCount={cartCount} /> */}
+      <Navbar />
 
       <main className="flex-1 px-3 sm:px-4 lg:px-10 py-8 lg:py-12">
         {/* Breadcrumb */}

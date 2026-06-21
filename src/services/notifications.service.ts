@@ -58,7 +58,7 @@ export const notificationsService = {
   getNotificationSettings():
     Promise<NotificationToggleState> {
     return apiRequest<NotificationToggleState>({
-      endpoint: "/notification-settings",
+      endpoint: "/notification/settings",
       mockData: settingsDb,
       useMock: API_CONFIG.useMock,
       delay: 200,
@@ -75,7 +75,7 @@ export const notificationsService = {
     };
 
     return apiRequest<NotificationToggleState>({
-      endpoint: "/notification-settings",
+      endpoint: "/notification/settings",
       method: "PATCH",
       body: {
         [key]: value,

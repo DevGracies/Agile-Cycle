@@ -41,20 +41,18 @@ const NotificationLogModal = ({
     <div
       onClick={handleOutsideClick}
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300
-      ${
-        show
+      ${show
           ? "bg-black/60 backdrop-blur-sm opacity-100"
           : "bg-black/0 backdrop-blur-0 opacity-0"
-      }`}
+        }`}
     >
       <div
         ref={modalRef}
         className={`w-full max-w-2xl rounded-3xl bg-white shadow-2xl overflow-hidden transition-all duration-300
-        ${
-          show
+        ${show
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-95 translate-y-4"
-        }`}
+          }`}
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[#EEF1EC] px-6 py-5">
