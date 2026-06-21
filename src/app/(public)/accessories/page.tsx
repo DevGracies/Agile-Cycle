@@ -6,7 +6,7 @@ import { accessoryDisplay, accessoryFilters } from '@/src/lib/product'
 import React from 'react'
 
 const AccessoriesPage = () => {
-    console.log(accessoryDisplay)   
+    // console.log(accessoryDisplay)   
   return (
     <div>
         <ProductPage 

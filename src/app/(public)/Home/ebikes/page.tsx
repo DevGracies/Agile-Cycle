@@ -84,7 +84,7 @@ export default function ElectricBikesPage() {
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* --- HERO BANNER --- */}
-       <HomeDisplayBanner/>
+       {/* <HomeDisplayBanner /> */}
 
         {/* --- PRODUCT GRID --- */}
         <section>

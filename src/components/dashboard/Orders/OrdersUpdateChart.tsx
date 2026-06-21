@@ -109,8 +109,13 @@ const OrdersUpdateChart: React.FC<OrdersUpdateChartProps> = ({
       </div>
 
       {/* Chart */}
+            {/* Chart */}
       <div style={{ width: "100%", height }}>
-        <ResponsiveContainer>
+        <ResponsiveContainer 
+          width="100%" 
+          height="100%" 
+          initialDimension={{ width: 320, height: 280 }}   // ← Add this
+        >
           <AreaChart
             data={data}
             margin={{

@@ -123,7 +123,11 @@ export function OrdersUpdateChart({
 
       {/* Chart */}
       <Box sx={{ width: "100%", height: 400 }}>
-        <ResponsiveContainer>
+        <ResponsiveContainer
+        width="100%" 
+          height="100%" 
+          initialDimension={{ width: 320, height: 250 }}   // ← Add this
+        >
           <AreaChart
             data={chartData}
             margin={{ top: 20, right: 20, left: -10, bottom: 0 }}
