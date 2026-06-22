@@ -14,7 +14,7 @@ export interface DisplayType {
   image: string;
 }
 
-interface ProductPageProps {
+export interface ProductPageProps {
   filter: any;
   breadcrumb: string;
   products: Product[];
