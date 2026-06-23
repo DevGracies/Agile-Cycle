@@ -1,10 +1,12 @@
+import { OrderItem } from "../components/dashboard/Orders/OrdersTable";
+
 export type TrendDirection = "up" | "down";
 
-export type OrderStatus =
-  | "pending"
-  | "shipping"
-  | "refund"
-  | "completed";
+// export type OrderStatus =
+//   | "pending"
+//   | "shipping"
+//   | "refund"
+//   | "completed";
 
 export interface DashboardMetric {
   id: string;
@@ -47,18 +49,19 @@ export interface ForecastMetric {
   value: string;
   percentage: number;
   trend: TrendDirection;
+  chartData: number[];
 }
 
-export interface LatestOrder {
-  id: string;
-  image: string;
-  product: string;
-  quantity: number;
-  date: string;
-  price: number;
-  orderTotal: number;
-  status: OrderStatus;
-}
+// export interface LatestOrder {
+//   id: string;
+//   image: string;
+//   product: string;
+//   quantity: number;
+//   date: string;
+//   price: number;
+//   orderTotal: number;
+//   status: OrderStatus;
+// }
 
 export interface TrafficSummary {
   storeVisits: {
@@ -79,5 +82,5 @@ export interface DashboardData {
   trafficChart: TrafficDataPoint[];
   bestSellers: BestSeller[];
   salesForecast: ForecastMetric[];
-  latestOrders: LatestOrder[];
+  latestOrders: OrderItem[];
 }

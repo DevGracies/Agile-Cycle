@@ -8,6 +8,7 @@ import {
     RevenueDataPoint,
     TrafficDataPoint,
 } from "@/src/types/dashboard";
+import { OrderItem } from "../components/dashboard/Orders/OrdersTable";
 
 
 //   Currency Helpers
@@ -215,6 +216,7 @@ export const salesForecastData: ForecastMetric[] = [
         value: "+24.2%",
         percentage: 24.2,
         trend: "up",
+        chartData: [10, 20, 15, 30, 28, 40],
     },
     {
         id: "profit",
@@ -222,6 +224,7 @@ export const salesForecastData: ForecastMetric[] = [
         value: "-2.5%",
         percentage: -2.5,
         trend: "down",
+        chartData: [20, 25, 55, 10, 28, 90],
     },
     {
         id: "orders",
@@ -229,6 +232,7 @@ export const salesForecastData: ForecastMetric[] = [
         value: "+32.8%",
         percentage: 32.8,
         trend: "up",
+        chartData: [2, 44, 33, 10, 38, 70],
     },
     {
         id: "visitors",
@@ -236,62 +240,63 @@ export const salesForecastData: ForecastMetric[] = [
         value: "+60%",
         percentage: 60,
         trend: "up",
+        chartData: [20, 55, 15, 880, 23, 49],
     },
 ];
 
 
 //   Latest Orders
 
-export const latestOrdersData: LatestOrder[] = [
+export const latestOrdersData: OrderItem[] = [
     {
         id: "1",
         image: PRODUCT_IMAGES.agileProRider,
-        product: "Agile Pro Rider",
-        quantity: 2,
+        productName: "Agile Pro Rider",
+        qty: 2,
         date: "Apr 5, 2026",
         price: 1200000,
-        orderTotal: 2400000,
-        status: "pending",
+        total: 2400000,
+        status: "Pending",
     },
     {
         id: "2",
         image: PRODUCT_IMAGES.agileProRider,
-        product: "Agile Pro Rider",
-        quantity: 1,
+        productName: "Agile Pro Rider",
+        qty: 1,
         date: "Apr 8, 2026",
         price: 1200000,
-        orderTotal: 1200000,
-        status: "shipping",
+        total: 1200000,
+        status: "Shipping",
     },
     {
         id: "3",
         image: PRODUCT_IMAGES.agileCityLite,
-        product: "Agile City Lite",
-        quantity: 3,
+        productName: "Agile City Lite",
+        qty: 3,
         date: "Apr 11, 2026",
         price: 950000,
-        orderTotal: 2850000,
-        status: "refund",
+        total: 2850000,
+        status: "Refund",
     },
     {
         id: "4",
         image: PRODUCT_IMAGES.oversizedSaddle,
-        product: "Oversize Saddle",
-        quantity: 2,
+        productName: "Oversize Saddle",
+        qty: 2,
         date: "Apr 13, 2026",
         price: 150000,
-        orderTotal: 300000,
-        status: "completed",
+        total: 300000,
+        status: "Completed",
     },
     {
         id: "5",
         image: PRODUCT_IMAGES.brakeHandle,
-        product: "Brake Handle Bell",
-        quantity: 4,
+        productName: "Brake Handle Bell",
+        qty: 4,
         date: "Apr 18, 2026",
         price: 200000,
-        orderTotal: 1000000,
-        status: "shipping",
+        total: 1000000,
+        status: "Shipping",
     },
 ];
 

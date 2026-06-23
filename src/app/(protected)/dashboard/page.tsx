@@ -8,12 +8,16 @@ import {
   dashboardMetrics,
   revenueByProductData,
   revenueChartData,
+  salesForecastData,
   trafficChartData,
   trafficSummary,
 } from "@/src/mocks/dashboard";
 import { MetricsSection } from '@/src/components/dashboard/metrics/MetricsSection';
 import { RevenueChart } from '@/src/components/dashboard/charts/RevenueChart';
 import { RevenueDonutChart } from '@/src/components/dashboard/charts/RevenueDonutChart';
+import OrdersSection from './main/OrdersSection';
+import SalesForeCast from '@/src/components/dashboard/main/SalesForeCast';
+import BestSellersSection from '@/src/components/dashboard/main/BestSellersSection';
 
 
 const DashboardPage = () => {
@@ -25,6 +29,11 @@ const DashboardPage = () => {
           <RevenueDonutChart data={revenueByProductData} />
           <TrafficChart data={trafficChartData} summary={trafficSummary} />
         </div>
+        <div className='grid md:grid-cols-2 gap-4'>
+          <BestSellersSection />
+          <SalesForeCast metrics={salesForecastData} />
+        </div>
+        <OrdersSection />
     </div>
   )
 }
