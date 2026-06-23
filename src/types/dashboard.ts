@@ -12,6 +12,7 @@ export interface DashboardMetric {
   value: string;
   percentage: number;
   trend: TrendDirection;
+  chartData: number[];
 }
 
 export interface RevenueDataPoint {
@@ -25,6 +26,7 @@ export interface TrafficDataPoint {
 }
 
 export interface RevenueByProduct {
+  id?: string;
   name: string;
   value: number;
   percentage: number;

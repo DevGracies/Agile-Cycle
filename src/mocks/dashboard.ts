@@ -1,5 +1,3 @@
-//src/data/dashboard.ts
-
 import {
     BestSeller,
     DashboardData,
@@ -64,6 +62,7 @@ export const dashboardMetrics: DashboardMetric[] = [
         value: "₦350M",
         percentage: 22,
         trend: "up",
+        chartData: [10, 20, 15, 30, 28, 40],
     },
     {
         id: "orders",
@@ -71,6 +70,7 @@ export const dashboardMetrics: DashboardMetric[] = [
         value: "1,200",
         percentage: 25,
         trend: "down",
+        chartData: [20, 25, 55, 10, 28, 90],
     },
     {
         id: "users",
@@ -78,6 +78,7 @@ export const dashboardMetrics: DashboardMetric[] = [
         value: "15,500",
         percentage: 49,
         trend: "up",
+        chartData: [2, 44, 33, 10, 38, 70],
     },
 ];
 

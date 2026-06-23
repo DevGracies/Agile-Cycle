@@ -15,10 +15,7 @@ export function MetricsSection({
     <section
       aria-label="Dashboard Metrics"
       className="
-        grid
-        grid-cols-1
-        gap-4
-        md:grid-cols-3
+        grid grid-cols-1 sm:grid-cols-3 gap-6
       "
     >
       {metrics.map((metric) => (
