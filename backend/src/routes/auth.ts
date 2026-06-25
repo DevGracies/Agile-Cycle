@@ -3,13 +3,13 @@ import { env } from "../config/env";
 import { login, logout, register } from "../controllers/auth";
 
 
-const authRouter = Router();
+const router = Router();
 
-authRouter.post("/register", register);
-authRouter.post("/login", login);
-authRouter.post("/logout", logout);
+router.post("/register", register);
+router.post("/login", login);
+router.post("/logout", logout);
 
-// authRouter.get(
+// router.get(
 //     "/google",
 //     googleAuth,
 //     passport.authenticate(
@@ -17,7 +17,7 @@ authRouter.post("/logout", logout);
 //         { scope: ["profile", "email"] },
 //     )
 // );
-// authRouter.get(
+// router.get(
 //     "/google/callback",
 //     passport.authenticate("google", {
 //         session: false,
@@ -27,4 +27,4 @@ authRouter.post("/logout", logout);
 // );
 
 
-export default authRouter;
+export default router;

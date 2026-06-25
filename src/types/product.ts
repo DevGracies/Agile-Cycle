@@ -3,33 +3,19 @@ export type ProductCategory =
   | "accessory"
   | "enhancement";
 
-export type ProductAvailability =
+export type InventoryStatus =
   | "in-stock"
   | "low-stock"
   | "out-of-stock";
 
 export interface ProductImage {
-  id: string;
   url: string;
   alt: string;
 }
 
 export interface ProductColor {
-  id: string;
   name: string;
-  value: string;
-}
-
-export interface ProductBatteryOption {
-  id: string;
-  label: string;
-}
-
-export interface ProductVariant {
-  id: string;
-  name: string;
-  image: string;
-  description: string;
+  color: string;
 }
 
 export interface ProductFeatureSpec {
@@ -38,7 +24,6 @@ export interface ProductFeatureSpec {
 }
 
 export interface ProductFeature {
-  id: string;
   title: string;
   subtitle?: string;
   description: string;
@@ -46,59 +31,34 @@ export interface ProductFeature {
   specs?: ProductFeatureSpec[];
 }
 
-export interface ProductReview {
-  id: string;
-  userName: string;
-  rating: number;
-  title: string;
-  comment: string;
-  createdAt: string;
-  verifiedPurchase: boolean;
-}
-
-export interface ProductAccessory {
-  id: string;
+export interface ProductVariant {
   name: string;
-  description: string;
   image: string;
-  price: number;
+  description: string;
 }
 
-export interface ProductSpecs {
-  range?: string;
-  material?: string;
-  weight?: string;
-  torque?: string;
-  motor?: string;
-  batterySize?: string;
-  batteryAh?: string;
-  extraBatteryAh?: string;
-  size?: string;
-  color?: string;
-  maxSpeed?: string;
-  chargingTime?: string;
+export interface BatteryOption {
+  label: string;
 }
 
-export interface Product {
-  id: string;
+export interface EbikeDocument {
+  name: string;
   slug: string;
   sku: string;
 
-  name: string;
   description: string;
   shortDescription: string;
 
-  category: ProductCategory;
-
   images: ProductImage[];
 
-  currentPrice: number;
-  originalPrice?: number;
-  shippingDuration?: string;
+  price: number;
+  discountPrice?: number;
 
   stock: number;
 
-  rating: number;
+  inventoryStatus: string;
+
+  averageRating: number;
   reviewCount: number;
 
   badge?: string;
@@ -106,24 +66,22 @@ export interface Product {
   isFeatured: boolean;
   isNewArrival: boolean;
 
-  specs?: ProductSpecs;
+  specs?: Record<string, string>;
 
   colors: ProductColor[];
 
-  batteryOptions?: ProductBatteryOption[];
+  batteryOptions?: BatteryOption[];
 
   variants?: ProductVariant[];
 
-  accessories?: ProductAccessory[];
+  accessories: string[];
 
   features?: ProductFeature[];
 
-  reviews?: ProductReview[];
+  shippingDuration?: string;
+
+  isActive: boolean;
 }
-
-
-
-
 
 
 

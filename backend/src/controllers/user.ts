@@ -23,11 +23,13 @@ export const getAllUsers = asyncHandler(
 export const deleteCurrentUser = asyncHandler(
     async (req: Request, res: Response) => {
         const { email } = req.body;
-        const user = await User.findOne({ email }).lean();
+        const user = await User.findOne({ email });
 
         if (!user) {
             throw new AppError("No user found", 404);
         }
+
+        await user.deleteOne();
 
         res.status(200).json({
             success: true,
@@ -39,9 +41,9 @@ export const deleteCurrentUser = asyncHandler(
 
 export const deleteAllUsers = asyncHandler(
     async (_: Request, res: Response) => {
-        const users = await User.find()
+        const users = await User.deleteMany()
 
-        if (!users.length) {
+        if (!users.deletedCount) {
             throw new AppError("No users found", 404);
         }
 

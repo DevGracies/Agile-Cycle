@@ -12,6 +12,10 @@ export const env = {
 
     JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET!,
 
+    ADMIN_EMAIL: process.env.ADMIN_EMAIL!,
+    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD!,
+    ADMIN_NAME: process.env.ADMIN_NAME!,
+
     // GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     // GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     // GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,

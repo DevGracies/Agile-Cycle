@@ -3,11 +3,11 @@ import { authenticate } from "../middlewares/auth";
 import { deleteAllUsers, deleteCurrentUser, getAllUsers, getCurrentUser } from "../controllers/user";
 
 
-const userRouter = Router();
+const router = Router();
 
-userRouter.get("/all", authenticate, getAllUsers);
-userRouter.get("/", authenticate, getCurrentUser);
-userRouter.delete("/delete", deleteCurrentUser);
-userRouter.delete("/all/delete", deleteAllUsers);
+router.get("/all", getAllUsers);
+router.get("/", authenticate, getCurrentUser);
+router.delete("/delete", authenticate, deleteCurrentUser);
+router.delete("/all/delete", deleteAllUsers);
 
-export default userRouter;
+export default router;

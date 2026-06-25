@@ -8,6 +8,7 @@ import { errorHandler } from './middlewares/errorHandler';
 
 import authRouter from './routes/auth';
 import userRouter from './routes/user';
+import ebikeRouter from './routes/ebike';
 
 // Connect to database
 connectDB();
@@ -25,6 +26,7 @@ app.use(cookieParser())
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/ebikes", ebikeRouter);
 
 app.use(errorHandler);
 
