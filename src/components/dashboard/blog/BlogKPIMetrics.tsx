@@ -11,7 +11,7 @@ interface IBriefProduct {
 
 const BlogKPIMetrics = ({ title, amount, percentage, sign, data }: IBriefProduct) => {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-xs p-4 flex justify-between items-center">
+    <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-4 flex justify-between items-center">
       <div>
         <p className="text-sm text-gray-500">{title}</p>
         <p className="text-2xl font-bold">{amount}</p>
