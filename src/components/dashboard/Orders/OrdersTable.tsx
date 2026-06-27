@@ -51,7 +51,7 @@ const tabs = [
   "All order",
   "Completed",
   "Pending",
-  "Canceled",
+  "Shipping",
 ];
 
 const formatCurrency = (amount: number) => {
@@ -83,6 +83,11 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
         (item) => item.status === "Pending"
       );
     }
+    if (currentTab === "Shipping") {
+      return orders.filter(
+        (item) => item.status === "Shipping"
+      );
+    }
 
     return orders;
   }, [orders, selectedTab]);
@@ -102,41 +107,43 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
     >
       {/* Header */}
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <Typography
-          className="text-[20px] font-semibold text-[#111827]"
-        >
-          {title}
-        </Typography>
+        <h2 className="text-2xl font-semibold text-[#1F1F1F]">{title}</h2>
 
-        <div className="rounded-[12px] bg-[#01430D33] p-2">
-          <Tabs
-            value={selectedTab}
-            onChange={(_, value) => {
-                setSelectedTab(value);
-                setCurrentPage(1);
-            }}
-            sx={{
-                "& .MuiTabs-indicator": {
-                display: "none",
-                },
-            }}
-            >
-            {tabs.map((tab, index) => (
-              <Tab
-                key={tab}
-                label={
-                  index === 0
-                    ? `${tab} (${orders.length})`
-                    : tab
-                }
-                className={`!min-h-[44px] !rounded-[10px] !px-5 !text-[15px] !font-medium !normal-case ${
-                  selectedTab === index
-                    ? "!bg-white !text-[#52A30D]"
-                    : "text-[#111827]"
-                }`}
-              />
-            ))}
-          </Tabs>
+        <div className="overflow-x-auto">
+          <div className="inline-flex min-w-full rounded-2xl bg-[#01430D14] p-1.5 sm:p-2 gap-1">
+            {tabs.map((tab, index) => {
+              const isActive = selectedTab === index;
+
+              return (
+                <button
+                  key={tab}
+                  onClick={() => {
+                    setSelectedTab(index);
+                    setCurrentPage(1);
+                  }}
+                  className={`relative whitespace-nowrap rounded-xl px-4 sm:px-5 lg:px-6 py-3 text-sm sm:text-[15px] font-medium transition-all duration-300
+                ${isActive
+                      ? "bg-white text-primary shadow-[0_4px_12px_rgba(0,0,0,0.08)]"
+                      : "text-[#374151] hover:bg-white/60 hover:text-[#111827]"
+                    }`}
+                >
+                  <span className="flex items-center gap-2">
+                    {tab}
+
+                    {index === 0 && (
+                      <span
+                        className={`rounded-full px-2 py-[2px] text-xs transition-all duration-300
+                      ${isActive ? "bg-primary text-white" : "bg-white text-[#52A30D]"
+                          }`}
+                      >
+                        {orders.length}
+                      </span>
+                    )}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -246,16 +253,16 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 
         {/* Pagination */}
         <div className="flex items-center gap-4">
-            <button
-              onClick={() =>
-                setCurrentPage((prev) =>
-                  Math.max(prev - 1, 1)
-                )
-              }
-              className="flex h-10.5 w-10.5 items-center justify-center rounded-full bg-[#52A30D] text-white"
-            >
-              <ArrowBackRoundedIcon />
-            </button>
+          <button
+            onClick={() =>
+              setCurrentPage((prev) =>
+                Math.max(prev - 1, 1)
+              )
+            }
+            className="flex h-10.5 w-10.5 items-center justify-center rounded-full bg-[#52A30D] text-white"
+          >
+            <ArrowBackRoundedIcon />
+          </button>
 
           <div className="flex items-center gap-3">
             {Array.from({
@@ -263,11 +270,10 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
             }).map((_, index) => (
               <div
                 key={index}
-                className={`h-1.25 rounded-full transition-all ${
-                  currentPage === index + 1
+                className={`h-1.25 rounded-full transition-all ${currentPage === index + 1
                     ? "w-6 bg-[#0F3D0F]"
                     : "w-3 bg-[#B7C7B0]"
-                }`}
+                  }`}
               />
             ))}
           </div>

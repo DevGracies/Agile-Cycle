@@ -22,9 +22,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       {/* Main area */}
       <div className="flex flex-col flex-1">
         {/* Navbar */}
-        <Navbar setSidebarOpen={setSidebarOpen} user={MOCK_NAVBAR_USER} />;
+        <Navbar setSidebarOpen={setSidebarOpen} user={MOCK_NAVBAR_USER} />
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto md:ml-[236px]">
+        <main className="flex-1 overflow-y-auto md:ml-[236px] px-4">
           {children}
           <p className="text-gray-500 text-right text-sm px-10 py-4">
             &copy; {new Date().getFullYear()} AgileCycle. All Rights Reserved.

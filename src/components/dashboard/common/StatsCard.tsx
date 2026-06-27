@@ -23,7 +23,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
 
   return (
     <div
-      className={`max-w-85 w-full flex items-center justify-between rounded-[24px] bg-white p-6 shadow-sm shadow-[#519A0914] ${className}`}
+      className={` w-full flex items-center justify-between rounded-[24px] bg-white p-6 shadow-sm shadow-[#519A0914] ${className}`}
     >
       {/* Left */}
       <div className="leading-5.5">

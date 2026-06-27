@@ -11,7 +11,7 @@ export default function SettingsLayout({
       
       {/* Desktop Sidebar */}
       <div className="hidden xl:block">
-        <div className="fixed h-screen w-[260px] px-6">
+        <div className="fixed h-screen w-[260px] pl-2 pr-6">
           <SettingsTabs />
         </div>
       </div>
@@ -22,7 +22,7 @@ export default function SettingsLayout({
       </div>
 
       {/* Main Content */}
-      <section className="w-full xl:pl-60 px-4 sm:px-6">
+      <section className="w-full xl:pl-60 p-4 sm:p-6">
         {children}
       </section>
     </main>
