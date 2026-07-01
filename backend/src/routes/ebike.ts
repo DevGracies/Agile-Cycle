@@ -4,11 +4,14 @@ import { archiveEbike, createEbike, getAllEbikes, getEbike, updateEbike } from "
 
 const router = Router();
 
-router.post("/", authenticate, createEbike);
+// Public Routes
 router.get("/", getAllEbikes);
 router.get("/:id", getEbike);
 
-router.patch("/:id", authenticate, updateEbike);
-router.patch("/:id", authenticate, archiveEbike);
+// Protected Routes
+router.use(authenticate);
+router.post("/", createEbike);
+router.patch("/:id", updateEbike);
+router.patch("/:id", archiveEbike);
 
 export default router;

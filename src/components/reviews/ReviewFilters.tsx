@@ -11,8 +11,6 @@ const ReviewFilters = ({product}: {product: Product}) => {
   const [date, setDate] = useState<string>("");
   const {open, setOpen} = useReview();
 
-  console.log("Product", product)
-
   return (
     <div className="flex flex-col lg:flex-row gap-4 justify-between mt-10 mb-8">
       <div className="flex flex-col md:flex-row gap-4">

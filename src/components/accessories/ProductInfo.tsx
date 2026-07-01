@@ -14,14 +14,14 @@ interface ProductInformationProps {
 
 const ProductInformation = ({ product }: ProductInformationProps) => {
   const [selectedModel, setSelectedModel] = useState(
-    product?.compatibleModels?.[0]?.id || "",
+    product?.compatibleModels?.[0]?._id || "",
   );
 
   const [quantity, setQuantity] = useState(1);
 
   if (!product) return;
 
-  const stockStatus = getStockStatus(product.stock); console.log(product.stock)
+  const stockStatus = getStockStatus(product.stock);
 
   const stockDisplay = () => {
     if (stockStatus === "low-stock") {
@@ -46,8 +46,8 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
         </h1>
 
         <div className="flex items-center gap-4 mt-3">
-          <RatingStars count={Math.floor(product.rating)} />
-          <span className="font-semibold">{product.rating}/5</span>
+          <RatingStars count={Math.floor(product.averageRating)} />
+          <span className="font-semibold">{product.averageRating}/5</span>
           <ChevronRight className="text-gray-400 size-4" />
           <span className="text-[#9a9a9a]">
             <span className="font-semibold text-gray-800">
@@ -59,7 +59,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
 
         <div>
           <h2 className="text-2xl font-bold text-secondary">
-            {formatPrice(product.currentPrice)}
+            {formatPrice(product.price)}
           </h2>
         </div>
 
@@ -71,7 +71,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
             {stockDisplay()}
           </p>
           <p className="text-sm text-primary">
-            Ship within {product?.shippingDuration} business days
+            Ship within {product?.shippingDuration ?? `2 Business days`} 
           </p>
         </div>
       </div>
@@ -83,13 +83,13 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {product?.compatibleModels?.map((model) => {
-            const isSelected = selectedModel === model.id;
+            const isSelected = selectedModel === model._id;
 
             return (
               <button
-                key={model.id}
+                key={model._id}
                 type="button"
-                onClick={() => setSelectedModel(model.id)}
+                onClick={() => setSelectedModel(model._id)}
                 className={`flex items-center justify-between rounded-lg border shadow-sm px-4 py-3 cursor-pointer text-left text-sm font-medium transition duration-200 ${
                   isSelected
                     ? "border-primary bg-green-50 text-primary"

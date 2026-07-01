@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-export const productMediaSchema = new Schema(
+export const mediaSchema = new Schema(
   {
     url: {
       type: String,
@@ -24,12 +24,12 @@ export const productColorSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      // required: true,
     },
 
     color: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   {

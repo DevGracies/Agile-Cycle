@@ -1,4 +1,4 @@
-import { Accessories, Product } from "@/src/types/product";
+import { Accessories } from "@/src/types/product";
 
 const accessories = [
   {
@@ -114,7 +114,7 @@ const features = [
   },
 ]
 
-export const products: Product[] = [
+export const products = [
   {
     id: "product1",
 
@@ -536,7 +536,7 @@ export const products: Product[] = [
         url: "/ebikes/Ebike2.png",
         alt: "EcoRide Folded View",
       },
-     {
+      {
         id: "img2",
         url: "/agile-image1.jpg",
         alt: "AeroX Side View",
@@ -774,3 +774,126 @@ export const accessories2: Accessories = {
   note:
     "Due to monitor differences, actual colours may vary slightly from the product images.",
 };
+
+
+// export const enhancements = [
+//   {
+//     _id: "6a3d79593421d18b9dec511b",
+//     name: "Smart LED Helmet",
+//     slug: "smart-led-helmet",
+//     sku: "ACC-1001",
+//     description: "Helmet with integrated LED indicators.",
+//     shortDescription: "Safety helmet with smart lighting.",
+//     price: 120,
+//     category: "helmets",
+//     stock: 50,
+//     inventoryStatus: "in-stock",
+//     averageRating: 0,
+//     reviewCount: 0,
+//     isFeatured: false,
+//     isNewArrival: false,
+//     compatibleModels: [],
+//     isActive: true,
+//     images: [],
+//     colors: [],
+//     features: [],
+//     __v: 0,
+//     createdAt: "2026-06-25T18:54:17.574Z",
+//     updatedAt: "2026-06-25T18:54:17.574Z"
+//   },
+//   {
+//     _id: "6a3d79593421d18b9dec511c",
+//     name: "Anti-Theft Bike Lock",
+//     slug: "anti-theft-bike-lock",
+//     sku: "ACC-1002",
+//     description: "Heavy-duty anti-theft lock.",
+//     shortDescription: "Maximum bicycle security.",
+//     price: 79,
+//     category: "alarms",
+//     stock: 100,
+//     inventoryStatus: "in-stock",
+//     averageRating: 0,
+//     reviewCount: 0, "isFeatured": false,
+//     isNewArrival: false,
+//     compatibleModels: [],
+//     isActive: true,
+//     images: [],
+//     colors: [],
+//     features: [],
+//     __v: 0,
+//     createdAt: "2026-06-25T18:54:17.574Z",
+//     updatedAt: "2026-06-25T18:54:17.574Z"
+//   },
+//   {
+//     _id: "6a3d79593421d18b9dec511d",
+//     name: "Rear Storage Basket",
+//     slug: "rear-storage-basket",
+//     sku: "ACC-1003",
+//     description: "Large rear-mounted basket.",
+//     shortDescription: "Extra storage for commuting.",
+//     price: 65,
+//     category: "storage",
+//     stock: 40,
+//     inventoryStatus: "in-stock",
+//     averageRating: 0,
+//     reviewCount: 0,
+//     isFeatured: false,
+//     isNewArrival: false,
+//     compatibleModels: [],
+//     isActive: true,
+//     images: [],
+//     colors: [],
+//     features: [],
+//     __v: 0,
+//     createdAt: "2026-06-25T18:54:17.574Z",
+//     updatedAt: "2026-06-25T18:54:17.574Z"
+//   },
+//   {
+//     _id: "6a3d79593421d18b9dec511e",
+//     name: "Premium Brake pods",
+//     slug: "premium-brake-pods",
+//     sku: "ACC-1004",
+//     description: "Durable aluminum brake pods.",
+//     shortDescription: "Strong brake pods.",
+//     price: 99,
+//     category: "brake pods",
+//     stock: 25,
+//     inventoryStatus: "in-stock",
+//     averageRating: 0,
+//     reviewCount: 0,
+//     isFeatured: false,
+//     isNewArrival: false,
+//     compatibleModels: [],
+//     isActive: true,
+//     images: [],
+//     colors: [],
+//     features: [],
+//     __v: 0,
+//     createdAt: "2026-06-25T18:54:17.574Z",
+//     updatedAt: "2026-06-25T18:54:17.574Z"
+//   },
+//   {
+//     _id: "6a3d79593421d18b9dec511f",
+//     name: "Night Vision Bike Light",
+//     slug: "night-vision-bike-light",
+//     sku: "ACC-1005",
+//     description: "Ultra-bright front bike light.",
+//     shortDescription: "High visibility lighting.",
+//     price: 55,
+//     category: "lights",
+//     stock: 80,
+//     inventoryStatus: "in-stock",
+//     averageRating: 0,
+//     reviewCount: 0,
+//     isFeatured: false,
+//     isNewArrival: false,
+//     compatibleModels: [],
+//     isActive: true,
+//     images: [],
+//     colors: [],
+//     features: [],
+//     __v: 0,
+//     createdAt: "2026-06-25T18:54:17.574Z",
+//     updatedAt: "2026-06-25T18:54:17.574Z"
+//   }
+// ]

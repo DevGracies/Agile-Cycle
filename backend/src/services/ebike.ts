@@ -1,52 +1,123 @@
 
+import Accessories from "../models/accessories";
+import Enhancement from "../models/enhancement";
 import Ebike from "../models/ebike";
-import { CreateEbikeInput, GetEbikesQuery } from "../types/product";
+import { CreateEbikeInput, ProductQuery } from "../types/ebike";
 import { AppError } from "../utils/AppError";
 import slugify from "slugify";
+import Review from "../models/review";
 
 export const createEbikeService = async (
-    data: CreateEbikeInput
+  data: CreateEbikeInput
 ) => {
-    const existingBike = await Ebike.findOne({
-        $or: [
-            { slug: data.slug },
-            { sku: data.sku },
-        ],
-    });
+  const existingBike = await Ebike.findOne({
+    $or: [
+      { slug: data.slug },
+      { sku: data.sku },
+    ],
+  });
 
-    if (existingBike) {
-        throw new AppError(
-            "Ebike already exists",
-            409
-        );
-    }
+  if (existingBike) {
+    throw new AppError(
+      "Ebike already exists",
+      409
+    );
+  }
 
-    const slug = slugify(data.name, {
-        lower: true,
-        strict: true,
-    });
+  const slug = slugify(data.name, {
+    lower: true,
+    strict: true,
+  });
 
-    const ebike = await Ebike.create({
-        ...data,
-        slug,
-    });
+  const ebike = await Ebike.create({
+    ...data,
+    slug,
+  });
 
-    return ebike;
+  return ebike;
 };
+
+export const updateEbikeService = async (
+  ebikeId: string,
+  data: Partial<CreateEbikeInput>
+) => {
+  const ebike = await Ebike.findById(ebikeId);
+
+  if (!ebike) {
+    throw new AppError(
+      "Ebike not found",
+      404
+    );
+  }
+
+  if (data.sku && data.sku !== ebike.sku) {
+    const existingSku = await Ebike.findOne({
+      sku: data.sku,
+      _id: { $ne: ebikeId },
+    });
+
+    if (existingSku) {
+      throw new AppError(
+        "SKU already exists",
+        409
+      );
+    }
+  }
+
+  if (data.name) {
+    data.slug = slugify(data.name, {
+      lower: true,
+      strict: true,
+    });
+  }
+
+  const updatedEbike =
+    await Ebike.findByIdAndUpdate(
+      ebikeId,
+      data,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+  return updatedEbike;
+};
+
+
+export const archiveEbikeService = async (
+  ebikeId: string
+) => {
+  const ebike = await Ebike.findById(
+    ebikeId
+  );
+
+  if (!ebike) {
+    throw new AppError(
+      "Ebike not found",
+      404
+    );
+  }
+
+  ebike.isActive = false;
+
+  await ebike.save();
+
+  return null;
+};
+
 
 export const getEbikeService =
   async (ebikeId: string) => {
-    const ebike =
-      await Ebike.findOne({
+    const [ebike, compatibleAccessories, compatibleEnhancements, review] = await Promise.all([
+      Ebike.findOne({
         _id: ebikeId,
         isActive: true,
-      })
-        .populate(
-          "compatibleAccessories"
-        )
-        .populate(
-          "compatibleEnhancements"
-        );
+      }),
+      Accessories.find({ compatibleModels: ebikeId }).populate("compatibleModels"),
+      Enhancement.find({ compatibleModels: ebikeId }).populate("compatibleModels"),
+      Review.find({ productId: ebikeId }).populate("productId"),
+    ])
 
     if (!ebike) {
       throw new AppError(
@@ -54,12 +125,26 @@ export const getEbikeService =
         404
       );
     }
+    if (!compatibleAccessories.length) {
+      throw new AppError("No compatible accessories found", 404)
+    }
+    if (!compatibleEnhancements.length) {
+      throw new AppError("No compatible enhancements found", 404)
+    }
+    if (!review.length) {
+      throw new AppError("No compatible enhancements found", 404)
+    }
 
-    return ebike;
-};
+    return {
+      ebike,
+      compatibleAccessories,
+      compatibleEnhancements,
+      review,
+    };
+  };
 
 export const getEbikesService = async (
-  query: GetEbikesQuery
+  query: ProductQuery
 ) => {
   const {
     page = "1",
@@ -176,16 +261,16 @@ export const getEbikesService = async (
     limitNumber;
 
   const [ebikes, total] = await Promise.all([
-      Ebike.find(filters)
-        .sort(sortOption)
-        .skip(skip)
-        .limit(limitNumber)
-        .lean(),
+    Ebike.find(filters)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limitNumber)
+      .lean(),
 
-      Ebike.countDocuments(
-        filters
-      ),
-    ]);
+    Ebike.countDocuments(
+      filters
+    ),
+  ]);
 
   return {
     ebikes,
@@ -199,73 +284,4 @@ export const getEbikesService = async (
       ),
     },
   };
-};
-
-export const updateEbikeService = async (
-  ebikeId: string,
-  data: Partial<CreateEbikeInput>
-) => {
-  const ebike = await Ebike.findById(ebikeId);
-
-  if (!ebike) {
-    throw new AppError(
-      "Ebike not found",
-      404
-    );
-  }
-
-  if (data.sku && data.sku !== ebike.sku) {
-    const existingSku = await Ebike.findOne({
-      sku: data.sku,
-      _id: { $ne: ebikeId },
-    });
-
-    if (existingSku) {
-      throw new AppError(
-        "SKU already exists",
-        409
-      );
-    }
-  }
-
-  if (data.name) {
-    data.slug = slugify(data.name, {
-      lower: true,
-      strict: true,
-    });
-  }
-
-  const updatedEbike =
-    await Ebike.findByIdAndUpdate(
-      ebikeId,
-      data,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-
-  return updatedEbike;
-};
-
-
-export const archiveEbikeService = async (
-    ebikeId: string
-) => {
-    const ebike = await Ebike.findById(
-        ebikeId
-    );
-
-    if (!ebike) {
-        throw new AppError(
-            "Ebike not found",
-            404
-        );
-    }
-
-    ebike.isActive = false;
-
-    await ebike.save();
-
-    return null;
 };

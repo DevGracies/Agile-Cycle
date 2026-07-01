@@ -5,7 +5,7 @@ import ProductActions from "./ProductActions";
 import { Product } from "@/src/types/product";
 
 import { useProductPurchase } from "@/src/hooks/useProductPurchase";
-import { getStockStatus } from "@/src/utils/product";
+import { formatPrice, getStockStatus } from "@/src/utils/product";
 import { ChevronRight } from "lucide-react";
 
 export default function ProductInfo({ product }: { product: Product }) {
@@ -40,6 +40,7 @@ export default function ProductInfo({ product }: { product: Product }) {
     } else return "text-primary";
   };
 
+  console.log("Product Info", product)
   return (
     <div>
       <h1 className="text-3xl font-bold">{product.name}</h1>
@@ -50,8 +51,8 @@ export default function ProductInfo({ product }: { product: Product }) {
 
       {/* RATING */}
       <div className="flex items-center gap-4 mt-3">
-        <RatingStars count={Math.floor(product.rating)} />
-        <span className="font-semibold">{product.rating}/5</span>
+        <RatingStars count={Math.floor(product.averageRating)} />
+        <span className="font-semibold">{product.averageRating}/5</span>
         <ChevronRight className="text-gray-400 size-4" />
         <span className="text-[#9a9a9a]">
           <span className="font-semibold text-gray-800">
@@ -64,12 +65,12 @@ export default function ProductInfo({ product }: { product: Product }) {
       {/* PRICE */}
       <div className="flex items-center gap-4 mt-6">
         <h2 className="text-2xl font-bold text-secondary">
-          ₦{product.currentPrice.toLocaleString()}
+          {formatPrice(product.discountPrice)}
         </h2>
 
-        {product.originalPrice && (
+        {product.price && (
           <span className="line-through text-primary/70">
-            ₦{product.originalPrice.toLocaleString()}
+            {formatPrice(product.price)}
           </span>
         )}
       </div>
@@ -81,7 +82,7 @@ export default function ProductInfo({ product }: { product: Product }) {
         </span>
 
         <span className="text-primary text-sm font-medium">
-          Ship within {product.shippingDuration ?? 2} business days
+          Ship within {product.shippingDuration ?? `2 business days`}
         </span>
       </div>
 

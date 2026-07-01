@@ -1,12 +1,12 @@
 "use client"
 
 import ProductPage from '@/src/components/shared/product/ProductPage'
-import { accessories } from '@/src/lib/data'
+import { useAccessory } from '@/src/hooks/useAccessories'
 import { accessoryDisplay, accessoryFilters } from '@/src/lib/product'
 import React from 'react'
 
 const AccessoriesPage = () => {
-    // console.log(accessoryDisplay)   
+  const {accessories} = useAccessory();
   return (
     <div>
         <ProductPage 

@@ -3,11 +3,11 @@
 import Container from "../layout/Container";
 import { Pagination } from "../dashboard/common/Dashboard";
 import ProductSectionLayout from "../ebikes/ebike-details/ProductSectionLayout";
-import ProductGrid from "../ebikes/ebike-details/ProductGrid";
-import { useProduct } from "@/src/hooks/useProduct";
+import EbikeGrid from "../ebikes/ebike-details/EbikeGrid";
+import { useFeaturedProducts } from "@/src/hooks/useFeaturedProducts";
 
 const ProductSection = () => {
-  const {products} = useProduct();
+   const { ebikes } = useFeaturedProducts();
   return (
       <Container>
         <ProductSectionLayout
@@ -23,7 +23,7 @@ const ProductSection = () => {
           }
         >
           
-          <ProductGrid products={products} />
+          <EbikeGrid products={ebikes} />
         </ProductSectionLayout>
       </Container>
   );

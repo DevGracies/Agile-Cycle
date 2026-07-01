@@ -1,5 +1,5 @@
 import User from "../models/user";
-import { generateEmailToken } from "../utils";
+import { BikeType } from "../types/user";
 import { AppError } from "../utils/AppError";
 // import { changePasswordSchema } from "../validators/user";
 import bcrypt from "bcryptjs";
@@ -75,48 +75,40 @@ export const resetPasswordService = async ({ token, newPassword }: ConfirmPasswo
     return;
 }
 
-export const requestEmailVerificationService = async (userId: string) => {
-    const user = await User.findById(userId);
+export const requestEmailVerificationService = async (email: string) => {
+    const user = await User.findById({ email });
 
     if (!user) {
         throw new AppError("User not found", 404);
     }
 
-
     if (user.isEmailVerified) {
         throw new AppError("Email already verified", 400);
     }
 
-    const { rawToken, hashedToken } = generateEmailToken();
 
-    user.emailVerificationToken = hashedToken;
+    const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+
+    user.emailVerificationToken = verificationToken;
     user.emailVerificationExpiresAt = new Date(Date.now() + 15 * 60 * 1000);
 
     await user.save({ validateBeforeSave: false });
-    // const verifyUrl =
-    //     `${env.CLIENT_URL}/verify-email?token=${rawToken}`;
 
     // await sendEmail({
     //     to: user.email,
     //     subject: "Verify your email",
     //     html: `
-    //   <p>Verify your email address</p>
-    //   <a href="${verifyUrl}">
-    //     Verify Email
-    //   </a>
+    //   <p>Here is your verification code.</p>
+    //   <h2>${verificationToken}</h2>
     // `,
     // });
 }
 
 export const confirmEmailVerificationService = async (userId: string, token: string): Promise<void> => {
-    const hashedToken = crypto
-        .createHash("sha256")
-        .update(token)
-        .digest("hex");
 
     const user = await User.findOne({
         _id: userId,
-        emailVerificationToken: hashedToken,
+        emailVerificationToken: token,
         emailVerificationExpiresAt: {
             $gt: new Date(),
         },
@@ -185,3 +177,69 @@ export const confirmEmailVerificationService = async (userId: string, token: str
 //     user.passwordChangedAt = Date.now();
 //     await user.save();
 // }
+
+
+
+interface ProfileInput {
+    userId: string;
+    country: string;
+    state: string;
+    ridingPurpose: string;
+    bikeType: BikeType;
+    bikeBrand: string;
+    belongsToClub: boolean;
+    clubName: string;
+}
+
+export const setUpProfileService = async ({ userId, country, state, ridingPurpose, bikeType, bikeBrand, belongsToClub, clubName }: ProfileInput) => {
+    const user = await User.findByIdAndUpdate(
+        userId,
+        {
+            $set: {
+                riderProfile: {
+                    country,
+                    state,
+                    ridingPurpose,
+                    bikeType,
+                    bikeBrand,
+                    belongsToClub,
+                    clubName,
+                }
+            }
+        },
+        { new: true, runValidators: true }
+    )
+
+    if (!user) {
+        throw new AppError("User not found", 404)
+    }
+
+    return user;
+}
+
+interface SubscribeInput {
+    userId: string;
+    isSubscribed: boolean;
+    isTipsEnabled: boolean;
+}
+
+export const subscribeToNewsLetterService = async ({ userId, isSubscribed, isTipsEnabled }: SubscribeInput) => {
+    const user = await User.findByIdAndUpdate(
+        userId,
+        {
+            $set: {
+                preferences: {
+                    isSubscribed,
+                    isTipsEnabled,
+                }
+            }
+        },
+        { new: true, runValidators: true }
+    )
+
+    if (!user) {
+        throw new AppError("User not found", 404)
+    }
+
+    return user;
+}

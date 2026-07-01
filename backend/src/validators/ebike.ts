@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EBIKE_CATEGORIES } from "../types/product";
+import { EBIKE_CATEGORIES } from "../types/ebike";
 
 export const createEbikeSchema = z.object({
   name: z.string().min(2).max(150),
