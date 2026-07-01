@@ -1,15 +1,16 @@
 import React from "react";
 import Image from "next/image";
-import { ProductCompatibility } from "@/src/types/product";
+import { Ebike } from "@/src/types/product";
 
 
 interface CompatibilityTableProps {
-  data: ProductCompatibility[];
+  data: Ebike[];
 }
 
 const CompatibilityTable = ({
   data,
 }: CompatibilityTableProps) => {
+  console.log(data.length)
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-3">
       <h2 className="mb-6 text-sm font-bold uppercase tracking-wide text-primary">
@@ -29,27 +30,27 @@ const CompatibilityTable = ({
           <tbody>
             {data.map((item) => (
               <tr
-                key={item.id}
+                key={item._id}
                 className="border-b border-gray-300 last:border-none"
               >
                 <td className="px-4 py-4 flex gap-2 items-center">
                   <div className="relative h-16 w-20 overflow-hidden rounded-lg">
                     <Image
-                      src={item.image}
-                      alt={item.bikeName}
+                      src={item.images?.[0]?.url}
+                      alt={item.images?.[0]?.alt ?? item.name}
                       fill
                       className="object-cover"
                     />
                   </div>
-                  {item.bikeName}
+                  {item.name}
                 </td>
 
                 <td className="px-4 py-4 text-gray-600">
-                  {item.model}
+                  {item?.specs?.material}
                 </td>
 
                 <td className="px-4 py-4 text-gray-600">
-                  {item.wheelSize}
+                  {item?.specs?.range}
                 </td>
               </tr>
             ))}

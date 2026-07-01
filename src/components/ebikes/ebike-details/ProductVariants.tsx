@@ -23,8 +23,7 @@ export default function ProductVariants({
   onSelectBattery,
   onSelectedVariant,
 }: Props) {
-  const productColor = product.colors.find((col) => col.id === selectedColor);
-  console.log("ProductVariants", product);
+  const productColor = product.colors.find((col) => col._id === selectedColor);
   return (
     <div className="space-y-7">
       {/* COLORS */}
@@ -38,15 +37,15 @@ export default function ProductVariants({
         <div className="flex gap-4 mt-4">
           {product.colors.map((color) => (
             <div
-              key={color.id}
-              onClick={() => onSelectColor(color.id)}
+              key={color._id}
+              onClick={() => onSelectColor(color._id)}
               className={`w-8 h-8 rounded cursor-pointer transition-all duration-300 ${
-                selectedColor === color.id
+                selectedColor === color._id
                   ? "ring-2 ring-primary border-3 border-gray-200"
                   : ""
               }`}
               style={{
-                backgroundColor: color.value,
+                backgroundColor: color.color,
               }}
             />
           ))}
@@ -64,10 +63,10 @@ export default function ProductVariants({
         <div className="flex gap-3 mt-4 flex-wrap">
           {product?.batteryOptions?.map((battery) => (
             <button
-              key={battery.id}
-              onClick={() => onSelectBattery(battery.id)}
+              key={battery._id}
+              onClick={() => onSelectBattery(battery._id)}
               className={`px-6 h-12 rounded-md font-semibold border ${
-                selectedBattery === battery.id
+                selectedBattery === battery._id
                   ? "bg-primary text-white"
                   : "border-primary text-primary"
               }`}
@@ -93,12 +92,12 @@ export default function ProductVariants({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
         {product?.variants?.map((variant) => {
-          const isActive = selectedVariant === variant.id;
+          const isActive = selectedVariant === variant._id;
 
           return (
             <button
-              key={variant.id}
-              onClick={() => onSelectedVariant(variant.id)}
+              key={variant._id}
+              onClick={() => onSelectedVariant(variant._id)}
               type="button"
               className={`
           relative flex items-center gap-4 rounded-2xl p-3

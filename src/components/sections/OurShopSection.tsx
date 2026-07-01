@@ -17,9 +17,9 @@ const OurShopSection = () => {
         priority
         className="object-cover object-center"
       />
-      <Container className="relative space-y-6 mt-10 z-10">
+      <Container className="relative space-y-6 mt-10 z-10 max-md:ml-5">
         <h2 className="text-4xl font-bold">Our Shop</h2>
-        <p className="text-sm w-[200px] md:w-160">
+        <p className="text-sm w-[350px] md:w-160">
           Visit us in person at our physical shop to experience Agile Cycle
           firsthand. Explore our full range of e-bikes, accessories, and
           services. Whether you&apos;re test-riding, getting expert advice, or

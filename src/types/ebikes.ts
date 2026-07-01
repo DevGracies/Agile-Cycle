@@ -1,3 +1,6 @@
+import { Pagination } from "./api";
+import { Accessories, Ebike, Enhancement} from "./product";
+
 export interface Category {
   id: string;
   name: string;
@@ -18,4 +21,29 @@ export interface SidebarFilters {
     min: number;
     max: number;
   };
+}
+
+export interface GetEbikesResponse {
+  success: boolean;
+  ebikes: Ebike[];
+  pagination: Pagination;
+}
+
+export interface GetEbikeResponse {
+    ebike: Ebike,
+    compatibleAccessories: Accessories[],
+    compatibleEnhancements: Enhancement[],
+}
+
+export interface Filters {
+  page?: number;
+  limit?: number;
+  category?: number;
+  search?: number;
+  featured?: number;
+  newArrival?: number;
+  inventoryStatus?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  sort?: number;
 }

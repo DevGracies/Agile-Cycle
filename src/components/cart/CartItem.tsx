@@ -31,7 +31,7 @@ export default function CartItem({ item, onRemove, onChangeQty }: Props) {
             <h4 className="font-semibold text-sm">{product.name}</h4>
 
             <span className="font-semibold">
-              {formatPrice(product.currentPrice ?? 0).toLocaleString()}
+              {formatPrice(product.price ?? 0).toLocaleString()}
             </span>
           </div>
 

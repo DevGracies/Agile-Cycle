@@ -1,8 +1,10 @@
+import { Accessories, Ebike, Enhancement } from "../types/product";
 import { apiRequest } from "./api.service";
 import { CartItem } from "@/src/types/cart";
-import { Product } from "@/src/types/product";
 
-const USE_MOCK = true;
+type CartType = Ebike | Accessories | Enhancement;
+
+const USE_MOCK = false;
 
 let cartDB: CartItem[] = [];
 
@@ -18,14 +20,14 @@ export const cartService = {
   },
 
   // ADD TO CART
-  addToCart(product: Product, quantity: number = 1): Promise<CartItem[]> {
+  addToCart(product: CartType, quantity: number = 1): Promise<CartItem[]> {
     const existing = cartDB.find(
-      (item) => item.product.id === product.id,
+      (item) => item.product._id === product._id,
     );
 
     if (existing) {
       cartDB = cartDB.map((item) =>
-        item.product.id === product.id
+        item.product._id === product._id
           ? {
               ...item,
               quantity: item.quantity + quantity,
@@ -55,7 +57,7 @@ export const cartService = {
   // REMOVE FROM CART
   removeFromCart(productId: string): Promise<CartItem[]> {
     cartDB = cartDB.filter(
-      (item) => item.product.id !== productId,
+      (item) => item.product._id !== productId,
     );
 
     return apiRequest<CartItem[]>({
@@ -73,7 +75,7 @@ export const cartService = {
     quantity: number,
   ): Promise<CartItem[]> {
     cartDB = cartDB.map((item) =>
-      item.product.id === productId
+      item.product._id === productId
         ? {
             ...item,
             quantity: Math.max(1, quantity),

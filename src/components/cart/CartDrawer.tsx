@@ -36,7 +36,7 @@ export default function CartDrawer({ open, onClose }: Props) {
   }, [open, onClose]);
 
   const subtotal = items.reduce(
-    (acc, item) => acc + item.product?.currentPrice * item.quantity,
+    (acc, item) => acc + item.product?.price * item.quantity,
     0,
   );
 
@@ -78,10 +78,10 @@ export default function CartDrawer({ open, onClose }: Props) {
               <div className="mt-5 space-y-4">
                 {items.map((item) => (
                   <CartItem
-                    key={item.product.id}
+                    key={item.product._id}
                     item={item}
-                    onRemove={() => removeFromCart(item.product.id)}
-                    onChangeQty={(q) => updateQuantity(item.product.id, q)}
+                    onRemove={() => removeFromCart(item.product._id)}
+                    onChangeQty={(q) => updateQuantity(item.product._id, q)}
                   />
                 ))}
               </div>

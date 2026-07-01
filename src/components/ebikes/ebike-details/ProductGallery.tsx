@@ -11,10 +11,10 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
-import { Accessories, Product } from "@/src/types/product";
+import { Accessories, Ebike } from "@/src/types/product";
 
 interface ProductGalleryProps {
-  product: Product | Accessories;
+  product: Ebike | Accessories;
 }
 
 export default function ProductGallery({
@@ -25,7 +25,7 @@ export default function ProductGallery({
 
   useEffect(() => {
     setSelected(0);
-  }, [product.id]);
+  }, [product._id]);
 
   const images =
     product.images;
@@ -54,10 +54,10 @@ export default function ProductGallery({
           fill
           priority
           src={
-            images[selected].url
+            images[selected]?.url
           }
           alt={
-            images[selected].alt
+            images[selected]?.alt
           }
           className="object-cover"
         />
@@ -82,37 +82,28 @@ export default function ProductGallery({
       </div>
 
       <div className="flex mt-4 overflow-x-auto">
-        {images.map(
-          (
-            image,
-            index,
-          ) => (
-            <button
-              key={image.id}
-              onClick={() =>
-                setSelected(
-                  index,
-                )
-              }
-              className={`relative w-[80px] h-[80px] md:min-w-[110px] md:h-[90px] border-2 ${
-                selected ===
+        {images.map((image, index) => (
+          <button
+            key={image._id}
+            onClick={() =>
+              setSelected(
+                index,
+              )
+            }
+            className={`relative w-[80px] h-[80px] md:min-w-[110px] md:h-[90px] border-2 ${selected ===
                 index
-                  ? "border-primary"
-                  : "border-transparent"
+                ? "border-primary"
+                : "border-transparent"
               }`}
-            >
-              <Image
-                fill
-                src={
-                  image.url
-                }
-                alt={
-                  image.alt
-                }
-                className="object-cover"
-              />
-            </button>
-          ),
+          >
+            <Image
+              fill
+              src={image.url}
+              alt={image.alt ?? "Product Image"}
+              className="object-cover"
+            />
+          </button>
+        ),
         )}
       </div>
     </div>

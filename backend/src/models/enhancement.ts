@@ -7,9 +7,9 @@ import {
 import {
     productColorSchema,
     productFeatureSchema,
-    productMediaSchema,
+    mediaSchema,
 } from "./schemas/product";
-import { ENHANCEMENT_CATEGORIES } from "../types/ebike";
+import { ENHANCEMENT_CATEGORIES } from "../types/enhancement";
 
 const enhancementSchema = new Schema(
     {
@@ -48,7 +48,7 @@ const enhancementSchema = new Schema(
         },
 
         images: {
-            type: [productMediaSchema],
+            type: [mediaSchema],
             default: [],
         },
 
@@ -140,8 +140,7 @@ const enhancementSchema = new Schema(
     }
 );
 
-export type EnhancementDocument =
-    InferSchemaType<typeof enhancementSchema>;
+export type EnhancementDocument = InferSchemaType<typeof enhancementSchema>;
 
 export default model(
     "Enhancement",

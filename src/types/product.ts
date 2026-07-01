@@ -9,6 +9,7 @@ export type InventoryStatus =
   | "out-of-stock";
 
 export interface ProductImage {
+  _id: string;
   url: string;
   alt: string;
 }
@@ -24,6 +25,7 @@ export interface ProductFeatureSpec {
 }
 
 export interface ProductFeature {
+  _id: string;
   title: string;
   subtitle?: string;
   description: string;
@@ -41,7 +43,8 @@ export interface BatteryOption {
   label: string;
 }
 
-export interface EbikeDocument {
+export interface Ebike {
+  _id: string;
   name: string;
   slug: string;
   sku: string;
@@ -74,8 +77,6 @@ export interface EbikeDocument {
 
   variants?: ProductVariant[];
 
-  accessories: string[];
-
   features?: ProductFeature[];
 
   shippingDuration?: string;
@@ -85,34 +86,98 @@ export interface EbikeDocument {
 
 
 
+// export interface Accessories {
+//   _id: string;
+//   name: string;
+//   description?: string;
+//   currentPrice: number;
+//   originalPrice?: number;
+//   rating: number;
+//   reviewCount: number;
+//   stock: number;
+//   shippingDuration?: string;
+//   images: ProductImage[];
+//   compatibleModels?: CompatibleModel[];
+//   compatibilityTable?: ProductCompatibility[];
+//   features: ProductFeature[];
+//   packageContents?: string[];
+//   note?: string;
+// }
+
 export interface Accessories {
-  id: string;
+  _id: string;
   name: string;
-  description?: string;
-  currentPrice: number;
-  originalPrice?: number;
-  rating: number;
-  reviewCount: number;
-  stock: number;
-  shippingDuration?: string;
+  slug: string;
+  sku: string;
+
+  description: string;
+  shortDescription: string;
+
   images: ProductImage[];
-  compatibleModels?: CompatibleModel[];
-  compatibilityTable?: ProductCompatibility[];
-  features: ProductFeature[];
-  packageContents?: string[];
-  note?: string;
+
+  price: number;
+  discountPrice?: number;
+
+  shippingDuration?: string;
+  stock: number;
+
+  inventoryStatus: string;
+
+  averageRating: number;
+  reviewCount: number;
+
+  badge?: string;
+
+  isFeatured: boolean;
+  isNewArrival: boolean;
+
+  colors: ProductColor[];
+
+  compatibleModels: Ebike[];
+
+  features?: ProductFeature[];
+
+  isActive: boolean;
+}
+
+export interface Enhancement {
+  _id: string;
+  name: string;
+  slug: string;
+  sku: string;
+
+  description: string;
+  shortDescription: string;
+
+  images: ProductImage[];
+
+  price: number;
+  discountPrice?: number;
+
+  shippingDuration?: string;
+  stock: number;
+
+  inventoryStatus: string;
+
+  averageRating: number;
+  reviewCount: number;
+
+  badge?: string;
+
+  isFeatured: boolean;
+  isNewArrival: boolean;
+
+  colors: ProductColor[];
+
+  compatibleModels: Ebike[];
+
+  features?: ProductFeature[];
+
+  isActive: boolean;
 }
 
 export interface CompatibleModel {
   id: string;
   name: string;
   selected?: boolean;
-}
-
-export interface ProductCompatibility {
-  id: string;
-  image: string;
-  bikeName: string;
-  model: string;
-  wheelSize: string;
 }

@@ -1,7 +1,14 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../utils/asyncHandler";
 import User from "../models/user";
-import { confirmEmailVerificationService, requestEmailVerificationService, requestPasswordResetService, resetPasswordService } from "../services/user";
+import {
+    confirmEmailVerificationService,
+    requestEmailVerificationService,
+    requestPasswordResetService,
+    resetPasswordService,
+    setUpProfileService,
+    subscribeToNewsLetterService
+} from "../services/user";
 import { AppError } from "../utils/AppError";
 import { AuthenticatedRequest } from "../types/auth";
 
@@ -26,7 +33,7 @@ export const deleteCurrentUser = asyncHandler(
         const user = await User.findOne({ email });
 
         if (!user) {
-            throw new AppError("No user found", 404);
+            throw new AppError("User not found", 404);
         }
 
         await user.deleteOne();
@@ -59,7 +66,7 @@ export const deleteAllUsers = asyncHandler(
 export const getCurrentUser = asyncHandler(
     async (req: AuthenticatedRequest, res: Response) => {
         if (!req.user) {
-            throw new AppError("No user found", 404);
+            throw new AppError("User not found", 404);
         }
         const user = await User.findById(req.user.id)
             .select(
@@ -109,9 +116,10 @@ export const resetPassword = asyncHandler(async (
 export const requestEmailVerification = asyncHandler(
     async (req: AuthenticatedRequest, res: Response) => {
         if (!req.user) {
-            throw new AppError("No user found", 404);
+            throw new AppError("User not found", 404);
         }
-        await requestEmailVerificationService(req.user.id);
+        const { email } = req.body;
+        await requestEmailVerificationService(email);
 
         res.status(200).json({
             success: true,
@@ -123,7 +131,7 @@ export const requestEmailVerification = asyncHandler(
 export const confirmEmailVerification = asyncHandler(
     async (req: AuthenticatedRequest, res: Response) => {
         if (!req.user) {
-            throw new AppError("No user found", 404);
+            throw new AppError("User not found", 404);
         }
         await confirmEmailVerificationService(
             req.user.id,
@@ -137,4 +145,33 @@ export const confirmEmailVerification = asyncHandler(
     }
 );
 
+export const setUpProfile = asyncHandler(
+    async (req: AuthenticatedRequest, res: Response) => {
+        if (!req.user) {
+            throw new AppError("User not found", 404);
+        }
+        const userId = req.user.id;
+        const { country, state, ridingPurpose, bikeType, bikeBrand, belongsToClub, clubName } = req.body;
+        await setUpProfileService({ userId, country, state, ridingPurpose, bikeType, bikeBrand, belongsToClub, clubName })
+        res.status(200).json({
+            success: true,
+            message: "User Profile set up successful"
+        })
+    }
+)
 
+export const subscribeToNewsLetter = asyncHandler(
+    async (req: AuthenticatedRequest, res: Response) => {
+        if (!req.user) {
+            throw new AppError("User not found", 404);
+        }
+        const userId = req.user.id;
+        const { isSubscribed, isTipsEnabled } = req.body;
+        await subscribeToNewsLetterService({ userId, isSubscribed, isTipsEnabled });
+
+        res.status(200).json({
+            success: true,
+            message: "Newsletter subscription successful",
+        })
+    }
+)

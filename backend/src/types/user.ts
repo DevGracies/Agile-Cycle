@@ -6,7 +6,8 @@ export const AUTH_PROVIDERS = ["local", "google"] as const;
 
 export const BIKE_TYPES = [
   "electricBike",
-  "regularBike",
+  "tricycle",
+  "commuting",
 ] as const;
 
 export type AuthProvider =

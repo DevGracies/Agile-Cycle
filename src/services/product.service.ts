@@ -3,14 +3,14 @@ import { Product } from "@/src/types/product";
 import { products as productMock } from "../mocks/product.mock";
 import { accessories, enhancements } from "../lib/data";
 
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 let productsDb: Product[] = structuredClone([...productMock, ...enhancements, ...accessories]);
 
 export const productService = {
   getProducts(): Promise<Product[]> {
     return apiRequest<Product[]>({
-      endpoint: "/products",
+      endpoint: "/ebikes",
       mockData: productsDb,
       useMock: USE_MOCK,
       delay: 300,
@@ -22,7 +22,7 @@ export const productService = {
 
     if (!product) {
       return apiRequest<Product>({
-        endpoint: `/products/${id}`,
+        endpoint: `/ebikes/${id}`,
         mockData: (() => {
           throw new Error("Product not found");
         })(),
@@ -31,7 +31,7 @@ export const productService = {
     }
 
     return apiRequest<Product>({
-      endpoint: `/products/${id}`,
+      endpoint: `/ebikes/${id}`,
       mockData: product,
       useMock: USE_MOCK,
       delay: 200,
@@ -47,7 +47,7 @@ export const productService = {
     productsDb = [newProduct, ...productsDb];
 
     return apiRequest<Product>({
-      endpoint: "/products",
+      endpoint: "/ebikes",
       method: "POST",
       body: payload,
       mockData: newProduct,
@@ -64,7 +64,7 @@ export const productService = {
 
     if (index === -1) {
       return apiRequest<Product>({
-        endpoint: `/products/${id}`,
+        endpoint: `/ebikes/${id}`,
         method: "PATCH",
         mockData: (() => {
           throw new Error("Product not found");
@@ -79,7 +79,7 @@ export const productService = {
     };
 
     return apiRequest<Product>({
-      endpoint: `/products/${id}`,
+      endpoint: `/ebikes/${id}`,
       method: "PATCH",
       body: payload,
       mockData: productsDb[index],
@@ -96,7 +96,7 @@ export const productService = {
     }
 
     return apiRequest<{ success: boolean }>({
-      endpoint: `/products/${id}`,
+      endpoint: `/ebikes/${id}`,
       method: "DELETE",
       mockData: { success: true },
       useMock: USE_MOCK,
@@ -110,7 +110,7 @@ export const productService = {
     );
 
     return apiRequest<Product[]>({
-      endpoint: `/products?search=${query}`,
+      endpoint: `/ebikes?search=${query}`,
       mockData: result,
       useMock: USE_MOCK,
       delay: 300,
@@ -123,7 +123,7 @@ export const productService = {
     );
 
     return apiRequest<Product[]>({
-      endpoint: `/products?category=${category}`,
+      endpoint: `/ebikes?category=${category}`,
       mockData: result,
       useMock: USE_MOCK,
       delay: 300,

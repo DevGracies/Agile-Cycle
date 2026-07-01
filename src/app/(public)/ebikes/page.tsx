@@ -1,18 +1,18 @@
 "use client";
 
 import ProductPage from "@/src/components/shared/product/ProductPage";
-import { useProduct } from "@/src/hooks/useProduct";
+import { useEbike } from "@/src/hooks/useEbike";
 import { ebikesDisplay, ebikeFilters } from "@/src/lib/product";
 import React from "react";
 
 const EbikesPage = () => {
-  const { products } = useProduct();
+  const { ebikes } = useEbike();
   return (
     <div>
       <ProductPage
         filter={ebikeFilters}
         breadcrumb="EBIKES"
-        products={products}
+        products={ebikes}
         display={ebikesDisplay}
       />
     </div>
