@@ -20,7 +20,7 @@ export const createAccessory = asyncHandler(
 
         const accessory = await createAccessoryService(parsed.data);
 
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message:
                 "Accessory created successfully",
@@ -35,7 +35,7 @@ export const getAccessory =
     async (req: Request,res: Response) => {
       const accessory = await getAccessoryService(req.params.id as string);
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         data: accessory,
       });
@@ -48,7 +48,7 @@ export const getAllAccessories =
     async (req: Request,res: Response) => {
       const result = await getAccessoriesService(req.query);
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         messsage: "Accessories fetched successfully",
         ...result,
@@ -76,7 +76,7 @@ export const updateAccessory =
           parsed.data
         );
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message:
           "Accessory updated successfully",
@@ -91,7 +91,7 @@ export const archiveAccessory =
     async (req: Request,res: Response) => {
       await archiveAccessoryService(req.params.id as string);
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message:
           "Accessory deleted successfully",

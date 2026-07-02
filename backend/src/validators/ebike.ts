@@ -30,8 +30,8 @@ export const createEbikeSchema = z.object({
 
   images: z.array(
     z.object({
-      url: z.string().url(),
-      alt: z.string().optional(),
+      public_id: z.string().url(),
+      secure_url: z.string().optional(),
     })
   ).optional(),
 

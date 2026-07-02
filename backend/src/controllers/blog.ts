@@ -10,17 +10,22 @@ import { AppError } from "../utils/AppError";
 //  @route   POST /blogs
 //  @access  Private
 
-export const createBlog = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
-    const blog = await blogService.createBlog(req.body);
-
+export const createBlog = asyncHandler(async (req: Request, res: Response) => {
     if (!req.user) {
         throw new AppError("User not found", 404);
     }
+
+    const blog = await blogService.createBlog({
+        ...req.body,
+        authorId: req.user.id,
+        image: req.file,
+    });
+
     return res.status(201).json({
         success: true,
         message: "Blog created successfully.",
         blog,
-    })
+    });
 });
 
 
@@ -60,19 +65,19 @@ export const getBlog = asyncHandler(async (req: Request, res: Response) => {
 //  @route   PATCH /blogs/:id
 //  @access  Private
 
-export const updateBlog = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
-    if (!req.user) {
-        throw new AppError("User not found", 404);
-    }
+export const updateBlog = asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const blog = await blogService.updateBlog(id as string, req.body);
+    const blog = await blogService.updateBlog(id, {
+        ...req.body,
+        image: req.file,
+    });
 
-    return res.status(200).json({
+    res.status(200).json({
         success: true,
         message: "Blog updated successfully.",
         blog,
-    })
+    });
 });
 
 

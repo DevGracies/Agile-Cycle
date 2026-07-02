@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { asyncHandler } from "../utils/asyncHandler";
 import { AppError } from "../utils/AppError";
-import { archiveEbikeService, createEbikeService, getEbikeService, getEbikesService, updateEbikeService } from "../services/ebike";
+import { archiveEbikeService, createEbikeService, deleteEbikeImageService, getEbikeService, getEbikesService, updateEbikeService, uploadEbikeImagesService } from "../services/ebike";
 import { createEbikeSchema, updateEbikeSchema } from "../validators/ebike";
 
 
@@ -18,9 +18,13 @@ export const createEbike = asyncHandler(
       );
     }
 
-    const ebike = await createEbikeService(parsed.data);
+    if (!req?.files || !req?.files.length) {
+      throw new AppError("At least one image is required", 400);
+    }
 
-    res.status(201).json({
+    const ebike = await createEbikeService(parsed.data, req?.files as Express.Multer.File[]);
+
+    return res.status(201).json({
       success: true,
       message:
         "Ebike created successfully",
@@ -35,7 +39,7 @@ export const getEbike =
     async (req: Request, res: Response) => {
       const { ebike, compatibleAccessories, compatibleEnhancements, review } = await getEbikeService(req.params.id as string);
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         data: {
           ebike,
@@ -54,7 +58,7 @@ export const getAllEbikes =
     async (req: Request, res: Response) => {
       const result = await getEbikesService(req.query);
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         messsage: "Ebikes fetched successfully",
         ...result,
@@ -79,10 +83,10 @@ export const updateEbike =
       const ebike =
         await updateEbikeService(
           req.params.id as string,
-          parsed.data
+          parsed.data,
         );
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message:
           "Ebike updated successfully",
@@ -92,12 +96,46 @@ export const updateEbike =
   );
 
 
+export const uploadEbikeImages = asyncHandler(
+  async (req, res) => {
+
+    const images =
+      await uploadEbikeImagesService(
+        req.params.id as string,
+        req.files as Express.Multer.File[]
+      );
+
+    res.status(200).json({
+      success: true,
+      message: "Images uploaded successfully.",
+      data: images,
+    });
+
+  }
+);
+
+export const deleteEbikeImage = asyncHandler(
+  async (req, res) => {
+
+    await deleteEbikeImageService(
+      req.params.id as string,
+      req.params.publicId as string
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Image deleted successfully.",
+    });
+
+  }
+);
+
 export const archiveEbike =
   asyncHandler(
     async (req: Request, res: Response) => {
       await archiveEbikeService(req.params.id as string);
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message:
           "Ebike deleted successfully",

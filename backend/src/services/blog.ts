@@ -3,6 +3,7 @@ import Blog from "../models/blog";
 import slugify from "slugify";
 import Comment from "../models/comment";
 import { AppError } from "../utils/AppError";
+import { deleteImage, replaceImage, uploadImage } from "../utils/cloudinary";
 
 // Utility: generate slug from title
 const generateSlug = (title: string) => {
@@ -15,28 +16,48 @@ const generateSlug = (title: string) => {
 
 // CREATE BLOG
 export const createBlog = async (data: any) => {
-    const { title, content, category, image, status, authorId } = data;
+    const {
+        title,
+        content,
+        category,
+        status,
+        authorId,
+        image,
+    } = data;
 
     let slug = generateSlug(title);
 
-    const existing = await Blog.findOne({ slug });
+    const exists = await Blog.exists({ slug });
 
-    if (existing) {
+    if (exists) {
         slug = `${slug}-${Date.now()}`;
     }
 
-    const blog = await Blog.create({
+    let uploadedImage;
+
+    if (image) {
+        uploadedImage = await uploadImage(image.path, "blogs");
+    }
+
+    return Blog.create({
         authorId,
         title,
         content,
         category,
-        image,
         slug,
-        status: status || "draft",
-        publishedAt: status === "active" ? new Date() : undefined,
-    });
+        status: status ?? "draft",
+        publishedAt:
+            status === "active"
+                ? new Date()
+                : undefined,
 
-    return blog;
+        image: uploadedImage
+            ? {
+                public_id: uploadedImage.public_id,
+                secure_url: uploadedImage.secure_url,
+            }
+            : undefined,
+    });
 };
 
 // GET BLOGS (FILTER + PAGINATION)
@@ -117,7 +138,10 @@ export const getBlog = async (blogId: string) => {
 };
 
 // UPDATE BLOG
-export const updateBlog = async (id: string, data: any) => {
+export const updateBlog = async (
+    id: string,
+    data: any
+) => {
     if (!Types.ObjectId.isValid(id)) {
         throw new AppError("Invalid blog id");
     }
@@ -128,25 +152,47 @@ export const updateBlog = async (id: string, data: any) => {
         throw new AppError("Blog not found");
     }
 
-    // If title changes, regenerate slug
-    if (data.title && data.title !== blog.title) {
-        data.slug = generateSlug(data.title);
+    if (
+        data.title &&
+        data.title !== blog.title
+    ) {
+        let slug = generateSlug(data.title);
 
-        const existing = await Blog.findOne({
-            slug: data.slug,
+        const exists = await Blog.exists({
+            slug,
             _id: { $ne: id },
         });
 
-        if (existing) {
-            data.slug = `${data.slug}-${Date.now()}`;
+        if (exists) {
+            slug = `${slug}-${Date.now()}`;
         }
+
+        data.slug = slug;
     }
 
-    const updated = await Blog.findByIdAndUpdate(id, data, {
-        new: true,
-    });
+    if (data.image) {
 
-    return updated;
+        const uploaded = await replaceImage(
+            data.image,
+            blog.image?.public_id,
+            "blogs"
+        );
+
+        data.image = {
+            public_id: uploaded.public_id,
+            secure_url: uploaded.secure_url,
+        };
+
+    }
+
+    return Blog.findByIdAndUpdate(
+        id,
+        data,
+        {
+            new: true,
+            runValidators: true,
+        }
+    );
 };
 
 // UPDATE BLOG STATUS
@@ -176,7 +222,9 @@ export const updateBlogStatus = async (id: string, status: string) => {
 };
 
 // DELETE BLOG
-export const deleteBlog = async (id: string) => {
+export const deleteBlog = async (
+    id: string
+) => {
     if (!Types.ObjectId.isValid(id)) {
         throw new AppError("Invalid blog id");
     }
@@ -187,7 +235,11 @@ export const deleteBlog = async (id: string) => {
         throw new AppError("Blog not found");
     }
 
-    await Blog.findByIdAndDelete(id);
+    if (blog.image?.public_id) {
+        await deleteImage(blog.image.public_id);
+    }
+
+    await blog.deleteOne();
 
     return true;
 };

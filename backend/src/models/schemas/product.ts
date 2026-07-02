@@ -2,20 +2,18 @@ import { Schema } from "mongoose";
 
 export const mediaSchema = new Schema(
   {
-    url: {
+    public_id: {
       type: String,
       required: true,
-      trim: true,
     },
 
-    alt: {
+    secure_url: {
       type: String,
-      default: "",
-      trim: true,
+      required: true,
     },
   },
   {
-    _id: true,
+    _id: false,
   }
 );
 
