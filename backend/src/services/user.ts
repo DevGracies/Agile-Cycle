@@ -1,17 +1,11 @@
 import User from "../models/user";
 import { BikeType } from "../types/user";
 import { AppError } from "../utils/AppError";
-// import { changePasswordSchema } from "../validators/user";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
 export interface RequestPasswordResetInput {
     email: string;
-}
-
-export interface ConfirmPasswordResetInput {
-    token: string;
-    newPassword: string;
 }
 
 export const requestPasswordResetService = async ({ email }: RequestPasswordResetInput): Promise<void> => {
@@ -51,7 +45,7 @@ export const requestPasswordResetService = async ({ email }: RequestPasswordRese
     // });
 }
 
-export const resetPasswordService = async ({ token, newPassword }: ConfirmPasswordResetInput) => {
+export const resetPasswordService = async (token: string, newPassword: string) => {
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
     const user = await User.findOne({
@@ -72,7 +66,13 @@ export const resetPasswordService = async ({ token, newPassword }: ConfirmPasswo
 
     await user.save();
 
-    return;
+    // await sendEmail({
+    //     to: user.email,
+    //     subject: "Password Reset Successful",
+    //     html: `
+    //   <h2>Password reset successful</h2>
+    // `,
+    // });
 }
 
 export const requestEmailVerificationService = async (email: string) => {
@@ -124,60 +124,15 @@ export const confirmEmailVerificationService = async (userId: string, token: str
     user.emailVerificationExpiresAt = undefined;
 
     await user.save();
+
+    // await sendEmail({
+    //     to: user.email,
+    //     subject: "Email Verification Successful",
+    //     html: `
+    //   <p>Your email verification was successful. Visit page and login</p>
+    // `,
+    // });
 }
-
-// interface ChangePasswordInput {
-//     currentPassword: string;
-//     newPassword: string;
-// }
-// export const changePassword = async (body: ChangePasswordInput, id: string): Promise<void> => {
-//     const parsed = await changePasswordSchema.safeParse(body);
-
-//     if (!parsed.success) {
-//         throw new AppError(
-//             JSON.stringify(parsed.error.format())
-//         );
-//     }
-
-//     const { currentPassword, newPassword } = parsed.data;
-
-//     if (!currentPassword || !!newPassword) {
-//         throw new AppError("Current and new password are required", 400);
-//     }
-
-
-//     const user = await User.findById(id);
-//     if (!user) {
-//         throw new AppError("User not found", 404);
-//     }
-
-//     if (user.provider !== "local") {
-//         throw new AppError("Password change not available for social login account", 400)
-//     }
-
-//     if (!user.password) {
-//         throw new AppError("User does not have a password set", 400);
-//     }
-
-//     const hashed = await bcrypt.hash(newPassword, 10);
-
-//     const isMatch = await bcrypt.compare(currentPassword, user.password);
-
-//     if (!isMatch) {
-//         throw new AppError("Invalid password", 400);
-//     }
-
-//     const isSame = await bcrypt.compare(hashed, user.password);
-
-//     if (isSame) {
-//         throw new AppError("New password must be different from old password", 400);
-//     }
-
-//     user.password = hashed;
-//     user.passwordChangedAt = Date.now();
-//     await user.save();
-// }
-
 
 
 interface ProfileInput {
@@ -191,19 +146,13 @@ interface ProfileInput {
     clubName: string;
 }
 
-export const setUpProfileService = async ({ userId, country, state, ridingPurpose, bikeType, bikeBrand, belongsToClub, clubName }: ProfileInput) => {
+export const setUpProfileService = async (userId:  string, data: ProfileInput) => {
     const user = await User.findByIdAndUpdate(
         userId,
         {
             $set: {
                 riderProfile: {
-                    country,
-                    state,
-                    ridingPurpose,
-                    bikeType,
-                    bikeBrand,
-                    belongsToClub,
-                    clubName,
+                    data,
                 }
             }
         },

@@ -20,7 +20,7 @@ export const createEnhancement = asyncHandler(
 
         const enhancement = await createEnhancementService(parsed.data);
 
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message:
                 "Enhancement created successfully",
@@ -35,7 +35,7 @@ export const getEnhancement =
     async (req: Request,res: Response) => {
       const enhancement = await getEnhancementService(req.params.id as string);
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         data: enhancement,
       });
@@ -48,7 +48,7 @@ export const getAllEnhancements =
     async (req: Request,res: Response) => {
       const result = await getAllEnhancementsService(req.query);
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         messsage: "Enhancements fetched successfully",
         ...result,
@@ -76,7 +76,7 @@ export const updateEnhancement =
           parsed.data
         );
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message:
           "Enhancement updated successfully",
@@ -91,7 +91,7 @@ export const archiveEnhancement =
     async (req: Request,res: Response) => {
       await archiveEnhancementService(req.params.id as string);
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message:
           "Enhancement deleted successfully",

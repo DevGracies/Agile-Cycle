@@ -41,7 +41,7 @@ const blogSchema = new Schema(
 
     status: {
       type: String,
-      enum: ["active", "inactive"],
+      enum: ["active", "inactive", "archived"],
       default: "draft",
       index: true,
     },

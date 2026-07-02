@@ -6,35 +6,48 @@ import { CreateEbikeInput, ProductQuery } from "../types/ebike";
 import { AppError } from "../utils/AppError";
 import slugify from "slugify";
 import Review from "../models/review";
+import { deleteImage, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
 
 export const createEbikeService = async (
-  data: CreateEbikeInput
+    data: CreateEbikeInput,
+    files: Express.Multer.File[]
 ) => {
-  const existingBike = await Ebike.findOne({
-    $or: [
-      { slug: data.slug },
-      { sku: data.sku },
-    ],
-  });
+    const exists = await Ebike.findOne({
+        $or: [
+            { sku: data.sku },
+            { slug: slugify(data.name) },
+        ],
+    });
 
-  if (existingBike) {
-    throw new AppError(
-      "Ebike already exists",
-      409
-    );
-  }
+    if (exists) {
+        throw new AppError(
+            "Ebike already exists",
+            409
+        );
+    }
 
-  const slug = slugify(data.name, {
-    lower: true,
-    strict: true,
-  });
+    let images: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
 
-  const ebike = await Ebike.create({
-    ...data,
-    slug,
-  });
+    if (files?.length) {
 
-  return ebike;
+        const uploads = await uploadImages(
+            files,
+            "ebikes"
+        );
+
+        images = uploads.map(formatCloudinaryMedia);
+
+    }
+
+    return Ebike.create({
+        ...data,
+        slug: slugify(data.name, {
+            lower: true,
+            strict: true,
+        }),
+        images,
+    });
+
 };
 
 export const updateEbikeService = async (
@@ -51,12 +64,12 @@ export const updateEbikeService = async (
   }
 
   if (data.sku && data.sku !== ebike.sku) {
-    const existingSku = await Ebike.findOne({
+    const exists = await Ebike.findOne({
       sku: data.sku,
       _id: { $ne: ebikeId },
     });
 
-    if (existingSku) {
+    if (exists) {
       throw new AppError(
         "SKU already exists",
         409
@@ -84,6 +97,72 @@ export const updateEbikeService = async (
   return updatedEbike;
 };
 
+export const uploadEbikeImagesService = async (
+    ebikeId: string,
+    files: Express.Multer.File[]
+) => {
+
+    const ebike = await Ebike.findById(ebikeId);
+
+    if (!ebike) {
+        throw new AppError(
+            "Ebike not found",
+            404
+        );
+    }
+
+    const uploads =
+        await uploadImages(
+            files,
+            "ebikes"
+        );
+
+    const images = uploads.map(formatCloudinaryMedia);
+
+    ebike.images.push(...images);
+
+    await ebike.save();
+
+    return ebike.images;
+
+};
+
+export const deleteEbikeImageService = async (
+    ebikeId: string,
+    publicId: string
+) => {
+
+    const ebike = await Ebike.findById(ebikeId);
+
+    if (!ebike) {
+        throw new AppError(
+            "Ebike not found",
+            404
+        );
+    }
+
+    const imageExists =
+        ebike.images.some(
+            image =>
+                image.public_id === publicId
+        );
+
+    if (!imageExists) {
+        throw new AppError(
+            "Image not found",
+            404
+        );
+    }
+
+    await deleteImage(publicId);
+
+    ebike.images = (ebike.images.filter(
+      image => image.public_id !== publicId
+    ) as any);
+
+    await ebike.save();
+
+};
 
 export const archiveEbikeService = async (
   ebikeId: string

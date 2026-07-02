@@ -21,7 +21,7 @@ export const getAllUsers = asyncHandler(
             throw new AppError("No users found", 404);
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             users,
         });
@@ -38,7 +38,7 @@ export const deleteCurrentUser = asyncHandler(
 
         await user.deleteOne();
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "User deleted successfully",
             user,
@@ -54,7 +54,7 @@ export const deleteAllUsers = asyncHandler(
             throw new AppError("No users found", 404);
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "All users deleted successfully",
             users,
@@ -78,7 +78,7 @@ export const getCurrentUser = asyncHandler(
             throw new AppError("User not found", 404);
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             user,
         });
@@ -103,9 +103,10 @@ export const resetPassword = asyncHandler(async (
     req: Request,
     res: Response,
 ) => {
-    const { token, newPassword } = req.body;
+    const { token } = req.params;
+    const { newPassword } = req.body;
 
-    await resetPasswordService({ token, newPassword });
+    await resetPasswordService(token as string, newPassword);
 
     return res.status(200).json({
         success: true,
@@ -121,7 +122,7 @@ export const requestEmailVerification = asyncHandler(
         const { email } = req.body;
         await requestEmailVerificationService(email);
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "Verification email sent",
         });
@@ -138,7 +139,7 @@ export const confirmEmailVerification = asyncHandler(
             req.body.token
         );
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "Email verified successfully",
         });
@@ -151,11 +152,10 @@ export const setUpProfile = asyncHandler(
             throw new AppError("User not found", 404);
         }
         const userId = req.user.id;
-        const { country, state, ridingPurpose, bikeType, bikeBrand, belongsToClub, clubName } = req.body;
-        await setUpProfileService({ userId, country, state, ridingPurpose, bikeType, bikeBrand, belongsToClub, clubName })
-        res.status(200).json({
+        await setUpProfileService(userId, req.body)
+        return res.status(200).json({
             success: true,
-            message: "User Profile set up successful"
+            message: "User profile set up successful"
         })
     }
 )
@@ -169,7 +169,7 @@ export const subscribeToNewsLetter = asyncHandler(
         const { isSubscribed, isTipsEnabled } = req.body;
         await subscribeToNewsLetterService({ userId, isSubscribed, isTipsEnabled });
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "Newsletter subscription successful",
         })

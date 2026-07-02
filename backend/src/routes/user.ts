@@ -23,10 +23,10 @@ router.get("/", getCurrentUser);
 router.delete("/delete", deleteCurrentUser);
 router.delete("/all/delete", deleteAllUsers);
 
-router.post("/request-password-reset", requestPasswordReset);
-router.patch("/reset-password", resetPassword);
+router.post("/forgot-password", requestPasswordReset);
+router.patch("/reset-password/:token", resetPassword);
 
-router.post("/request-email-verification", requestEmailVerification);
+router.post("/email-verification", requestEmailVerification);
 router.patch("/verify-email", confirmEmailVerification);
 
 router.patch("/profile", setUpProfile);

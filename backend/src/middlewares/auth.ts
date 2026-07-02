@@ -12,7 +12,7 @@ export const authenticate = asyncHandler(
     const token = req.cookies?.accessToken;
 
     if (!token) {
-      throw new AppError("Not authenticated", 401);
+      throw new AppError("Unauthorized - not authenticated", 401);
     }
 
     const decoded = jwt.verify(
