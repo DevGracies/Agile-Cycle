@@ -39,9 +39,9 @@ export const useFeaturedProducts = () => {
         fetchFeaturedProducts()
     }, [])
 
-    console.log("Ebikes", ebikes)
-    console.log("Accessories", accessories)
-    console.log("Enhancements", enhancements)
+    // console.log("Ebikes", ebikes)
+    // console.log("Accessories", accessories)
+    // console.log("Enhancements", enhancements)
 
     return {
         ebikes,

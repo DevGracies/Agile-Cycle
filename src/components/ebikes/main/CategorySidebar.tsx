@@ -90,7 +90,6 @@ export default function CategorySidebar({ filters }: Props) {
                 max={filters.price.max}
                 value={priceRange}
                 onChange={setPriceRange}
-                currencySymbol="₦"
               />
             </div>
 

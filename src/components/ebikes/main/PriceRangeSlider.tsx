@@ -17,7 +17,7 @@ export default function PriceRangeSlider({
   step = 1,
   value,
   onChange,
-  currencySymbol = "$",
+  currencySymbol = "₦",
 }: PriceRangeSliderProps) {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [dragging, setDragging] = useState<"min" | "max" | null>(null);

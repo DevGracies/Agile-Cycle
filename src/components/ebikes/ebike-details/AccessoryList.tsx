@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Accessories, Enhancement } from "@/src/types/product";
+import { formatPrice } from "@/src/utils/product";
 
 export default function AccessoryList({accessories}: {accessories: Accessories[] | Enhancement[]}) {
   return (
@@ -44,7 +45,7 @@ export default function AccessoryList({accessories}: {accessories: Accessories[]
             </div>
 
             <div className="text-right">
-              <h4 className="text-secondary font-bold text-sm">{item.price}</h4>
+              <h4 className="text-secondary font-bold text-sm">{formatPrice(item.price)}</h4>
 
               <Link
                 href="/accessories"

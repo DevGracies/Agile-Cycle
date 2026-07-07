@@ -10,7 +10,7 @@ export const getHomeProducts = async() => {
         Enhancement.find().limit(6),
     ]);
 
-    console.log("FeaturedEbikes", featuredEbikes)
+    // console.log("FeaturedEbikes", featuredEbikes)
     if(!featuredEbikes) return [];
     if(!featuredAccessories) return [];
     if(!featuredEnhancements) return [];

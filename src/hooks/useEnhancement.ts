@@ -32,7 +32,7 @@ export const useEnhancement = (
     try {
       setLoadingState("enhancements", true);
       const data = await getAllEnhancements();
-      console.log(data);
+      // console.log(data);
       setEnhancements(data?.enhancements);
     } catch {
       setError("Failed to fetch enhancements",);
@@ -50,8 +50,8 @@ export const useEnhancement = (
       setLoadingState("enhancement", true);
       if (!enhancementId) return;
       const data = await getEnhancement(enhancementId);
-      console.log("Enhancement details", data)
-      setEnhancement(data.data);
+      // console.log("Enhancement details", data)
+      setEnhancement(data?.data);
     } catch (err) {
       console.error(err);
       setError("Failed to load enhancement");

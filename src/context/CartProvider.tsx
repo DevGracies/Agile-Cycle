@@ -27,6 +27,8 @@ const CartContext = createContext<CartContextType | null>(null);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
 
+  const STORAGE_KEY = "agile-cycle-cart";
+
   // INIT CART
   useEffect(() => {
     const loadCart = async () => {
@@ -37,12 +39,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     loadCart();
   }, []);
 
+  useEffect(() => {
+    JSON.parse(localStorage.getItem(STORAGE_KEY) as string);
+  })
   // ADD TO CART
   const addToCart = async (product: Product, quantity: number = 1) => {
     try {
       const updated = await cartService.addToCart(product, quantity);
 
       setItems(updated);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       toast.success(`${quantity} ${quantity > 1 ? "items" : "item"} added to cart`);
     } catch (error) {
       const errorMessage =
