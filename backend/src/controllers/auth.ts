@@ -19,7 +19,7 @@ export const register = asyncHandler(async (
     maxAge: 30 * 60 * 1000,
   });
 
-  res.status(201).json({
+  return res.status(201).json({
     success: true,
     message: "Account created successfully",
   });
@@ -39,7 +39,7 @@ export const login = asyncHandler(async (
     maxAge: 30 * 60 * 1000,
   });
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     message: "User Login successful"
   });
@@ -58,7 +58,7 @@ export const logout = asyncHandler(async (
     maxAge: 30 * 60 * 1000,
   });
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     message: "User logged out successfully"
   });

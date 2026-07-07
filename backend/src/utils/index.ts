@@ -9,7 +9,7 @@ export const generateAccessToken = (payload: { id: string, role: Role }) => {
     })
 }
 
-export const generateEmailToken = () => {
+export const generateToken = () => {
     const rawToken = crypto.randomBytes(32).toString("hex");
     const hashedToken = crypto
         .createHash("sha256")

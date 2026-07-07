@@ -1,0 +1,31 @@
+import { Router } from "express";
+import * as blogController from "../controllers/blog";
+import { authenticate } from "../middlewares/auth";
+import upload from "../middlewares/upload";
+
+const router = Router();
+
+//  Public
+router.get("/", blogController.getBlogs);
+router.get("/:id", blogController.getBlog);
+
+//  Protected
+router.use(authenticate);
+
+router.post(
+    "/",
+    upload.single("image"),
+    blogController.createBlog
+);
+
+router.patch(
+    "/:id",
+    upload.single("image"),
+    blogController.updateBlog
+);
+
+router.patch("/:id/status", blogController.updateBlogStatus);
+
+router.delete("/:id", blogController.deleteBlog);
+
+export default router;

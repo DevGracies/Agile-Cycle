@@ -11,7 +11,7 @@ export const useProductPurchase = (
 
   const [selectedColor, setSelectedColor] =
     useState<string | null>(
-      product.colors?.[0]?.id ?? null,
+      product.colors?.[0]?._id ?? null,
     );
 
   const [selectedVariant, setSelectedVariant] =

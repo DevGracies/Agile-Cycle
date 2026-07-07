@@ -1,11 +1,13 @@
+"use client";
 import React from "react";
-import { enhancements } from "@/src/lib/data";
 import Container from "../layout/Container";
 import { Pagination } from "../dashboard/common/Dashboard";
 import ProductSectionLayout from "../ebikes/ebike-details/ProductSectionLayout";
-import ProductGrid from "../ebikes/ebike-details/ProductGrid";
+import EnhancementsGrid from "../ebikes/ebike-details/EnhancementGrid";
+import { useFeaturedProducts } from "@/src/hooks/useFeaturedProducts";
 
 const EnhancementsSection = () => {
+  const { enhancements } = useFeaturedProducts();
   return (
     <Container>
       <ProductSectionLayout
@@ -21,7 +23,7 @@ const EnhancementsSection = () => {
           />
         }
       >
-        <ProductGrid products={enhancements} />
+        <EnhancementsGrid products={enhancements} />
       </ProductSectionLayout>
     </Container>
   );

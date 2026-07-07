@@ -1,21 +1,19 @@
 import { Schema } from "mongoose";
 
-export const productMediaSchema = new Schema(
+export const mediaSchema = new Schema(
   {
-    url: {
+    public_id: {
       type: String,
       required: true,
-      trim: true,
     },
 
-    alt: {
+    secure_url: {
       type: String,
-      default: "",
-      trim: true,
+      required: true,
     },
   },
   {
-    _id: true,
+    _id: false,
   }
 );
 
@@ -24,12 +22,12 @@ export const productColorSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      // required: true,
     },
 
     color: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   {

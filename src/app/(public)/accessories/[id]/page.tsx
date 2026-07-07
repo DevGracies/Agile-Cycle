@@ -4,23 +4,42 @@ import CompatibilityTable from "@/src/components/accessories/CompatibilityTable"
 import FeatureSection from "@/src/components/accessories/FeatureSection";
 import ProductInformation from "@/src/components/accessories/ProductInfo";
 import ProductGallery from "@/src/components/ebikes/ebike-details/ProductGallery";
-import {accessories2 as product} from "@/src/mocks/product.mock"
+import Container from "@/src/components/layout/Container";
+import BreadCrumbs from "@/src/components/shared/product/BreadCrumbs";
+import Loader from "@/src/components/ui/Loader";
+import { useAccessory } from "@/src/hooks/useAccessories";
+import { accessories2 as product } from "@/src/mocks/product.mock"
+import { Accessories } from "@/src/types/product";
+import { useParams } from "next/navigation";
 
 export default function ProductDetailsPage() {
-    if(!product) return;
+  const params = useParams();
+
+  const { accessory, loading } = useAccessory(params.id as string);
+
+  console.log("Accessory Info", accessory)
+  if (loading.accessory) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <Loader text="Loading Product Details..." />
+      </div>
+    );
+  }
+  if (!product) return;
   return (
     <main className="bg-gray-50 py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <Container>
         <div className="space-y-8">
+          <BreadCrumbs product={accessory} />
           <section className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <ProductGallery product={product} />
+            <ProductGallery product={accessory as Accessories} />
 
-            <ProductInformation product={product} />
+            <ProductInformation product={accessory as Accessories} />
           </section>
 
           <section className="space-y-8">
             <CompatibilityTable
-              data={product?.compatibilityTable ?? []}
+              data={accessory?.compatibleModels ?? []}
             />
 
             <FeatureSection
@@ -30,7 +49,7 @@ export default function ProductDetailsPage() {
             />
           </section>
         </div>
-      </div>
+      </Container>
     </main>
   );
 }

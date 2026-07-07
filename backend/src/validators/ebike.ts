@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EBIKE_CATEGORIES } from "../types/product";
+import { EBIKE_CATEGORIES } from "../types/ebike";
 
 export const createEbikeSchema = z.object({
   name: z.string().min(2).max(150),
@@ -30,8 +30,8 @@ export const createEbikeSchema = z.object({
 
   images: z.array(
     z.object({
-      url: z.string().url(),
-      alt: z.string().optional(),
+      public_id: z.string().url(),
+      secure_url: z.string().optional(),
     })
   ).optional(),
 

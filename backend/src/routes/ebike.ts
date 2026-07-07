@@ -1,14 +1,41 @@
 import { Router } from "express";
 import { authenticate } from "../middlewares/auth";
-import { archiveEbike, createEbike, getAllEbikes, getEbike, updateEbike } from "../controllers/ebike";
+import { archiveEbike, createEbike, deleteEbikeImage, getAllEbikes, getEbike, updateEbike, uploadEbikeImages } from "../controllers/ebike";
+import upload from "../middlewares/upload";
 
 const router = Router();
 
-router.post("/", authenticate, createEbike);
+// Public Routes
 router.get("/", getAllEbikes);
 router.get("/:id", getEbike);
 
-router.patch("/:id", authenticate, updateEbike);
-router.patch("/:id", authenticate, archiveEbike);
+// Protected Routes
+router.use(authenticate);
+router.post(
+    "/",
+    upload.array("images", 10),
+    createEbike
+);
+
+router.patch(
+    "/:id",
+    updateEbike
+);
+
+router.post(
+    "/:id/images",
+    upload.array("images", 10),
+    uploadEbikeImages
+);
+
+router.delete(
+    "/:id/images/:publicId",
+    deleteEbikeImage
+);
+
+router.patch(
+    "/:id/archive",
+    archiveEbike
+);
 
 export default router;

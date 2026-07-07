@@ -13,14 +13,14 @@ import FeatureSection from "@/src/components/ebikes/ebike-details/FeatureSection
 import VideoSection from "@/src/components/ebikes/ebike-details/VideoSections";
 import CustomerReviews from "@/src/components/reviews/CustomerReviews";
 import RecentlyViewed from "@/src/components/ebikes/ebike-details/RecentlyViewed";
-import { useProduct } from "@/src/hooks/useProduct";
+import { useEbike } from "@/src/hooks/useEbike";
 
 export default function EbikeDetailsPage() {
   const params = useParams();
 
-  const { product, loading } = useProduct(params.id as string);
+  const { ebike, loading, compatibleAccessories, compatibleEnhancements } = useEbike(params.id as string);
 
-  if (loading.product) {
+  if (loading.ebike) {
     return (
       <div className="h-screen flex items-center justify-center">
         <Loader text="Loading Product Details..." />
@@ -28,7 +28,7 @@ export default function EbikeDetailsPage() {
     );
   }
 
-  if (!product) {
+  if (!ebike) {
     return (
       <div className="h-screen flex items-center justify-center">
         Product not found
@@ -39,20 +39,20 @@ export default function EbikeDetailsPage() {
   return (
     <main className="bg-[#f8f8f8] min-h-screen py-24 space-y-20">
       <Container>
-        <BreadCrumbs product={product} />
+        <BreadCrumbs product={ebike} />
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-6">
-          <ProductGallery product={product} />
-          <ProductInfo product={product} />
+          <ProductGallery product={ebike} />
+          <ProductInfo product={ebike} />
 
           <div className="space-y-4">
-            <DescriptionCard product={product} />
-            <ProductSpecs product={product} />
+            <DescriptionCard product={ebike} />
+            <ProductSpecs product={ebike} />
             <BulkOrderCard />
           </div>
 
           <div className="mt-10">
-            <AccessoryList accessories={product.accessories ?? []} />
+            <AccessoryList accessories={[...compatibleAccessories, ...compatibleEnhancements]} />
           </div>
         </div>
       </Container>
@@ -60,9 +60,9 @@ export default function EbikeDetailsPage() {
       <div className="overflow-hidden bg-white py-20">
         <VideoSection />
 
-        {product.features?.map((feature, index) => (
+        {ebike.features?.map((feature, index) => (
           <FeatureSection
-            key={feature.id}
+            key={feature._id}
             title={feature.title}
             subtitle={feature.subtitle ?? ""}
             description={feature.description}
@@ -74,7 +74,7 @@ export default function EbikeDetailsPage() {
       </div>
 
       <Container>
-        <CustomerReviews product={product} />
+        <CustomerReviews product={ebike} />
 
         <RecentlyViewed />
       </Container>

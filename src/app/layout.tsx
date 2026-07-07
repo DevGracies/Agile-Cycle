@@ -5,6 +5,7 @@ import ConfirmProvider from "../context/ConfirmProvider";
 import BackToTop from "../components/shared/BackToTop";
 import { Toaster } from "react-hot-toast";
 import { CartProvider } from "../context/CartProvider";
+import { ReactNode } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,7 @@ const lexend = Lexend({
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="en">

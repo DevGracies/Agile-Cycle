@@ -2,11 +2,13 @@
 
 import PaginationFooter from "@/src/components/ebikes/main/Pagination";
 import HomeDisplayBanner from "@/src/components/home/HomeDisplayBanner";
-import ProductGrid from "@/src/components/ebikes/ebike-details/ProductGrid";
 import CategorySidebar from "@/src/components/ebikes/main/CategorySidebar";
-import { Product } from "@/src/types/product";
 import RecentlyViewed from "../../ebikes/ebike-details/RecentlyViewed";
 import Container from "../../layout/Container";
+import EbikeGrid from "@/src/components/ebikes/ebike-details/EbikeGrid";
+import { Accessories, Ebike, Enhancement } from "@/src/types/product";
+import EnhancementsGrid from "../../ebikes/ebike-details/EnhancementGrid";
+import AccessoriesGrid from "../../ebikes/ebike-details/AccessoriesGrid";
 
 export interface DisplayType {
   title: string;
@@ -16,8 +18,8 @@ export interface DisplayType {
 
 export interface ProductPageProps {
   filter: any;
-  breadcrumb: string;
-  products: Product[];
+  breadcrumb: "EBIKES" | "ACCESSORIES" | "ENHANCEMENTS";
+  products: Ebike[] | Accessories[] | Enhancement[];
   display: DisplayType;
 }
 
@@ -41,7 +43,15 @@ export default function ProductPage({
         <section className="space-y-4">
           <HomeDisplayBanner display={display} />
 
-          <ProductGrid products={products} />
+          {breadcrumb === "EBIKES" && (
+            <EbikeGrid products={products as Ebike[]} />
+          )}
+          {breadcrumb === "ACCESSORIES" && (
+            <AccessoriesGrid products={products as Accessories[]} />
+          )}
+          {breadcrumb === "ENHANCEMENTS" && (
+            <EnhancementsGrid products={products as Enhancement[]} />
+          )}
 
           <PaginationFooter
             currentPage={1}

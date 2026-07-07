@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { accessories } from "@/src/lib/product";
-import { ProductAccessory } from "@/src/types/product";
 import Link from "next/link";
+import { Accessories, Enhancement } from "@/src/types/product";
+import { formatPrice } from "@/src/utils/product";
 
-export default function AccessoryList({accessories}: {accessories: ProductAccessory[]}) {
+export default function AccessoryList({accessories}: {accessories: Accessories[] | Enhancement[]}) {
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -30,8 +30,8 @@ export default function AccessoryList({accessories}: {accessories: ProductAccess
               <input type="checkbox" className="w-5 h-5 accent-primary" />
 
               <Image
-                src={item.image}
-                alt={item.name}
+                src={item.images?.[0]?.url}
+                alt={item.images?.[0]?.alt ?? item.name}
                 width={65}
                 height={65}
                 className="object-contain"
@@ -45,7 +45,7 @@ export default function AccessoryList({accessories}: {accessories: ProductAccess
             </div>
 
             <div className="text-right">
-              <h4 className="text-secondary font-bold text-sm">{item.price}</h4>
+              <h4 className="text-secondary font-bold text-sm">{formatPrice(item.price)}</h4>
 
               <Link
                 href="/accessories"

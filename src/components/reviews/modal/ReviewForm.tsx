@@ -79,7 +79,7 @@ export function ReviewForm({ product, onSuccess }: Props) {
           src={product?.images?.[0]?.url || "/placeholder.png"}
           width={100}
           height={100}
-          alt={product?.images?.[0]?.alt || "Product image"}
+          alt={product?.images?.[0]?.alt ?? product.name ?? "Product image"}
           className="w-full h-full object-cover rounded-md"
         />
         </div>

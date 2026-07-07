@@ -28,36 +28,27 @@ const navLinks = [
   {
     name: "E-bikes",
     path: "/bikes",
-    dropDowns: [
-      { name: "Cargo", path: "/cargo" },
-      { name: "Cruisers", path: "/cruisers" },
-    ],
+    dropDowns: true,
   },
   {
     name: "Accessories",
     path: "/acessories",
-    dropDowns: [
-      { name: "Saddle", path: "/saddle" },
-      { name: "Pump", path: "/pump" },
-    ],
+    dropDowns: true,
   },
   {
     name: "Enhancements",
     path: "/enhancement",
-    dropDowns: [
-      { name: "Display Control", path: "/display-control" },
-      { name: "Suspension Seat", path: "/suspension-seat" },
-    ],
+    dropDowns: true,
   },
   {
     name: "Explore",
     path: "/explore",
-    dropDowns: [{ name: "Shop", path: "/shop" }],
+    dropDowns: true,
   },
   {
     name: "Support",
     path: "/support",
-    dropDowns: [{ name: "Help", path: "/help" }],
+    dropDowns: true
   },
 ];
 
@@ -101,7 +92,7 @@ const Navbar = () => {
             <nav className="hidden lg:flex items-center gap-8">
               {navLinks.map((item) => {
                 const active = pathname === item.path;
-                const hasDropDown = item.dropDowns?.length;
+                const hasDropDown = item.dropDowns;
 
                 return (
                   <div
@@ -130,29 +121,6 @@ const Navbar = () => {
                         </span>
                       )}
                     </Link>
-
-                    {/* DESKTOP DROPDOWN */}
-                    {hasDropDown && (
-                      <div
-                        className={`absolute top-[160%] left-0 w-56 bg-white rounded-md border border-gray-100 shadow-xl overflow-hidden transition-all duration-300 ease-out ${
-                          activeDropDown === item.name
-                            ? "opacity-100 visible translate-y-0"
-                            : "opacity-0 invisible translate-y-3"
-                        }`}
-                      >
-                        <div className="py-2">
-                          {item.dropDowns?.map((dropItem) => (
-                            <Link
-                              key={dropItem.name}
-                              href={dropItem.path}
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f5f9ef] hover:text-primary transition-colors duration-200"
-                            >
-                              {dropItem.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </div>
                 );
               })}
@@ -242,7 +210,7 @@ const Navbar = () => {
         <nav className="px-5 py-6 flex flex-col">
           {navLinks.map((item) => {
             const active = pathname === item.path;
-            const hasDropDown = item.dropDowns?.length;
+            const hasDropDown = item.dropDowns;
 
             return (
               <div key={item.name} className="border-b border-gray-100 py-1">
@@ -271,32 +239,6 @@ const Navbar = () => {
                     </button>
                   )}
                 </div>
-
-                {/* MOBILE DROPDOWN */}
-                {hasDropDown && (
-                  <div
-                    className={`grid transition-all duration-300 ease-in-out ${
-                      mobileDropDown === item.name
-                        ? "grid-rows-[1fr] opacity-100"
-                        : "grid-rows-[0fr] opacity-0"
-                    }`}
-                  >
-                    <div className="overflow-hidden">
-                      <div className="pb-3 pl-3 flex flex-col gap-1">
-                        {item.dropDowns?.map((dropItem) => (
-                          <Link
-                            key={dropItem.name}
-                            href={dropItem.path}
-                            onClick={() => setOpenMenu(false)}
-                            className="text-sm text-gray-600 hover:text-primary py-2 transition-colors"
-                          >
-                            {dropItem.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
             );
           })}

@@ -1,7 +1,7 @@
-import { Accessories, Product } from "@/src/types/product";
+import { Accessories, Ebike, Enhancement } from "@/src/types/product";
 
 export interface CartItem {
-  product: Product | Accessories;
+  product: Ebike | Enhancement | Accessories;
   quantity: number;
   selectedColor?: string;
   selectedBattery?: string;

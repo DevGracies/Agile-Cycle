@@ -7,11 +7,11 @@ import {
 import { 
     productColorSchema, 
     productFeatureSchema, 
-    productMediaSchema, 
+    mediaSchema, 
     productSpecSchema, 
     productVariantSchema 
 } from "./schemas/product";
-import { EBIKE_CATEGORIES } from "../types/product";
+import { EBIKE_CATEGORIES } from "../types/ebike";
 
 const ebikeSchema = new Schema(
   {
@@ -50,7 +50,7 @@ const ebikeSchema = new Schema(
     },
 
     images: {
-      type: [productMediaSchema],
+      type: [mediaSchema],
       default: [],
     },
 
@@ -136,20 +136,6 @@ const ebikeSchema = new Schema(
       type: [productVariantSchema],
       default: [],
     },
-
-    compatibleAccessories: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Accessory",
-      },
-    ],
-    compatibleEnhancements: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Enhancement",
-      },
-    ],
-
     features: {
       type: [productFeatureSchema],
       default: [],

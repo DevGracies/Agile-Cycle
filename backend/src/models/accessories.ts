@@ -7,9 +7,9 @@ import {
 import {
     productColorSchema,
     productFeatureSchema,
-    productMediaSchema,
+    mediaSchema,
 } from "./schemas/product";
-import { ACCESSORY_CATEGORIES } from "../types/ebike";
+import { ACCESSORY_CATEGORIES } from "../types/accessory";
 
 const accessorySchema = new Schema(
     {
@@ -48,7 +48,7 @@ const accessorySchema = new Schema(
         },
 
         images: {
-            type: [productMediaSchema],
+            type: [mediaSchema],
             default: [],
         },
 
