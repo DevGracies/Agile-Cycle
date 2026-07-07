@@ -12,6 +12,7 @@ import ebikeRouter from './routes/ebike';
 import accessoryRouter from "./routes/accessory"
 import enhancementRouter from "./routes/enhancement"
 import featuredProductsRouter from "./routes/featured-products";
+import orderRouter from "./routes/order"
 
 // Connect to database
 connectDB();
@@ -33,6 +34,7 @@ app.use("/api/ebikes", ebikeRouter);
 app.use("/api/accessories", accessoryRouter);
 app.use("/api/enhancements", enhancementRouter);
 app.use("/api/featured-products", featuredProductsRouter);
+app.use("/api/orders", orderRouter);
 
 app.use(errorHandler);
 

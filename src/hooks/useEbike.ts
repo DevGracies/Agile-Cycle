@@ -34,7 +34,7 @@ export const useEbike = (
     try {
       setLoadingState("ebikes", true);
       const data = await getAllEbikes();
-      console.log(data);
+      // console.log(data);
       setEbikes(data?.ebikes);
     } catch {
       setError("Failed to fetch ebikes",);

@@ -33,6 +33,7 @@ export interface GetEbikeResponse {
     ebike: Ebike,
     compatibleAccessories: Accessories[],
     compatibleEnhancements: Enhancement[],
+    // review: number,
 }
 
 export interface Filters {

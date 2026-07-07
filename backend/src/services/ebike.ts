@@ -188,14 +188,14 @@ export const archiveEbikeService = async (
 
 export const getEbikeService =
   async (ebikeId: string) => {
-    const [ebike, compatibleAccessories, compatibleEnhancements, review] = await Promise.all([
+    const [ebike, compatibleAccessories, compatibleEnhancements] = await Promise.all([
       Ebike.findOne({
         _id: ebikeId,
         isActive: true,
       }),
       Accessories.find({ compatibleModels: ebikeId }).populate("compatibleModels"),
       Enhancement.find({ compatibleModels: ebikeId }).populate("compatibleModels"),
-      Review.find({ productId: ebikeId }).populate("productId"),
+      // Review.find({ productId: ebikeId }).populate("productId"),
     ])
 
     if (!ebike) {
@@ -205,20 +205,24 @@ export const getEbikeService =
       );
     }
     if (!compatibleAccessories.length) {
+      console.log("No compatible accessories found")
       throw new AppError("No compatible accessories found", 404)
     }
     if (!compatibleEnhancements.length) {
+      console.log("No compatible enhancements found")
       throw new AppError("No compatible enhancements found", 404)
-    }
-    if (!review.length) {
-      throw new AppError("No compatible enhancements found", 404)
-    }
 
+    }
+    // if (!review.length) {
+    //   console.log("No compatible review found")
+    //   throw new AppError("No compatible review found", 404)
+    // }
+    
+    console.log("reached", ebike);
     return {
       ebike,
       compatibleAccessories,
       compatibleEnhancements,
-      review,
     };
   };
 

@@ -37,15 +37,16 @@ export const createEbike = asyncHandler(
 export const getEbike =
   asyncHandler(
     async (req: Request, res: Response) => {
-      const { ebike, compatibleAccessories, compatibleEnhancements, review } = await getEbikeService(req.params.id as string);
+      const { ebike, compatibleAccessories, compatibleEnhancements } = await getEbikeService(req.params.id as string);
 
+    console.log("Ebike", ebike)
       return res.status(200).json({
         success: true,
         data: {
           ebike,
           compatibleAccessories,
           compatibleEnhancements,
-          review,
+          
         },
         messsage: "Ebike fetched successfully",
       });

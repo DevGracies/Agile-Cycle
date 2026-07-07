@@ -12,7 +12,6 @@ export const getAllEbikes = async(filters?: Filters): Promise<GetEbikesResponse>
 }
 export const getEbike = async(id: string): Promise<ApiResponse<GetEbikeResponse>> => {
     const { data } = await api.get(`/ebikes/${id}`);
-    console.log("Ebike Data", data)
     return data;
 }
 export const createEbike = async(body: Partial<Ebike>)=> {

@@ -6,7 +6,7 @@ import SubscribeSection from "@/src/components/sections/SubscribeSection";
 export default function PublicLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <>
