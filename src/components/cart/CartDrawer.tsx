@@ -6,17 +6,17 @@ import CartFooter from "./CartFooter";
 import CartItem from "./CartItem";
 import CartSuccessBanner from "./CartSuccessBanner";
 import CartHeader from "./CartHeader";
-import { CartItem as CartItems } from "@/src/types/cart";
+import { CartItem as CartCart } from "@/src/types/cart";
 import { useCart } from "@/src/context/CartProvider";
 
 interface Props {
   open: boolean;
   onClose: () => void;
-  items?: CartItems[];
+  cart?: CartCart[];
 }
 
 export default function CartDrawer({ open, onClose }: Props) {
-  const { items, removeFromCart, updateQuantity } = useCart();
+  const { cart, removeFromCart, updateQuantity } = useCart();
 
   useEffect(() => {
     if (!open) return;
@@ -35,8 +35,8 @@ export default function CartDrawer({ open, onClose }: Props) {
     };
   }, [open, onClose]);
 
-  const subtotal = items.reduce(
-    (acc, item) => acc + item.product?.price * item.quantity,
+  const subtotal = cart?.items.reduce(
+    (acc, item) => acc + item.productId?.price * item.quantity,
     0,
   );
 
@@ -69,19 +69,19 @@ export default function CartDrawer({ open, onClose }: Props) {
         <CartHeader onClose={onClose} />
 
         <div className="flex-1 overflow-y-auto p-6">
-          {items.length === 0 ? (
+          {cart?.items.length === 0 ? (
             <EmptyCart />
           ) : (
             <>
               <CartSuccessBanner />
 
               <div className="mt-5 space-y-4">
-                {items.map((item) => (
+                {cart?.items.map((item) => (
                   <CartItem
-                    key={item.product._id}
+                    key={item.productId._id}
                     item={item}
-                    onRemove={() => removeFromCart(item.product._id)}
-                    onChangeQty={(q) => updateQuantity(item.product._id, q)}
+                    onRemove={() => removeFromCart(item.productId._id, item.productType)}
+                    onChangeQty={(q) => updateQuantity(item.productId._id, item.productType, q)}
                   />
                 ))}
               </div>
@@ -89,7 +89,7 @@ export default function CartDrawer({ open, onClose }: Props) {
           )}
         </div>
 
-        <CartFooter subtotal={subtotal} isEmpty={!items.length} />
+        <CartFooter subtotal={subtotal || 0} isEmpty={!cart?.items.length} />
       </aside>
     </>
   );

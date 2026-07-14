@@ -1,3 +1,4 @@
+import { Newsletter } from "../models/newsletter";
 import User from "../models/user";
 import { BikeType } from "../types/user";
 import { AppError } from "../utils/AppError";
@@ -135,18 +136,40 @@ export const confirmEmailVerificationService = async (userId: string, token: str
 }
 
 
-interface ProfileInput {
+interface CyclingExperienceInput {
     userId: string;
-    country: string;
-    state: string;
-    ridingPurpose: string;
     bikeType: BikeType;
     bikeBrand: string;
     belongsToClub: boolean;
     clubName: string;
 }
 
-export const setUpProfileService = async (userId:  string, data: ProfileInput) => {
+export const setUpCyclingExperienceService = async (userId: string, data: CyclingExperienceInput) => {
+    const user = await User.findByIdAndUpdate(
+        userId,
+        {
+            $set: {
+                riderProfile: data
+            }
+        },
+        { new: true, runValidators: true }
+    )
+
+    if (!user) {
+        throw new AppError("User not found", 404)
+    }
+
+    return user;
+}
+
+interface ProfileInput {
+    userId: string;
+    country: string;
+    state: string;
+    ridingPurpose: string;
+}
+
+export const setUpProfileService = async (userId: string, data: ProfileInput) => {
     const user = await User.findByIdAndUpdate(
         userId,
         {
@@ -166,29 +189,128 @@ export const setUpProfileService = async (userId:  string, data: ProfileInput) =
     return user;
 }
 
-interface SubscribeInput {
+interface ToggleSubscribeInput {
     userId: string;
+    email: string;
     isSubscribed: boolean;
     isTipsEnabled: boolean;
 }
 
-export const subscribeToNewsLetterService = async ({ userId, isSubscribed, isTipsEnabled }: SubscribeInput) => {
-    const user = await User.findByIdAndUpdate(
-        userId,
-        {
-            $set: {
-                preferences: {
-                    isSubscribed,
-                    isTipsEnabled,
+export const toggleSubscribeToNewsLetterService = async ({ userId, email, isSubscribed, isTipsEnabled }: ToggleSubscribeInput) => {
+    const [user, alreadySubscribed] = await Promise.all([
+        User.findByIdAndUpdate(
+            userId,
+            {
+                $set: {
+                    preferences: {
+                        isSubscribed,
+                        isTipsEnabled,
+                    }
                 }
-            }
-        },
-        { new: true, runValidators: true }
-    )
+            },
+            { new: true, runValidators: true }
+        ),
 
-    if (!user) {
-        throw new AppError("User not found", 404)
+        Newsletter.findOne({ email }),
+    ]);
+
+if (!user) {
+    throw new AppError("User not found", 404)
+}
+
+
+if (alreadySubscribed?.isSubscribed) {
+    return alreadySubscribed;
+}
+
+if (alreadySubscribed) {
+    alreadySubscribed.isSubscribed = true;
+    alreadySubscribed.subscribedAt = new Date();
+
+    return alreadySubscribed.save();
+}
+
+if (!alreadySubscribed) {
+    await Newsletter.create({
+        email,
+    })
+};
+
+return { user, alreadySubscribed };
+}
+
+interface GetSubscribersQuery {
+    page?: number;
+    limit?: number;
+    search?: string;
+    isSubscribed?: boolean;
+}
+
+export const subscribeToNewsletter = async (email: string) => {
+    const normalizedEmail = email.trim().toLowerCase();
+    const existingSubscriber = await Newsletter.findOne({ email: normalizedEmail });
+
+    if (existingSubscriber?.isSubscribed) {
+        return existingSubscriber;
     }
 
-    return user;
+    if (existingSubscriber) {
+        existingSubscriber.isSubscribed = true;
+        existingSubscriber.subscribedAt = new Date();
+
+        return existingSubscriber.save();
+    }
+
+    return Newsletter.create({
+        email: normalizedEmail,
+    })
+}
+export const unSubscribeToNewsletter = async (email: string) => {
+    const normalizedEmail = email.trim().toLowerCase();
+    const subscriber = await Newsletter.findOne({ email: normalizedEmail });
+
+    if (!subscriber) {
+        throw new AppError("Subscriber not found", 404);
+    }
+    subscriber.isSubscribed = false;
+    return subscriber.save();
+}
+
+export const getNewsletterSubscribers = async (query: GetSubscribersQuery) => {
+    const page = Math.max(Number(query.page) || 1, 1);
+    const limit = Math.max(Number(query.limit) || 10, 1);
+
+    const skip = (page - 1) * limit;
+
+    const filter: Record<string, any> = {};
+
+    if (query.search) {
+        filter.email = {
+            $regex: query.search,
+            $options: "i"
+        };
+    }
+
+    if (typeof query.isSubscribed === "boolean") {
+        filter.isSubscribed = query.isSubscribed;
+    }
+
+    const [subscribers, total] = await Promise.all([
+        Newsletter.find(filter)
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
+            .lean(),
+
+        Newsletter.countDocuments(filter),
+    ]);
+
+    return {
+        subscribers, pagination: {
+            page,
+            limit,
+            total,
+            totalPages: Math.ceil(total / limit),
+        }
+    }
 }

@@ -3,18 +3,24 @@ import { asyncHandler } from "../utils/asyncHandler";
 import User from "../models/user";
 import {
     confirmEmailVerificationService,
+    getNewsletterSubscribers,
     requestEmailVerificationService,
     requestPasswordResetService,
     resetPasswordService,
+    setUpCyclingExperienceService,
     setUpProfileService,
-    subscribeToNewsLetterService
+    subscribeToNewsletter,
+    toggleSubscribeToNewsLetterService,
+    unSubscribeToNewsletter
 } from "../services/user";
 import { AppError } from "../utils/AppError";
 import { AuthenticatedRequest } from "../types/auth";
+import { newsletterQuerySchema, newsletterSchema } from "../validators/newsletter";
 
 
 export const getAllUsers = asyncHandler(
-    async (_: Request, res: Response) => {
+    async (_, res: Response) => {
+        console.log("Fetching all users");
         const users = await User.find().lean();
 
         if (!users.length) {
@@ -57,7 +63,7 @@ export const deleteAllUsers = asyncHandler(
         return res.status(200).json({
             success: true,
             message: "All users deleted successfully",
-            users,
+            data: users,
         });
     }
 );
@@ -80,7 +86,7 @@ export const getCurrentUser = asyncHandler(
 
         return res.status(200).json({
             success: true,
-            user,
+            data: user,
         });
     }
 );
@@ -160,18 +166,75 @@ export const setUpProfile = asyncHandler(
     }
 )
 
-export const subscribeToNewsLetter = asyncHandler(
+export const setUpCyclingExperience = asyncHandler(
     async (req: AuthenticatedRequest, res: Response) => {
         if (!req.user) {
             throw new AppError("User not found", 404);
         }
         const userId = req.user.id;
+        await setUpCyclingExperienceService(userId, req.body)
+        return res.status(200).json({
+            success: true,
+            message: "User cycling experience data successful"
+        })
+    }
+)
+
+export const toggleSubscribeToNewsLetter = asyncHandler(
+    async (req: AuthenticatedRequest, res: Response) => {
+        if (!req.user) {
+            throw new AppError("User not found", 404);
+        }
+
+        const { id: userId, email } = req.user;
+
         const { isSubscribed, isTipsEnabled } = req.body;
-        await subscribeToNewsLetterService({ userId, isSubscribed, isTipsEnabled });
+        await toggleSubscribeToNewsLetterService({ userId, email, isSubscribed, isTipsEnabled });
 
         return res.status(200).json({
             success: true,
             message: "Newsletter subscription successful",
+        })
+    }
+)
+
+export const subscribe = asyncHandler(
+    async (req: Request, res: Response) => {
+
+        const { email } = newsletterSchema.parse(req.body);
+        await subscribeToNewsletter(email);
+
+        return res.status(200).json({
+            success: true,
+            message: "Successfully subscribed to the newsletter",
+        })
+    }
+)
+
+export const unsubscribe = asyncHandler(
+    async (req: Request, res: Response) => {
+
+        const { email } = newsletterSchema.parse(req.body);
+
+        await unSubscribeToNewsletter(email);
+
+        return res.status(200).json({
+            success: true,
+            message: "Successfully unsubscribed to the newsletter",
+        })
+    }
+)
+
+export const getSubscribers = asyncHandler(
+    async (req: Request, res: Response) => {
+
+        const query = newsletterQuerySchema.parse(req.query);
+        const result = await getNewsletterSubscribers(query);
+
+        return res.status(200).json({
+            success: true,
+            message: "Newsletter subscribers fetched successfully",
+            data: { ...result },
         })
     }
 )

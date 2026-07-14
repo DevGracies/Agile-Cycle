@@ -4,14 +4,29 @@ import Link from "next/link";
 import { useState } from "react";
 
 import Button from "../ui/Button";
+import toast from "react-hot-toast";
+import { toggleSubscribeToNewsLetter } from "@/src/services/user.service";
+import { useRouter } from "next/navigation";
+import Loader from "../ui/Loader";
 
 const NewsLetter = () => {
   const [newsletter, setNewsletter] = useState(false);
-
   const [tips, setTips] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async ( e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    try{
+      const res = await toggleSubscribeToNewsLetter({isSubscribed: newsletter, isTipsEnabled: tips});
+      toast.success(res.message || "Preferences updated successfully");
+      router.push("/welcome")
+    } catch(error){
+      toast.error(error instanceof Error ? error.message : "Failed to update preferences");
+    } finally{
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -97,7 +112,7 @@ const NewsLetter = () => {
           type="submit"
           className="w-full mt-12"
         >
-          Finish Setup
+          {isLoading ? <Loader /> : "Finish Setup"}
         </Button>
 
         {/* FOOTER TEXT */}

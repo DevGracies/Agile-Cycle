@@ -90,8 +90,6 @@ export const services = [
 export const accessories: Product[] = [
   {
     id: "product7",
-    slug: "adjustable-bike-stem",
-    sku: "ACC-001",
 
     name: "Adjustable Bike Stem",
     description: "High-quality adjustable stem for better riding posture",
@@ -121,8 +119,6 @@ export const accessories: Product[] = [
 
   {
     id: "product8",
-    slug: "oversize-saddle",
-    sku: "ACC-002",
 
     name: "Oversize Saddle",
     description: "Comfortable oversized saddle designed for long-distance rides",
@@ -154,8 +150,6 @@ export const accessories: Product[] = [
 
   {
     id: "product9",
-    slug: "ebike-hitch-rack",
-    sku: "ACC-003",
 
     name: "Ebike Hitch Rack",
     description: "Heavy-duty rack for transporting electric bikes securely",
@@ -187,8 +181,6 @@ export const accessories: Product[] = [
 
   {
     id: "product10",
-    slug: "hunter-light",
-    sku: "ACC-004",
 
     name: "Hunter Light",
     description: "High-intensity front bike light for night riding safety",
@@ -220,8 +212,6 @@ export const accessories: Product[] = [
 
   {
     id: "product11",
-    slug: "ebike-pump",
-    sku: "ACC-005",
 
     name: "E-bike Pump",
     description: "Compact electric pump designed for quick tire inflation",
@@ -253,8 +243,6 @@ export const accessories: Product[] = [
 
   {
     id: "product12",
-    slug: "brake-handle-bell",
-    sku: "ACC-006",
 
     name: "Brake Handle Bell",
     description: "Integrated brake handle with built-in bell for safety",
@@ -288,8 +276,6 @@ export const accessories: Product[] = [
 export const enhancements: Product[] = [
   {
     id: "product13",
-    slug: "extended-range-battery",
-    sku: "ENH-001",
 
     name: "Extended Range Lithium Battery",
     description: "Upgrade your bike with longer battery life",
@@ -318,8 +304,6 @@ export const enhancements: Product[] = [
   },
   {
     id: "product14",
-    slug: "smart-display-console",
-    sku: "ENH-002",
 
     name: "Smart Display Console",
     description: "Advanced LCD display with real-time ride metrics",
@@ -351,8 +335,6 @@ export const enhancements: Product[] = [
 
   {
     id: "product15",
-    slug: "suspension-seat-post",
-    sku: "ENH-003",
 
     name: "Suspension Seat Post",
     description: "Improves comfort by absorbing road shocks",
@@ -384,8 +366,6 @@ export const enhancements: Product[] = [
 
   {
     id: "product16",
-    slug: "led-lighting-system",
-    sku: "ENH-004",
 
     name: "Integrated LED Lighting System",
     description: "Front and rear LED lighting for enhanced night visibility",
@@ -417,8 +397,6 @@ export const enhancements: Product[] = [
 
   {
     id: "product17",
-    slug: "cargo-rear-rack",
-    sku: "ENH-005",
 
     name: "Cargo Rear Rack with Panniers",
     description: "Heavy-duty rear rack with storage panniers for long rides",
@@ -450,8 +428,6 @@ export const enhancements: Product[] = [
 
   {
     id: "product18",
-    slug: "ergonomic-gel-saddle",
-    sku: "ENH-006",
 
     name: "Ergonomic Gel Saddle",
     description: "Premium gel saddle designed for maximum riding comfort",

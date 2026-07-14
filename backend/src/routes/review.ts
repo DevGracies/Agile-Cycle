@@ -1,14 +1,15 @@
 import { Router } from "express";
 import { authenticate } from "../middlewares/auth";
-import { createReview, getReviews } from "../controllers/review";
+import { postReview, getReviewsByProductId, getReviews } from "../controllers/review";
 
 const router  = Router();
 
 // Public Routes
 router.get("/", getReviews);
+router.get("/:productId", getReviewsByProductId);
 
 // Protected Routes
 router.use(authenticate);
-router.post("/", createReview);
+router.post("/:productId", postReview);
 
 export default router;

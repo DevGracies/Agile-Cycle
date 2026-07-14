@@ -1,7 +1,11 @@
 import multer from "multer";
 import { AppError } from "../utils/AppError";
 
-const storage = multer.memoryStorage();
+const storage = multer.diskStorage({
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`)
+    }
+});
 
 const fileFilter: multer.Options["fileFilter"] = (
     req, file, cb

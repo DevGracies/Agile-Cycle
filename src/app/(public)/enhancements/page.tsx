@@ -1,12 +1,12 @@
 "use client";
 
 import ProductPage from "@/src/components/shared/product/ProductPage";
-import { useEnhancement } from "@/src/hooks/useEnhancement";
+import { useEnhancement } from "@/src/context/EnhancementProvider";
 import { enhancementDisplay, enhancementFilters } from "@/src/lib/product";
 import React from "react";
 
 const EnhancementsPage = () => {
-  const {enhancements} = useEnhancement();
+  const { enhancements } = useEnhancement();
   return (
     <div>
       <ProductPage

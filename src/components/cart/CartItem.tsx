@@ -1,7 +1,7 @@
 import Image from "next/image";
 import QuantityControl from "./QuantityControl";
 import { formatPrice } from "@/src/utils/product";
-import { CartItem as CartItemType } from "@/src/types/cart";
+import { CartItem as CartItemType } from "@/src/services/cart.service";
 
 interface Props {
   item: CartItemType;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function CartItem({ item, onRemove, onChangeQty }: Props) {
-  const product = item?.product;
+  const product = item?.productId as any;
 
   if(!product) return;
   return (

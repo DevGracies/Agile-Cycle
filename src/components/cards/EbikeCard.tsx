@@ -67,7 +67,7 @@ const EbikeCard = ({ ebike }: ProductCardProps) => {
         )}
 
         {/* ACTIONS */}
-        <ProductActions product={ebike} card type="ebikes" />
+        <ProductActions product={ebike} card type="ebike" />
       </div>
     </div>
   );

@@ -17,15 +17,6 @@ const blogSchema = new Schema(
       maxlength: 200,
     },
 
-    slug: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-      trim: true,
-      index: true,
-    },
-
     content: {
       type: String,
       required: true,
@@ -78,4 +69,4 @@ blogSchema.index({ title: "text", excerpt: "text", content: "text" });
 
 export type Blog = InferSchemaType<typeof blogSchema>;
 
-export default model("Blog", blogSchema);
+export const Blog = model("Blog", blogSchema);

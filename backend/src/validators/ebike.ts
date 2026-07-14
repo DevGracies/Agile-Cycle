@@ -4,10 +4,6 @@ import { EBIKE_CATEGORIES } from "../types/ebike";
 export const createEbikeSchema = z.object({
   name: z.string().min(2).max(150),
 
-  slug: z.string().min(2),
-
-  sku: z.string().min(2),
-
   description: z.string().min(10),
 
   shortDescription: z.string().min(10).max(300),

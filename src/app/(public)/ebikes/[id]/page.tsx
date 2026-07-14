@@ -1,7 +1,7 @@
 "use client";
+
 import { useParams } from "next/navigation";
 import Container from "@/src/components/layout/Container";
-import Loader from "@/src/components/ui/Loader";
 import BreadCrumbs from "@/src/components/shared/product/BreadCrumbs";
 import ProductGallery from "@/src/components/ebikes/ebike-details/ProductGallery";
 import ProductInfo from "@/src/components/ebikes/ebike-details/ProductInfo";
@@ -13,22 +13,25 @@ import FeatureSection from "@/src/components/ebikes/ebike-details/FeatureSection
 import VideoSection from "@/src/components/ebikes/ebike-details/VideoSections";
 import CustomerReviews from "@/src/components/reviews/CustomerReviews";
 import RecentlyViewed from "@/src/components/ebikes/ebike-details/RecentlyViewed";
-import { useEbike } from "@/src/hooks/useEbike";
+import { useEbike } from "@/src/context/EbikeProvider";
+import { useEffect } from "react";
+import ProductDetailsSkeleton from "@/src/components/skeleton/ProductDetailsSkeleton";
+import { Ebike } from "@/src/types/product";
 
 export default function EbikeDetailsPage() {
   const params = useParams();
 
-  const { ebike, loading, compatibleAccessories, compatibleEnhancements } = useEbike(params.id as string);
+  const { fetchEbike, ebike, loading, compatibleAccessories, compatibleEnhancements } = useEbike();
 
-  if (loading.ebike) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <Loader text="Loading Product Details..." />
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (params.id) {
+      fetchEbike(params.id as string);
+    }
+  }, [params.id, fetchEbike]);
 
-  if (!ebike) {
+  if (loading.ebike && !ebike) return <ProductDetailsSkeleton />
+
+  if (!ebike && !loading.ebike) {
     return (
       <div className="h-screen flex items-center justify-center">
         Product not found
@@ -42,12 +45,12 @@ export default function EbikeDetailsPage() {
         <BreadCrumbs product={ebike} />
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-6">
-          <ProductGallery product={ebike} />
-          <ProductInfo product={ebike} />
+          <ProductGallery product={ebike as Ebike} />
+          <ProductInfo product={ebike as Ebike} />
 
           <div className="space-y-4">
-            <DescriptionCard product={ebike} />
-            <ProductSpecs product={ebike} />
+            <DescriptionCard product={ebike as Ebike} />
+            <ProductSpecs product={ebike as Ebike} />
             <BulkOrderCard />
           </div>
 
@@ -60,7 +63,7 @@ export default function EbikeDetailsPage() {
       <div className="overflow-hidden bg-white py-20">
         <VideoSection />
 
-        {ebike.features?.map((feature, index) => (
+        {ebike?.features?.map((feature, index) => (
           <FeatureSection
             key={feature._id}
             title={feature.title}
@@ -74,7 +77,7 @@ export default function EbikeDetailsPage() {
       </div>
 
       <Container>
-        <CustomerReviews product={ebike} />
+        <CustomerReviews product={ebike as Ebike} />
 
         <RecentlyViewed />
       </Container>

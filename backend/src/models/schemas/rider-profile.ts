@@ -15,6 +15,7 @@ export const riderProfileSchema =
       bikeType: {
         type: String,
         enum: BIKE_TYPES,
+        default: "",
       },
 
       bikeBrand: String,

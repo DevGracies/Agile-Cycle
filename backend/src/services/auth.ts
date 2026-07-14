@@ -53,7 +53,7 @@ export const loginService = async (body: LoginInput): Promise<{ accessToken: str
 
   const { email, password } = parsed.data;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
     throw new AppError("User not found", 404);
@@ -66,13 +66,13 @@ export const loginService = async (body: LoginInput): Promise<{ accessToken: str
   }
 
   if (!user.password) {
-    throw new AppError("Invalid email or password", 400);
+    throw new AppError("Invalid email or passwordt", 400);
   }
 
   const isPasswordMatch = await bcrypt.compare(password, user.password);
 
   if (!isPasswordMatch) {
-    throw new AppError("Invalid email or password", 400);
+    throw new AppError("Invalid email or passwords", 400);
   }
 
   const accessToken = generateAccessToken({

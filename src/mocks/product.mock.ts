@@ -117,13 +117,7 @@ const features = [
 export const products = [
   {
     id: "product1",
-
-    slug: "aerox-e-bike",
-
-    sku: "AEROX-001",
-
     name: "AeroX E-Bike",
-
     description:
       "Agile Comet X is designed for urban adventurers and daily commuters. It features a powerful 500W Peak motor ensuring smooth and efficient driving on city streets. The removable 48V lithium-ion battery provides reliable performance and long-range riding capability.",
 
@@ -226,8 +220,6 @@ export const products = [
   },
   {
     id: "product2",
-    slug: "voltrunner-pro",
-    sku: "VOLT-002",
     name: "VoltRunner Pro",
     description:
       "VoltRunner Pro is built for high-speed urban commuting with a reinforced aluminum frame and precision motor control system designed for responsive acceleration and stability.",
@@ -300,8 +292,6 @@ export const products = [
 
   {
     id: "product3",
-    slug: "trailblazer-x",
-    sku: "TRAIL-003",
     name: "TrailBlazer X",
     description:
       "TrailBlazer X is engineered for off-road terrain with reinforced suspension, high torque output, and durable carbon frame for extreme riding conditions.",
@@ -374,8 +364,6 @@ export const products = [
 
   {
     id: "product4",
-    slug: "urbanglide-s",
-    sku: "URB-004",
     name: "Urban Glide S",
     description:
       "Urban Glide S is optimized for daily city commuting with lightweight structure, efficient battery usage, and smooth handling for urban environments.",
@@ -448,8 +436,6 @@ export const products = [
 
   {
     id: "product5",
-    slug: "thunderbolt-gt",
-    sku: "THUN-005",
     name: "ThunderBolt GT",
     description:
       "ThunderBolt GT delivers extreme performance with high torque motor, extended range battery system, and premium shock absorption for long distance riders.",
@@ -522,8 +508,6 @@ export const products = [
 
   {
     id: "product6",
-    slug: "ecoride-mini",
-    sku: "ECO-006",
     name: "EcoRide Mini",
     description:
       "EcoRide Mini is a compact foldable e-bike designed for portability and efficiency, perfect for tight urban spaces and daily commuting.",
@@ -598,8 +582,8 @@ export const products = [
 
 
 
-export const accessories2: Accessories = {
-  id: "oversize-saddle",
+export const accessories2 = {
+  _id: "oversize-saddle",
 
   name: "Oversize Saddle",
 
@@ -614,22 +598,22 @@ export const accessories2: Accessories = {
 
   images: [
     {
-      id: "img1",
+      _id: "img1",
       url: "/accessories/accessory2.png",
       alt: "AeroX Front View",
     },
     {
-      id: "img2",
+      _id: "img2",
       url: "/accessories/accessory1.png",
       alt: "AeroX Side View",
     },
     {
-      id: "img3",
+      _id: "img3",
       url: "/accessories/accessory3.png",
       alt: "AeroX Detail View",
     },
     {
-      id: "img4",
+      _id: "img4",
       url: "/accessories/accessory4.png",
       alt: "AeroX Rear View",
     },
@@ -637,54 +621,54 @@ export const accessories2: Accessories = {
 
   compatibleModels: [
     {
-      id: "agile-comet-x",
+      _id: "agile-comet-x",
       name: "Agile Comet X",
     },
 
     {
-      id: "agile-pro",
+      _id: "agile-pro",
       name: "Agile Pro",
     },
 
     {
-      id: "agile-explorer",
+      _id: "agile-explorer",
       name: "Agile Explorer",
     },
 
     {
-      id: "agile-sport",
+      _id: "agile-sport",
       name: "Agile Sport",
     },
 
     {
-      id: "agile-city",
+      _id: "agile-city",
       name: "Agile City",
     },
 
     {
-      id: "agile-urban",
+      _id: "agile-urban",
       name: "Agile Urban",
     },
 
     {
-      id: "agile-lite",
+      _id: "agile-lite",
       name: "Agile Lite",
     },
 
     {
-      id: "agile-mountain",
+      _id: "agile-mountain",
       name: "Agile Mountain",
     },
 
     {
-      id: "agile-x",
+      _id: "agile-x",
       name: "Agile X",
     },
   ],
 
   compatibilityTable: [
     {
-      id: "bike-1",
+      _id: "bike-1",
       image: "/agile-image1.jpg",
       bikeName: "Agile Comet X",
       model: "F26F",
@@ -692,7 +676,7 @@ export const accessories2: Accessories = {
     },
 
     {
-      id: "bike-2",
+      _id: "bike-2",
       image: "/agile-image2.jpg",
       bikeName: "Agile Pro",
       model: "F26F",
@@ -700,7 +684,7 @@ export const accessories2: Accessories = {
     },
 
     {
-      id: "bike-3",
+      _id: "bike-3",
       image: "/agile-image3.jpg",
       bikeName: "Agile Explorer",
       model: "F28X",
@@ -708,7 +692,7 @@ export const accessories2: Accessories = {
     },
 
     {
-      id: "bike-4",
+      _id: "bike-4",
       image: "/agile-image1.jpg",
       bikeName: "Agile Sport",
       model: "S24R",
@@ -716,7 +700,7 @@ export const accessories2: Accessories = {
     },
 
     {
-      id: "bike-5",
+      _id: "bike-5",
       image: "/agile-image2.jpg",
       bikeName: "Agile City",
       model: "C26U",
@@ -724,7 +708,7 @@ export const accessories2: Accessories = {
     },
 
     {
-      id: "bike-6",
+      _id: "bike-6",
       image: "/agile-image3.jpg",
       bikeName: "Agile Urban",
       model: "U27T",
@@ -734,35 +718,35 @@ export const accessories2: Accessories = {
 
   features: [
     {
-      id: "feature-1",
+      _id: "feature-1",
       title: "Extra Wide Soft Seat",
       description:
         "Designed with high-density foam and dual suspension to relieve pressure and improve riding comfort.",
     },
 
     {
-      id: "feature-2",
+      _id: "feature-2",
       title: "Universal Fit",
       description:
         "Compatible with mountain bikes, cruisers, exercise bikes, and e-bikes.",
     },
 
     {
-      id: "feature-3",
+      _id: "feature-3",
       title: "Ergonomic Design",
       description:
         "Ventilated structure reduces pressure and improves comfort.",
     },
 
     {
-      id: "feature-4",
+      _id: "feature-4",
       title: "Waterproof Surface",
       description:
         "Scratch-resistant microfiber leather protects against rain.",
     },
 
     {
-      id: "feature-5",
+      _id: "feature-5",
       title: "Reflective Safety Belt",
       description:
         "Improves visibility during night rides.",
@@ -774,126 +758,3 @@ export const accessories2: Accessories = {
   note:
     "Due to monitor differences, actual colours may vary slightly from the product images.",
 };
-
-
-// export const enhancements = [
-//   {
-//     _id: "6a3d79593421d18b9dec511b",
-//     name: "Smart LED Helmet",
-//     slug: "smart-led-helmet",
-//     sku: "ACC-1001",
-//     description: "Helmet with integrated LED indicators.",
-//     shortDescription: "Safety helmet with smart lighting.",
-//     price: 120,
-//     category: "helmets",
-//     stock: 50,
-//     inventoryStatus: "in-stock",
-//     averageRating: 0,
-//     reviewCount: 0,
-//     isFeatured: false,
-//     isNewArrival: false,
-//     compatibleModels: [],
-//     isActive: true,
-//     images: [],
-//     colors: [],
-//     features: [],
-//     __v: 0,
-//     createdAt: "2026-06-25T18:54:17.574Z",
-//     updatedAt: "2026-06-25T18:54:17.574Z"
-//   },
-//   {
-//     _id: "6a3d79593421d18b9dec511c",
-//     name: "Anti-Theft Bike Lock",
-//     slug: "anti-theft-bike-lock",
-//     sku: "ACC-1002",
-//     description: "Heavy-duty anti-theft lock.",
-//     shortDescription: "Maximum bicycle security.",
-//     price: 79,
-//     category: "alarms",
-//     stock: 100,
-//     inventoryStatus: "in-stock",
-//     averageRating: 0,
-//     reviewCount: 0, "isFeatured": false,
-//     isNewArrival: false,
-//     compatibleModels: [],
-//     isActive: true,
-//     images: [],
-//     colors: [],
-//     features: [],
-//     __v: 0,
-//     createdAt: "2026-06-25T18:54:17.574Z",
-//     updatedAt: "2026-06-25T18:54:17.574Z"
-//   },
-//   {
-//     _id: "6a3d79593421d18b9dec511d",
-//     name: "Rear Storage Basket",
-//     slug: "rear-storage-basket",
-//     sku: "ACC-1003",
-//     description: "Large rear-mounted basket.",
-//     shortDescription: "Extra storage for commuting.",
-//     price: 65,
-//     category: "storage",
-//     stock: 40,
-//     inventoryStatus: "in-stock",
-//     averageRating: 0,
-//     reviewCount: 0,
-//     isFeatured: false,
-//     isNewArrival: false,
-//     compatibleModels: [],
-//     isActive: true,
-//     images: [],
-//     colors: [],
-//     features: [],
-//     __v: 0,
-//     createdAt: "2026-06-25T18:54:17.574Z",
-//     updatedAt: "2026-06-25T18:54:17.574Z"
-//   },
-//   {
-//     _id: "6a3d79593421d18b9dec511e",
-//     name: "Premium Brake pods",
-//     slug: "premium-brake-pods",
-//     sku: "ACC-1004",
-//     description: "Durable aluminum brake pods.",
-//     shortDescription: "Strong brake pods.",
-//     price: 99,
-//     category: "brake pods",
-//     stock: 25,
-//     inventoryStatus: "in-stock",
-//     averageRating: 0,
-//     reviewCount: 0,
-//     isFeatured: false,
-//     isNewArrival: false,
-//     compatibleModels: [],
-//     isActive: true,
-//     images: [],
-//     colors: [],
-//     features: [],
-//     __v: 0,
-//     createdAt: "2026-06-25T18:54:17.574Z",
-//     updatedAt: "2026-06-25T18:54:17.574Z"
-//   },
-//   {
-//     _id: "6a3d79593421d18b9dec511f",
-//     name: "Night Vision Bike Light",
-//     slug: "night-vision-bike-light",
-//     sku: "ACC-1005",
-//     description: "Ultra-bright front bike light.",
-//     shortDescription: "High visibility lighting.",
-//     price: 55,
-//     category: "lights",
-//     stock: 80,
-//     inventoryStatus: "in-stock",
-//     averageRating: 0,
-//     reviewCount: 0,
-//     isFeatured: false,
-//     isNewArrival: false,
-//     compatibleModels: [],
-//     isActive: true,
-//     images: [],
-//     colors: [],
-//     features: [],
-//     __v: 0,
-//     createdAt: "2026-06-25T18:54:17.574Z",
-//     updatedAt: "2026-06-25T18:54:17.574Z"
-//   }
-// ]

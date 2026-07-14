@@ -9,6 +9,8 @@ import EbikeGrid from "@/src/components/ebikes/ebike-details/EbikeGrid";
 import { Accessories, Ebike, Enhancement } from "@/src/types/product";
 import EnhancementsGrid from "../../ebikes/ebike-details/EnhancementGrid";
 import AccessoriesGrid from "../../ebikes/ebike-details/AccessoriesGrid";
+import { useEnhancement } from "@/src/context/EnhancementProvider";
+import { useEffect, useState } from "react";
 
 export interface DisplayType {
   title: string;
@@ -29,6 +31,35 @@ export default function ProductPage({
   products,
   display,
 }: ProductPageProps) {
+  const { applyFilters, filters } = useEnhancement();
+  const [total, setTotal] = useState(filters.total);
+  const [page, setPage] = useState(filters.page);
+  const [limit, setLimit] = useState(filters.limit);
+  const [totalPages, setTotalPages] = useState(filters.totalPages);
+
+  useEffect(() => {
+    setTotal(filters.total);
+    setPage(filters.page);
+    setLimit(filters.limit);
+    setTotalPages(filters.totalPages);
+  }, [
+    filters.total,
+    filters.page,
+    filters.limit,
+    filters.totalPages,
+  ])
+
+
+  const handleApply = (e: SubmitEvent) => {
+    e.preventDefault();
+    applyFilters({
+      total,
+      page,
+      limit,
+      totalPages,
+    })
+  }
+
   return (
     <Container className="py-24">
       <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
@@ -38,7 +69,7 @@ export default function ProductPage({
       </div>
 
       <div className="grid gap-8 lg:grid-cols-[280px_1fr]">
-        <CategorySidebar filters={filter} />
+        <CategorySidebar filters={filter} onApply={handleApply} />
 
         <section className="space-y-4">
           <HomeDisplayBanner display={display} />

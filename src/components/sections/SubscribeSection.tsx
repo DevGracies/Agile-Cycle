@@ -1,8 +1,33 @@
+"use client";
+
 import Image from "next/image";
 import Container from "../layout/Container";
 import image from "@/public/home/categories-image.png"
+import { useState, FormEvent } from "react";
+import toast from "react-hot-toast";
+import { subscribeToNewsLetter } from "@/src/services/user.service";
+import Loader from "../ui/Loader";
 
 const SubscribeSection = () => {
+  const [email, setEmail] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubscribing(true)
+    try {
+      if(!email) {
+        toast("Please enter your email")
+      }
+      const res = await subscribeToNewsLetter(email);
+      toast.success(res.message || "Successfully subscirbed");
+      setEmail("");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Failed to subscribe to newsletter")
+    } finally {
+      setIsSubscribing(false);
+    }
+  }
   return (
     <section className="relative overflow-hidden mt-20">
       <div className="absolute inset-0">
@@ -35,17 +60,22 @@ const SubscribeSection = () => {
               launches, and community highlights.
             </p>
 
-            <div className="mt-2 flex flex-col md:flex-row gap-4">
+            <form onSubmit={handleSubmit} className="mt-2 flex flex-col md:flex-row gap-4">
               <input
                 type="email"
                 placeholder="Your Email"
+                value={email}
+                required
+                onChange={(e) => setEmail(e.target.value)}
                 className="flex-1 rounded-xl border border-white/40 bg-transparent px-5 py-4 outline-none placeholder:text-white/70 text-white"
               />
 
-              <button className="h-[56px] px-8 rounded-xl bg-white text-[#519A09] font-semibold hover:opacity-90 transition cursor-pointer">
-                Subscribe Now
+              <button
+                type="submit"
+                className="h-[56px] px-8 rounded-xl bg-white text-[#519A09] font-semibold hover:opacity-90 transition cursor-pointer">
+                {isSubscribing ? <Loader /> : "Subscribe Now"}
               </button>
-            </div>
+            </form>
           </div>
 
           <div className="mt-10">
@@ -57,7 +87,7 @@ const SubscribeSection = () => {
             </p>
 
             <button className="mt-2 h-[54px] px-8 rounded-xl border border-white text-white font-semibold hover:bg-white hover:text-[#519A09] transition cursor-pointer">
-              Get in Touch
+              <a href="mailto:agilecycle@gmail.com" target="_blank" className="size-full">Get in Touch</a>
             </button>
           </div>
         </div>

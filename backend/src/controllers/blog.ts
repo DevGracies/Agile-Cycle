@@ -3,12 +3,10 @@ import * as blogService from "../services/blog";
 import { asyncHandler } from "../utils/asyncHandler";
 import { AuthenticatedRequest } from "../types/auth";
 import { AppError } from "../utils/AppError";
+import { Blog } from "../models/blog";
+import { Comment } from "../models/comment";
+import { BlogView } from "../models/view";
 
-
-
-//  @desc    Create blog
-//  @route   POST /blogs
-//  @access  Private
 
 export const createBlog = asyncHandler(async (req: Request, res: Response) => {
     if (!req.user) {
@@ -28,11 +26,6 @@ export const createBlog = asyncHandler(async (req: Request, res: Response) => {
     });
 });
 
-
-//  @desc    Get all blogs
-//  @route   GET /blogs
-//  @access  Public
-
 export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
     const blogs = await blogService.getBlogs(req.query);
 
@@ -42,11 +35,6 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
         blogs,
     })
 });
-
-
-//  @desc    Get blog by id
-//  @route   GET /blogs/:id
-//  @access  Public
 
 export const getBlog = asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -60,15 +48,10 @@ export const getBlog = asyncHandler(async (req: Request, res: Response) => {
     })
 });
 
-
-//  @desc    Update blog
-//  @route   PATCH /blogs/:id
-//  @access  Private
-
 export const updateBlog = asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const blog = await blogService.updateBlog(id, {
+    const blog = await blogService.updateBlog(id as string, {
         ...req.body,
         image: req.file,
     });
@@ -79,11 +62,6 @@ export const updateBlog = asyncHandler(async (req: Request, res: Response) => {
         blog,
     });
 });
-
-
-//  @desc    Update blog status
-//  @route   PATCH /blogs/:id/status
-//  @access  Private
 
 export const updateBlogStatus = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     if (!req.user) {
@@ -101,11 +79,6 @@ export const updateBlogStatus = asyncHandler(async (req: AuthenticatedRequest, r
     })
 });
 
-
-//  @desc    Delete blog
-//  @route   DELETE /blogs/:id
-//  @access  Private
-
 export const deleteBlog = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     if (!req.user) {
         throw new AppError("User not found", 404);
@@ -119,3 +92,28 @@ export const deleteBlog = asyncHandler(async (req: AuthenticatedRequest, res: Re
         message: "Blog deleted successfully.",
     })
 });
+
+export const getBlogDashboardStats = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+    if (!req.user) {
+        throw new AppError("User not found", 404);
+    }
+    
+    const [blogs, comments, views] = await Promise.all([
+        Blog.countDocuments(),
+        Comment.countDocuments(),
+        BlogView.countDocuments(),
+    ]);
+
+
+    return res.status(200).json({
+        success: true,
+        message: "Blog Dashboard stats fetched successfully.",
+        data: {
+            blogs,
+            comments,
+            views,
+        }
+    })
+});
+
+

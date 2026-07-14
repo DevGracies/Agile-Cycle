@@ -2,29 +2,30 @@
 
 import CompatibilityTable from "@/src/components/accessories/CompatibilityTable";
 import FeatureSection from "@/src/components/accessories/FeatureSection";
-import ProductInformation from "@/src/components/accessories/ProductInfo";
 import ProductGallery from "@/src/components/ebikes/ebike-details/ProductGallery";
+import EnhancementInfo from "@/src/components/enhancement/EnhancementInfo";
 import Container from "@/src/components/layout/Container";
 import BreadCrumbs from "@/src/components/shared/product/BreadCrumbs";
-import Loader from "@/src/components/ui/Loader";
-import { useEnhancement } from "@/src/hooks/useEnhancement";
-import { accessories2 as product } from "@/src/mocks/product.mock"
+import ProductDetailsSkeleton from "@/src/components/skeleton/ProductDetailsSkeleton";
+import { useEnhancement } from "@/src/context/EnhancementProvider";
 import { Enhancement } from "@/src/types/product";
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function ProductDetailsPage() {
   const params = useParams();
 
-  const { enhancement, loading } = useEnhancement(params.id as string);
+  const { enhancement, fetchEnhancement, loading } = useEnhancement();
 
-  if (loading.enhancement) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <Loader text="Loading Product Details..." />
-      </div>
-    );
-  }
-  if (!product) return;
+  useEffect(() => {
+    if (params.id) {
+      fetchEnhancement(params.id as string);
+    }
+  }, [params.id, fetchEnhancement])
+
+
+  if (loading.enhancement) return <ProductDetailsSkeleton />
+
   return (
     <main className="bg-gray-50 py-24">
       <Container>
@@ -34,7 +35,7 @@ export default function ProductDetailsPage() {
 
             <ProductGallery product={enhancement as Enhancement} />
 
-            <ProductInformation product={enhancement as Enhancement} />
+            <EnhancementInfo product={enhancement as Enhancement} />
           </section>
 
           <section className="space-y-8">
@@ -43,9 +44,7 @@ export default function ProductDetailsPage() {
             />
 
             <FeatureSection
-              features={product?.features}
-              packageContents={product?.packageContents ?? []}
-              note={product?.note ?? ""}
+              product={enhancement as Enhancement}
             />
           </section>
         </div>

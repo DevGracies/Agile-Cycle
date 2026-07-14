@@ -1,10 +1,8 @@
-import Ebike from "../models/ebike";
+import { Ebike } from "../models/ebike";
 
 export const ebikes = [
   {
     name: "Volt Cruiser X",
-    slug: "volt-cruiser-x",
-    sku: "EBK-1001",
 
     description:
       "A premium cruiser e-bike designed for comfortable city rides and weekend adventures with a powerful rear hub motor and long-range battery.",
@@ -141,8 +139,6 @@ export const ebikes = [
 
   {
     name: "Metro Commuter Pro",
-    slug: "metro-commuter-pro",
-    sku: "EBK-1002",
 
     description:
       "Designed specifically for urban commuting with integrated lights and lightweight aluminum construction.",
@@ -273,8 +269,6 @@ export const ebikes = [
 
   {
     name: "Trail Blazer M9",
-    slug: "trail-blazer-m9",
-    sku: "EBK-1003",
 
     description: "High-performance utility e-bike for rough terrain.",
 
@@ -399,8 +393,6 @@ export const ebikes = [
 
   {
     name: "Cargo Master XL",
-    slug: "cargo-master-xl",
-    sku: "EBK-1004",
 
     description: "Heavy-duty electric cargo bike.",
 
@@ -525,8 +517,6 @@ export const ebikes = [
 
   {
     name: "FoldRide Compact",
-    slug: "foldride-compact",
-    sku: "EBK-1005",
 
     description: "Compact folding electric bicycle.",
 
@@ -651,8 +641,6 @@ export const ebikes = [
 
   {
     name: "Adventure Explorer",
-    slug: "adventure-explorer",
-    sku: "EBK-1006",
 
     description: "Built for long-distance touring and exploration.",
 

@@ -46,11 +46,10 @@ export interface BatteryOption {
 export interface Ebike {
   _id: string;
   name: string;
-  slug: string;
-  sku: string;
 
   description: string;
   shortDescription: string;
+  category: string;
 
   images: ProductImage[];
 
@@ -107,11 +106,10 @@ export interface Ebike {
 export interface Accessories {
   _id: string;
   name: string;
-  slug: string;
-  sku: string;
 
   description: string;
   shortDescription: string;
+  category: string;
 
   images: ProductImage[];
 
@@ -143,12 +141,10 @@ export interface Accessories {
 export interface Enhancement {
   _id: string;
   name: string;
-  slug: string;
-  sku: string;
 
   description: string;
   shortDescription: string;
-
+  category: string;
   images: ProductImage[];
 
   price: number;
@@ -175,6 +171,8 @@ export interface Enhancement {
 
   isActive: boolean;
 }
+
+export type Product = Ebike | Accessories | Enhancement;
 
 export interface CompatibleModel {
   id: string;

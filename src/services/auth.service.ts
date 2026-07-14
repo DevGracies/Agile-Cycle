@@ -6,7 +6,7 @@ export const signUp = async (data: {
     email: string;
     password: string;
 }): Promise<AuthResponse> => {
-    const res = await api.post("/auth/signup", data);
+    const res = await api.post("/auth/register", data);
     return res.data;
 };
 

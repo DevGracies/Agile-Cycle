@@ -21,9 +21,11 @@ export const useFeaturedProducts = () => {
     const [ebikes, setEbikes] = useState<Ebike[]>([]);
     const [accessories, setAccessories] = useState<Accessories[]>([]);
     const [enhancements, setEnhancements] = useState<Enhancement[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const fetchFeaturedProducts = async () => {
         try {
+            setIsLoading(true);
             const { data } = await getFeaturedProducts();
             setEbikes(data.ebikes);
             setAccessories(data.accessories);
@@ -32,6 +34,8 @@ export const useFeaturedProducts = () => {
             if (error instanceof Error) {
                 console.error(error.message);
             }
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -39,13 +43,10 @@ export const useFeaturedProducts = () => {
         fetchFeaturedProducts()
     }, [])
 
-    // console.log("Ebikes", ebikes)
-    // console.log("Accessories", accessories)
-    // console.log("Enhancements", enhancements)
-
     return {
         ebikes,
         accessories,
-        enhancements
+        enhancements,
+        isLoading,
     }
 }

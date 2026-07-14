@@ -49,6 +49,9 @@ const VerifyEmailForm = () => {
       {/* BUTTON */}
       <Button
         type="button"
+        onClick={() => {
+          window.location.href = "/";
+        }}
         className="w-full"
       >
         Proceed to Homepage

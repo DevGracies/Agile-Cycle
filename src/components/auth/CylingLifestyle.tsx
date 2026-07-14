@@ -3,14 +3,27 @@
 import Link from "next/link";
 
 import Button from "../ui/Button";
-import Select from "../ui/Select";
 import { Input } from "../ui/Input";
+import Select from "../ui/CustomSelect";
+import { BikeType } from "@/src/types/user";
+import Loader from "../ui/Loader";
+import { useCyclingExperience } from "@/src/hooks/useCyclingExperience";
 
 const SetUpProfile = () => {
-  const handleSubmit = async ( e: React.FormEvent<HTMLFormElement> ) => {
-    e.preventDefault();
-  };
 
+  const {
+    bikeType,
+    setBikeType,
+    bikeBrand,
+    setBikeBrand,
+    clubName,
+    setClubName,
+    belongsToClub,
+    setBelongsToClub,
+    isLoading,
+    handleSubmit,
+  } = useCyclingExperience();
+  console.log(belongsToClub)
   return (
     <>
       {/* HEADING */}
@@ -28,48 +41,72 @@ const SetUpProfile = () => {
       </div>
 
       {/* FORM */}
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit}
+        className="space-y-5">
 
-        {/* PURPOSE */}
         <Select
-          label=". Do you have electric bicycle or a regular bicycle?"
-           placeholder="Electric Bicycle"
-          options={["Commuting", "Tricycle", "Kekecycle"]}
-          
-          showIcon
+          value={bikeType ?? ""}
+          onChange={(value) => setBikeType(value as BikeType)}
+          placeholder="Electric Bicycle"
+          options={[
+            {
+              label: "Commuting",
+              value: "commuting",
+            },
+            {
+              label: "Tricycle",
+              value: "tricycle",
+            },
+            {
+              label: "Kekecycle",
+              value: "kekecycle",
+            },
+          ]}
+          className="w-full!"
         />
 
-         <Input
-                  label="If you do, what brand?"
-                  type="text"
-                  placeholder="Enter brand name"
-                  
-                />
+        <Input
+          label="If you do, what brand?"
+          type="text"
+          placeholder="Enter brand name"
+          value={bikeBrand}
+          onChange={(e) => setBikeBrand(e.target.value)}
+        />
 
-         <div>
-          <p>. Do you belong to any cycling club?</p>
+        <div>
+          <p>Do you belong to any cycling club?</p>
 
           <div className="flex gap-10 mt-3">
-            <Button variant="light"  className="w-29">
-            Yes
-            </Button>
-            <Button variant="outline" className="w-29">
-            No
-            </Button>
+            <button
+              onClick={() => setBelongsToClub("yes")}
+              type="button"
+              className={`flex items-center justify-center rounded font-semibold disabled:cursor-not-allowed h-12 px-8 border border-gray-300 text-sm disabled:opacity-70 ${belongsToClub === "yes" ? "bg-secondary text-[#F7FAFC]" : "text-secondary"} text-[20px]`}
+            >
+              Yes
+            </button>
+            <button
+              onClick={() => setBelongsToClub("no")}
+              type="button"
+              className={`flex items-center justify-center rounded font-semibold disabled:cursor-not-allowed h-12 px-8 border border-gray-300 text-sm disabled:opacity-70 ${belongsToClub === "no" ? "bg-secondary text-[#F7FAFC]" : "text-secondary"} text-[20px]`}
+            >
+              No
+            </button>
           </div>
-          </div>   
+        </div>
 
-          <Input
-                    label="If yes, which one?"
-                    type="text"
-                    placeholder="Enter club name"
-                    
-                  />
-    
+        <Input
+          label="If yes, which one?"
+          type="text"
+          placeholder="Enter club name"
+          value={clubName}
+          onChange={(e) => setClubName(e.target.value)}
+          disabled={belongsToClub === "no"}
+        />
+
 
         {/* BUTTON */}
         <Button type="submit" className="w-full mt-10">
-          Finish Setup
+          {isLoading ? <Loader /> : "Finish Setup"}
         </Button>
 
         <Link

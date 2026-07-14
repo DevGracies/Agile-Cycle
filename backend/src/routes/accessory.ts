@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { authenticate } from "../middlewares/auth";
+import { adminOnly, authenticate } from "../middlewares/auth";
 import { archiveAccessory, createAccessory, getAllAccessories, getAccessory, updateAccessory } from "../controllers/accessory";
+import upload from "../middlewares/upload";
 
 const router = Router();
 
@@ -9,8 +10,12 @@ router.get("/", getAllAccessories);
 router.get("/:id", getAccessory);
 
 // Protected Routes
-router.use(authenticate);
-router.post("/", createAccessory);
+router.use(authenticate, adminOnly);
+router.post(
+    "/",
+    upload.array("images", 5),
+    createAccessory
+);
 router.patch("/:id", updateAccessory);
 router.patch("/:id", archiveAccessory);
 

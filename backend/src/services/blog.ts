@@ -1,19 +1,8 @@
 import { Types } from "mongoose";
-import Blog from "../models/blog";
-import slugify from "slugify";
-import Comment from "../models/comment";
 import { AppError } from "../utils/AppError";
 import { deleteImage, replaceImage, uploadImage } from "../utils/cloudinary";
-
-// Utility: generate slug from title
-const generateSlug = (title: string) => {
-    const slug = slugify(title, {
-        lower: true,
-        strict: true,
-    });
-    return slug;
-};
-
+import { Blog } from "../models/blog";
+import { Comment } from "../models/comment";
 // CREATE BLOG
 export const createBlog = async (data: any) => {
     const {
@@ -25,13 +14,6 @@ export const createBlog = async (data: any) => {
         image,
     } = data;
 
-    let slug = generateSlug(title);
-
-    const exists = await Blog.exists({ slug });
-
-    if (exists) {
-        slug = `${slug}-${Date.now()}`;
-    }
 
     let uploadedImage;
 
@@ -44,7 +26,6 @@ export const createBlog = async (data: any) => {
         title,
         content,
         category,
-        slug,
         status: status ?? "draft",
         publishedAt:
             status === "active"
@@ -150,24 +131,6 @@ export const updateBlog = async (
 
     if (!blog) {
         throw new AppError("Blog not found");
-    }
-
-    if (
-        data.title &&
-        data.title !== blog.title
-    ) {
-        let slug = generateSlug(data.title);
-
-        const exists = await Blog.exists({
-            slug,
-            _id: { $ne: id },
-        });
-
-        if (exists) {
-            slug = `${slug}-${Date.now()}`;
-        }
-
-        data.slug = slug;
     }
 
     if (data.image) {

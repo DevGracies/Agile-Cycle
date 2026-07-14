@@ -18,7 +18,7 @@ export const createAccessory = asyncHandler(
             );
         }
 
-        const accessory = await createAccessoryService(parsed.data);
+        const accessory = await createAccessoryService(parsed.data, req?.files as Express.Multer.File[]);
 
         return res.status(201).json({
             success: true,
