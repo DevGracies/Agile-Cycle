@@ -1,7 +1,7 @@
 "use client";
 
 import ProductPage from "@/src/components/shared/product/ProductPage";
-import { useEbike } from "@/src/hooks/useEbike";
+import { useEbike } from "@/src/context/EbikeProvider";
 import { ebikesDisplay, ebikeFilters } from "@/src/lib/product";
 import React from "react";
 

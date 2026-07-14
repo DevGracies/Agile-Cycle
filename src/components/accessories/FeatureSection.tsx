@@ -1,18 +1,16 @@
 import React from "react";
-import { ProductFeature } from "@/src/types/product";
+import { Accessories, Enhancement } from "@/src/types/product";
 
 
 interface FeatureSectionProps {
-  features: ProductFeature[];
-  packageContents: string[];
-  note: string;
+  product: Accessories | Enhancement;
 }
 
 const FeatureSection = ({
-  features,
-  packageContents,
-  note,
+  product,
 }: FeatureSectionProps) => {
+  const features = product.features || [];
+
   return (
     <section className="w-full md:w-3/4 rounded-xl border border-gray-200 bg-white p-6">
       <div className="space-y-8">
@@ -24,7 +22,7 @@ const FeatureSection = ({
           <div className="space-y-4">
             {features.map((feature) => (
               <ul
-                key={feature.id}
+                key={feature._id}
                 className="list-disc text-primary px-6"
               >
                 <li>
@@ -47,14 +45,14 @@ const FeatureSection = ({
           </h3>
 
           <ul className="space-y-2 text-sm text-gray-600">
-            {packageContents.map((content, index) => (
-              <li key={index}>{content}</li>
-            ))}
+            <li>1 × {product.name}</li>
           </ul>
         </div>
 
         <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-secondary">Note:</h3> <p className="text-gray-600 text-sm">{note}</p>
+            <h3 className="font-semibold text-secondary">Note:</h3> <p className="text-gray-600 text-sm">
+              Due to monitor differences, actual colours may vary slightly from the product images.
+            </p>
         </div>
       </div>
     </section>

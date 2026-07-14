@@ -20,22 +20,6 @@ const accessorySchema = new Schema(
             maxlength: 150,
         },
 
-        slug: {
-            type: String,
-            required: true,
-            unique: true,
-            lowercase: true,
-            index: true,
-        },
-
-        sku: {
-            type: String,
-            required: true,
-            unique: true,
-            uppercase: true,
-            index: true,
-        },
-
         description: {
             type: String,
             required: true,
@@ -143,7 +127,4 @@ const accessorySchema = new Schema(
 export type AccessoryDocument =
     InferSchemaType<typeof accessorySchema>;
 
-export default model(
-    "Accessory",
-    accessorySchema
-);
+export const Accessory = model("Accessory", accessorySchema);

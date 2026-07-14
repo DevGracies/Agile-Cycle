@@ -5,12 +5,19 @@ import { useEffect, useState } from "react";
 
 import Button from "../ui/Button";
 import { Input } from "../ui/Input";
+import { useAuth } from "@/src/hooks/useAuth";
+import { verifyEmail } from "@/src/services/user.service";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const VerifyEmailForm = () => {
   const [timer, setTimer] = useState(30);
-   const [newsletter, setNewsletter] = useState(false);
+  const [termsPolicy, setTermsPolicy] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
-  const [tips, setTips] = useState(false);
+  const [code, setCode] = useState("");
+  const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     if (timer <= 0) return;
@@ -22,8 +29,20 @@ const VerifyEmailForm = () => {
     return () => clearInterval(interval);
   }, [timer]);
 
-  const handleSubmit = async ( e: React.FormEvent<HTMLFormElement> ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsVerifying(true);
+
+    try {
+      if (!code.trim()) return;
+      const res = await verifyEmail(code);
+      toast.success(res.message || "Yout email has been verified successfully");
+      router.push("/setUpProfile");
+    } catch (error) {
+       toast.error(error instanceof Error ? error.message : "Failed to verify email")
+    } finally {
+      setIsVerifying(false)
+    }
   };
 
   const handleResend = () => {
@@ -33,6 +52,7 @@ const VerifyEmailForm = () => {
     console.log("Verification code resent");
   };
 
+
   return (
     <>
       {/* HEADING */}
@@ -40,14 +60,14 @@ const VerifyEmailForm = () => {
 
         {/* TITLE */}
         <h1 className="text-[48px] leading-[48px] font-bold bg-[linear-gradient(90deg,#01430D_0%,#519A09_100%)] bg-clip-text text-transparent">
-           Verify Your Email
-          </h1>
+          Verify Your Email
+        </h1>
 
         {/* SUBTEXT */}
         <p className="mt-4 text-[17px] leading-6 text-gray-500">
           We have sent a verification code to{" "}
           <span className="font-medium text-[#519A09]">
-            example@gmail.com
+            {user?.email || "example@gmail.com"}
           </span>
         </p>
       </div>
@@ -62,6 +82,8 @@ const VerifyEmailForm = () => {
         <div className="relative">
 
           <Input
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
             label="Enter Code"
             type="text"
             placeholder="Input 6-digit code"
@@ -93,31 +115,31 @@ const VerifyEmailForm = () => {
         </div>
 
         <label className="flex cursor-pointer items-center gap-3">
-<input
-  type="checkbox"
-  checked={newsletter}
-  onChange={() => setNewsletter(!newsletter)}
-  className="w-6 h-6 rounded-[6px] border border-gray-300 accent-[#519A09] focus:ring-0 focus:outline-none"
-/>
+          <input
+            type="checkbox"
+            checked={termsPolicy}
+            onChange={() => setTermsPolicy(!termsPolicy)}
+            className="w-6 h-6 rounded-[6px] border border-gray-300 accent-[#519A09] focus:ring-0 focus:outline-none"
+          />
 
-            <div className="text-sm font-semibold text-gray-600">
-              I agree to{" "}
+          <div className="text-sm font-semibold text-gray-600">
+            I agree to{" "}
 
-              <span className="font-medium text-[#519A09]">
-                Terms
-              </span>{" "}
+            <span className="font-medium text-[#519A09]">
+              Terms
+            </span>{" "}
 
-              &{" "}
+            &{" "}
 
-              <span className="font-medium text-[#519A09]">
-                Privacy Policy
-              </span>
-              .
-            </div>
-          </label>
+            <span className="font-medium text-[#519A09]">
+              Privacy Policy
+            </span>
+            .
+          </div>
+        </label>
 
         {/* SUBMIT BUTTON */}
-        <Button 
+        <Button
           type="submit"
           className="w-full"
         >

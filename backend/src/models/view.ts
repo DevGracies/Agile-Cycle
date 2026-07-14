@@ -27,4 +27,4 @@ const blogViewSchema = new Schema(
 
 blogViewSchema.index({ blogId: 1, createdAt: -1 });
 
-export default model("BlogView", blogViewSchema);
+export const BlogView = model("BlogView", blogViewSchema);

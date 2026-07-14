@@ -1,52 +1,29 @@
 
-import Accessories from "../models/accessories";
-import Enhancement from "../models/enhancement";
-import Ebike from "../models/ebike";
+import { Accessory } from "../models/accessories";
+import { Enhancement } from "../models/enhancement";
+import { Ebike } from "../models/ebike";
 import { CreateEbikeInput, ProductQuery } from "../types/ebike";
 import { AppError } from "../utils/AppError";
-import slugify from "slugify";
-import Review from "../models/review";
+import { Review } from "../models/review";
 import { deleteImage, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
 
 export const createEbikeService = async (
-    data: CreateEbikeInput,
-    files: Express.Multer.File[]
+  data: CreateEbikeInput,
+  files: Express.Multer.File[]
 ) => {
-    const exists = await Ebike.findOne({
-        $or: [
-            { sku: data.sku },
-            { slug: slugify(data.name) },
-        ],
-    });
 
-    if (exists) {
-        throw new AppError(
-            "Ebike already exists",
-            409
-        );
-    }
+  let images: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
 
-    let images: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
+  if (files?.length) {
+    const uploads = await uploadImages(files, "ebikes");
 
-    if (files?.length) {
+    images = uploads.map(formatCloudinaryMedia);
+  }
 
-        const uploads = await uploadImages(
-            files,
-            "ebikes"
-        );
-
-        images = uploads.map(formatCloudinaryMedia);
-
-    }
-
-    return Ebike.create({
-        ...data,
-        slug: slugify(data.name, {
-            lower: true,
-            strict: true,
-        }),
-        images,
-    });
+  return Ebike.create({
+    ...data,
+    images
+  });
 
 };
 
@@ -54,36 +31,6 @@ export const updateEbikeService = async (
   ebikeId: string,
   data: Partial<CreateEbikeInput>
 ) => {
-  const ebike = await Ebike.findById(ebikeId);
-
-  if (!ebike) {
-    throw new AppError(
-      "Ebike not found",
-      404
-    );
-  }
-
-  if (data.sku && data.sku !== ebike.sku) {
-    const exists = await Ebike.findOne({
-      sku: data.sku,
-      _id: { $ne: ebikeId },
-    });
-
-    if (exists) {
-      throw new AppError(
-        "SKU already exists",
-        409
-      );
-    }
-  }
-
-  if (data.name) {
-    data.slug = slugify(data.name, {
-      lower: true,
-      strict: true,
-    });
-  }
-
   const updatedEbike =
     await Ebike.findByIdAndUpdate(
       ebikeId,
@@ -94,74 +41,77 @@ export const updateEbikeService = async (
       }
     );
 
+  if (!updatedEbike) {
+    throw new AppError(
+      "Ebike not found",
+      404
+    );
+  }
+
   return updatedEbike;
 };
 
 export const uploadEbikeImagesService = async (
-    ebikeId: string,
-    files: Express.Multer.File[]
+  ebikeId: string,
+  files: Express.Multer.File[]
 ) => {
 
-    const ebike = await Ebike.findById(ebikeId);
+  const ebike = await Ebike.findById(ebikeId);
 
-    if (!ebike) {
-        throw new AppError(
-            "Ebike not found",
-            404
-        );
-    }
+  if (!ebike) {
+    throw new AppError(
+      "Ebike not found",
+      404
+    );
+  }
 
-    const uploads =
-        await uploadImages(
-            files,
-            "ebikes"
-        );
+  const uploads =
+    await uploadImages(files, "ebikes");
 
-    const images = uploads.map(formatCloudinaryMedia);
+  const images = uploads.map(formatCloudinaryMedia);
 
-    ebike.images.push(...images);
+  ebike.images.push(...images);
 
-    await ebike.save();
+  await ebike.save();
 
-    return ebike.images;
+  return ebike.images;
 
 };
 
 export const deleteEbikeImageService = async (
-    ebikeId: string,
-    publicId: string
+  ebikeId: string,
+  publicId: string
 ) => {
 
-    const ebike = await Ebike.findById(ebikeId);
+  const ebike = await Ebike.findById(ebikeId);
 
-    if (!ebike) {
-        throw new AppError(
-            "Ebike not found",
-            404
-        );
-    }
+  if (!ebike) {
+    throw new AppError(
+      "Ebike not found",
+      404
+    );
+  }
 
-    const imageExists =
-        ebike.images.some(
-            image =>
-                image.public_id === publicId
-        );
+  const imageExists =
+    ebike.images.some(
+      image =>
+        image.public_id === publicId
+    );
 
-    if (!imageExists) {
-        throw new AppError(
-            "Image not found",
-            404
-        );
-    }
+  if (!imageExists) {
+    throw new AppError(
+      "Image not found",
+      404
+    );
+  }
 
-    await deleteImage(publicId);
+  await deleteImage(publicId);
 
-    ebike.images = (ebike.images.filter(
-      image => image.public_id !== publicId
-    ) as any);
+  ebike.images = (ebike.images.filter(
+    image => image.public_id !== publicId
+  ) as any);
 
-    await ebike.save();
-
+  await ebike.save();
 };
 
 export const archiveEbikeService = async (
@@ -188,14 +138,11 @@ export const archiveEbikeService = async (
 
 export const getEbikeService =
   async (ebikeId: string) => {
-    const [ebike, compatibleAccessories, compatibleEnhancements] = await Promise.all([
-      Ebike.findOne({
-        _id: ebikeId,
-        isActive: true,
-      }),
-      Accessories.find({ compatibleModels: ebikeId }).populate("compatibleModels"),
+    const [ebike, compatibleAccessories, compatibleEnhancements, reviews] = await Promise.all([
+      Ebike.findById(ebikeId),
+      Accessory.find({ compatibleModels: ebikeId }).populate("compatibleModels"),
       Enhancement.find({ compatibleModels: ebikeId }).populate("compatibleModels"),
-      // Review.find({ productId: ebikeId }).populate("productId"),
+      Review.find({ productId: ebikeId }).populate("productId"),
     ])
 
     if (!ebike) {
@@ -204,25 +151,16 @@ export const getEbikeService =
         404
       );
     }
-    if (!compatibleAccessories.length) {
-      console.log("No compatible accessories found")
-      throw new AppError("No compatible accessories found", 404)
-    }
-    if (!compatibleEnhancements.length) {
-      console.log("No compatible enhancements found")
-      throw new AppError("No compatible enhancements found", 404)
 
+    if (!ebike.isActive) {
+      throw new AppError("Ebike is currently not available.")
     }
-    // if (!review.length) {
-    //   console.log("No compatible review found")
-    //   throw new AppError("No compatible review found", 404)
-    // }
-    
-    console.log("reached", ebike);
+
     return {
       ebike,
-      compatibleAccessories,
-      compatibleEnhancements,
+      compatibleAccessories: compatibleAccessories ?? [],
+      compatibleEnhancements: compatibleEnhancements ?? [],
+      reviews: reviews ?? [],
     };
   };
 

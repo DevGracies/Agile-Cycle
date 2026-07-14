@@ -1,10 +1,8 @@
-import Enhancement from "../models/enhancement";
+import { Enhancement } from "../models/enhancement";
 
 export const enhancements = [
   {
     name: "Extended Range Battery",
-    slug: "extended-range-battery",
-    sku: "ENH-1001",
 
     category: "performance",
 
@@ -44,8 +42,6 @@ export const enhancements = [
 
   {
     name: "1000W Performance Motor",
-    slug: "1000w-performance-motor",
-    sku: "ENH-1002",
 
     category: "performance",
 
@@ -85,8 +81,6 @@ export const enhancements = [
 
   {
     name: "Smart LCD Display",
-    slug: "smart-lcd-display",
-    sku: "ENH-1003",
 
     category: "technology",
 
@@ -126,8 +120,6 @@ export const enhancements = [
 
   {
     name: "Trail Suspension Kit",
-    slug: "trail-suspension-kit",
-    sku: "ENH-1004",
 
     category: "utility",
 
@@ -167,8 +159,6 @@ export const enhancements = [
 
   {
     name: "Performance Upgrade Bundle",
-    slug: "performance-upgrade-bundle",
-    sku: "ENH-1005",
 
     category: "performance",
 

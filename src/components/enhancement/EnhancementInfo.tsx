@@ -2,17 +2,17 @@
 
 import React, { useState } from "react";
 import { Check, ChevronRight } from "lucide-react";
-import { Accessories } from "@/src/types/product";
+import { Enhancement } from "@/src/types/product";
 import { formatPrice, getStockStatus } from "@/src/utils/product";
 import QuantitySelector from "../ebikes/ebike-details/QuantitySelector";
 import RatingStars from "../shared/product/RatingStars";
 import ProductActions from "../ebikes/ebike-details/ProductActions";
 
-interface ProductInformationProps {
-  product: Accessories;
+interface EnhancementInfoProps {
+  product: Enhancement;
 }
 
-const ProductInformation = ({ product }: ProductInformationProps) => {
+const EnhancementInfo = ({ product }: EnhancementInfoProps) => {
   const [selectedModel, setSelectedModel] = useState(
     product?.compatibleModels?.[0]?._id || "",
   );
@@ -117,11 +117,11 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
         </div>
 
         <div className="w-full">
-          <ProductActions product={product} quantity={quantity} />
+          <ProductActions product={product} quantity={quantity} type="enhancement" />
         </div>
       </div>
     </div>
   );
 };
 
-export default ProductInformation;
+export default EnhancementInfo;

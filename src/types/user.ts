@@ -3,9 +3,11 @@ export type Role = "user" | "admin";
 export const AUTH_PROVIDERS = ["local", "google"] as const;
 
 export const BIKE_TYPES = [
+  "",
   "electricBike",
   "tricycle",
   "commuting",
+  "kekecycle",
 ] as const;
 
 export type AuthProvider =

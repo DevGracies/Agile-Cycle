@@ -20,22 +20,6 @@ const enhancementSchema = new Schema(
             maxlength: 150,
         },
 
-        slug: {
-            type: String,
-            required: true,
-            unique: true,
-            lowercase: true,
-            index: true,
-        },
-
-        sku: {
-            type: String,
-            required: true,
-            unique: true,
-            uppercase: true,
-            index: true,
-        },
-
         description: {
             type: String,
             required: true,
@@ -142,7 +126,4 @@ const enhancementSchema = new Schema(
 
 export type EnhancementDocument = InferSchemaType<typeof enhancementSchema>;
 
-export default model(
-    "Enhancement",
-    enhancementSchema
-);
+export const Enhancement = model("Enhancement", enhancementSchema);

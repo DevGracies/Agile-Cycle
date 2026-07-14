@@ -22,22 +22,6 @@ const ebikeSchema = new Schema(
       maxlength: 150,
     },
 
-    slug: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-      index: true,
-    },
-
-    sku: {
-      type: String,
-      required: true,
-      unique: true,
-      uppercase: true,
-      index: true,
-    },
-
     description: {
       type: String,
       required: true,
@@ -155,7 +139,4 @@ const ebikeSchema = new Schema(
 export type EbikeDocument =
   InferSchemaType<typeof ebikeSchema>;
 
-export default model(
-  "Ebike",
-  ebikeSchema
-);
+export const Ebike = model("Ebike",ebikeSchema);

@@ -110,7 +110,7 @@ export default function ProductInfo({ product }: { product: Product }) {
           />
         </div>
         <div className="w-full">
-          <ProductActions product={product} quantity={quantity} />
+          <ProductActions product={product} quantity={quantity} type="ebike" />
         </div>
       </div>
     </div>

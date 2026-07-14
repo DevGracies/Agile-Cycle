@@ -1,47 +1,33 @@
-import slugify from "slugify";
-
-import Accessory from "../models/accessories";
-
 import { AppError } from "../utils/AppError";
 
 import type {
   CreateAccessoryInput,
 } from "../types/accessory";
 import { ProductQuery } from "../types/ebike";
+import { Accessory } from "../models/accessories";
+import { formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
 
 
-export const createAccessoryService =
-  async (
-    data: CreateAccessoryInput
-  ) => {
-    const exists =
-      await Accessory.findOne({
-        $or: [
-            { slug: data.slug },
-            { sku: data.sku },
-        ],
+export const createAccessoryService = async (
+  data: CreateAccessoryInput,
+  files: Express.Multer.File[]
+) => {
+  let images: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
+
+  if (files?.length) {
+    const uploads = await uploadImages(files, "accessories");
+
+    images = uploads.map(formatCloudinaryMedia)
+  }
+
+  const accessory =
+    await Accessory.create({
+      ...data,
+      images,
     });
 
-    if (exists) {
-      throw new AppError(
-        "Accessory already exists",
-        409
-      );
-    }
-
-    const slug = slugify(data.name, {
-            lower: true,
-            strict: true,
-        });
-
-    const accessory =
-      await Accessory.create({
-        ...data,
-        slug,
-      });
-
-    return accessory;
-  };
+  return accessory;
+};
 
 
 
@@ -49,36 +35,6 @@ export const updateAccessoryService = async (
   accessoryId: string,
   data: Partial<CreateAccessoryInput>
 ) => {
-  const accessory = await Accessory.findById(accessoryId);
-
-  if (!accessory) {
-    throw new AppError(
-      "Accessory not found",
-      404
-    );
-  }
-
-  if (data.sku && data.sku !== accessory.sku) {
-    const existingSku = await Accessory.findOne({
-      sku: data.sku,
-      _id: { $ne: accessoryId },
-    });
-
-    if (existingSku) {
-      throw new AppError(
-        "SKU already exists",
-        409
-      );
-    }
-  }
-
-  if (data.name) {
-    data.slug = slugify(data.name, {
-      lower: true,
-      strict: true,
-    });
-  }
-
   const updatedAccessory =
     await Accessory.findByIdAndUpdate(
       accessoryId,
@@ -89,6 +45,13 @@ export const updateAccessoryService = async (
       }
     );
 
+  if (!updatedAccessory) {
+    throw new AppError(
+      "Accessory not found",
+      404
+    );
+  }
+
   return updatedAccessory;
 };
 
@@ -97,10 +60,7 @@ export const updateAccessoryService = async (
 export const getAccessoryService =
   async (accessoryId: string) => {
     const accessory =
-      await Accessory.findOne({
-        _id: accessoryId,
-        isActive: true,
-      })
+      await Accessory.findById(accessoryId)
         .populate(
           "compatibleModels"
         )
@@ -112,8 +72,12 @@ export const getAccessoryService =
       );
     }
 
+    if (!accessory.isActive) {
+      throw new AppError("Accessory is currently not available.")
+    }
+
     return accessory;
-};
+  };
 
 
 export const getAccessoriesService = async (
@@ -234,16 +198,16 @@ export const getAccessoriesService = async (
     limitNumber;
 
   const [accessories, total] = await Promise.all([
-      Accessory.find(filters)
-        .sort(sortOption)
-        .skip(skip)
-        .limit(limitNumber)
-        .lean(),
+    Accessory.find(filters)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limitNumber)
+      .lean(),
 
-      Accessory.countDocuments(
-        filters
-      ),
-    ]);
+    Accessory.countDocuments(
+      filters
+    ),
+  ]);
 
   return {
     accessories,
@@ -261,22 +225,22 @@ export const getAccessoriesService = async (
 
 
 export const archiveAccessoryService = async (
-    accessoryId: string
+  accessoryId: string
 ) => {
-    const accessory = await Accessory.findById(
-        accessoryId
+  const accessory = await Accessory.findById(
+    accessoryId
+  );
+
+  if (!accessory) {
+    throw new AppError(
+      "Accessory not found",
+      404
     );
+  }
 
-    if (!accessory) {
-        throw new AppError(
-            "Accessory not found",
-            404
-        );
-    }
+  accessory.isActive = false;
 
-    accessory.isActive = false;
+  await accessory.save();
 
-    await accessory.save();
-
-    return null;
+  return null;
 };

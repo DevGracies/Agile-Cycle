@@ -2,30 +2,32 @@
 
 import CompatibilityTable from "@/src/components/accessories/CompatibilityTable";
 import FeatureSection from "@/src/components/accessories/FeatureSection";
-import ProductInformation from "@/src/components/accessories/ProductInfo";
+import AccessoryInfo from "@/src/components/accessories/AccessoryInfo";
 import ProductGallery from "@/src/components/ebikes/ebike-details/ProductGallery";
 import Container from "@/src/components/layout/Container";
 import BreadCrumbs from "@/src/components/shared/product/BreadCrumbs";
-import Loader from "@/src/components/ui/Loader";
-import { useAccessory } from "@/src/hooks/useAccessories";
-import { accessories2 as product } from "@/src/mocks/product.mock"
 import { Accessories } from "@/src/types/product";
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
+import { useAccessory } from "@/src/context/AccessoryProvider";
+import ProductDetailsSkeleton from "@/src/components/skeleton/ProductDetailsSkeleton";
 
 export default function ProductDetailsPage() {
   const params = useParams();
 
-  const { accessory, loading } = useAccessory(params.id as string);
+  const {
+    accessory,
+    fetchAccessory,
+    loading
+  } = useAccessory();
 
-  console.log("Accessory Info", accessory)
-  if (loading.accessory) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <Loader text="Loading Product Details..." />
-      </div>
-    );
-  }
-  if (!product) return;
+  useEffect(() => {
+    if (params.id) {
+      fetchAccessory(params.id as string);
+    }
+  }, [params.id, fetchAccessory]);
+
+  if (loading.accessory) return <ProductDetailsSkeleton />
   return (
     <main className="bg-gray-50 py-24">
       <Container>
@@ -34,7 +36,7 @@ export default function ProductDetailsPage() {
           <section className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <ProductGallery product={accessory as Accessories} />
 
-            <ProductInformation product={accessory as Accessories} />
+            <AccessoryInfo product={accessory as Accessories} />
           </section>
 
           <section className="space-y-8">
@@ -43,9 +45,7 @@ export default function ProductDetailsPage() {
             />
 
             <FeatureSection
-              features={product?.features}
-              packageContents={product?.packageContents ?? []}
-              note={product?.note ?? ""}
+              product={accessory as Accessories}
             />
           </section>
         </div>
