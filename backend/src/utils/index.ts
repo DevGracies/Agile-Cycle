@@ -3,6 +3,12 @@ import { env } from "../config/env";
 import { Role } from "../types/user";
 import crypto from "crypto";
 
+import { Model } from "mongoose";
+import { Ebike } from "../models/ebike";
+import { Accessory } from "../models/accessories";
+import { Enhancement } from "../models/enhancement";
+import { ProductType } from "../models/cart";
+
 export const generateAccessToken = (payload: { id: string, role: Role }) => {
     return jwt.sign(payload, env.JWT_ACCESS_SECRET, {
         expiresIn: "30m",
@@ -25,3 +31,10 @@ export const roles = {
 };
 
 export const allRoles = Object.values(roles);
+
+
+export const PRODUCT_MODELS: Record<ProductType, Model<any>> = {
+  ebike: Ebike,
+  accessory: Accessory,
+  enhancement: Enhancement,
+};

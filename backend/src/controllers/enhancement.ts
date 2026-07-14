@@ -7,36 +7,36 @@ import { createEnhancementSchema, updateEnhancementSchema } from "../validators/
 
 
 export const createEnhancement = asyncHandler(
-    async (req: Request,res: Response) => {
-        const parsed = createEnhancementSchema.safeParse(req.body);
+  async (req: Request, res: Response) => {
+    const parsed = createEnhancementSchema.safeParse(req.body);
 
-        if (!parsed.success) {
-            throw new AppError(
-                "Invalid request data",
-                400,
-                JSON.stringify(parsed.error.flatten()),
-            );
-        }
-
-        const enhancement = await createEnhancementService(parsed.data);
-
-        return res.status(201).json({
-            success: true,
-            message:
-                "Enhancement created successfully",
-            data: enhancement,
-        });
+    if (!parsed.success) {
+      throw new AppError(
+        "Invalid request data",
+        400,
+        JSON.stringify(parsed.error.flatten()),
+      );
     }
+
+    const enhancement = await createEnhancementService(parsed.data, req?.files as Express.Multer.File[]);
+
+    return res.status(201).json({
+      success: true,
+      message: "Enhancement created successfully",
+      data: enhancement,
+    });
+  }
 );
 
 
 export const getEnhancement =
   asyncHandler(
-    async (req: Request,res: Response) => {
+    async (req: Request, res: Response) => {
       const enhancement = await getEnhancementService(req.params.id as string);
 
       return res.status(200).json({
         success: true,
+        message: "Enhancement fetched successfully",
         data: enhancement,
       });
     }
@@ -45,7 +45,7 @@ export const getEnhancement =
 
 export const getAllEnhancements =
   asyncHandler(
-    async (req: Request,res: Response) => {
+    async (req: Request, res: Response) => {
       const result = await getAllEnhancementsService(req.query);
 
       return res.status(200).json({
@@ -59,7 +59,7 @@ export const getAllEnhancements =
 
 export const updateEnhancement =
   asyncHandler(
-    async (req: Request,res: Response) => {
+    async (req: Request, res: Response) => {
       const parsed = updateEnhancementSchema.safeParse(req.body);
 
       if (!parsed.success) {
@@ -88,7 +88,7 @@ export const updateEnhancement =
 
 export const archiveEnhancement =
   asyncHandler(
-    async (req: Request,res: Response) => {
+    async (req: Request, res: Response) => {
       await archiveEnhancementService(req.params.id as string);
 
       return res.status(200).json({

@@ -6,24 +6,52 @@ import { useState } from "react";
 
 import Button from "../ui/Button";
 import { Input } from "../ui/Input";
+import { signUp } from "@/src/services/auth.service";
+import toast from "react-hot-toast";
+import Loader from "../ui/Loader";
+import { useRouter } from "next/navigation";
+import { apiError } from "@/src/services/api.service";
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // ✅ NEW: password state
-  const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     setIsLoading(true);
+    try {
+      if (!name.trim() || !email.trim() || !password || !confirmPassword) {
+        toast.error("Please fill in all fields");
+        return;
+      }
 
-    setTimeout(() => {
+      if (password.length < 8) {
+        toast.error("Password must be at least 8 characters long");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        toast.error("Passwords do not match");
+        return;
+      }
+
+      await signUp({ name, email, password });
+      toast.success("Account created successfully");
+      router.push("/setUpProfile");
+    } catch (error) {
+        toast.error(apiError(error) || "Signup failed. Please try again.");
+    } finally {
       setIsLoading(false);
-    }, 2000);
-  };
+    }
+  }
 
   return (
     <>
@@ -46,12 +74,18 @@ const SignupForm = () => {
         <Input
           label="Full Name"
           type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
           placeholder="John Doe"
         />
 
         <Input
           label="E-mail"
           type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
           placeholder="example@gmail.com"
         />
 
@@ -68,6 +102,7 @@ const SignupForm = () => {
               label={""}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
 
             <button
@@ -85,7 +120,7 @@ const SignupForm = () => {
             </button>
           </div>
 
-         
+
         </div>
 
         {/* CONFIRM PASSWORD */}
@@ -99,6 +134,10 @@ const SignupForm = () => {
               type={showConfirmPassword ? "text" : "password"}
               placeholder="@#*%"
               label={""}
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
             />
 
             <button
@@ -117,7 +156,7 @@ const SignupForm = () => {
               </div>
             </button>
           </div>
-           {/* ✅ CONDITIONAL HINT */}
+          {/* ✅ CONDITIONAL HINT */}
           {password.length > 0 && password.length < 8 && (
             <p className="mt-2 text-xs text-[#01430D]">
               Use 8+ characters with a mix of uppercase, number, and symbol
@@ -127,19 +166,19 @@ const SignupForm = () => {
 
         {/* BUTTON */}
         <Button type="submit" className="w-full">
-          Sign Up
+          {isLoading ? <Loader text="Creating Account" /> : "Sign Up"}
         </Button>
 
-       {/* DIVIDER */}
-<div className="flex items-center gap-4 py-2">
-  <div className="h-px flex-1 bg-[#7A7A7A]" />
+        {/* DIVIDER */}
+        <div className="flex items-center gap-4 py-2">
+          <div className="h-px flex-1 bg-[#7A7A7A]" />
 
-  <span className="text-[12px] font-medium text-[#7A7A7A]">
-    OR
-  </span>
+          <span className="text-[12px] font-medium text-[#7A7A7A]">
+            OR
+          </span>
 
-  <div className="h-px flex-1 bg-[#7A7A7A]" />
-</div>
+          <div className="h-px flex-1 bg-[#7A7A7A]" />
+        </div>
 
         {/* GOOGLE BUTTON */}
         <Button

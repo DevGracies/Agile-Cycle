@@ -31,4 +31,4 @@ likeSchema.index(
   }
 );
 
-export default model("Like", likeSchema);
+export const Like = model("Like", likeSchema);

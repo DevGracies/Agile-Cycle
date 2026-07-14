@@ -4,8 +4,6 @@ import { ENHANCEMENT_CATEGORIES } from "../types/enhancement";
 
 export const createEnhancementSchema = z.object({
     name: z.string().min(2),
-    slug: z.string().min(2),
-    sku: z.string().min(2),
     description: z.string(),
     shortDescription: z.string(),
 

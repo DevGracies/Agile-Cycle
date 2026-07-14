@@ -39,6 +39,8 @@ export interface GetEbikeResponse {
 export interface Filters {
   page?: number;
   limit?: number;
+  totalPages?: number;
+  total?: number;
   category?: number;
   search?: number;
   featured?: number;

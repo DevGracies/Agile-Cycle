@@ -1,6 +1,6 @@
+import { Product } from "@/src/types/product";
 import Link from "next/link";
 
-import { Product } from "@/src/types/product";
 
 interface BreadCrumbsProps {
   product: Product;
@@ -19,15 +19,15 @@ export default function BreadCrumbs({ product }: BreadCrumbsProps) {
       <span className="text-[#9d9d9d]">{">"}</span>
 
       <Link
-        href={`/ebikes?category=${product.category}`}
+        href={`/ebikes?category=${product?.category}`}
         className="text-[#9d9d9d]"
       >
-        {product.category}
+        {product?.category}
       </Link>
 
       <span className="text-[#9d9d9d]">{">"}</span>
 
-      <span className="text-[#6f6f6f] font-semibold">{product.name}</span>
+      <span className="text-[#6f6f6f] font-semibold">{product?.name}</span>
     </nav>
   );
 }

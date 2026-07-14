@@ -7,9 +7,10 @@ import PriceRangeSlider from "./PriceRangeSlider";
 
 interface Props {
   filters: SidebarFilters;
+  onApply?: () => void
 }
 
-export default function CategorySidebar({ filters }: Props) {
+export default function CategorySidebar({ filters, onApply }: Props) {
   const [selectedAvailability, setSelectedAvailability] = useState<string[]>(
     [],
   );
@@ -94,7 +95,7 @@ export default function CategorySidebar({ filters }: Props) {
             </div>
 
             <button
-              onClick={applyFilters}
+              onClick={onApply}
               className="w-1/2 rounded-lg bg-secondary py-3 font-medium text-white hover:bg-secondary/90 cursor-pointer"
             >
               Apply

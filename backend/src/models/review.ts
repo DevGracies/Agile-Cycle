@@ -72,4 +72,4 @@ reviewSchema.index(
 
 export type ReviewDocument = InferSchemaType<typeof reviewSchema>;
 
-export default model("Review", reviewSchema);
+export const Review = model("Review", reviewSchema);

@@ -5,6 +5,7 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import CloseIcon from '@mui/icons-material/Close';
+import toast from 'react-hot-toast';
 
 export default function EditProductPage({ edit }: { edit?: string }) {
 
@@ -15,7 +16,8 @@ export default function EditProductPage({ edit }: { edit?: string }) {
   const [taxIncluded, setTaxIncluded] = useState<string>("yes");
   const [colors, setColors] = useState<string[]>([]);
   const [hexInput, setHexInput] = useState<string>("");
-  
+  const [isPublishing, setIsPublishing] = useState(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // --- HANDLERS ---
@@ -29,7 +31,7 @@ export default function EditProductPage({ edit }: { edit?: string }) {
   };
 
   const removeImage = (idx: number, e: React.MouseEvent) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     const newImages = [...images];
     newImages[idx] = null;
     setImages(newImages);
@@ -39,8 +41,8 @@ export default function EditProductPage({ edit }: { edit?: string }) {
     if (/^#([0-9A-F]{3}){1,2}$/i.test(hexInput)) {
       setColors([...colors, hexInput]);
       setHexInput("");
-    }else{
-        alert('wrong input')
+    } else {
+      alert('wrong input')
     }
   };
 
@@ -48,15 +50,26 @@ export default function EditProductPage({ edit }: { edit?: string }) {
     setColors(colors.filter((_, i) => i !== idx));
   };
 
+  const publishEbike = async () => {
+    setIsPublishing(true)
+    try {
+
+    } catch (error) {
+      console.error(error)
+      toast.error("Failed to publish product")
+    } finally {
+      setIsPublishing(false)
+    }
+  }
   return (
     <div className="min-h-screen p-8 font-sans text-gray-700 bg-[#F2F5F3] max-[525px]:p-3">
       <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
 
       {/* --- HEADER --- */}
-       <div className="bg-white mb-10 max-w-7xl mx-auto rounded-xl justify-between flex items-center overflow-hidden h-20 bg-gradient-to-r from-[#ffffff] to-[#F2F5F3]">
-         <div 
+      <div className="bg-white mb-10 max-w-7xl mx-auto rounded-xl justify-between flex items-center overflow-hidden h-20 bg-gradient-to-r from-[#ffffff] to-[#F2F5F3]">
+        <div
           className="h-full flex items-center pl-8 pr-12 bg-gradient-to-r from-[#01430D] to-[#519A09] text-white font-semibold text-sm max-[597px]:pr-5 max-[597px]:pl-4 max-[382px]:pr-4 max-[382px]:pl-2"
-          style={{ 
+          style={{
             clipPath: 'polygon(0% 0%, 100% 0, 85% 100%, 0% 100%)',
             minWidth: '108.5px'
           }}
@@ -65,11 +78,11 @@ export default function EditProductPage({ edit }: { edit?: string }) {
         </div>
         <button className="bg-[#0a3614] mr-[1rem] text-white px-8 py-2.5 rounded-lg font-semibold text-sm hover:opacity-90 transition-all shadow-md">
           Publish product
-        </button> 
+        </button>
       </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-        
+
         {/* --- LEFT UNIFIED COLUMN --- */}
         <div className="bg-white rounded-[0.5rem] overflow-hidden h-full">
           {/* Basic Details Section */}
@@ -169,7 +182,7 @@ export default function EditProductPage({ edit }: { edit?: string }) {
 
         {/* --- RIGHT UNIFIED COLUMN --- */}
         <div className="bg-white rounded-[0.5rem] shadow-sm  border border-gray-100 overflow-hidden h-full">
-          
+
           {/* Image Upload Section */}
           <div className="p-4 border-b border-gray-50">
             <h3 className="font-bold mb-6 mt-4 text-sm uppercase tracking-wide">Upload Product Image</h3>
@@ -190,15 +203,15 @@ export default function EditProductPage({ edit }: { edit?: string }) {
 
             <div className="grid grid-cols-4 gap-4">
               {images.map((img, idx) => (
-                <div 
-                  key={idx} 
-                  onClick={() => { setSelectedIdx(idx); if(!img) fileInputRef.current?.click(); }}
+                <div
+                  key={idx}
+                  onClick={() => { setSelectedIdx(idx); if (!img) fileInputRef.current?.click(); }}
                   className={`relative aspect-square rounded-[0.5rem] border-2 cursor-pointer flex flex-col items-center justify-center transition-all ${selectedIdx === idx ? 'border-[#4f9a14] bg-[#f8faf8] scale-105 z-10' : 'border-dashed border-[#e8f3e8] bg-white hover:border-green-300'}`}
                 >
                   {img ? (
                     <>
                       <img src={img} className="w-full h-full object-cover rounded-[0.4rem]" alt={`Thumb ${idx + 1}`} />
-                      <button 
+                      <button
                         onClick={(e) => removeImage(idx, e)}
                         className="absolute top-1.5 right-1.5 bg-white text-gray-500 rounded-full w-5 h-5 flex items-center justify-center shadow-md border border-gray-100 hover:text-red-500 transition-all z-20"
                       >
@@ -243,7 +256,7 @@ export default function EditProductPage({ edit }: { edit?: string }) {
               {colors.map((color, idx) => (
                 <div key={idx} className="relative group">
                   <div className="w-12 h-12 rounded-[0.5rem] shadow-sm border border-gray-200 overflow-hidden" style={{ backgroundColor: color }} />
-                  <button 
+                  <button
                     onClick={() => removeColor(idx)}
                     className="absolute -top-1.5 -right-1.5 bg-white text-gray-500 rounded-full w-5 h-5 flex items-center justify-center shadow-md border border-gray-100 hover:text-red-500 transition-all"
                   >
@@ -253,11 +266,11 @@ export default function EditProductPage({ edit }: { edit?: string }) {
               ))}
 
               <div className="flex items-center border border-[#e8f3e8] rounded-[0.5rem] bg-[#fcfdfc] px-2 h-12 w-24  focus-within:bg-[#f2f5f3] focus-within:border-green-200 transition-colors">
-                <input 
-                  type="text" 
-                  value={hexInput} 
+                <input
+                  type="text"
+                  value={hexInput}
                   onChange={(e) => setHexInput(e.target.value)}
-                  placeholder="#FFFFFF" 
+                  placeholder="#FFFFFF"
                   className="bg-transparent text-xs font-bold w-full focus:outline-none placeholder:text-gray-300"
                 />
                 <button onClick={addColorByHex} className="text-green-600 hover:scale-125 transition-transform ml-1">

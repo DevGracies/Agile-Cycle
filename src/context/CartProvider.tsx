@@ -7,117 +7,202 @@ import {
   useMemo,
   useState,
   ReactNode,
+  useCallback,
 } from "react";
-import { CartItem } from "@/src/types/cart";
-import { Product } from "@/src/types/product";
+
 import toast from "react-hot-toast";
-import { cartService } from "@/src/services/cart.service";
+
+import {
+  Cart,
+  ProductType,
+  cartApi,
+} from "@/src/services/cart.service";
+
 
 interface CartContextType {
-  items: CartItem[];
-  addToCart: (product: Product, quantity?: number) => void;
-  removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
-  clearCart: () => void;
+  cart: Cart | null;
+
+  addToCart: (
+    productId: string,
+    productType: ProductType,
+    quantity: number
+  ) => Promise<void>;
+
+  removeFromCart: (
+    productId: string,
+    productType: ProductType
+  ) => Promise<void>;
+
+  updateQuantity: (
+    productId: string,
+    productType: ProductType,
+    quantity: number
+  ) => Promise<void>;
+
+  clearCart: () => Promise<void>;
+  fetchCart: () => Promise<void>;
   cartCount: number;
 }
 
+
 const CartContext = createContext<CartContextType | null>(null);
 
-export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+export function CartProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const [cart, setCart] = useState<Cart | null>(null);
 
-  const STORAGE_KEY = "agile-cycle-cart";
+  //  Fetch current user cart
+  const fetchCart = useCallback(async () => {
+    try {
+      const response = await cartApi.getCart();
+      setCart(response.data ?? null);
+    } catch (error) {
 
-  // INIT CART
-  useEffect(() => {
-    const loadCart = async () => {
-      const data = await cartService.getCart();
-      setItems(data);
-    };
-
-    loadCart();
+      console.error(
+        "Failed to fetch cart:",
+        error
+      );
+    }
   }, []);
 
   useEffect(() => {
-    JSON.parse(localStorage.getItem(STORAGE_KEY) as string);
-  })
-  // ADD TO CART
-  const addToCart = async (product: Product, quantity: number = 1) => {
-    try {
-      const updated = await cartService.addToCart(product, quantity);
+    fetchCart();
+  }, [fetchCart]);
 
-      setItems(updated);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-      toast.success(`${quantity} ${quantity > 1 ? "items" : "item"} added to cart`);
+  //  Add product to cart
+  const addToCart = useCallback(async (
+    productId: string,
+    productType: ProductType,
+    quantity: number
+  ) => {
+    try {
+      const response =
+        await cartApi.addToCart({
+          productId,
+          productType,
+          quantity,
+        });
+
+      setCart(response.data ?? null);
+      const item = `${quantity > 1 ? "items" : "item"}`;
+      toast.success(
+        `${quantity} ${item} added to cart`
+      );
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Failed to add item to cart";
-      toast.error(errorMessage);
+      toast.error("Failed to add item");
+      if (error instanceof Error) {
+        console.error(error.message)
+      };
     }
-  };
+  }, [])
 
-  // REMOVE
-  const removeFromCart = async (productId: string) => {
+  //  Remove item from cart
+  const removeFromCart = useCallback(async (
+    productId: string,
+    productType: ProductType
+  ) => {
     try {
-      const updated = await cartService.removeFromCart(productId);
-
-      setItems(updated);
+      const response =
+        await cartApi.removeFromCart(
+          productId,
+          productType
+        );
+      setCart(response.data ?? null);
+      fetchCart()
       toast.success("Item removed from cart");
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Failed to remove item";
-      toast.error(errorMessage);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to remove item"
+      );
     }
-  };
+  }, [])
 
-  // UPDATE QTY
-  const updateQuantity = async (productId: string, quantity: number) => {
+  //  Update cart item quantity
+  const updateQuantity = useCallback(async (
+    productId: string,
+    productType: ProductType,
+    quantity: number = 1
+  ) => {
     try {
-      const updated = await cartService.updateQuantity(productId, quantity);
-
-      setItems(updated);
+      const response =
+        await cartApi.updateCartItem(
+          productId,
+          {
+            productType,
+            quantity,
+          }
+        );
+      setCart(response.data ?? null);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Failed to update quantity";
-      toast.error(errorMessage);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to update quantity"
+      );
     }
-  };
+  }, [])
 
-  // CLEAR CART
-  const clearCart = async () => {
+  // Empty cart
+  const clearCart = useCallback(async () => {
     try {
-      const updated = await cartService.clearCart();
-      setItems(updated);
-      toast.success("Cart cleared");
+      const response = await cartApi.clearCart();
+      setCart(response.data ?? null);
+      toast.success(
+        "Cart cleared"
+      );
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Failed to clear cart";
-      toast.error(errorMessage);
-    }
-  };
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to clear cart"
+      );
 
+    }
+
+  }, []);
+
+  // Total quantity in cart
   const cartCount = useMemo(() => {
-    return items.reduce((total, item) => total + item.quantity, 0);
-  }, [items]);
+    if (!cart) {
+      return 0;
+    }
+    return cart.items.reduce((total, item) =>
+      total + item.quantity, 0);
+  }, [cart]);
 
-  const value = useMemo(
-    () => ({
-      items,
-      addToCart,
-      removeFromCart,
-      updateQuantity,
-      clearCart,
-      cartCount,
-    }),
-    [items],
+  const value = useMemo(() => ({
+    cart,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    fetchCart,
+    cartCount,
+  }), [cart, cartCount, fetchCart, removeFromCart, updateQuantity, clearCart, addToCart]
   );
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  return (
+    <CartContext.Provider
+      value={value}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 }
 
-export const useCart = () => {
-  const ctx = useContext(CartContext);
-  if (!ctx) throw new Error("useCart must be used inside CartProvider");
-  return ctx;
-};
+export function useCart() {
+  const context =
+    useContext(CartContext);
+  if (!context) {
+    throw new Error(
+      "useCart must be used within CartProvider"
+    );
+  }
+  return context;
+
+}

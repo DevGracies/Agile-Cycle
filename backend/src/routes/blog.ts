@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as blogController from "../controllers/blog";
-import { authenticate } from "../middlewares/auth";
+import { adminOnly, authenticate } from "../middlewares/auth";
 import upload from "../middlewares/upload";
 
 const router = Router();
@@ -10,7 +10,7 @@ router.get("/", blogController.getBlogs);
 router.get("/:id", blogController.getBlog);
 
 //  Protected
-router.use(authenticate);
+router.use(authenticate, adminOnly);
 
 router.post(
     "/",
@@ -27,5 +27,7 @@ router.patch(
 router.patch("/:id/status", blogController.updateBlogStatus);
 
 router.delete("/:id", blogController.deleteBlog);
+
+router.get("/stats", blogController.getBlogDashboardStats);
 
 export default router;

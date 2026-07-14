@@ -38,4 +38,4 @@ commentSchema.index({ blogId: 1, createdAt: -1 });
 
 export type CommentDocument = InferSchemaType<typeof commentSchema>;
 
-export default model("Comment", commentSchema);
+export const Comment = model("Comment", commentSchema);

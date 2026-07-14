@@ -4,8 +4,6 @@ import { ACCESSORY_CATEGORIES } from "../types/accessory";
 
 export const createAccessorySchema = z.object({
     name: z.string().min(2),
-    slug: z.string().min(2),
-    sku: z.string().min(2),
     description: z.string(),
     shortDescription: z.string(),
 

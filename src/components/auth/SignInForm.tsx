@@ -1,11 +1,37 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { login } from "@/src/services/auth.service";
+import toast from "react-hot-toast";
+import Loader from "../ui/Loader";
+import { apiError } from "@/src/services/api.service";
+import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignInForm() {
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      await login({ email, password });
+      toast.success("Login successful");
+      router.push("/");
+    } catch (error) {
+      toast.error(apiError(error) || "login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
   return (
     <div className="w-full max-w-md">
 
@@ -27,7 +53,9 @@ export default function SignInForm() {
       </div>
 
       {/* Form */}
-      <form className="space-y-6">
+      <form
+        className="space-y-6"
+        onSubmit={handleSubmit}>
         {/* Email */}
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700">
@@ -37,6 +65,9 @@ export default function SignInForm() {
           <input
             type="email"
             placeholder="example@gmail.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
             className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-gray-700 outline-none transition focus:border-green-600 focus:bg-white"
           />
         </div>
@@ -49,16 +80,28 @@ export default function SignInForm() {
 
           <div className="relative">
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               placeholder="@#*%"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
               className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 pr-12 text-gray-700 outline-none transition focus:border-green-600 focus:bg-white"
             />
 
             <button
               type="button"
-              className="absolute right-0 top-1/2 flex h-[40px] w-[54px] -translate-y-1/2 items-center justify-center border-l border-[#CFD9E0] text-gray-500"
+              onClick={() =>
+                setShowConfirmPassword(!showConfirmPassword)
+              }
+              className="absolute right-0 top-1/2 flex h-[40px] w-[54px] -translate-y-1/2 items-center justify-center text-gray-500 transition hover:text-green-700"
             >
-              <RemoveRedEyeIcon style={{ fontSize: 20 }} />
+              <div className="flex h-10 items-center border-l border-l-gray-200 pl-3 px-5">
+                {showConfirmPassword ? (
+                  <EyeOff size={20} />
+                ) : (
+                  <Eye size={20} />
+                )}
+              </div>
             </button>
           </div>
         </div>
@@ -86,7 +129,7 @@ export default function SignInForm() {
           type="submit"
           className="w-full rounded-lg bg-green-900 py-4 text-sm font-semibold text-white hover:bg-green-800"
         >
-          Sign in
+          {isLoading ? <Loader text="Signing In" /> : "Sign In"}
         </button>
       </form>
 

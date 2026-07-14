@@ -16,7 +16,7 @@ export const register = asyncHandler(async (
     secure: isProd,
     sameSite: isProd ? "none" : "lax",
     path: "/",
-    maxAge: 30 * 60 * 1000,
+    maxAge: 24 * 60 * 60 * 1000,
   });
 
   return res.status(201).json({
@@ -36,7 +36,7 @@ export const login = asyncHandler(async (
     secure: isProd,
     sameSite: isProd ? "none" : "lax",
     path: "/",
-    maxAge: 30 * 60 * 1000,
+    maxAge: 24 * 60 * 60 * 1000,
   });
 
   return res.status(200).json({
@@ -55,7 +55,7 @@ export const logout = asyncHandler(async (
     secure: isProd,
     sameSite: isProd ? "none" : "lax",
     path: "/",
-    maxAge: 30 * 60 * 1000,
+    maxAge: 24 * 60 * 60 * 1000,
   });
 
   return res.status(200).json({

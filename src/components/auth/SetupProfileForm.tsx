@@ -3,14 +3,21 @@
 import Link from "next/link";
 
 import Button from "../ui/Button";
-import Select from "../ui/Select";
+import Select from "../ui/CustomSelect";
+import Loader from "../ui/Loader";
+import { useSetUpProfile } from "@/src/hooks/useSetUpProfile";
 
 const SetUpProfile = () => {
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-  };
+  const {
+    country,
+    setCountry,
+    state,
+    setState,
+    ridingPurpose,
+    setRidingPurpose,
+    isLoading,
+    handleSubmit,
+  } = useSetUpProfile();
 
   return (
     <>
@@ -22,32 +29,51 @@ const SetUpProfile = () => {
       </div>
 
       {/* FORM */}
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-5">
         {/* COUNTRY */}
+        <label className="text-gray-500">Select Country</label>
         <Select
-          label="Select Country"
-           placeholder="Nigeria"
-          options={["Nigeria", "Ghana", "Kenya", "South Africa"]}
+          value={country ?? ""}
+          onChange={(value) => setCountry(value as string)}
+          placeholder="Country"
+          options={["Nigeria", "Ghana", "Kenya", "South Africa"].map((val) => ({
+            label: val,
+            value: val,
+          }))}
         />
 
         {/* STATE */}
+        <label className="text-gray-500">Select State</label>
         <Select
-          label="Select State"
-           placeholder="Lagos"
-          options={["Lagos", "Abuja", "Oyo", "Kano"]}
+          value={state ?? ""}
+          onChange={(value) => setState(value as string)}
+          placeholder="State"
+          options={["Lagos", "Abuja", "Oyo", "Kano"].map((val) => ({
+            label: val,
+            value: val,
+          }))}
         />
 
         {/* PURPOSE */}
+        <label className="text-gray-500">Choose Riding Purpose</label>
         <Select
-          label="Choose Riding Purpose"
-           placeholder="Commuting"
-          options={["Commuting", "Tricycle", "Kekecycle"]}
-          showIcon
+          value={ridingPurpose ?? ""}
+          onChange={(value) => setRidingPurpose(value as string)}
+          placeholder="Riding Purpose"
+          options={["Commuting", "Tricycle", "Kekecycle"].map((val) => ({
+            label: val,
+            value: val,
+          }))}
         />
 
+
         {/* BUTTON */}
-        <Button type="submit" className="w-full mt-10">
-          Continue
+        <Button
+          type="submit"
+          className="w-full mt-10">
+          {isLoading ? <Loader /> : "Continue"}
         </Button>
 
         <Link

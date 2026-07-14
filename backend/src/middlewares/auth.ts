@@ -8,7 +8,7 @@ import { asyncHandler } from "../utils/asyncHandler";
 import { JwtPayload, AuthUser, AuthenticatedRequest } from "../types/auth";
 
 export const authenticate = asyncHandler(
-  async (req: AuthenticatedRequest, _: Response, __: NextFunction) => {
+  async (req: AuthenticatedRequest, _: Response, next: NextFunction) => {
     const token = req.cookies?.accessToken;
 
     if (!token) {
@@ -43,5 +43,21 @@ export const authenticate = asyncHandler(
     };
 
     req.user = authUser;
+    next();
   }
 );
+
+
+export const adminOnly = asyncHandler(
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      throw new AppError("Unauthorized - user not found", 401)
+    };
+
+    if (req.user.email !== env.ADMIN_EMAIL) {
+      throw new AppError("Forbidden - Admin access only", 409)
+    };
+
+    next();
+  }
+)

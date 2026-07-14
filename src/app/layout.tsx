@@ -6,11 +6,15 @@ import BackToTop from "../components/shared/BackToTop";
 import { Toaster } from "react-hot-toast";
 import { CartProvider } from "../context/CartProvider";
 import { ReactNode } from "react";
+import { AuthProvider } from "../context/AuthProvider";
+import { EbikeProvider } from "../context/EbikeProvider";
+import { AccessoryProvider } from "../context/AccessoryProvider";
+import { EnhancementProvider } from "../context/EnhancementProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
- 
+
 });
 
 const geistMono = Geist_Mono({
@@ -25,7 +29,7 @@ export const metadata: Metadata = {
 
 const lexend = Lexend({
   subsets: ["latin"],
-  weight: [ "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export default function RootLayout({
@@ -38,12 +42,20 @@ export default function RootLayout({
       <body className={lexend.className}>
         <Toaster position="top-center" />
 
-        <ConfirmProvider>
-          <CartProvider>
-            {children}
-            <BackToTop />
-          </CartProvider>
-        </ConfirmProvider>
+        <AuthProvider>
+          <EbikeProvider>
+            <AccessoryProvider>
+              <EnhancementProvider>
+                <ConfirmProvider>
+                  <CartProvider>
+                    {children}
+                    <BackToTop />
+                  </CartProvider>
+                </ConfirmProvider>
+              </EnhancementProvider>
+            </AccessoryProvider>
+          </EbikeProvider>
+        </AuthProvider>
       </body>
 
     </html>

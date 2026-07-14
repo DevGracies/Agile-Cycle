@@ -43,7 +43,7 @@ const OurShopSection = () => {
         </div>
         <button 
         onClick={() => router.push("/support")}
-        className="border-2 border-secondary w-full rounded-md bg-white/50 p-2 text-secondary text-sm cursor-pointer">Get Directions</button>
+        className="border border-secondary w-full rounded-md bg-white/50 p-2 text-secondary text-sm cursor-pointer">Get Directions</button>
       </div>
     </section>
   );

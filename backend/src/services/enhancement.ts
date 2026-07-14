@@ -1,47 +1,33 @@
-import slugify from "slugify";
-
-import Enhancement from "../models/enhancement";
-
+import { Enhancement } from "../models/enhancement";
 import { AppError } from "../utils/AppError";
 
 import type {
   CreateEnhancementInput,
 } from "../types/enhancement";
 import { ProductQuery } from "../types/ebike";
+import { formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
 
 
-export const createEnhancementService =
-  async (
-    data: CreateEnhancementInput
-  ) => {
-    const exists =
-      await Enhancement.findOne({
-        $or: [
-          { slug: data.slug },
-          { sku: data.sku },
-        ],
-      });
+export const createEnhancementService = async (
+  data: CreateEnhancementInput,
+  files: Express.Multer.File[]
+) => {
+  let images: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
 
-    if (exists) {
-      throw new AppError(
-        "Enhancement already exists",
-        409
-      );
-    }
+  if (files?.length) {
+    const uploads = await uploadImages(files, "accessories");
 
-    const slug = slugify(data.name, {
-      lower: true,
-      strict: true,
+    images = uploads.map(formatCloudinaryMedia)
+  }
+
+  const enhancement =
+    await Enhancement.create({
+      ...data,
+      images
     });
 
-    const enhancement =
-      await Enhancement.create({
-        ...data,
-        slug,
-      });
-
-    return enhancement;
-  };
+  return enhancement;
+};
 
 
 
@@ -49,36 +35,6 @@ export const updateEnhancementService = async (
   enhancementId: string,
   data: Partial<CreateEnhancementInput>
 ) => {
-  const enhancement = await Enhancement.findById(enhancementId);
-
-  if (!enhancement) {
-    throw new AppError(
-      "Enhancement not found",
-      404
-    );
-  }
-
-  if (data.sku && data.sku !== enhancement.sku) {
-    const existingSku = await Enhancement.findOne({
-      sku: data.sku,
-      _id: { $ne: enhancementId },
-    });
-
-    if (existingSku) {
-      throw new AppError(
-        "SKU already exists",
-        409
-      );
-    }
-  }
-
-  if (data.name) {
-    data.slug = slugify(data.name, {
-      lower: true,
-      strict: true,
-    });
-  }
-
   const updatedEnhancement =
     await Enhancement.findByIdAndUpdate(
       enhancementId,
@@ -89,6 +45,13 @@ export const updateEnhancementService = async (
       }
     );
 
+  if (!updatedEnhancement) {
+    throw new AppError(
+      "Enhancement not found",
+      404
+    );
+  }
+
   return updatedEnhancement;
 };
 
@@ -97,10 +60,7 @@ export const updateEnhancementService = async (
 export const getEnhancementService =
   async (enhancementId: string) => {
     const enhancement =
-      await Enhancement.findOne({
-        _id: enhancementId,
-        isActive: true,
-      })
+      await Enhancement.findById(enhancementId)
         .populate(
           "compatibleModels"
         )
@@ -110,6 +70,10 @@ export const getEnhancementService =
         "Enhancement not found",
         404
       );
+    }
+
+    if (!enhancement.isActive) {
+      throw new AppError("Enhancement is currently not available.")
     }
 
     return enhancement;
@@ -258,7 +222,6 @@ export const getAllEnhancementsService = async (
     },
   };
 };
-
 
 export const archiveEnhancementService = async (
   enhancementId: string

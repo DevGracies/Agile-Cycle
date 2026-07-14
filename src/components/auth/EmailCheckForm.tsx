@@ -1,8 +1,10 @@
 "use client";
 
+import { useAuth } from "@/src/hooks/useAuth";
 import Link from "next/link";
 
 export default function EmailCheckForm() {
+  const { user } = useAuth();
   return (
     <>
       <div className="mb-10">
@@ -28,7 +30,7 @@ export default function EmailCheckForm() {
           <div className="relative">
             <input
               type="email"
-              value="example@gmail.com"
+              value={user?.email || "example@gmail.com"}
               disabled
               className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-4 pr-28 text-gray-400 outline-none"
             />

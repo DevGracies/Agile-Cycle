@@ -90,17 +90,18 @@ const api = axios.create({
     }
 })
 
-const apiError = (error: unknown): never => {
+
+const apiError = (error: unknown): string => {
     if(axios.isAxiosError(error)){
         const message = 
         error.response?.data?.message ||
         error.response?.data?.error ||
         "Something went wrong"
         
-        throw new Error(message);
+        return message;
     }
     
-    throw new Error("Unexpected error occured");
+    return "Unexpected error occured";
 };
 
 export {api, apiError};
