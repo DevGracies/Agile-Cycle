@@ -1,3 +1,4 @@
+// rebuilt this component using the backend code provided 
 "use client";
 import React, { useState, useRef } from 'react';
 import ReplayOutlinedIcon from '@mui/icons-material/ReplayOutlined';
@@ -6,26 +7,52 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import toast from 'react-hot-toast';
+import { ProductType } from '@/src/services/cart.service';
+import { createEbike } from '@/src/services/ebike.service';
+import { ProductImage } from '@/src/types/product';
+import { createAccessory } from '@/src/services/accessory.service';
+import { createEnhancement } from '@/src/services/enhancement.service';
+import Loader from '../../ui/Loader';
 
 export default function EditProductPage({ edit }: { edit?: string }) {
 
   // --- STATE ---
-  const [images, setImages] = useState<(string | null)[]>([null, null, null, null]);
+  const [images, setImages] = useState<(ProductImage | null)[]>([null, null, null, null]);
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
   const [isUnlimited, setIsUnlimited] = useState(true);
   const [taxIncluded, setTaxIncluded] = useState<string>("yes");
   const [colors, setColors] = useState<string[]>([]);
   const [hexInput, setHexInput] = useState<string>("");
   const [isPublishing, setIsPublishing] = useState(false);
+  const [productType, setProductType] = useState<ProductType>("ebikes");
+  const [stock, setStock] = useState<number | null>(null)
+  const [price, setPrice] = useState<number | null>(null)
+  const [discountPrice, setDiscountPrice] = useState<number | null>(null);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const ebikes = ["cruisers", "commuters", "cargo", "folding", "utility", "trikes"];
+  const accessories = ["light", "carrier-bags", "mirror", "helmet", "phone-holder", "alarms", "electric-pump", "seat", "brake-pods", "batteries", "gloves", "storage",];
+  const enhancements = ["performance", "comfort", "safety", "technology", "utility", "style"];
+
+  const subCategories = (type: ProductType) => {
+    switch (type) {
+      case "ebikes":
+        return ebikes
+      case "accessories":
+        return accessories
+      case "enhancements":
+        return enhancements
+    }
+  }
   // --- HANDLERS ---
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
       const url = URL.createObjectURL(e.target.files[0]);
       const newImages = [...images];
-      newImages[selectedIdx] = url;
+      newImages[selectedIdx] = { secure_url: url };
       setImages(newImages);
     }
   };
@@ -50,10 +77,33 @@ export default function EditProductPage({ edit }: { edit?: string }) {
     setColors(colors.filter((_, i) => i !== idx));
   };
 
-  const publishEbike = async () => {
-    setIsPublishing(true)
-    try {
+  const data = {
+    name,
+    description,
+    images,
+    colors,
+    stock,
+    price,
+    discountPrice,
+  }
 
+  const publishEbike = async (type: ProductType) => {
+    setIsPublishing(true)
+    let res;
+    try {
+      switch (type) {
+        case "ebikes":
+          res = await createEbike(data);
+          break;
+        case "accessories":
+          res = await createAccessory(data);
+          break;
+        case "enhancements":
+          res = await createEnhancement(data);
+          break;
+      }
+
+      toast.success(res.message);
     } catch (error) {
       console.error(error)
       toast.error("Failed to publish product")
@@ -76,8 +126,10 @@ export default function EditProductPage({ edit }: { edit?: string }) {
         >
           {edit ? "Edit product" : "Add New product"}
         </div>
-        <button className="bg-[#0a3614] mr-[1rem] text-white px-8 py-2.5 rounded-lg font-semibold text-sm hover:opacity-90 transition-all shadow-md">
-          Publish product
+        <button
+          onClick={() => publishEbike(productType)}
+          className="bg-[#0a3614] mr-[1rem] cursor-pointer text-white px-8 py-2.5 rounded-lg font-semibold text-sm hover:opacity-90 transition-all shadow-md">
+          {isPublishing ? <Loader text="Publishing..." /> : "Publish product" }
         </button>
       </div>
 
@@ -91,11 +143,19 @@ export default function EditProductPage({ edit }: { edit?: string }) {
             <div className="space-y-5">
               <div>
                 <label className="text-xs text-gray-400 mb-2 block font-semibold">Product name</label>
-                <input type="text" defaultValue="Agile Pro Rider (eBike)" className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3 text-sm font-medium focus:outline-none focus:border-green-200 focus:bg-[#f2f5f3] transition-colors" />
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3 text-sm font-medium focus:outline-none focus:border-green-200 focus:bg-[#f2f5f3] transition-colors" />
               </div>
               <div>
                 <label className="text-xs text-gray-400 mb-2 block font-semibold">Product Description</label>
-                <textarea rows={6} className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-4 text-xs leading-relaxed focus:outline-none focus:border-green-200 focus:bg-[#f2f5f3] transition-colors" defaultValue="Agile Comet X is designed for urban adventurers..." />
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={6}
+                  className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-4 text-xs leading-relaxed focus:outline-none focus:border-green-200 focus:bg-[#f2f5f3] transition-colors" defaultValue="Agile Comet X is designed for urban adventurers..." />
               </div>
             </div>
           </div>
@@ -107,7 +167,12 @@ export default function EditProductPage({ edit }: { edit?: string }) {
               <div >
                 <label className="text-xs text-gray-400 mb-2 block font-semibold">Product price</label>
                 <div className="relative bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] focus-within:bg-[#f2f5f3] focus-within:border-green-200 transition-colors">
-                  <input type="text" defaultValue="250,000" className="w-full  p-3 text-sm font-semibold focus:outline-none" />
+                  <input
+                    type="text"
+                    value={price || 0}
+                    onChange={(e) => setPrice(Number(e.target.value))}
+                    defaultValue="250,000"
+                    className="w-full  p-3 text-sm font-semibold focus:outline-none" />
                   <div className="absolute right-3 top-2.5 flex items-center gap-1 border-l pl-2 border-gray-200">
                     <span className="text-lg">🇳🇬</span>
                     <KeyboardArrowDownOutlinedIcon fontSize="small" className="text-gray-400" />
@@ -121,7 +186,12 @@ export default function EditProductPage({ edit }: { edit?: string }) {
                   <div className="flex items-center gap-2 mr-2">
                     <span className="bg-[#0a3614] text-white px-2 py-0.5 rounded text-xs font-bold">N</span>
                   </div>
-                  <input type="text" placeholder="0.00" className="bg-transparent text-sm font-bold text-[#4f9a14] focus:outline-none flex-grow py-2" />
+                  <input
+                    type="text"
+                    placeholder="0.00"
+                    value={discountPrice || 0}
+                    onChange={(e) => setDiscountPrice(Number(e.target.value))}
+                    className="bg-transparent text-sm font-bold text-[#4f9a14] focus:outline-none flex-grow py-2" />
                   <span className="text-[10px] text-gray-500 font-bold uppercase whitespace-nowrap ml-2">Sale = N150,000.00</span>
                 </div>
               </div>
@@ -152,7 +222,11 @@ export default function EditProductPage({ edit }: { edit?: string }) {
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div>
                 <label className="text-xs text-gray-400 mb-2 block font-semibold">Stock Quantity</label>
-                <input type="text" defaultValue="Unlimited" className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3 text-sm font-medium focus:outline-none focus:bg-[#f2f5f3] focus:border-green-200 transition-colors" />
+                <input
+                  type="text"
+                  value={stock || 0}
+                  onChange={(e) => setStock(Number(e.target.value))}
+                  className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3 text-sm font-medium focus:outline-none focus:bg-[#f2f5f3] focus:border-green-200 transition-colors" />
               </div>
               <div>
                 <label className="text-xs text-gray-400 mb-2 block font-semibold">Stock Status</label>
@@ -236,16 +310,20 @@ export default function EditProductPage({ edit }: { edit?: string }) {
             <h3 className="font-bold mb-6 text-sm uppercase tracking-wide">Category & Sub - category</h3>
             <div className="space-y-4 mb-10">
               <div className="relative">
-                <select className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3.5 text-sm appearance-none focus:outline-none focus:border-green-200 cursor-pointer font-medium focus:bg-[#f2f5f3] focus-within:border-green-200 transition-colors">
+                <select value={productType} onChange={(e) => setProductType(e.target.value as ProductType)} className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3.5 text-sm appearance-none focus:outline-none focus:border-green-200 cursor-pointer font-medium focus:bg-[#f2f5f3] focus-within:border-green-200 transition-colors">
                   <option value="" disabled >Select product category</option>
-                  <option>E-Bikes</option>
+                  <option value="ebikes">E-Bikes</option>
+                  <option value="accessories">Accessories</option>
+                  <option value="enhancements">Enhancements</option>
                 </select>
                 <KeyboardArrowDownOutlinedIcon className="absolute right-4 top-4 text-gray-400 pointer-events-none" fontSize="small" />
               </div>
               <div className="relative">
                 <select className="w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3.5 text-sm appearance-none focus:outline-none focus:border-green-200 cursor-pointer font-medium focus:bg-[#f2f5f3] focus:border-green-200 transition-colors">
-                  <option value="" disabled >Select product sub-category</option>
-                  <option>Urban Cruisers</option>
+                  {subCategories(productType).map((sub) => (
+                    // <option value="" disabled >Select product sub-category</option>
+                    <option key={sub} value={sub}>{sub?.toUpperCase()}</option>
+                  ))}
                 </select>
                 <KeyboardArrowDownOutlinedIcon className="absolute right-4 top-4 text-gray-400 pointer-events-none" fontSize="small" />
               </div>
@@ -285,3 +363,203 @@ export default function EditProductPage({ edit }: { edit?: string }) {
     </div>
   );
 }
+// "export const createEbike = asyncHandler(
+//   async (req: Request, res: Response) => {
+//     const parsed = createEbikeSchema.safeParse(req.body);
+
+//     if (!parsed.success) {
+//       throw new AppError(
+//         "Invalid request data",
+//         400,
+//         JSON.stringify(parsed.error.flatten()),
+//       );
+//     }
+
+//     if (!req?.files || !req?.files.length) {
+//       throw new AppError("At least one image is required", 400);
+//     }
+
+//     const ebike = await createEbikeService(parsed.data, req?.files as Express.Multer.File[]);
+
+//     return res.status(201).json({
+//       success: true,
+//       message:
+//         "Ebike created successfully",
+//       data: ebike,
+//     });
+//   }
+// );"   "export const createEbikeService = async (
+//   data: CreateEbikeInput,
+//   files: Express.Multer.File[]
+// ) => {
+
+//   let images: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
+
+//   if (files?.length) {
+//     const uploads = await uploadImages(files, "ebikes");
+
+//     images = uploads.map(formatCloudinaryMedia);
+//   }
+
+//   return Ebike.create({
+//     ...data,
+//     images
+//   });
+
+// };"   here is the schema file" import {
+//   Schema,
+//   model,
+//   InferSchemaType,
+// } from "mongoose";
+
+// import {
+//     productColorSchema,
+//     productFeatureSchema,
+//     mediaSchema,
+//     productSpecSchema,
+//     productVariantSchema
+// } from "./schemas/product";
+// import { EBIKE_CATEGORIES } from "../types/ebike";
+
+// const ebikeSchema = new Schema(
+//   {
+//     name: {
+//       type: String,
+//       required: true,
+//       trim: true,
+//       maxlength: 150,
+//     },
+
+//     description: {
+//       type: String,
+//       required: true,
+//     },
+
+//     shortDescription: {
+//       type: String,
+//       required: true,
+//       maxlength: 300,
+//     },
+
+//     images: {
+//       type: [mediaSchema],
+//       default: [],
+//     },
+
+//     price: {
+//       type: Number,
+//       required: true,
+//       min: 0,
+//       index: true,
+//     },
+
+//     discountPrice: {
+//       type: Number,
+//       min: 0,
+//     },
+
+//     shippingDuration: String,
+//     category: {
+//       type: String,
+//       enum: EBIKE_CATEGORIES,
+//       required: true,
+//       index: true,
+//     },
+
+//     stock: {
+//       type: Number,
+//       default: 0,
+//       min: 0,
+//     },
+
+//     inventoryStatus: {
+//       type: String,
+//       enum: [
+//         "in-stock",
+//         "low-stock",
+//         "out-of-stock",
+//       ],
+//       default: "in-stock",
+//     },
+
+//     averageRating: {
+//       type: Number,
+//       default: 0,
+//     },
+
+//     reviewCount: {
+//       type: Number,
+//       default: 0,
+//     },
+
+//     badge: String,
+
+//     isFeatured: {
+//       type: Boolean,
+//       default: false,
+//       index: true,
+//     },
+
+//     isNewArrival: {
+//       type: Boolean,
+//       default: false,
+//       index: true,
+//     },
+//     specs: productSpecSchema,
+
+//     video: {
+//       url: {
+//         type: String,
+//         default: null,
+//       },
+//     },
+//     colors: {
+//       type: [productColorSchema],
+//       default: [],
+//     },
+
+//     batteryOptions: [
+//       {
+//         label: String,
+//       },
+//     ],
+
+//     variants: {
+//       type: [productVariantSchema],
+//       default: [],
+//     },
+//     features: {
+//       type: [productFeatureSchema],
+//       default: [],
+//     },
+
+//     isActive: {
+//       type: Boolean,
+//       default: true,
+//       index: true,
+//     },
+//   },
+//   {
+//     timestamps: true,
+//   }
+// );
+
+// export type EbikeDocument =
+//   InferSchemaType<typeof ebikeSchema>;
+
+// export const Ebike = model("Ebike",ebikeSchema);"  "export const mediaSchema = new Schema(
+//   {
+//     public_id: {
+//       type: String,
+//       required: true,
+//     },
+
+//     secure_url: {
+//       type: String,
+//       required: true,
+//     },
+//   },
+//   {
+//     _id: false,
+//   }
+// );""

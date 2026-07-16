@@ -14,26 +14,31 @@ import {
   getEnhancement,
 } from "../services/enhancement.service";
 import { Enhancement } from "../types/product";
-import { Filters } from "../types/ebikes";
-import { useRouter, useSearchParams } from "next/navigation";
+import { ProductFilters } from "../types/ebikes";
 
 interface LoadingState {
   enhancement: boolean;
   enhancements: boolean;
 }
 
+interface PaginationState {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 interface EnhancementContextType {
   enhancement: Enhancement | null;
   enhancements: Enhancement[];
   loading: LoadingState;
+  pagination: PaginationState;
   error: string | null;
   discountPercentage: number;
   fetchEnhancement: (
     enhancementId: string
   ) => Promise<void>;
-  fetchEnhancements: () => Promise<void>;
-  applyFilters: (filters: Partial<Filters>) => void;
-  filters: Filters;
+  fetchEnhancements: (filters?: Partial<ProductFilters>) => Promise<void>;
 }
 
 const EnhancementContext =
@@ -45,15 +50,22 @@ export function EnhancementProvider({
   children: ReactNode;
 }) {
   const [enhancement, setEnhancement] = useState<Enhancement | null>(null);
+
   const [enhancements, setEnhancements] = useState<Enhancement[]>([]);
+
+  const [pagination, setPagination] =
+    useState<PaginationState>({
+      total: 0,
+      page: 1,
+      limit: 10,
+      totalPages: 1,
+    });
+
   const [loading, setLoading] = useState<LoadingState>({
     enhancement: true,
     enhancements: true,
   });
   const [error, setError] = useState<string | null>(null);
-  const searchParams = useSearchParams();
-  const query = searchParams.toString();
-  const router = useRouter();
 
   const setLoadingState = useCallback(
     (
@@ -68,45 +80,8 @@ export function EnhancementProvider({
     [],
   );
 
-  const filters = useMemo<Filters>(() => ({
-    total: searchParams.get("total") ? Number(searchParams.get("total")) : undefined,
-
-    page: searchParams.get("page") ? Number(searchParams.get("page")) : undefined,
-
-    limit: searchParams.get("limit") ? Number(searchParams.get("limit")) : undefined,
-
-    totalPages: searchParams.get("totalPages") ? Number(searchParams.get("totalPages")) : undefined,
-
-  }), [searchParams])
-
-  const applyFilters = useCallback(
-    (filters: Partial<Filters>) => {
-      const params = new URLSearchParams(query);
-
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value === undefined || value === "") {
-          params.delete(key);
-        } else {
-          params.set(key, String(value));
-        }
-      });
-
-      const nextQuery = params.toString();
-
-      if (nextQuery === query) return;
-
-      router.replace(
-        nextQuery
-          ? `/enhancements?${nextQuery}`
-          : "/enhancements",
-        { scroll: false }
-      );
-    },
-    [router, query]
-  );
-
   const fetchEnhancements = useCallback(
-    async (queryFilters?: Filters) => {
+    async (filters?: Partial<ProductFilters>) => {
       try {
         setLoadingState(
           "enhancements",
@@ -116,12 +91,19 @@ export function EnhancementProvider({
         setError(null);
 
         const response =
-          await getAllEnhancements(queryFilters);
+          await getAllEnhancements(filters);
 
         setEnhancements(
-          response?.enhancements ?? [],
+          response?.enhancements,
         );
 
+        setPagination({
+          total: response.total,
+          page: response.page,
+          limit: response.limit,
+          totalPages:
+            response.totalPages,
+        });
 
       } catch (error) {
         console.error(error);
@@ -180,8 +162,8 @@ export function EnhancementProvider({
 
 
   useEffect(() => {
-    fetchEnhancements(filters);
-  }, [fetchEnhancements, filters]);
+    fetchEnhancements();
+  }, [fetchEnhancements]);
 
 
   const discountPercentage =
@@ -209,10 +191,9 @@ export function EnhancementProvider({
       enhancements,
       loading,
       error,
+      pagination,
       fetchEnhancement,
       fetchEnhancements,
-      applyFilters,
-      filters,
       discountPercentage,
     }),
     [
@@ -220,10 +201,9 @@ export function EnhancementProvider({
       enhancements,
       loading,
       error,
+      pagination,
       fetchEnhancement,
       fetchEnhancements,
-      applyFilters,
-      filters,
       discountPercentage,
     ],
   );

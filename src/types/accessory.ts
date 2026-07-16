@@ -1,8 +1,13 @@
-import { Pagination } from "./api";
 import { Accessories } from "./product";
 
 export interface GetAccessoryResponse {
   success: boolean;
+  message?: string;
+
   accessories: Accessories[];
-  pagination: Pagination;
+
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }

@@ -43,7 +43,7 @@ export const accessories = [
 
 export const ebikeFilters = {
   name: "Ebikes",
-  categories: [
+  category: [
     { id: "all", name: "All", count: 200 },
     { id: "cruisers", name: "Cruisers", count: 50 },
     { id: "commuters", name: "Commuters", count: 40 },
@@ -54,9 +54,9 @@ export const ebikeFilters = {
     { id: "ride-share", name: "Ride Share", count: 10 },
   ],
 
-  availability: [
+  inventoryStatus: [
     { id: "in-stock", label: "In stock" },
-    { id: "out-stock", label: "Out of stock" },
+    { id: "out-of-stock", label: "Out of stock" },
   ],
 
   products: [
@@ -65,17 +65,16 @@ export const ebikeFilters = {
     { id: "enhancements", label: "Ebike Enhancements" },
   ],
 
-  price: {
-    min: 0,
-    max: 500000,
-  },
+
+  minPrice: 0,
+  maxPrice: 5000000,
 };
 
 
 
 export const accessoryFilters = {
   name: "Accessories",
-  categories: [
+  category: [
     { id: "all", name: "All", count: 230 },
     { id: "light", name: "Lights", count: 10 },
     { id: "carrier-bags", name: "Carrier bags", count: 20 },
@@ -93,9 +92,9 @@ export const accessoryFilters = {
     { id: "regenerative-kits", name: "Regenerative kits", count: 12 },
   ],
 
-  availability: [
+  inventoryStatus: [
     { id: "in-stock", label: "In stock" },
-    { id: "out-stock", label: "Out of stock" },
+    { id: "out-of-stock", label: "Out of stock" },
   ],
 
   products: [
@@ -104,16 +103,15 @@ export const accessoryFilters = {
     { id: "enhancements", label: "Ebike Enhancements" },
   ],
 
-  price: {
-    min: 0,
-    max: 500000,
-  },
+
+  minPrice: 0,
+  maxPrice: 5000000,
 };
 
 
 export const enhancementFilters = {
   name: "Enhancements",
-  categories: [
+  category: [
     { id: "all", name: "All", count: 230 },
     { id: "performance", name: "Performance", count: 10 },
     { id: "comfort", name: "Comfort", count: 20 },
@@ -123,9 +121,9 @@ export const enhancementFilters = {
     { id: "style", name: "Style", count: 15 },
   ],
 
-  availability: [
+  inventoryStatus: [
     { id: "in-stock", label: "In stock" },
-    { id: "out-stock", label: "Out of stock" },
+    { id: "out-of-stock", label: "Out of stock" },
   ],
 
   products: [
@@ -133,11 +131,8 @@ export const enhancementFilters = {
     { id: "accessories", label: "Ebike Accessories" },
     { id: "enhancements", label: "Ebike Enhancements" },
   ],
-
-  price: {
-    min: 0,
-    max: 500000,
-  },
+  minPrice: 0,
+  maxPrice: 5000000,
 };
 
 

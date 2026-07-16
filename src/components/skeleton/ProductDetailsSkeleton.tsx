@@ -99,13 +99,13 @@ export default function ProductDetailsSkeleton() {
           </div>
 
           {/* Variants */}
-          <div className="mt-8 grid gap-4">
+          <div className="mt-8 flex gap-4">
             {Array.from({ length: 2 }).map((_, i) => (
               <div
                 key={i}
                 className="flex items-center gap-4 rounded-xl border border-gray-200 p-4"
               >
-                <Skeleton className="h-20 w-20 rounded-lg" />
+                <Skeleton className="h-16 w-40 rounded-lg" />
 
                 <div className="flex-1 space-y-2">
                   <Skeleton className="h-5 w-32" />

@@ -49,13 +49,13 @@ export default function RootLayout({
                 <ConfirmProvider>
                   <CartProvider>
                     {children}
-                    <BackToTop />
                   </CartProvider>
                 </ConfirmProvider>
               </EnhancementProvider>
             </AccessoryProvider>
           </EbikeProvider>
         </AuthProvider>
+        <BackToTop />
       </body>
 
     </html>

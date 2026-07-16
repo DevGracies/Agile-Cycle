@@ -85,7 +85,7 @@ export const getAccessoriesService = async (
 ) => {
   const {
     page = "1",
-    limit = "12",
+    limit = "10",
 
     category,
 
@@ -99,7 +99,7 @@ export const getAccessoriesService = async (
 
     search,
 
-    sort,
+    sort="newest",
   } = query;
 
   const filters: Record<string, any> = {
@@ -187,15 +187,12 @@ export const getAccessoriesService = async (
       };
   }
 
-  const pageNumber =
-    Number(page);
+  const pageNumber = Math.max(1, Number(page) || 1);
 
-  const limitNumber =
-    Number(limit);
+  const limitNumber = Math.max(1, Number(limit) || 10);
 
   const skip =
-    (pageNumber - 1) *
-    limitNumber;
+    (pageNumber - 1) * limitNumber;
 
   const [accessories, total] = await Promise.all([
     Accessory.find(filters)
@@ -212,14 +209,12 @@ export const getAccessoriesService = async (
   return {
     accessories,
 
-    pagination: {
-      total,
-      page: pageNumber,
-      limit: limitNumber,
-      totalPages: Math.ceil(
-        total / limitNumber
-      ),
-    },
+    total,
+    page: pageNumber,
+    limit: limitNumber,
+    totalPages: Math.ceil(
+      total / limitNumber
+    ),
   };
 };
 

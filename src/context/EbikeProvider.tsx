@@ -9,7 +9,6 @@ import {
   useMemo,
   useState,
 } from "react";
-import toast from "react-hot-toast";
 
 import {
   getAllEbikes,
@@ -22,26 +21,52 @@ import {
   Enhancement,
 } from "../types/product";
 
+import {
+  ProductFilters,
+} from "../types/ebikes";
+
 interface LoadingState {
   ebike: boolean;
   ebikes: boolean;
 }
 
+interface PaginationState {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 interface EbikeContextType {
   ebike: Ebike | null;
+
   ebikes: Ebike[];
-  compatibleAccessories: Accessories[];
-  compatibleEnhancements: Enhancement[];
+
   loading: LoadingState;
+
   error: string | null;
+
+  pagination: PaginationState;
+
+  compatibleAccessories: Accessories[];
+
+  compatibleEnhancements: Enhancement[];
+
+  fetchEbike: (
+    ebikeId: string,
+  ) => Promise<void>;
+
+  fetchEbikes: (
+    filters?: Partial<ProductFilters>,
+  ) => Promise<void>;
+
   discountPercentage: number;
-  fetchEbike: (ebikeId: string) => Promise<void>;
-  fetchEbikes: () => Promise<void>;
 }
 
 const EbikeContext =
-  createContext<EbikeContextType | null>(null);
-
+  createContext<EbikeContextType | null>(
+    null,
+  );
 
 export function EbikeProvider({
   children,
@@ -64,6 +89,14 @@ export function EbikeProvider({
     setCompatibleEnhancements,
   ] = useState<Enhancement[]>([]);
 
+  const [pagination, setPagination] =
+    useState<PaginationState>({
+      total: 0,
+      page: 1,
+      limit: 10,
+      totalPages: 1,
+    });
+
   const [loading, setLoading] =
     useState<LoadingState>({
       ebike: true,
@@ -73,51 +106,68 @@ export function EbikeProvider({
   const [error, setError] =
     useState<string | null>(null);
 
+  const setLoadingState =
+    useCallback(
+      (
+        key: keyof LoadingState,
+        value: boolean,
+      ) => {
+        setLoading((prev) => ({
+          ...prev,
+          [key]: value,
+        }));
+      },
+      [],
+    );
 
-  const setLoadingState = useCallback(
-    (
-      key: keyof LoadingState,
-      value: boolean,
-    ) => {
-      setLoading((prev) => ({
-        ...prev,
-        [key]: value,
-      }));
-    },
-    [],
-  );
+  // Fetch list
+  const fetchEbikes =
+    useCallback(
+      async (filters?: Partial<ProductFilters>) => {
+        try {
+          setLoadingState(
+            "ebikes",
+            true,
+          );
+
+          setError(null);
+
+          const response =
+            await getAllEbikes(
+              filters,
+            );
+
+          setEbikes(
+            response.ebikes,
+          );
+
+          setPagination({
+            total: response.total,
+            page: response.page,
+            limit: response.limit,
+            totalPages:
+              response.totalPages,
+          });
+        } catch (error) {
+          console.error(error);
+
+          setError(
+            "Failed to fetch ebikes",
+          );
+        } finally {
+          setLoadingState(
+            "ebikes",
+            false,
+          );
+        }
+      },
+      [setLoadingState],
+    );
 
 
-  const fetchEbikes = useCallback(async () => {
-    try {
-      setLoadingState("ebikes", true);
-      setError(null);
-
-      const response =
-        await getAllEbikes();
-
-      setEbikes(
-        response?.ebikes ?? [],
-      );
-
-    } catch (error) {
-      console.error(error);
-
-      setError(
-        "Failed to fetch ebikes",
-      );
-
-    } finally {
-      setLoadingState(
-        "ebikes",
-        false,
-      );
-    }
-  }, [setLoadingState]);
-
-
-  const fetchEbike = useCallback(
-    async (ebikeId: string) => {
+  // Fetch single product
+  const fetchEbike =
+    useCallback(async (ebikeId: string) => {
       try {
         setLoadingState(
           "ebike",
@@ -126,29 +176,34 @@ export function EbikeProvider({
 
         setError(null);
 
-        const response = await getEbike(ebikeId);
+        const response =
+          await getEbike(
+            ebikeId,
+          );
 
-        const data = response.data;
+        const data =
+          response.data;
 
         setEbike(
-          data?.ebike ?? null,
+          data?.ebike ??
+          null,
         );
 
         setCompatibleAccessories(
-          data?.compatibleAccessories ?? [],
+          data?.compatibleAccessories ??
+          [],
         );
 
         setCompatibleEnhancements(
-          data?.compatibleEnhancements ?? [],
+          data?.compatibleEnhancements ??
+          [],
         );
-
       } catch (error) {
         console.error(error);
 
         setError(
           "Failed to load ebike",
         );
-
       } finally {
         setLoadingState(
           "ebike",
@@ -156,67 +211,77 @@ export function EbikeProvider({
         );
       }
     },
-    [setLoadingState],
-  );
+      [setLoadingState],
+    );
 
 
+  // Initial fetch
   useEffect(() => {
     fetchEbikes();
   }, [fetchEbikes]);
-
 
   const discountPercentage =
     useMemo(() => {
       if (
         !ebike?.discountPrice ||
-        ebike.discountPrice <= ebike.price
+        ebike.discountPrice <=
+        ebike.price
       ) {
         return 0;
       }
 
       return Math.round(
-        (
-          (ebike.price -
-            ebike.discountPrice) /
-          ebike.discountPrice
-        ) * 100,
+        ((ebike.price -
+          ebike.discountPrice) /
+          ebike.price) *
+        100,
       );
     }, [ebike]);
-
 
   const value = useMemo(
     () => ({
       ebike,
+
       ebikes,
+
       loading,
+
       error,
-      fetchEbike,
-      fetchEbikes,
-      discountPercentage,
+
+      pagination,
+
       compatibleAccessories,
+
       compatibleEnhancements,
+
+      fetchEbike,
+
+      fetchEbikes,
+
+      discountPercentage,
     }),
     [
       ebike,
       ebikes,
       loading,
       error,
+      pagination,
+      compatibleAccessories,
+      compatibleEnhancements,
       fetchEbike,
       fetchEbikes,
       discountPercentage,
-      compatibleAccessories,
-      compatibleEnhancements,
     ],
   );
 
-
   return (
-    <EbikeContext.Provider value={value}>
+    <EbikeContext.Provider
+      value={value}
+    >
       {children}
     </EbikeContext.Provider>
   );
 }
-
 
 export function useEbike() {
   const context =

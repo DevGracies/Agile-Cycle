@@ -3,9 +3,10 @@ import { Pagination } from "../../dashboard/common/Dashboard";
 interface Props {
   currentPage: number;
   totalPages: number;
-  start: number;
-  end: number;
-  totalItems: number;
+  start?: number;
+  end?: number;
+  onPageChange: (page: number) => void
+  totalItems?: number;
 }
 
 export default function PaginationFooter({
@@ -13,13 +14,14 @@ export default function PaginationFooter({
   totalPages,
   start,
   end,
+  onPageChange,
   totalItems,
 }: Props) {
   return (
     <div className="flex flex-col md:grid grid-cols-4 items-center justify-between gap-6 rounded-xl bg-white p-5">
       <div className="md:ml-60 col-span-3 flex items-center justify-center gap-4">
         <Pagination
-          // setCurrentPage={(prev: number) => 1}
+          setCurrentPage={onPageChange}
           totalPages={totalPages}
           currentPage={currentPage}
         />

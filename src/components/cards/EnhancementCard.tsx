@@ -54,7 +54,7 @@ const EnhancementCard = ({ enhancement }: ProductCardProps) => {
         </div>
 
         {/* ACTIONS */}
-        <ProductActions product={enhancement} card type="enhancement" />
+        <ProductActions product={enhancement} card type="enhancements" />
       </div>
     </div>
   );

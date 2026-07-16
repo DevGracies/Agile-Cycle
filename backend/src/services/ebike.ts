@@ -169,7 +169,7 @@ export const getEbikesService = async (
 ) => {
   const {
     page = "1",
-    limit = "12",
+    limit = "10",
 
     category,
 
@@ -183,7 +183,7 @@ export const getEbikesService = async (
 
     search,
 
-    sort,
+    sort = "newest",
   } = query;
 
   const filters: Record<string, any> = {
@@ -271,15 +271,12 @@ export const getEbikesService = async (
       };
   }
 
-  const pageNumber =
-    Number(page);
+  const pageNumber = Math.max(1, Number(page) || 1);
 
-  const limitNumber =
-    Number(limit);
+  const limitNumber = Math.max(1, Number(limit) || 10);
 
   const skip =
-    (pageNumber - 1) *
-    limitNumber;
+    (pageNumber - 1) * limitNumber;
 
   const [ebikes, total] = await Promise.all([
     Ebike.find(filters)
@@ -296,13 +293,11 @@ export const getEbikesService = async (
   return {
     ebikes,
 
-    pagination: {
-      total,
-      page: pageNumber,
-      limit: limitNumber,
-      totalPages: Math.ceil(
-        total / limitNumber
-      ),
-    },
+    total,
+    page: pageNumber,
+    limit: limitNumber,
+    totalPages: Math.ceil(
+      total / limitNumber
+    ),
   };
 };

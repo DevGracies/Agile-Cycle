@@ -42,7 +42,7 @@ export default function EbikeDetailsPage() {
   return (
     <main className="bg-[#f8f8f8] min-h-screen py-24 space-y-20">
       <Container>
-        <BreadCrumbs product={ebike} />
+        <BreadCrumbs product={ebike as Ebike} />
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-6">
           <ProductGallery product={ebike as Ebike} />

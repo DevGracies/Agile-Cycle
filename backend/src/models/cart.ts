@@ -5,17 +5,17 @@ import {
 } from "mongoose";
 
 export const PRODUCT_TYPES = [
-  "ebike",
-  "accessory",
-  "enhancement",
+  "ebikes",
+  "accessories",
+  "enhancements",
 ] as const;
 
 export type ProductType = (typeof PRODUCT_TYPES)[number];
 
 const MODEL_MAP: Record<ProductType, string> = {
-  ebike: "Ebike",
-  accessory: "Accessory",
-  enhancement: "Enhancement",
+  ebikes: "Ebike",
+  accessories: "Accessory",
+  enhancements: "Enhancement",
 };
 
 const cartItemSchema = new Schema(

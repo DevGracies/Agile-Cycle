@@ -175,7 +175,7 @@ export const setUpCyclingExperience = asyncHandler(
         await setUpCyclingExperienceService(userId, req.body)
         return res.status(200).json({
             success: true,
-            message: "User cycling experience data successful"
+            message: "User cycling experience data set up successful"
         })
     }
 )
@@ -201,7 +201,16 @@ export const toggleSubscribeToNewsLetter = asyncHandler(
 export const subscribe = asyncHandler(
     async (req: Request, res: Response) => {
 
-        const { email } = newsletterSchema.parse(req.body);
+        const parsed = newsletterSchema.safeParse(req.body);
+        if (!parsed.success) {
+        throw new AppError(
+            JSON.stringify(parsed.error.format()),
+            400,
+            "Invalid email address",
+        );
+      }
+
+      const { email } = parsed.data;
         await subscribeToNewsletter(email);
 
         return res.status(200).json({
@@ -214,8 +223,17 @@ export const subscribe = asyncHandler(
 export const unsubscribe = asyncHandler(
     async (req: Request, res: Response) => {
 
-        const { email } = newsletterSchema.parse(req.body);
+        const parsed = newsletterSchema.safeParse(req.body);
 
+        if (!parsed.success) {
+            throw new AppError(
+                JSON.stringify(parsed.error.format()),
+                400,
+                "Invalid email address",
+            );
+        }
+
+        const { email } = parsed.data;
         await unSubscribeToNewsletter(email);
 
         return res.status(200).json({
@@ -228,8 +246,16 @@ export const unsubscribe = asyncHandler(
 export const getSubscribers = asyncHandler(
     async (req: Request, res: Response) => {
 
-        const query = newsletterQuerySchema.parse(req.query);
-        const result = await getNewsletterSubscribers(query);
+        const parsedQuery = newsletterQuerySchema.safeParse(req.query);
+
+        if (!parsedQuery.success) {
+            throw new AppError(
+                JSON.stringify(parsedQuery.error.format()),
+                400,
+                "Invalid query parameters",
+            );
+        }
+        const result = await getNewsletterSubscribers(parsedQuery.data);
 
         return res.status(200).json({
             success: true,

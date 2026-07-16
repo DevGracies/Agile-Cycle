@@ -1,8 +1,13 @@
-import { Pagination } from "./api";
 import { Enhancement } from "./product";
 
 export interface GetEnhancementResponse {
   success: boolean;
+  message?: string;
+
   enhancements: Enhancement[];
-  pagination: Pagination;
+
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }

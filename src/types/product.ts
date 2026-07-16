@@ -9,9 +9,8 @@ export type InventoryStatus =
   | "out-of-stock";
 
 export interface ProductImage {
-  _id: string;
-  url: string;
-  alt: string;
+  public_id?: string;
+  secure_url: string;
 }
 
 export interface ProductColor {

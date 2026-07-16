@@ -1,7 +1,7 @@
 import { ApiResponse } from "../types/api";
 import { api } from "./api.service";
 
-export type ProductType = "ebike" | "accessory" | "enhancement";
+export type ProductType = "ebikes" | "accessories" | "enhancements";
 
 
 export interface CartItem {

@@ -65,7 +65,7 @@ export const getAllEbikes =
 
       return res.status(200).json({
         success: true,
-        messsage: "Ebikes fetched successfully",
+        message: "Ebikes fetched successfully",
         ...result,
       });
     }
