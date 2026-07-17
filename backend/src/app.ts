@@ -14,6 +14,7 @@ import enhancementRouter from "./routes/enhancement"
 import featuredProductsRouter from "./routes/featured-products";
 import orderRouter from "./routes/order"
 import cartRouter from "./routes/cart"
+import blogRouter from "./routes/blog"
 
 // Connect to database
 connectDB();
@@ -37,6 +38,7 @@ app.use("/api/enhancements", enhancementRouter);
 app.use("/api/featured-products", featuredProductsRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/blog", blogRouter);
 
 app.use(errorHandler);
 

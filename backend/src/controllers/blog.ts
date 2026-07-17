@@ -8,7 +8,7 @@ import { Comment } from "../models/comment";
 import { BlogView } from "../models/view";
 
 
-export const createBlog = asyncHandler(async (req: Request, res: Response) => {
+export const createBlog = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     if (!req.user) {
         throw new AppError("User not found", 404);
     }

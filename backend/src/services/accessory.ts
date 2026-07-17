@@ -99,7 +99,7 @@ export const getAccessoriesService = async (
 
     search,
 
-    sort="newest",
+    sort = "newest",
   } = query;
 
   const filters: Record<string, any> = {
@@ -140,7 +140,10 @@ export const getAccessoriesService = async (
     ];
   }
 
-  if (minPrice || maxPrice) {
+  if (
+    minPrice !== undefined ||
+    maxPrice !== undefined
+  ) {
     const priceFilter: Record<string, number> = {};
 
     if (minPrice) {
@@ -194,7 +197,7 @@ export const getAccessoriesService = async (
   const skip =
     (pageNumber - 1) * limitNumber;
 
-  const [accessories, total] = await Promise.all([
+  const [accessories, total, categoryCounts] = await Promise.all([
     Accessory.find(filters)
       .sort(sortOption)
       .skip(skip)
@@ -204,17 +207,33 @@ export const getAccessoriesService = async (
     Accessory.countDocuments(
       filters
     ),
+    Accessory.aggregate([
+      {
+        $match: {
+          isActive: true
+        }
+      },
+
+      {
+        $group: {
+          _id: "$category",
+          count: {
+            $sum: 1
+          }
+        }
+      }
+    ])
   ]);
 
   return {
     accessories,
-
     total,
     page: pageNumber,
     limit: limitNumber,
     totalPages: Math.ceil(
       total / limitNumber
     ),
+    categoryCounts,
   };
 };
 

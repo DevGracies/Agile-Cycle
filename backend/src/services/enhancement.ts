@@ -140,7 +140,10 @@ export const getAllEnhancementsService = async (
     ];
   }
 
-  if (minPrice || maxPrice) {
+  if (
+    minPrice !== undefined ||
+    maxPrice !== undefined
+  ) {
     const priceFilter: Record<string, number> = {};
 
     if (minPrice) {
@@ -194,7 +197,7 @@ export const getAllEnhancementsService = async (
   const skip =
     (pageNumber - 1) * limitNumber;
 
-  const [enhancements, total] = await Promise.all([
+  const [enhancements, total, categoryCounts] = await Promise.all([
     Enhancement.find(filters)
       .sort(sortOption)
       .skip(skip)
@@ -204,17 +207,33 @@ export const getAllEnhancementsService = async (
     Enhancement.countDocuments(
       filters
     ),
+    Enhancement.aggregate([
+      {
+        $match: {
+          isActive: true
+        }
+      },
+
+      {
+        $group: {
+          _id: "$category",
+          count: {
+            $sum: 1
+          }
+        }
+      }
+    ])
   ]);
 
   return {
     enhancements,
-
     total,
     page: pageNumber,
     limit: limitNumber,
     totalPages: Math.ceil(
       total / limitNumber
     ),
+    categoryCounts
   };
 };
 

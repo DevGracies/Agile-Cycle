@@ -34,7 +34,7 @@ export const allRoles = Object.values(roles);
 
 
 export const PRODUCT_MODELS: Record<ProductType, Model<any>> = {
-  ebike: Ebike,
-  accessory: Accessory,
-  enhancement: Enhancement,
+  ebikes: Ebike,
+  accessories: Accessory,
+  enhancements: Enhancement,
 };

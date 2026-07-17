@@ -224,7 +224,10 @@ export const getEbikesService = async (
     ];
   }
 
-  if (minPrice || maxPrice) {
+  if (
+    minPrice !== undefined ||
+    maxPrice !== undefined
+  ) {
     const priceFilter: Record<string, number> = {};
 
     if (minPrice) {
@@ -278,7 +281,7 @@ export const getEbikesService = async (
   const skip =
     (pageNumber - 1) * limitNumber;
 
-  const [ebikes, total] = await Promise.all([
+  const [ebikes, total, categoryCounts] = await Promise.all([
     Ebike.find(filters)
       .sort(sortOption)
       .skip(skip)
@@ -288,16 +291,32 @@ export const getEbikesService = async (
     Ebike.countDocuments(
       filters
     ),
+    Ebike.aggregate([
+      {
+        $match: {
+          isActive: true
+        }
+      },
+
+      {
+        $group: {
+          _id: "$category",
+          count: {
+            $sum: 1
+          }
+        }
+      }
+    ])
   ]);
 
-  return {
-    ebikes,
-
-    total,
-    page: pageNumber,
-    limit: limitNumber,
-    totalPages: Math.ceil(
-      total / limitNumber
-    ),
-  };
+return {
+  ebikes,
+  total,
+  page: pageNumber,
+  limit: limitNumber,
+  totalPages: Math.ceil(
+    total / limitNumber
+  ),
+  categoryCounts
+};
 };
