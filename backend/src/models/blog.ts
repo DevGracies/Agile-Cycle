@@ -17,6 +17,13 @@ const blogSchema = new Schema(
       maxlength: 200,
     },
 
+    description: {
+  type: String,
+  required: true,
+  trim: true,
+  maxlength: 250,
+},
+
     content: {
       type: String,
       required: true,

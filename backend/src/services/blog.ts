@@ -12,13 +12,15 @@ export const createBlog = async (data: any) => {
         status,
         authorId,
         image,
+        description,
     } = data;
 
 
     let uploadedImage;
 
     if (image) {
-        uploadedImage = await uploadImage(image.path, "blogs");
+        uploadedImage = await uploadImage(image, "blogs");
+        
     }
 
     return Blog.create({
@@ -26,6 +28,7 @@ export const createBlog = async (data: any) => {
         title,
         content,
         category,
+        description,
         status: status ?? "draft",
         publishedAt:
             status === "active"
@@ -42,80 +45,97 @@ export const createBlog = async (data: any) => {
 };
 
 // GET BLOGS (FILTER + PAGINATION)
+// GET BLOGS (FILTER + PAGINATION)
 export const getBlogs = async (query: any) => {
-    const {
-        page = 1,
-        limit = 10,
-        search,
-        category,
-        status,
-        sort = "newest",
-    } = query;
+  const {
+    page = 1,
+    limit = 10,
+    search,
+    category,
+    status,
+    sort = "newest",
+  } = query;
 
-    const filter: any = {};
+  const filter: any = {};
 
-    if (category) filter.category = category;
-    if (status) filter.status = status;
+  if (category) filter.category = category;
+  if (status) filter.status = status;
 
-    if (search) {
-        filter.$text = { $search: search };
-    }
+  if (search) {
+    filter.$text = { $search: search };
+  }
 
-    const sortOption: any =
-        sort === "oldest"
-            ? { createdAt: 1 }
-            : { createdAt: -1 };
+  const sortOption: any =
+  sort === "oldest"
+    ? { createdAt: 1 }
+    : { createdAt: -1 };
 
-    const skip = (Number(page) - 1) * Number(limit);
+  const skip = (Number(page) - 1) * Number(limit);
 
-    const [blogs, total] = await Promise.all([
-        Blog.find(filter)
-            .sort(sortOption)
-            .skip(skip)
-            .limit(Number(limit))
-            .select("-content")
-            .lean(),
+  const [blogs, total] = await Promise.all([
+    Blog.find(filter)
+      .populate("authorId", "name")
+  //  .populate("authorId", "firstName lastName")
+      .sort(sortOption)
+      .skip(skip)
+      .limit(Number(limit))
+      .select("-content")
+      .lean(),
 
-        Blog.countDocuments(filter),
-    ]);
+    Blog.countDocuments(filter),
+  ]);
 
-    return {
-        blogs,
-        pagination: {
-            total,
-            page: Number(page),
-            limit: Number(limit),
-            pages: Math.ceil(total / Number(limit)),
-        },
-    };
+  const formattedBlogs = blogs.map((blog) => {
+  const { authorId, ...rest } = blog;
+
+  return {
+    ...rest,
+    author: authorId,
+  };
+});
+
+return {
+  blogs: formattedBlogs,
+  pagination: {
+    total,
+    page: Number(page),
+    limit: Number(limit),
+    pages: Math.ceil(total / Number(limit)),
+  },
 };
+}
 
 // GET BLOG BY ID + INCREMENT VIEWS
 export const getBlog = async (blogId: string) => {
-    const [blog, comments] = await Promise.all([
-        Blog.findByIdAndUpdate(
-            blogId,
-            {
-                $inc: { "stats.views": 1 },
-            },
-            {
-                new: true,
-            }
-        ).lean(),
-        Comment.find({ blogId })
-    ])
+  const [blog, comments] = await Promise.all([
+    Blog.findByIdAndUpdate(
+      blogId,
+      {
+        $inc: { "stats.views": 1 },
+      },
+      {
+        new: true,
+      }
+    )
+      .populate("authorId", "name")
+      .lean(),
 
-    if (!blog) {
-        throw new AppError("Blog not found");
-    }
-    if (!comments.length) {
-        throw new AppError("Blog not found");
-    }
+    Comment.find({ blogId }),
+  ]);
 
-    return {
-        blog,
-        comments,
-    };
+  if (!blog) {
+    throw new AppError("Blog not found");
+  }
+
+  const { authorId, ...rest } = blog;
+
+return {
+  blog: {
+    ...rest,
+    author: authorId,
+  },
+  comments,
+};
 };
 
 // UPDATE BLOG

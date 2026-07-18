@@ -17,7 +17,7 @@ import enhancement5 from "@/public/enhancement/enhancement5.png"
 import enhancement6 from "@/public/enhancement/enhancement6.png"
 import { Product } from "../types/product"
 // import { Accessories, Enhancements, Product } from "../types"
-import { Insight} from "../types";
+import { Blog, Insight} from "../types";
 
 
 export const categories = [
@@ -459,15 +459,18 @@ export const enhancements: Product[] = [
 ]
 
 // Insights data for the Home Agile Cycle Shop section and blog page
-export const insights: Insight[] = [
+export const insights: Blog[] = [
   {
-    id: 1,
+    _id: "1",
     image: "/home/insight.png",
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
-    date: "January 22, 2026",
-    author: "Agile Cycle",
+    publishedAt: "January 22, 2026",
+    author: {
+      _id: "1",
+      name: "Agile Cycle"
+    },
     likes: 24,
     comments: 12,
 
@@ -562,13 +565,16 @@ export const insights: Insight[] = [
     ],
   },
   {
-    id: 2,
+    _id: "2",
     image: "/home/insight2.png",
     heroImage: "/home/blog2.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
-    date: "January 22, 2026",
-    author: "Agile Cycle",
+    publishedAt: "January 22, 2026",
+    author: {
+      name: "Agile Cycle",
+      _id: "1"
+    },
     likes: 24,
     comments: 12,
 
