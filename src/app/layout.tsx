@@ -10,6 +10,7 @@ import { AuthProvider } from "../context/AuthProvider";
 import { EbikeProvider } from "../context/EbikeProvider";
 import { AccessoryProvider } from "../context/AccessoryProvider";
 import { EnhancementProvider } from "../context/EnhancementProvider";
+import QueryProvider from "../providers/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +43,8 @@ export default function RootLayout({
       <body className={lexend.className}>
         <Toaster position="top-center" />
 
-        <AuthProvider>
+        <QueryProvider>
+          <AuthProvider>
           <EbikeProvider>
             <AccessoryProvider>
               <EnhancementProvider>
@@ -56,6 +58,7 @@ export default function RootLayout({
             </AccessoryProvider>
           </EbikeProvider>
         </AuthProvider>
+        </QueryProvider>
       </body>
 
     </html>

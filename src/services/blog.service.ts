@@ -5,6 +5,7 @@ import {
 } from "../mocks/index.mock";
 
 import {
+    BlogListResponse,
     BlogLog,
     BlogMetrics,
     BlogStatus,
@@ -131,7 +132,7 @@ export const blogService = {
         });
     },
 
-    // Create Blog
+  //  Create Blog
 
     async createBlog(
         blog: Omit<BlogLog, "id">,
@@ -155,6 +156,10 @@ export const blogService = {
             delay: 300,
         });
     },
+
+   
+
+
 
     // Update Blog
 
@@ -212,3 +217,4 @@ export const blogService = {
         return true;
     },
 };
+

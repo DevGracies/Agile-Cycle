@@ -1,8 +1,8 @@
-import Image from "next/image";
-import { notFound } from "next/navigation";
+"use client";
 
-import { insights } from "@/src/lib/data";
-import { Insight } from "@/src/types";
+import Image from "next/image";
+import { notFound, useParams } from "next/navigation";
+
 import CommentSection from "@/src/components/home/localShop/CommentSection";
 import commentsIcon from "@/public/home/comment.png";
 import like from "@/public/home/Like.png";
@@ -14,21 +14,26 @@ import twitterIcon from "@/public/home/Twitter.png";
 import leftArrowIcon from "@/public/home/Left-arrow.png";
 import rightArrowIcon from "@/public/home/Right-arrow.png";
 import CommentsTrigger from "@/src/components/home/localShop/CommentsTrigger";
+import { useBlog } from "@/src/hooks/useBlogUsers";
 
-interface PageProps {
-  params: Promise<{id: string;}>; 
+
+
+export default async function BlogDetailsPage() {
+  const { id } = useParams<{ id: string }>();
+
+const {
+  data: blog,
+  isLoading,
+  isError,
+} = useBlog(id);
+
+if (isLoading) {
+  return <div>Loading...</div>;
 }
 
-export default async function BlogDetailsPage({ params,}: PageProps) {
-  const { id } = await params;
-
-  const blog: Insight | undefined = insights.find(
-    (item) => item.id === Number(id)
-  );
-
-  if (!blog) {
-    notFound();
-  }
+if (isError || !blog) {
+  notFound();
+}
 
   return (
     // <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-[35px] pt-[20px] pb-[80px] bg-red-200"></main>
@@ -54,13 +59,13 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
       <div className="mt-[18px] flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-[14px] sm:text-[16px]">
         <div className="flex items-center gap-2">
           <span className="text-[#519A09]">
-          {blog.author}
+          {blog.author.name}
         </span>
 
         <span className="text-[#A3A3A3]">•</span>
 
         <span className="text-[#519A09]">
-          {blog.date}
+          {blog.publishedAt}
         </span>
         </div>
 
@@ -68,7 +73,7 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
          <span className="w-[2px] h-5 bg-gradient-to-b from-[#519A09] to-[#01430D]"></span>
           <img src={like.src} alt="Like" className="w-7 h-7" />
           <span className="text-[#519A09] ">
-            {blog.likes}
+            {blog.stats.likes}
           </span>
           <img src={unlike.src} alt="Unlike" className="w-5 h-5" />
         </div>
@@ -76,14 +81,14 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
 
       {/* Hero Image */}
       <div className="mt-[24px]">
-        <Image
-          src={blog.heroImage}
-          alt={blog.title}
-          width={1440}
-          height={700}
-          priority
-          className="w-full h-auto"
-        />
+       <Image
+  src={blog.image}
+  alt={blog.title}
+  width={1440}
+  height={700}
+  priority
+  className="w-full h-auto"
+/>
       </div>
 
       <div className="mx-auto max-w-[1100px] w-full">
@@ -104,10 +109,10 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
          </div>
 
         <CommentsTrigger
-          comments={blog.comments}
+          comments={blog.stats.comments}
           blogTitle={blog.title}
           icon={commentsIcon.src}
-          blogId={blog.id}
+          blogId={blog._id}
         />
       </div>
 

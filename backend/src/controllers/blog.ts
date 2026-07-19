@@ -8,7 +8,7 @@ import { Comment } from "../models/comment";
 import { BlogView } from "../models/view";
 
 
-export const createBlog = asyncHandler(async (req: Request, res: Response) => {
+export const createBlog = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     if (!req.user) {
         throw new AppError("User not found", 404);
     }
@@ -19,6 +19,12 @@ export const createBlog = asyncHandler(async (req: Request, res: Response) => {
         image: req.file,
     });
 
+//     const blog = await blogService.createBlog({
+//     ...req.body,
+//     authorId: req.body.authorId,
+//     image: req.file,
+// });
+
     return res.status(201).json({
         success: true,
         message: "Blog created successfully.",
@@ -27,13 +33,14 @@ export const createBlog = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
-    const blogs = await blogService.getBlogs(req.query);
+    const { blogs, pagination } = await blogService.getBlogs(req.query);
 
     return res.status(200).json({
         success: true,
         message: "Blogs fetched successfully.",
         blogs,
-    })
+        pagination,
+    });
 });
 
 export const getBlog = asyncHandler(async (req: Request, res: Response) => {

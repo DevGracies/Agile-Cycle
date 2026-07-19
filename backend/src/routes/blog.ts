@@ -8,15 +8,21 @@ const router = Router();
 //  Public
 router.get("/", blogController.getBlogs);
 router.get("/:id", blogController.getBlog);
+router.post(
+    "/",
+    authenticate,
+    upload.single("image"),
+    blogController.createBlog,
+);
 
 //  Protected
 router.use(authenticate, adminOnly);
 
-router.post(
-    "/",
-    upload.single("image"),
-    blogController.createBlog
-);
+// router.post(
+//     "/",
+//     upload.single("image"),
+//     blogController.createBlog
+// );
 
 router.patch(
     "/:id",

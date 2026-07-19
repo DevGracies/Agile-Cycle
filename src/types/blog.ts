@@ -58,3 +58,46 @@ export interface BlogMetrics {
   totalComments: number;
   totalVisitors: number;
 }
+
+// 
+// 
+// 
+export interface Blog {
+  _id: string;
+  authorId: string;
+
+  title: string;
+
+  image?: {
+    public_id: string;
+    secure_url: string;
+  };
+
+  category: string;
+
+  status: "active" | "inactive" | "archived";
+
+  publishedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+
+  stats: {
+    views: number;
+    likes: number;
+    comments: number;
+  };
+}
+
+export interface BlogListResponse {
+  success: boolean;
+  message: string;
+
+  blogs: Blog[];
+
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    pages: number;
+  };
+}
