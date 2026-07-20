@@ -51,55 +51,55 @@ export function getProductImage(product: Product): string {
   return "/fallback.png";
 }
 
-export const buildQueryParams = (
-  filters?: Partial<ProductFilters>
-) => {
-  const params = new URLSearchParams();
+  export const buildQueryParams = (
+    filters?: Partial<ProductFilters>
+  ) => {
+    const params = new URLSearchParams();
 
-  if (!filters) return params;
+    if (!filters) return params;
 
-  if (filters.page) {
-    params.set("page", String(filters.page));
-  }
+    if (filters.page) {
+      params.set("page", String(filters.page));
+    }
 
-  if (filters.productType) {
-    params.set("productType", String(filters.productType));
-  }
-  
-  if (filters.limit) {
-    params.set("limit", String(filters.limit));
-  }
+    if (filters.productType) {
+      params.set("productType", String(filters.productType));
+    }
+    
+    if (filters.limit) {
+      params.set("limit", String(filters.limit));
+    }
 
-  if (filters?.category && filters.category.length > 0) {
-    params.set(
-      "category",
-      filters.category[0]
-    );
-  }
+    if (filters?.category !== undefined) {
+      params.set(
+        "category",
+        filters.category
+      );
+    }
 
-  if (filters?.inventoryStatus && filters.inventoryStatus.length > 0) {
-    params.set(
-      "inventoryStatus",
-      filters.inventoryStatus
-    );
-  }
+    if (filters?.inventoryStatus && filters.inventoryStatus.length > 0) {
+      params.set(
+        "inventoryStatus",
+        filters.inventoryStatus
+      );
+    }
 
-  if (filters.minPrice !== undefined && Number(filters.minPrice) > 0) {
+    if (filters.minPrice !== undefined) {
     params.set(
       "minPrice",
       String(filters.minPrice)
     );
   }
 
-  if (filters.maxPrice !== undefined && Number(filters.maxPrice) > 0) {
+    if (filters.maxPrice !== undefined) {
     params.set(
       "maxPrice",
       String(filters.maxPrice)
     );
   }
 
-  return params;
-};
+    return params;
+  };
 
 
 export const ebikeImages = [

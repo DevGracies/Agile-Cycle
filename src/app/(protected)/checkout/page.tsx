@@ -29,9 +29,7 @@ export default function CheckoutPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [errors, setErrors] = useState<
-    Partial<Record<keyof CheckoutFormValues, string>>
-  >({});
+  const [errors, setErrors] = useState<Partial<Record<keyof CheckoutFormValues, string>>>({});
 
   const [formData, setFormData] = useState<CheckoutFormValues>({
     email: "example@gmail.com",

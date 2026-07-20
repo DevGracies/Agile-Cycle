@@ -12,6 +12,14 @@ export interface FilterOption {
   label: string;
 }
 
+export interface CategoryCount {
+
+ _id:string;
+
+ count:number;
+
+}
+
 export interface GetEbikesResponse {
   success: boolean;
   message?: string;
@@ -22,7 +30,9 @@ export interface GetEbikesResponse {
   page: number;
   limit: number;
   totalPages: number;
+  categoryCounts: CategoryCount[];
 }
+
 
 export interface GetEbikeResponse {
     ebike: Ebike,
@@ -53,7 +63,10 @@ export interface ProductFilters {
   category?: string;
   minPrice?: number;
   maxPrice?: number;
-  inventoryStatus?: string;
+  inventoryStatus?:
+    | "in-stock"
+    | "out-of-stock"
+    | "";
   featured?: string;
   newArrival?: string;
   search?: string;

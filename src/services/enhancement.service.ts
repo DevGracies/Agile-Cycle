@@ -6,31 +6,30 @@ import { api } from "./api.service";
 import { buildQueryParams } from "../utils/product";
 
 
-export const getAllEnhancements = async(filters?: Partial<ProductFilters>): Promise<GetEnhancementResponse> => {
+export const getAllEnhancements = async (filters?: Partial<ProductFilters>): Promise<GetEnhancementResponse> => {
     const params = buildQueryParams(filters);
-
     const { data } = await api.get(`/enhancements?${params.toString()}`);
-
     return data
 }
 
-export const getEnhancement = async(id: string): Promise<ApiResponse<Enhancement>> => {
+export const getEnhancement = async (id: string): Promise<ApiResponse<Enhancement>> => {
     const { data } = await api.get(`/enhancements/${id}`);
-
     return data;
 }
-export const createEnhancement = async(body: Partial<Enhancement>)=> {
-    const { data } = await api.post(`/enhancements`, body);
-    
+
+export const createEnhancement = async (formData: FormData) => {
+    const { data } = await api.post(
+        "/enhancements",
+        formData,
+    );
+    return data;
+};
+
+export const updateEnhancement = async (id: string, formData: FormData) => {
+    const { data } = await api.patch(`/enhancements/${id}`, formData);
     return data;
 }
-export const updateEnhancement = async(id: string, body: Partial<Enhancement>) => {
-    const { data } = await api.patch(`/enhancements/${id}`, body);
-
-    return data;
-}
-export const deleteEnhancement = async(id: string) => {
-    const { data } = await api.patch(`/enhancements/${id}`);
-
+export const deleteEnhancement = async (id: string) => {
+    const { data } = await api.patch(`/enhancements/${id}/delete`);
     return data;
 }

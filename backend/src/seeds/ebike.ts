@@ -12,12 +12,12 @@ export const ebikes = [
 
     images: [
       {
-        url: "https://images.unsplash.com/photo-1624243519828-52a0f2c88af3?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZWJpa2VzfGVufDB8fDB8fHww",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1624243519828-52a0f2c88af3?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZWJpa2VzfGVufDB8fDB8fHww",
+        public_id: "Ebike Image 1"
       },
       {
-        url: "https://images.unsplash.com/photo-1649878938553-1eaac5c27375?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZWJpa2VzfGVufDB8fDB8fHww",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1649878938553-1eaac5c27375?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZWJpa2VzfGVufDB8fDB8fHww",
+        public_id: "Ebike Image 2"
       },
     ],
 
@@ -58,7 +58,7 @@ export const ebikes = [
     },
 
     video: {
-      url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+      secure_url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
     },
 
     colors: [
@@ -148,12 +148,12 @@ export const ebikes = [
 
     images: [
       {
-        url: "https://images.unsplash.com/photo-1620801082287-d1913a342dce?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZWJpa2VzfGVufDB8fDB8fHww",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1620801082287-d1913a342dce?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZWJpa2VzfGVufDB8fDB8fHww",
+        public_id: "Ebike Image 3"
       },
       {
-        url: "https://images.unsplash.com/photo-1625304664697-30a254733647?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1625304664697-30a254733647?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Ebike Image 4"
       },
     ],
 
@@ -195,7 +195,7 @@ export const ebikes = [
     },
 
     video: {
-      url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+      secure_url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
     },
 
     colors: [
@@ -276,12 +276,12 @@ export const ebikes = [
 
     images: [
       {
-        url: "https://images.unsplash.com/photo-1622598473264-81a98f1c7be5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1622598473264-81a98f1c7be5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Ebike Image 5"
       },
       {
-        url: "https://plus.unsplash.com/premium_photo-1663091081411-e5e6005d1e13?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZWJpa2VzfGVufDB8fDB8fHww",
-        alt: "Accessory Image"
+        secure_url: "https://plus.unsplash.com/premium_photo-1663091081411-e5e6005d1e13?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZWJpa2VzfGVufDB8fDB8fHww",
+        public_id: "Ebike Image 6"
       },
     ],
 
@@ -323,7 +323,7 @@ export const ebikes = [
     },
 
     video: {
-      url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+      secure_url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
     },
 
     colors: [
@@ -400,12 +400,12 @@ export const ebikes = [
 
     images: [
       {
-        url: "https://images.unsplash.com/photo-1618987688327-dc0b28888fe4?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWJpa2VzfGVufDB8fDB8fHww",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1618987688327-dc0b28888fe4?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWJpa2VzfGVufDB8fDB8fHww",
+        public_id: "Ebike Image 7"
       },
       {
-        url: "https://images.unsplash.com/photo-1666360058702-a3aa07227c53?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1666360058702-a3aa07227c53?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Ebike Image 8"
       },
     ],
 
@@ -447,7 +447,7 @@ export const ebikes = [
     },
 
     video: {
-      url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+      secure_url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
     },
 
     colors: [
@@ -524,12 +524,12 @@ export const ebikes = [
 
     images: [
       {
-        url: "https://images.unsplash.com/photo-1625090665951-b93cbcb2687f?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1625090665951-b93cbcb2687f?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Ebike Image 9"
       },
       {
-        url: "https://images.unsplash.com/photo-1681261669206-c653789dc7bb?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjZ8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1681261669206-c653789dc7bb?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjZ8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Ebike Image 10"
       },
     ],
 
@@ -571,7 +571,7 @@ export const ebikes = [
     },
 
     video: {
-      url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+      secure_url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
     },
 
     colors: [
@@ -648,13 +648,13 @@ export const ebikes = [
 
     images: [
       {
-        url: "https://images.unsplash.com/photo-1619678786641-23eb19f27924?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1619678786641-23eb19f27924?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Ebike Image 11"
       },
       {
-        url: "https://plus.unsplash.com/premium_photo-1663051065015-a4fe49978a69?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzd8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        secure_url: "https://plus.unsplash.com/premium_photo-1663051065015-a4fe49978a69?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzd8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
 
-        alt: "Accessory Image"
+        public_id: "Ebike Image 12"
       },
     ],
 
@@ -696,7 +696,7 @@ export const ebikes = [
     },
 
     video: {
-      url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+      secure_url: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
     },
 
     colors: [

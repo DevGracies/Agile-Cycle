@@ -4,6 +4,7 @@ import { setUpCyclingExperience } from "../services/user.service";
 import { useState } from "react";
 import { BikeType } from "../types/user";
 import { useRouter } from "next/navigation";
+import { apiError } from "../services/api.service";
 
 export const useCyclingExperience = () => {
     const [bikeType, setBikeType] = useState<BikeType>("");
@@ -35,7 +36,7 @@ export const useCyclingExperience = () => {
             });
             router.push("/newsLetter")
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Failed to set up profile")
+            toast.error(apiError(error) || "Failed to set up profile")
         } finally {
             setIsLoading(false)
         }

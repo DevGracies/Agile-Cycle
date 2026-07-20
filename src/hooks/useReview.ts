@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 
 import { Review } from "../types/review";
 import { reviewService } from "../services/review.service";
+import { apiError } from "../services/api.service";
 
 type LoadingState = {
     reviews: boolean;
@@ -42,7 +43,7 @@ export const useReview = () => {
             setReviews(data);
             return data;
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Error fetching reviews");
+            toast.error(apiError(error) || "Error fetching reviews");
             throw error;
         } finally {
             setLoadingState("reviews", false);
@@ -58,7 +59,7 @@ export const useReview = () => {
             setReview(data);
             return data;
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Error fetching review");
+            toast.error(apiError(error) || "Error fetching review");
             throw error;
         } finally {
             setLoadingState("review", false);
@@ -76,7 +77,7 @@ export const useReview = () => {
             toast.success("Review updated successfully");
             return updated;
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Error updating review");
+            toast.error(apiError(error) || "Error updating review");
             throw error;
         } finally {
             setLoadingState("update", false);
@@ -90,7 +91,7 @@ export const useReview = () => {
             setReviews((prev) => prev.filter((review) => review.id !== reviewId));
             toast.success("Review deleted successfully");
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Error deleting review");
+            toast.error(apiError(error) || "Error deleting review");
             throw error;
         } finally {
             setLoadingState("delete", false);
@@ -125,11 +126,7 @@ export const useReview = () => {
 
                 return review;
             } catch (error) {
-                toast.error(
-                    error instanceof Error
-                        ? error.message
-                        : "Error submitting review"
-                );
+                toast.error(apiError(error) || "Error submitting review");
                 throw error;
             } finally {
                 setLoadingState("create", false);

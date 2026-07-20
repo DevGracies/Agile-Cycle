@@ -33,6 +33,7 @@ export const getAllUsers = asyncHandler(
         });
     }
 );
+
 export const deleteCurrentUser = asyncHandler(
     async (req: Request, res: Response) => {
         const { email } = req.body;

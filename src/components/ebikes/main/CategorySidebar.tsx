@@ -1,35 +1,51 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
 import {
   ChevronDown,
   ChevronRight,
-  Filter,
   X,
 } from "lucide-react";
-import { accessoryFilters, ebikeFilters, enhancementFilters } from "@/src/lib/product";
 
-export interface ProductFilters {
-  productType:
-  | "ebikes"
-  | "accessories"
-  | "enhancements";
-  category: string;
-  inventoryStatus:
-  | "in-stock"
-  | "out-of-stock"
-  minPrice: number;
-  maxPrice: number;
-}
+import {
+  accessoryFilters,
+  ebikeFilters,
+  enhancementFilters,
+} from "@/src/lib/product";
+
+import PriceRangeSlider from "./PriceRangeSlider";
+import { ProductFilters } from "@/src/types/ebikes";
+import { ProductType } from "@/src/services/cart.service";
+
+
 
 interface CategorySidebarProps {
+
   filters: ProductFilters;
+
+  categoryCounts: {
+    _id: string;
+    count: number;
+  }[];
+
   onApplyFilters:
   (filters: ProductFilters) => void;
+  pagination: any;
+
   onClearFilters: () => void;
+
   mobileOpen?: boolean;
+
   onCloseMobile?: () => void;
+
 }
+
+
 
 const productTypes = [
   {
@@ -44,7 +60,10 @@ const productTypes = [
     id: "enhancements",
     label: "Ebike Enhancements",
   },
+
 ] as const;
+
+
 
 const filterConfigMap = {
   ebikes: ebikeFilters,
@@ -52,301 +71,640 @@ const filterConfigMap = {
   enhancements: enhancementFilters,
 };
 
+
+
 export default function CategorySidebar({
   filters,
+  categoryCounts,
   onApplyFilters,
   onClearFilters,
+  pagination,
   mobileOpen = false,
   onCloseMobile,
 }: CategorySidebarProps) {
 
 
-  const [draftFilters, setDraftFilters] = useState<ProductFilters>(filters);
+  const [
+    draftFilters,
+    setDraftFilters
+  ] = useState<ProductFilters>(filters);
 
-  const [openSections, setOpenSections] =
-  useState({
-      productType: true,
-      category: true,
-      availability: true,
-      price: true,
-      more: false,
-    });
+
+
+  const [
+    openSections,
+    setOpenSections
+  ] = useState({
+
+    productType: true,
+
+    category: true,
+
+    availability: true,
+
+    price: true,
+
+    more: false,
+
+  });
+
+
 
   useEffect(() => {
+
     setDraftFilters(filters);
+
   }, [filters]);
-  
 
-  const activeFilterConfig = useMemo(() => {
-    return filterConfigMap[
+
+
+  const getCategoryCount = (
+    id: string
+  ) => {
+
+    if (id === "") {
+      return categoryCounts.reduce((acc, item) => acc + item.count, 0);
+    }
+
+    const item =
+      categoryCounts.find(
+        item => item._id === id
+      );
+
+    return item?.count ?? 0;
+  };
+
+  const activeFilterConfig =
+    useMemo(() => {
+
+      return filterConfigMap[
+        draftFilters.productType as keyof typeof filterConfigMap
+      ];
+
+    }, [
       draftFilters.productType
-    ];
-  }, [
-    draftFilters.productType
-  ]);
+    ]);
 
-  function updateFilter(
+
+
+
+  const updateFilter = (
     updates: Partial<ProductFilters>
-  ) {
-    setDraftFilters(prev => ({
+  ) => {
+
+    setDraftFilters((prev: any) => ({
+
       ...prev,
+
       ...updates,
+
     }));
-  }
 
-  function handleProductTypeChange(
-    productType: ProductFilters["productType"]
-  ) {
+  };
+
+
+
+  const handleProductTypeChange = (
+    type: ProductFilters["productType"]
+  ) => {
+
+
     updateFilter({
-      productType,
-      // reset category when switching products
-      category: "all",
+
+      productType: type,
+
+      category: "",
+
     });
+  };
 
-  }
 
-  function toggleSection(
+
+  const toggleSection = (
     section: keyof typeof openSections
-  ) {
+  ) => {
 
     setOpenSections(prev => ({
+
       ...prev,
+
       [section]: !prev[section],
+
     }));
 
-  }
+  };
 
-  function formatPrice(
-    value: number
-  ) {
-    return new Intl.NumberFormat(
-      "en-NG",
-      {
-        style: "currency",
-        currency: "NGN",
-        maximumFractionDigits: 0,
-      }
-    ).format(value);
-  }
   return (
-    <aside
-      className={`fixed inset-y-0 left-0 z-40 w-[320px] bg-white border-r border-gray-200 overflow-y-auto transition-transform lg:static lg:translate-x-0 max-lg:py-20 
-        ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}
-    >
-      {/* Mobile Header */}
-      <div
-        className="flex items-center justify-between px-5 py-4 border-b border-gray-300 lg:hidden " >
-        <div className="flex items-center gap-2">
-          <h2 className="font-bold text-xl text-secondary">Filters</h2>
-        </div>
-        <button
+
+    <>
+      {/* Mobile Overlay */}
+      {mobileOpen && (
+        <div
           onClick={onCloseMobile}
-        >
-          <X size={20} />
-        </button>
-      </div>
+          className="
+          fixed
+          inset-0
+          z-40
+          bg-black/40
+          lg:hidden
+        "
+        />
+      )}
 
-      <div className="p-5 space-y-6 " >
 
-        {/* Categories */}
-        <FilterSection
-          title={filters.productType.toUpperCase()}
-          open={openSections.category}
-          onToggle={() => toggleSection("category")}
-        >
-          <div
-            className="space-y-3">
-            {activeFilterConfig.category.length > 8 ? (
-              activeFilterConfig.category.slice(0, 8).map(
-                category => (
-                  <button
-                    key={category.id}
-                    onClick={() => updateFilter({ category: category.id })}
-                    className={`${draftFilters.category === category.id ? "text-primary" : "text-gray-600"} flex items-center justify-between gap-8 cursor-pointer text-sm`}
-                  >
+      <aside
+        onClick={(e) => e.stopPropagation()}
+        className={`
+        fixed
+        inset-y-0
+        left-0
+        z-50
+        w-[320px]
+        bg-white
+        border-r
+        border-gray-200
+        overflow-y-auto
+        transition-transform
+        duration-300
+        lg:static
+        lg:translate-x-0
 
-                    {category.name} <ChevronRight size={16} /> {category.count}
-                  </button>
-                )
-              )
-            ) : (
-              activeFilterConfig.category.map(
-                category => (
-                  <button
-                    key={category.id}
-                    onClick={() => updateFilter({ category: category.id })}
-                    className={`${draftFilters.category === category.id ? "text-primary" : "text-gray-600"} flex items-center justify-between gap-8 cursor-pointer text-sm`}
-                  >
-
-                    {category.name} <ChevronRight size={16} /> {category.count}
-                  </button>
-                )
-              )
-            )}
-          </div>
-        </FilterSection>
-
-        {/* More Categories */}
-        {activeFilterConfig.category.length > 8 && (
-          <FilterSection
-            title="More"
-            open={openSections.more}
-            onToggle={() => toggleSection("more")}
-          >
-            <div className="space-y-3">
-              {activeFilterConfig.category.slice(8).map(category => (
-                <button
-                  key={category.id}
-                  onClick={() => updateFilter({ category: category.id })}
-                  className={`${draftFilters.category === category.id ? "text-primary" : "text-gray-600"} flex items-center justify-between gap-8 cursor-pointer text-sm`}
-                >
-
-                  {category.name} <ChevronRight size={16} /> {category.count}
-                </button>
-              )
-              )}
-            </div>
-          </FilterSection>
-        )}
-
-        <h2 className="text-secondary text-xl font-bold">Filters</h2>
-
-        {/* Price */}
-        <FilterSection
-          title="Price"
-          open={
-            openSections.price
+        ${mobileOpen
+            ? "translate-x-0"
+            : "-translate-x-full"
           }
-          onToggle={() =>
-            toggleSection(
-              "price"
-            )
-          }
+      `}
+      >
+
+
+        <div
+          className="
+flex items-center justify-between
+px-5 py-4
+border-b border-gray-200
+lg:hidden
+"
         >
-          <div className="space-y-4">
-            <div
-              className="flex justify-between text-sm text-gray-600 "
-            >
-              <span>
-                {formatPrice(draftFilters.minPrice)}
-              </span>
-              <span>
-                {formatPrice(draftFilters.maxPrice)}
-              </span>
-            </div>
 
-            <input
-              type="range"
-              min={activeFilterConfig.minPrice}
-              max={activeFilterConfig.maxPrice}
-              value={draftFilters.maxPrice}
-              onChange={(e) =>
-                updateFilter({
-                  maxPrice: Number(e.target.value)
-                })
-              }
-              className="w-full accent-secondary" />
-          </div>
-        </FilterSection>
+          <h2 className="
+font-bold
+text-xl
+text-secondary
+">
+            Filters
+          </h2>
 
-        <div className="flex gap-3 pt-4">
+
           <button
-            onClick={() =>
-              onApplyFilters(draftFilters)
-            }
-            className="flex-1 bg-secondary text-white rounded-lg py-3 px-14 text-sm font-medium" >
-            Apply
+            onClick={onCloseMobile}
+          >
+
+            <X size={20} />
+
           </button>
+
+
         </div>
 
-        {/* Availability */}
-        <FilterSection
-          title="Availability"
-          open={openSections.availability}
-          onToggle={() =>
-            toggleSection("availability")
-          }
+
+
+        <div
+          className="
+p-5
+space-y-6
+"
         >
-          <div className="space-y-3">
-            {
-              activeFilterConfig.inventoryStatus.map(
-                option => (
+
+
+
+          <FilterSection
+            title="Product Type"
+            open={openSections.productType}
+            onToggle={() => toggleSection("productType")}
+          >
+
+
+            <div
+              className="
+space-y-3
+"
+            >
+
+
+              {
+                productTypes.map(type => (
+
+                  <label
+                    key={type.id}
+                    className="
+flex items-center gap-3
+cursor-pointer
+text-sm
+"
+                  >
+
+
+                    <input
+
+                      type="checkbox"
+
+                      name="productType"
+
+                      checked={
+                        draftFilters.productType === type.id
+                      }
+
+                      onChange={() =>
+                        handleProductTypeChange(type.id)
+                      }
+                      className="accent-primary"
+
+                    />
+
+
+                    <span>
+                      {type.label}
+                    </span>
+
+
+                  </label>
+
+                ))
+
+              }
+
+
+            </div>
+
+
+          </FilterSection>
+
+
+
+
+
+          <FilterSection
+            title={
+              draftFilters.productType
+                ? (draftFilters.productType.toUpperCase() as ProductType)
+                : "Category"
+            }
+            open={openSections.category}
+            onToggle={() => toggleSection("category")}
+          >
+
+
+            <div
+              className="
+space-y-3
+"
+            >
+
+
+              {
+                activeFilterConfig.category
+                  .slice(0, 8)
+                  .map(category => (
+
+
+                    <button
+
+                      key={category.id}
+
+                      onClick={() =>
+                        updateFilter({
+                          category: category.id
+                        })
+                      }
+
+                      className={`
+flex
+items-center
+justify-between
+w-full
+text-sm
+
+${draftFilters.category === category.id
+                          ?
+                          "text-primary"
+                          :
+                          "text-gray-600"
+                        }
+
+`}
+                    >
+
+
+                      <span>
+                        {category.name}
+                      </span>
+
+
+                      <div className="
+flex items-center gap-1
+">
+
+                        <ChevronRight size={15} />
+
+                        <span>
+                          {getCategoryCount(category.id)}
+                        </span>
+
+
+                      </div>
+
+
+                    </button>
+
+
+                  ))
+
+
+              }
+
+
+            </div>
+
+
+
+          </FilterSection>
+
+
+
+
+
+          {
+            activeFilterConfig.category.length > 8 &&
+
+            <FilterSection
+
+              title="More"
+
+              open={openSections.more}
+
+              onToggle={() => toggleSection("more")}
+
+            >
+
+
+              <div
+                className="
+space-y-3
+"
+              >
+
+
+                {
+                  activeFilterConfig.category
+                    .slice(8)
+                    .map(category => (
+
+
+                      <button
+
+                        key={category.id}
+
+                        onClick={() =>
+                          updateFilter({
+                            category: category.id
+                          })
+                        }
+
+                        className={`
+flex
+justify-between
+items-center
+w-full
+text-sm
+
+${draftFilters.category === category.id
+                            ?
+                            "text-primary"
+                            :
+                            "text-gray-600"
+                          }
+
+`}
+                      >
+
+
+                        <span>
+                          {category.name}
+                        </span>
+
+
+                        <span>
+                          {getCategoryCount(category.id)}
+                        </span>
+
+
+                      </button>
+
+
+                    ))
+
+                }
+
+
+
+              </div>
+
+
+            </FilterSection>
+
+          }
+
+
+
+
+
+          <FilterSection
+
+            title="Price"
+
+            open={openSections.price}
+
+            onToggle={() => toggleSection("price")}
+
+          >
+
+
+            <PriceRangeSlider
+
+              min={
+                activeFilterConfig.minPrice
+              }
+
+              max={
+                activeFilterConfig.maxPrice
+              }
+
+              minValue={
+                draftFilters.minPrice ?? activeFilterConfig.minPrice
+              }
+
+              maxValue={
+                draftFilters.maxPrice ?? activeFilterConfig.maxPrice
+              }
+
+              onChange={(values) => {
+
+                updateFilter({
+
+                  minPrice: values.min,
+
+                  maxPrice: values.max,
+
+                });
+
+              }}
+
+            />
+
+
+          </FilterSection>
+
+
+
+
+
+          <FilterSection
+
+            title="Availability"
+
+            open={openSections.availability}
+
+            onToggle={() => toggleSection("availability")}
+
+          >
+
+
+            <div className="space-y-3">
+
+
+              {
+                activeFilterConfig.inventoryStatus.map(option => (
+
+
                   <label
                     key={option.id}
-                    className="flex items-center gap-3 cursor-pointer text-sm">
+                    className="
+flex gap-3
+items-center
+text-sm
+cursor-pointer
+"
+                  >
+
+
                     <input
-                      type="checkbox"
+
+                      type="radio"
+
                       name="availability"
+
                       checked={
                         draftFilters.inventoryStatus === option.id
                       }
+
                       onChange={() =>
                         updateFilter({
-                          inventoryStatus: option.id as ProductFilters["inventoryStatus"]
+
+                          inventoryStatus:
+                            option.id as ProductFilters["inventoryStatus"]
+
                         })
                       }
-                      className="accent-primary"
+
                     />
+
+
                     <span>
                       {option.label}
                     </span>
+
+
                   </label>
-                )
-              )
-            }
-          </div>
-        </FilterSection>
 
-        {/* Product Type */}
-        <FilterSection
-          title="Product Type"
-          open={openSections.productType}
-          onToggle={() => toggleSection("productType")}
-        >
-          <div
-            className="space-y-3">
-            {
-              productTypes.map(type => (
-                <label
-                  key={type.id}
-                  className="flex items-center gap-3 cursor-pointer text-sm " >
-                  <input
-                    type="checkbox"
-                    name="productType"
-                    checked={
-                      draftFilters.productType === type.id
-                    }
-                    onChange={() =>
-                      handleProductTypeChange(type.id)
-                    }
-                    className="accent-primary"
-                  />
-                  <span>
-                    {type.label}
-                  </span>
-                </label>
-              ))
-            }
-          </div>
-        </FilterSection>
 
-        {/* Actions */}
-        <div className="flex gap-3 pt-4" >
+                ))
+
+              }
+
+
+
+            </div>
+
+
+          </FilterSection>
+
+
+
+
+
           <button
+
             onClick={() =>
-              onClearFilters()
+              onApplyFilters(draftFilters)
             }
-            className="flex-1 border border-gray-300 rounded-lg py-3 text-sm text-secondary font-medium" >
-            Clear
+
+            className="
+w-full
+bg-secondary
+text-white
+rounded-lg
+py-3
+font-medium
+text-sm
+"
+
+          >
+
+            Apply Filters
+
           </button>
+
+
+
+          <button
+
+            onClick={onClearFilters}
+
+            className="
+w-full
+border
+border-gray-300
+rounded-lg
+py-3
+text-secondary
+font-medium
+text-sm
+"
+
+          >
+
+            Clear Filters
+
+          </button>
+
+
+
         </div>
 
 
-      </div>
 
-    </aside>
+      </aside>
+    </>
+
+
   );
+
 }
+
+
+
+
+
 
 function FilterSection({
   title,
@@ -354,30 +712,69 @@ function FilterSection({
   onToggle,
   children,
 }: {
+
   title: string;
+
   open: boolean;
+
   onToggle: () => void;
+
   children: React.ReactNode;
+
 }) {
+
+
   return (
+
     <section>
+
       <button
+
         onClick={onToggle}
-        className="w-full flex items-center justify-between mb-4 font-medium text-secondary"
+
+        className="
+w-full
+flex
+justify-between
+items-center
+mb-4
+font-medium
+text-secondary
+"
+
       >
+
         <span>
           {title}
         </span>
 
+
         <ChevronDown
+
           size={18}
-          className={`transition-transform${open ? "rotate-180" : ""}`}
+
+          className={
+            `
+transition-transform
+${open ? "rotate-180" : ""}
+`
+          }
+
         />
 
+
       </button>
-      {open && children}
+
+
+      {
+        open &&
+        children
+      }
+
+
     </section>
 
   );
+
 
 }

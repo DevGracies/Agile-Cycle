@@ -6,17 +6,31 @@ export const createEbikeSchema = z.object({
 
   description: z.string().min(10),
 
-  shortDescription: z.string().min(10).max(300),
+  shortDescription: z.preprocess(
+    value => value === "" ? undefined : value,
+    z.string().min(10).max(300).optional()
+  ),
 
-  price: z.number().positive(),
+  price: z.coerce.number().positive(),
 
-  discountPrice: z.number().positive().optional(),
+  discountPrice: z.preprocess(
+    value =>
+      value === "" ||
+        value === null ||
+        value === undefined
+        ? undefined
+        : value,
+    z.coerce.number().positive().optional()
+  ),
 
-  shippingDuration: z.string().optional(),
+  shippingDuration: z.preprocess(
+    value => value === "" ? undefined : value,
+    z.string().optional()
+  ),
 
   category: z.enum(EBIKE_CATEGORIES),
 
-  stock: z.number().min(0),
+  stock: z.coerce.number().min(0),
 
   badge: z.string().optional(),
 
@@ -26,17 +40,27 @@ export const createEbikeSchema = z.object({
 
   images: z.array(
     z.object({
-      public_id: z.string().url(),
+      public_id: z.string().min(1),
       secure_url: z.string().optional(),
     })
   ).optional(),
 
-  colors: z.array(
-    z.object({
-      name: z.string(),
-      hexCode: z.string(),
-    })
-  ).optional(),
+  colors: z.preprocess(
+    value => {
+      if (typeof value === "string") {
+        return JSON.parse(value);
+      }
+
+      return value;
+    },
+
+    z.array(
+      z.object({
+        name: z.string().min(1),
+        color: z.string().min(1)
+      })
+    )
+  ).optional()
 });
 
 export const updateEbikeSchema = createEbikeSchema.partial();

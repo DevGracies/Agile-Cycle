@@ -22,6 +22,7 @@ import {
 } from "../types/product";
 
 import {
+  CategoryCount,
   ProductFilters,
 } from "../types/ebikes";
 
@@ -51,6 +52,7 @@ interface EbikeContextType {
   compatibleAccessories: Accessories[];
 
   compatibleEnhancements: Enhancement[];
+  categoryCounts:CategoryCount[];
 
   fetchEbike: (
     ebikeId: string,
@@ -105,6 +107,10 @@ export function EbikeProvider({
 
   const [error, setError] =
     useState<string | null>(null);
+  const [
+    categoryCounts,
+    setCategoryCounts
+  ] = useState<CategoryCount[]>([]);
 
   const setLoadingState =
     useCallback(
@@ -141,6 +147,10 @@ export function EbikeProvider({
             response.ebikes,
           );
 
+          setCategoryCounts(
+            response.categoryCounts
+          );
+
           setPagination({
             total: response.total,
             page: response.page,
@@ -174,6 +184,7 @@ export function EbikeProvider({
           true,
         );
 
+        setEbikes([]);
         setError(null);
 
         const response =
@@ -214,11 +225,9 @@ export function EbikeProvider({
       [setLoadingState],
     );
 
-
-  // Initial fetch
-  useEffect(() => {
-    fetchEbikes();
-  }, [fetchEbikes]);
+    useEffect(() => {
+      fetchEbikes()
+    }, [fetchEbikes])
 
   const discountPercentage =
     useMemo(() => {
@@ -259,6 +268,7 @@ export function EbikeProvider({
       fetchEbikes,
 
       discountPercentage,
+      categoryCounts,
     }),
     [
       ebike,
@@ -271,6 +281,7 @@ export function EbikeProvider({
       fetchEbike,
       fetchEbikes,
       discountPercentage,
+      categoryCounts
     ],
   );
 

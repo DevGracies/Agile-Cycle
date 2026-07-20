@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ShoppingCart,
   User,
@@ -20,6 +20,7 @@ import SearchInput from "../shared/SearchInput";
 import CartDrawer from "../cart/CartDrawer";
 import { useCart } from "@/src/context/CartProvider";
 import { useAuth } from "@/src/context/AuthProvider";
+import { set } from "zod";
 
 const navLinks = [
   {
@@ -66,6 +67,7 @@ const Navbar = () => {
 
   // mobile dropdown
   const [mobileDropDown, setMobileDropDown] = useState<string | null>(null);
+  const dropDownRef = useRef<HTMLDivElement>(null);
 
   const toggleMobileDropdown = (name: string) => {
     setMobileDropDown((prev) => (prev === name ? null : name));
@@ -77,6 +79,18 @@ const Navbar = () => {
   useEffect(() => {
     refreshUser();
   }, [user, refreshUser]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+    if(dropDownRef.current && !dropDownRef.current.contains(e.target as Node)){
+      setOpen(false);
+    }
+  }
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  }
+  }, [])
 
   return (
     <>
@@ -145,19 +159,21 @@ const Navbar = () => {
               {/* USER */}
               {isAuthenticated ? (
                 <div className="relative">
-                {/* Trigger Button */}
-                <button
-                  onClick={() => setOpen((prev) => !prev)}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm transition hover:bg-gray-50"
-                >
-                  <User className="w-5 h-5 stroke-[1.7]" />
-                </button>
+                  {/* Trigger Button */}
+                  <button
+                    onClick={() => setOpen((prev) => !prev)}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm transition hover:bg-gray-50"
+                  >
+                    <User className="w-5 h-5 stroke-[1.7]" />
+                  </button>
 
-                {/* Dropdown */}
-                {open && (
-                  <div className="absolute right-0 mt-3 w-72 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl">
-                    <div className="flex items-center gap-3 p-4">
-                      {/* <Image
+                  {/* Dropdown */}
+                  {open && (
+                    <div 
+                    ref={dropDownRef}
+                    className="absolute right-0 mt-3 w-72 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl">
+                      <div className="flex items-center gap-3 p-4">
+                        {/* <Image
                         src={user?.avatar || "/images/avatar.png"}
                         alt="User"
                         width={52}
@@ -165,30 +181,30 @@ const Navbar = () => {
                         className="rounded-full object-cover"
                       /> */}
 
-                      <div className="min-w-0">
-                        <h3 className="truncate text-sm font-semibold text-gray-900">
-                          {user?.name}
-                        </h3>
+                        <div className="min-w-0">
+                          <h3 className="truncate text-sm font-semibold text-gray-900">
+                            {user?.name}
+                          </h3>
 
-                        <p className="truncate text-sm text-gray-500">
-                          {user?.email}
-                        </p>
+                          <p className="truncate text-sm text-gray-500">
+                            {user?.email}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-gray-100" />
+
+                      <div className="p-2">
+                        <button
+                          onClick={logOut}
+                          className="flex w-full items-center rounded-lg px-3 py-2 text-sm text-red-600 transition hover:bg-red-50"
+                        >
+                          Logout
+                        </button>
                       </div>
                     </div>
-
-                    <div className="border-t border-gray-100" />
-
-                    <div className="p-2">
-                      <button
-                        onClick={logOut}
-                        className="flex w-full items-center rounded-lg px-3 py-2 text-sm text-red-600 transition hover:bg-red-50"
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
               ) : (
                 <Link
                   href="/signin"

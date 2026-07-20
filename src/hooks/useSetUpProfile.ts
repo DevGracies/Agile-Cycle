@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import { profileSetUp } from "../services/user.service";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { apiError } from "../services/api.service";
 
 export const useSetUpProfile = () => {
     const [country, setCountry] = useState("");
@@ -22,7 +23,7 @@ export const useSetUpProfile = () => {
             });
             router.push("/cyclingLifeStyle")
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Failed to set up cycling experience")
+            toast.error(apiError(error) || "Failed to set up cycling experience")
         } finally {
             setIsLoading(false)
         }

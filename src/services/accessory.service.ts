@@ -5,7 +5,7 @@ import { Accessories } from "../types/product";
 import { buildQueryParams } from "../utils/product";
 import { api } from "./api.service";
 
-export const getAllAccessories = async(filters?: Partial<ProductFilters>): Promise<GetAccessoryResponse> => {
+export const getAllAccessories = async (filters?: Partial<ProductFilters>): Promise<GetAccessoryResponse> => {
     const params = buildQueryParams(filters);
 
     const { data } = await api.get(`/accessories?${params.toString()}`);
@@ -13,23 +13,20 @@ export const getAllAccessories = async(filters?: Partial<ProductFilters>): Promi
     return data
 }
 
-export const getAccessory = async(id: string): Promise<ApiResponse<Accessories>> => {
+export const getAccessory = async (id: string): Promise<ApiResponse<Accessories>> => {
     const { data } = await api.get(`/accessories/${id}`);
 
     return data;
 }
-export const createAccessory = async(body: Partial<Accessories>)=> {
-    const { data } = await api.post(`/accessories`, body);
-    
+export const createAccessory = async (formData: FormData) => {
+    const { data } = await api.post("/accessories", formData,);
+    return data;
+};
+export const updateAccessory = async (id: string, formData: FormData) => {
+    const { data } = await api.patch(`/accessories/${id}`, formData);
     return data;
 }
-export const updateAccessory = async(id: string, body: Partial<Accessories>) => {
-    const { data } = await api.patch(`/accessories/${id}`, body);
-
-    return data;
-}
-export const deleteAccessory = async(id: string) => {
-    const { data } = await api.patch(`/accessories/${id}`);
-
+export const deleteAccessory = async (id: string) => {
+    const { data } = await api.patch(`/accessories/${id}/delete`);
     return data;
 }

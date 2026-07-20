@@ -11,7 +11,7 @@ interface EnhancementsGridProps {
 const EnhancementsGrid = ({
     products,
 }: EnhancementsGridProps) => {
-    const { loading } = useEnhancement()
+    const { loading } = useEnhancement();
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {loading.enhancements ? (

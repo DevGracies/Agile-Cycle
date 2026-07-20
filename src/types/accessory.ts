@@ -1,3 +1,4 @@
+import { CategoryCount } from "./ebikes";
 import { Accessories } from "./product";
 
 export interface GetAccessoryResponse {
@@ -10,4 +11,5 @@ export interface GetAccessoryResponse {
   page: number;
   limit: number;
   totalPages: number;
+  categoryCounts: CategoryCount[];
 }

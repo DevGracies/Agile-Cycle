@@ -14,7 +14,7 @@ import {
   getAccessory,
 } from "../services/accessory.service";
 import { Accessories } from "../types/product";
-import { ProductFilters } from "../types/ebikes";
+import { CategoryCount, ProductFilters } from "../types/ebikes";
 
 interface LoadingState {
   accessory: boolean;
@@ -35,6 +35,7 @@ interface AccessoryContextType {
   pagination: PaginationState;
   error: string | null;
   discountPercentage: number;
+  categoryCounts: CategoryCount[];
   fetchAccessory: (accessoryId: string) => Promise<void>;
   fetchAccessories: (filters?: Partial<ProductFilters>) => Promise<void>;
 }
@@ -71,6 +72,11 @@ export function AccessoryProvider({
   const [error, setError] =
     useState<string | null>(null);
 
+  const [
+    categoryCounts,
+    setCategoryCounts
+  ] = useState<CategoryCount[]>([]);
+
   const setLoadingState = useCallback(
     (
       key: keyof LoadingState,
@@ -96,6 +102,11 @@ export function AccessoryProvider({
         setAccessories(
           response?.accessories,
         );
+
+        setCategoryCounts(
+          response.categoryCounts
+        );
+
 
         setPagination({
           total: response.total,
@@ -183,6 +194,7 @@ export function AccessoryProvider({
       fetchAccessory,
       fetchAccessories,
       discountPercentage,
+      categoryCounts,
     }),
     [
       accessory,
@@ -193,6 +205,7 @@ export function AccessoryProvider({
       fetchAccessory,
       fetchAccessories,
       discountPercentage,
+      categoryCounts,
     ],
   );
 

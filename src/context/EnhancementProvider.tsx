@@ -14,7 +14,7 @@ import {
   getEnhancement,
 } from "../services/enhancement.service";
 import { Enhancement } from "../types/product";
-import { ProductFilters } from "../types/ebikes";
+import { CategoryCount, ProductFilters } from "../types/ebikes";
 
 interface LoadingState {
   enhancement: boolean;
@@ -35,6 +35,7 @@ interface EnhancementContextType {
   pagination: PaginationState;
   error: string | null;
   discountPercentage: number;
+  categoryCounts: CategoryCount[];
   fetchEnhancement: (
     enhancementId: string
   ) => Promise<void>;
@@ -67,6 +68,11 @@ export function EnhancementProvider({
   });
   const [error, setError] = useState<string | null>(null);
 
+  const [
+    categoryCounts,
+    setCategoryCounts
+  ] = useState<CategoryCount[]>([]);
+
   const setLoadingState = useCallback(
     (
       key: keyof LoadingState,
@@ -96,6 +102,8 @@ export function EnhancementProvider({
         setEnhancements(
           response?.enhancements,
         );
+
+        setCategoryCounts(response.categoryCounts)
 
         setPagination({
           total: response.total,
@@ -195,6 +203,7 @@ export function EnhancementProvider({
       fetchEnhancement,
       fetchEnhancements,
       discountPercentage,
+      categoryCounts,
     }),
     [
       enhancement,
@@ -205,6 +214,7 @@ export function EnhancementProvider({
       fetchEnhancement,
       fetchEnhancements,
       discountPercentage,
+      categoryCounts
     ],
   );
 

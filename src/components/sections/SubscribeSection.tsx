@@ -7,6 +7,7 @@ import { useState, FormEvent } from "react";
 import toast from "react-hot-toast";
 import { subscribeToNewsLetter } from "@/src/services/user.service";
 import Loader from "../ui/Loader";
+import { apiError } from "@/src/services/api.service";
 
 const SubscribeSection = () => {
   const [email, setEmail] = useState("");
@@ -23,7 +24,7 @@ const SubscribeSection = () => {
       toast.success(res.message || "Successfully subscirbed");
       setEmail("");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to subscribe to newsletter")
+      toast.error(apiError(error) || "Failed to subscribe to newsletter")
     } finally {
       setIsSubscribing(false);
     }

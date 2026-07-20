@@ -5,7 +5,7 @@ import type {
   CreateEnhancementInput,
 } from "../types/enhancement";
 import { ProductQuery } from "../types/ebike";
-import { formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
+import { deleteImages, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
 
 
 export const createEnhancementService = async (
@@ -33,26 +33,46 @@ export const createEnhancementService = async (
 
 export const updateEnhancementService = async (
   enhancementId: string,
-  data: Partial<CreateEnhancementInput>
+  data: Partial<CreateEnhancementInput>,
+  files: Express.Multer.File[]
 ) => {
-  const updatedEnhancement =
-    await Enhancement.findByIdAndUpdate(
-      enhancementId,
-      data,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+  const enhancement = await Enhancement.findById(enhancementId);
+  if (!enhancement) {
+    throw new AppError("Enhancement not found", 404);
+  }
+  const existingImages =
+    Array.isArray(data.images)
+        ? data.images
+        : enhancement.images;
 
-  if (!updatedEnhancement) {
-    throw new AppError(
-      "Enhancement not found",
-      404
+  const imagesToDelete =
+    enhancement.images.filter(
+      image =>
+        !existingImages.some(
+          kept =>
+            kept.public_id === image.public_id
+        )
     );
+  if (imagesToDelete.length) {
+    await deleteImages(imagesToDelete.map(image => image.public_id));
   }
 
-  return updatedEnhancement;
+  let uploadedImages: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
+  if (files?.length) {
+    const uploads =
+      await uploadImages(files, "enhancements");
+    uploadedImages =
+      uploads.map(formatCloudinaryMedia);
+  }
+  enhancement.set({
+    ...data,
+    images: [
+      ...existingImages,
+      ...uploadedImages
+    ]
+  });
+  await enhancement.save();
+  return enhancement;
 };
 
 

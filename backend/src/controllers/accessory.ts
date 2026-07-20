@@ -60,7 +60,16 @@ export const getAllAccessories =
 export const updateAccessory =
   asyncHandler(
     async (req: Request,res: Response) => {
-      const parsed = updateAccessorySchema.safeParse(req.body);
+      const body = {
+      ...req.body,
+      images: req.body.existingImages
+        ? JSON.parse(req.body.existingImages)
+        : [],
+      // colors: req.body.colors
+      //   ? JSON.parse(req.body.colors)
+      //   : [],
+      }
+      const parsed = updateAccessorySchema.safeParse(body);
 
       if (!parsed.success) {
         throw new AppError(
@@ -73,7 +82,8 @@ export const updateAccessory =
       const accessory =
         await updateAccessoryService(
           req.params.id as string,
-          parsed.data
+          parsed.data,
+          req.files as Express.Multer.File[]
         );
 
       return res.status(200).json({

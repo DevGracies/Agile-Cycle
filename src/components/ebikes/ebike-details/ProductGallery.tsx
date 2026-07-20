@@ -54,10 +54,10 @@ export default function ProductGallery({
           fill
           priority
           src={
-            images[selected]?.url
+            images[selected]?.secure_url
           }
           alt={
-            images[selected]?.alt
+            product.name || "Product"
           }
           className="object-cover"
         />
@@ -84,7 +84,7 @@ export default function ProductGallery({
       <div className="flex mt-4 overflow-x-auto">
         {images.map((image, index) => (
           <button
-            key={image._id}
+            key={image.public_id}
             onClick={() =>
               setSelected(
                 index,
@@ -98,8 +98,8 @@ export default function ProductGallery({
           >
             <Image
               fill
-              src={image.url}
-              alt={image.alt ?? "Product Image"}
+              src={image.secure_url}
+              alt={product.name ?? "Product Image"}
               className="object-cover"
             />
           </button>

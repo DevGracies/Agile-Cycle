@@ -30,7 +30,7 @@ const CategoryCard = ({ title, description, image, large }: Props) => {
 
       {/* Hover Button */}
       <Link
-        href="/ebikes"
+        href="/products"
         className="
           absolute left-1/2 top-1/2
           -translate-x-1/2 translate-y-10

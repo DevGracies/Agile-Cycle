@@ -10,7 +10,7 @@ const seedDatabase = async () => {
   try {
     await mongoose.connect(env.MONGO_URI);
 
-    // await seedEbikes();
+    await seedEbikes();
 
     await seedAccessories();
 

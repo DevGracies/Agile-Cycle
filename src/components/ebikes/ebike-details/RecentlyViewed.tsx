@@ -1,10 +1,11 @@
 import { useEbike } from "@/src/context/EbikeProvider";
 import EbikeCard from "../../cards/EbikeCard";
 import EbikeCardSkeleton from "../../skeleton/EbikeCardSkeleton";
+import { useFeaturedProducts } from "@/src/hooks/useFeaturedProducts";
 
 
 const RecentlyViewed = () => {
-  const { ebikes, loading } = useEbike();
+  const { ebikes, isLoading } = useFeaturedProducts();
   return (
     <section className="mt-32">
       <h2 className="text-3xl font-bold mb-12">
@@ -12,7 +13,7 @@ const RecentlyViewed = () => {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {loading.ebikes ? (
+        {isLoading ? (
           Array.from({ length: 4 }).map((_, index) => (
             <EbikeCardSkeleton key={index} />
           ))

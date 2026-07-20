@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface DisplayType {
+export interface DisplayType {
   image: string;
   title: string;
   description: string;

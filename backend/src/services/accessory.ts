@@ -5,7 +5,7 @@ import type {
 } from "../types/accessory";
 import { ProductQuery } from "../types/ebike";
 import { Accessory } from "../models/accessories";
-import { formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
+import { deleteImages, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
 
 
 export const createAccessoryService = async (
@@ -33,29 +33,47 @@ export const createAccessoryService = async (
 
 export const updateAccessoryService = async (
   accessoryId: string,
-  data: Partial<CreateAccessoryInput>
+  data: Partial<CreateAccessoryInput>,
+  files: Express.Multer.File[]
 ) => {
-  const updatedAccessory =
-    await Accessory.findByIdAndUpdate(
-      accessoryId,
-      data,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+  const accessory = await Accessory.findById(accessoryId);
+  if (!accessory) {
+    throw new AppError("Accessory not found", 404);
+  }
+  const existingImages =
+    Array.isArray(data.images)
+      ? data.images
+      : accessory.images;
 
-  if (!updatedAccessory) {
-    throw new AppError(
-      "Accessory not found",
-      404
+  const imagesToDelete =
+    accessory.images.filter(
+      image =>
+        !existingImages.some(
+          kept =>
+            kept.public_id === image.public_id
+        )
     );
+  if (imagesToDelete.length) {
+    await deleteImages(imagesToDelete.map(image => image.public_id));
   }
 
-  return updatedAccessory;
+  let uploadedImages: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
+  if (files?.length) {
+    const uploads =
+      await uploadImages(files, "accessories");
+    uploadedImages =
+      uploads.map(formatCloudinaryMedia);
+  }
+  accessory.set({
+    ...data,
+    images: [
+      ...existingImages,
+      ...uploadedImages
+    ]
+  });
+  await accessory.save();
+  return accessory;
 };
-
-
 
 export const getAccessoryService =
   async (accessoryId: string) => {
