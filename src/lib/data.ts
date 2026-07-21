@@ -18,6 +18,7 @@ import enhancement6 from "@/public/enhancement/enhancement6.png"
 import { Product } from "../types/product"
 // import { Accessories, Enhancements, Product } from "../types"
 import { Blog, Insight} from "../types";
+import { MockBlog } from "../types/blog"
 
 
 export const categories = [
@@ -461,8 +462,11 @@ export const enhancements: Product[] = [
 // Insights data for the Home Agile Cycle Shop section and blog page
 export const insights: Blog[] = [
   {
-    _id: "1",
-    image: "/home/insight.png",
+      _id: "1",
+      image: {
+      public_id: "mock",
+      secure_url: "/home/blog.png",
+  },
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
@@ -471,12 +475,15 @@ export const insights: Blog[] = [
       _id: "1",
       name: "Agile Cycle"
     },
-    likes: 24,
-    comments: 12,
+  stats: {
+  views: 0,
+  likes: 24,
+  comments: 12,
+},
 
     commentsData: [
     {
-      id: 1,
+      _id: "1",
       name: "Chimako Favour",
       time: "5 hrs ago",
       likes: 12,
@@ -484,7 +491,7 @@ export const insights: Blog[] = [
         "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door!",
       replies: [
         {
-          id: 11,
+          _id: "11",
           name: "Admin",
           time: "3 hrs ago",
           likes: 2,
@@ -566,7 +573,10 @@ export const insights: Blog[] = [
   },
   {
     _id: "2",
-    image: "/home/insight2.png",
+    image: {
+  public_id: "mock",
+  secure_url: "/home/blog2.png",
+},
     heroImage: "/home/blog2.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
@@ -575,8 +585,11 @@ export const insights: Blog[] = [
       name: "Agile Cycle",
       _id: "1"
     },
-    likes: 24,
-    comments: 12,
+     stats: {
+  views: 0,
+  likes: 24,
+  comments: 12,
+},
 
      commentsData: [
     {
@@ -632,16 +645,23 @@ export const insights: Blog[] = [
       },
     ],
   },
+
   {
-    id: 3,
-    image: "/home/insight3.png",
+    _id: "3",
+    image: {
+  public_id: "mock",
+  secure_url: "/home/blog3.png",
+},
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
     author: "Agile Cycle",
-    likes: 24,
-    comments: 12,
+     stats: {
+  views: 0,
+  likes: 55,
+  comments: 2,
+},
     sections: [
       {
         id: 1,
@@ -652,15 +672,21 @@ export const insights: Blog[] = [
     ],
   },
   {
-    id: 4,
-    image: "/home/insight.png",
+    _id: "4",
+    image: {
+  public_id: "mock",
+  secure_url: "/home/blog4.png",
+},
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
     author: "Agile Cycle",
-    likes: 24,
-    comments: 12,
+     stats: {
+  views: 6,
+  likes: 4,
+  comments: 1,
+},
     sections: [
       {
           id: 1,
@@ -672,7 +698,10 @@ export const insights: Blog[] = [
   },
   {
     id: 5,
-    image: "/home/insight2.png",
+    image: {
+  public_id: "mock",
+  secure_url: "/home/insight3.png",
+},
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
@@ -691,7 +720,10 @@ export const insights: Blog[] = [
   },
   {
     id: 6,
-    image: "/home/insight3.png",
+   image: {
+  public_id: "mock",
+  secure_url: "/home/insight.png",
+},
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
@@ -710,7 +742,10 @@ export const insights: Blog[] = [
   },
   {
     id: 7,
-    image: "/home/insight.png",
+   image: {
+  public_id: "mock",
+  secure_url: "/home/insight3.png",
+},
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
@@ -729,7 +764,10 @@ export const insights: Blog[] = [
   },
   {
     id: 8,
-    image: "/home/insight2.png",
+   image: {
+  public_id: "mock",
+  secure_url: "/home/insight.png",
+},
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
@@ -748,7 +786,10 @@ export const insights: Blog[] = [
   },
   {
     id: 9,
-    image: "/home/insight3.png",
+    image: {
+  public_id: "mock",
+  secure_url: "/home/insight2.png",
+},
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
@@ -908,3 +949,4 @@ export const comments = [
     ],
   },
 ];
+

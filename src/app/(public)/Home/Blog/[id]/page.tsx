@@ -18,20 +18,17 @@ import { useBlog } from "@/src/hooks/useBlogUsers";
 
 
 
-export default async function BlogDetailsPage() {
-  const { id } = useParams<{ id: string }>();
+export default function BlogDetailsPage() {
+  const params = useParams();
+const id = params.id as string;
 
-const {
-  data: blog,
-  isLoading,
-  isError,
-} = useBlog(id);
+const { data: blog, isLoading, error } = useBlog(id);
 
 if (isLoading) {
   return <div>Loading...</div>;
 }
 
-if (isError || !blog) {
+if (!blog) {
   notFound();
 }
 
@@ -52,7 +49,7 @@ if (isError || !blog) {
 
       {/* Title */}
       <h1 className="text-[28px] sm:text-[32px] lg:text-[36px] leading-[38px] sm:leading-[46px] lg:leading-[58px] font-semibold text-[#111111] max-w-[1100px]">
-        {blog.title}
+        {blog.users}
       </h1>
 
       {/* Meta */}
@@ -82,7 +79,7 @@ if (isError || !blog) {
       {/* Hero Image */}
       <div className="mt-[24px]">
        <Image
-  src={blog.image}
+  src={blog.i}
   alt={blog.title}
   width={1440}
   height={700}

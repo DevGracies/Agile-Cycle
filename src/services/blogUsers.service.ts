@@ -1,25 +1,34 @@
-
 import { insights } from "@/src/lib/data";
+import { api } from "@/src/lib/api"; // your axios instance
+import { BlogListResponse, BlogResponse } from "../types/blog";
 
 export const blogService = {
   async getBlogs() {
-    return {
-      success: true,
-      blogs: insights,
-    };
+    try {
+      const data = await api.get<any, BlogListResponse>("/blogs");
+
+      return data;
+    } catch (error) {
+      console.warn("Using mock blog data");
+
+      return {
+        success: true,
+        blogs: insights,
+      };
+    }
   },
-
-
 
   async getBlog(id: string) {
-    const blog = insights.find(
-      (item) => item._id === id
-    );
+  try {
+    const data = await api.get<any, BlogResponse>(`/blogs/${id}`);
 
-    if (!blog) {
-      throw new Error("Blog not found");
-    }
+    return data.blog;
+  } catch {
+    console.warn("Using mock blog");
 
-    return blog;
-  },
+    const blog = insights.find((item) => item._id === id);
+
+    return blog ?? null;
+  }
+}
 };
