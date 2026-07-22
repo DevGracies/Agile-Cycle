@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 
 import Button from "../ui/Button";
 import { Input } from "../ui/Input";
-import { useAuth } from "@/src/hooks/useAuth";
 import { verifyEmail } from "@/src/services/user.service";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { apiError } from "@/src/services/api.service";
+import { useAuth } from "@/src/context/AuthProvider";
 
 const VerifyEmailForm = () => {
   const [timer, setTimer] = useState(30);

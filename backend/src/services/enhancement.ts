@@ -3,6 +3,7 @@ import { AppError } from "../utils/AppError";
 
 import type {
   CreateEnhancementInput,
+  UpdateEnhancementInput,
 } from "../types/enhancement";
 import { ProductQuery } from "../types/ebike";
 import { deleteImages, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
@@ -33,7 +34,7 @@ export const createEnhancementService = async (
 
 export const updateEnhancementService = async (
   enhancementId: string,
-  data: Partial<CreateEnhancementInput>,
+  data: Partial<UpdateEnhancementInput>,
   files: Express.Multer.File[]
 ) => {
   const enhancement = await Enhancement.findById(enhancementId);

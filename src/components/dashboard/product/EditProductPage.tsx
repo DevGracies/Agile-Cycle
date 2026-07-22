@@ -65,6 +65,7 @@ export default function EditProductPage({ edit }: { edit?: string }) {
   const hasImages =
     imageFiles.some(Boolean) ||
     imagePreview.some(Boolean);
+    
   return (
     <form
       onSubmit={submit}
@@ -502,7 +503,7 @@ export default function EditProductPage({ edit }: { edit?: string }) {
                   value={productType}
                   onChange={(e) => {
                     setProductType(e.target.value as ProductType);
-                    setValue("category", "");
+                    // setValue("category", "");
                   }}
 
                   className=" w-full bg-[#fcfdfc] border border-[#e8f3e8] rounded-[0.5rem] p-3.5 text-sm appearance-none focus:outline-none focus:border-green-200 cursor-pointer font-medium focus:bg-[#f2f5f3] transition-colors "

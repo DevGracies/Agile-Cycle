@@ -1,5 +1,5 @@
 import z from "zod";
-import { createEnhancementSchema } from "../validators/enhancement";
+import { createEnhancementSchema, updateEnhancementSchema } from "../validators/enhancement";
 
 
 export const ENHANCEMENT_CATEGORIES = [
@@ -14,3 +14,5 @@ export const ENHANCEMENT_CATEGORIES = [
 export type EnhancementCategory = typeof ENHANCEMENT_CATEGORIES[number];
 
 export type CreateEnhancementInput = z.infer<typeof createEnhancementSchema>;
+
+export type UpdateEnhancementInput = z.infer<typeof updateEnhancementSchema>;

@@ -45,20 +45,20 @@ export default function RootLayout({
 
         <QueryProvider>
           <AuthProvider>
-            <EbikeProvider>
-              <AccessoryProvider>
-                <EnhancementProvider>
-                  <ConfirmProvider>
-                    <CartProvider>
-                      {children}
-                    </CartProvider>
-                  </ConfirmProvider>
-                </EnhancementProvider>
-              </AccessoryProvider>
-            </EbikeProvider>
-          </AuthProvider>
+          <EbikeProvider>
+            <AccessoryProvider>
+              <EnhancementProvider>
+                <ConfirmProvider>
+                  <CartProvider>
+                    {children}
+                    <BackToTop />
+                  </CartProvider>
+                </ConfirmProvider>
+              </EnhancementProvider>
+            </AccessoryProvider>
+          </EbikeProvider>
+        </AuthProvider>
         </QueryProvider>
-        <BackToTop />
       </body>
 
     </html>

@@ -9,7 +9,7 @@ export const register = asyncHandler(async (
   req: Request,
   res: Response,
 ) => {
-  const { accessToken } = await registerService(req.body);
+  const { accessToken, verificationToken } = await registerService(req.body);
 
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
@@ -19,9 +19,11 @@ export const register = asyncHandler(async (
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
+  console.log("Token", verificationToken)
   return res.status(201).json({
     success: true,
     message: "Account created successfully",
+    data: verificationToken,
   });
 });
 

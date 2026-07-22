@@ -204,7 +204,7 @@ export default function CategorySidebar({
           className="
           fixed
           inset-0
-          z-40
+          z-20
           bg-black/40
           lg:hidden
         "
@@ -218,7 +218,7 @@ export default function CategorySidebar({
         fixed
         inset-y-0
         left-0
-        z-50
+        z-30
         w-[320px]
         bg-white
         border-r

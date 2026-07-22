@@ -4,7 +4,7 @@ import User from "../models/user";
 import {
     confirmEmailVerificationService,
     getNewsletterSubscribers,
-    requestEmailVerificationService,
+    // requestEmailVerificationService,
     requestPasswordResetService,
     resetPasswordService,
     setUpCyclingExperienceService,
@@ -121,20 +121,20 @@ export const resetPassword = asyncHandler(async (
     });
 });
 
-export const requestEmailVerification = asyncHandler(
-    async (req: AuthenticatedRequest, res: Response) => {
-        if (!req.user) {
-            throw new AppError("User not found", 404);
-        }
-        const { email } = req.body;
-        await requestEmailVerificationService(email);
+// export const requestEmailVerification = asyncHandler(
+//     async (req: AuthenticatedRequest, res: Response) => {
+//         if (!req.user) {
+//             throw new AppError("User not found", 404);
+//         }
+//         const { email } = req.body;
+//         await requestEmailVerificationService(email);
 
-        return res.status(200).json({
-            success: true,
-            message: "Verification email sent",
-        });
-    }
-);
+//         return res.status(200).json({
+//             success: true,
+//             message: "Verification email sent",
+//         });
+//     }
+// );
 
 export const confirmEmailVerification = asyncHandler(
     async (req: AuthenticatedRequest, res: Response) => {
@@ -142,7 +142,6 @@ export const confirmEmailVerification = asyncHandler(
             throw new AppError("User not found", 404);
         }
         await confirmEmailVerificationService(
-            req.user.id,
             req.body.token
         );
 

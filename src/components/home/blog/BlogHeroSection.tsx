@@ -1,11 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import blogHeroImage from "@/public/home/blogHero.png";
-import { insights } from "@/src/lib/data";
 import InsightCard from "../localShop/InsightCard";
 import leftArrow from "@/public/home/Left-arrow.png";
 import rightArrow from '@/public/home/Right-arrow.png';
 import line from "@/public/home/line.png";
 import line1 from "@/public/home/line1.png";
+import { useBlogs } from "@/src/hooks/useBlogUsers";
 
 const categories = [
   "All",
@@ -18,6 +20,17 @@ const categories = [
 ];
 
 export default function BlogHeroSection() {
+  const { data, isLoading, error } = useBlogs();
+
+  const blogs = data?.blogs ?? [];
+
+  if (isLoading) {
+  return <p>Loading blogs...</p>;
+}
+
+if (error) {
+  return <p>Failed to load blogs.</p>;
+}
   return (
     <section className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
@@ -75,15 +88,11 @@ export default function BlogHeroSection() {
 
          {/* Cards */}
                 <div className="mt-10 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-                 {insights.map((item) => (
+                 {blogs.map((blog) => (
                     <InsightCard
-                      key={item.id}
-                      id={item.id}
-                      image={item.image}
-                      title={item.title}
-                      description={item.description}
-                      date={item.date ?? ""}
-                    />
+  key={blog._id}
+  blog={blog}
+/>
                   ))}
                 </div>
 

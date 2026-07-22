@@ -11,7 +11,7 @@ export const createEbike = asyncHandler(
     const parsed = createEbikeSchema.safeParse(req.body);
 
     if (!parsed.success) {
-      console.log(JSON.stringify(parsed.error.flatten()))
+      console.log("parsed Error", JSON.stringify(parsed.error.flatten()))
       throw new AppError(
         "Invalid request data",
         400,
@@ -23,7 +23,7 @@ export const createEbike = asyncHandler(
       throw new AppError("At least one image is required", 400);
     }
 
-    console.log(req.files);
+    console.log("files", req.files);
     const ebike = await createEbikeService(parsed.data, req?.files as Express.Multer.File[]);
 
     return res.status(201).json({
@@ -99,7 +99,6 @@ export const updateEbike = asyncHandler(
     const parsed = updateEbikeSchema.safeParse(body);
 
     if (!parsed.success) {
-      console.log(parsed.error?.flatten())
       throw new AppError(
         "Invalid request data",
         400,

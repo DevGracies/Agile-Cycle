@@ -2,7 +2,7 @@
 import { Accessory } from "../models/accessories";
 import { Enhancement } from "../models/enhancement";
 import { Ebike } from "../models/ebike";
-import { CreateEbikeInput, ProductQuery } from "../types/ebike";
+import { CreateEbikeInput, ProductQuery, UpdateEbikeInput } from "../types/ebike";
 import { AppError } from "../utils/AppError";
 import { Review } from "../models/review";
 import { deleteImages, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
@@ -29,7 +29,7 @@ export const createEbikeService = async (
 
 export const updateEbikeService = async (
   ebikeId: string,
-  data: Partial<CreateEbikeInput>,
+  data: Partial<UpdateEbikeInput>,
   files: Express.Multer.File[]
 ) => {
   const ebike = await Ebike.findById(ebikeId);

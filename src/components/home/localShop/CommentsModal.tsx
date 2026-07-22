@@ -1,7 +1,5 @@
-"use client";
 
 import { X } from "lucide-react";
-import { useState } from "react";
 
 import BlogCommentCard from "./BlogCommentCard";
 import { insights } from "@/src/lib/data";
@@ -19,15 +17,8 @@ export default function CommentsModal({
   blogTitle,
   blogId,
 }: CommentsModalProps) {
-  
- 
-  const [activeCommentId, setActiveCommentId] = useState<number | null>(null);
 
     if (!isOpen) return null;
-
-    const toggleCommentInput = (id: number) => {
-        setActiveCommentId(activeCommentId === id ? null : id );
-    };
 
       const blog = insights.find(
         (item) => item.id === blogId

@@ -253,3 +253,37 @@ export type BikeCategory =
   content: string;
   replies?: Comment[];
 }
+
+
+
+// 
+export interface Blog {
+  _id: string;
+
+  title: string;
+  description: string;
+
+  content: string;
+
+  image: string;
+
+  category: string;
+
+  author: {
+    _id: string;
+    name: string;
+  };
+
+  status: "active" | "inactive" | "archived";
+
+  publishedAt: string;
+
+  stats: {
+    views: number;
+    likes: number;
+    comments: number;
+  };
+
+  createdAt: string;
+  updatedAt: string;
+}

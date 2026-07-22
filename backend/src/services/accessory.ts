@@ -2,6 +2,7 @@ import { AppError } from "../utils/AppError";
 
 import type {
   CreateAccessoryInput,
+  UpdateAccessoryInput,
 } from "../types/accessory";
 import { ProductQuery } from "../types/ebike";
 import { Accessory } from "../models/accessories";
@@ -33,7 +34,7 @@ export const createAccessoryService = async (
 
 export const updateAccessoryService = async (
   accessoryId: string,
-  data: Partial<CreateAccessoryInput>,
+  data: Partial<UpdateAccessoryInput>,
   files: Express.Multer.File[]
 ) => {
   const accessory = await Accessory.findById(accessoryId);

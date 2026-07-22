@@ -1,5 +1,5 @@
 import z from "zod";
-import { createEbikeSchema } from "../validators/ebike";
+import { createEbikeSchema, updateEbikeSchema } from "../validators/ebike";
 
 export const EBIKE_CATEGORIES = [
   "cruiser",
@@ -13,8 +13,9 @@ export const EBIKE_CATEGORIES = [
 
 export type EbikeCategory = typeof EBIKE_CATEGORIES[number];
 
-export type CreateEbikeInput =
-  z.infer<typeof createEbikeSchema>;
+export type CreateEbikeInput =  z.infer<typeof createEbikeSchema>;
+
+export type UpdateEbikeInput =  z.infer<typeof updateEbikeSchema>;
 
 export interface ProductQuery {
   page?: string;

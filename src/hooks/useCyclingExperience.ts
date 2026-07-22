@@ -20,6 +20,11 @@ export const useCyclingExperience = () => {
 
         const isClub = belongsToClub === "yes" ? true : false;
         try {
+            if(bikeType.trim() && !bikeBrand.trim()) {
+                toast.error("Please enter your bike brand");
+                return;
+            }
+
             if (isClub && !clubName.trim()) {
                 toast.error(
                     "Please enter your cycling club."

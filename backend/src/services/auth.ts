@@ -8,7 +8,7 @@ import { Role } from "../types/user";
 
 export const registerService = async (
   body: RegisterInput
-): Promise<{ accessToken: string }> => {
+): Promise<{ accessToken: string, verificationToken: string }> => {
   const parsed = registerSchema.safeParse(body);
 
   if (!parsed.success) {
@@ -39,7 +39,32 @@ export const registerService = async (
     role: user.role as Role,
   });
 
-  return { accessToken };
+
+  if (!user) {
+    throw new AppError("User not found", 404);
+  }
+
+  if (user.isEmailVerified) {
+    throw new AppError("Email already verified", 400);
+  }
+
+  const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+
+  user.emailVerificationToken = verificationToken;
+  user.emailVerificationExpiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+  await user.save({ validateBeforeSave: false });
+
+  // await sendEmail({
+  //     to: user.email,
+  //     subject: "Verify your email",
+  //     html: `
+  //   <p>Here is your verification code.</p>
+  //   <h2>${verificationToken}</h2>
+  // `,
+  // });
+
+  return { accessToken, verificationToken };
 };
 
 

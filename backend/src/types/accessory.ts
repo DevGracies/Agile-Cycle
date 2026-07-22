@@ -1,5 +1,5 @@
 import z from "zod";
-import { createAccessorySchema } from "../validators/accessory";
+import { createAccessorySchema, updateAccessorySchema } from "../validators/accessory";
 
 export const ACCESSORY_CATEGORIES = [
   "lights",
@@ -21,3 +21,5 @@ export const ACCESSORY_CATEGORIES = [
 export type AccessoryCategory = typeof ACCESSORY_CATEGORIES[number];
 
 export type CreateAccessoryInput = z.infer<typeof createAccessorySchema>;
+
+export type UpdateAccessoryInput = z.infer<typeof updateAccessorySchema>;

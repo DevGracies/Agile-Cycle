@@ -13,7 +13,9 @@ export default function PublicLayout({
     <>
       <div>
         <Navbar />
-        {children}
+         <main className="pt-4">
+          {children}
+         </main>
         <SubscribeSection />
         <FeaturesSection />
         <Footer />

@@ -16,6 +16,10 @@ export const useSetUpProfile = () => {
         setIsLoading(true)
 
         try {
+            if(!country || !state || !ridingPurpose){
+                toast.error("Please, fill the missing fields");
+                return;
+            }
             await profileSetUp({
                 country,
                 state,
