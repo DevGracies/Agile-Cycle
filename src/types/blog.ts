@@ -59,21 +59,23 @@ export interface BlogMetrics {
   totalVisitors: number;
 }
 
-// 
-// 
-// 
+// users blog
 export interface Blog {
   _id: string;
-  authorId: string;
+
+  author: {
+    _id: string;
+    name: string;
+  };
 
   title: string;
+  description: string;
+  content: string;
 
-  image?: {
+  image: {
     public_id: string;
     secure_url: string;
   };
-
-  category: string;
 
   status: "active" | "inactive" | "archived";
 
@@ -100,4 +102,44 @@ export interface BlogListResponse {
     limit: number;
     pages: number;
   };
+}
+
+export interface BlogResponse {
+  success: boolean;
+  message: string;
+  blog: Blog;
+  comments: any[]; // we'll type this later
+}
+// end of users blog
+
+export interface MockBlog {
+  _id: string;
+
+  title: string;
+  description: string;
+
+  heroImage?: string;
+
+  author: {
+    _id: string;
+    name: string;
+  };
+
+  image: {
+    public_id: string;
+    secure_url: string;
+  };
+
+  publishedAt: string;
+
+  stats: {
+  views: number;
+  likes: number;
+  comments: number;
+};
+  // comments: number;
+
+  //sections: BlogSection[];
+
+  commentsData?: Comment[];
 }

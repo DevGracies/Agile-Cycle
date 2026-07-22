@@ -4,8 +4,9 @@ import { asyncHandler } from "../utils/asyncHandler";
 import { AuthenticatedRequest } from "../types/auth";
 import { AppError } from "../utils/AppError";
 import { Blog } from "../models/blog";
-import { Comment } from "../models/comment";
+
 import { BlogView } from "../models/view";
+import comment from "../models/comment";
 
 
 export const createBlog = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
@@ -37,7 +38,7 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
 
     return res.status(200).json({
         success: true,
-        message: "Blogs fetched successfully.",
+        message: "Blogs fetched success.",
         blogs,
         pagination,
     });
@@ -46,13 +47,14 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
 export const getBlog = asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const blog = await blogService.getBlog(id as string);
+   const { blog } = await blogService.getBlog(id as string);
 
-    return res.status(200).json({
-        success: true,
-        message: "Blog fetched successfully.",
-        blog,
-    })
+return res.status(200).json({
+  success: true,
+  message: "Blog fetched successful.",
+  blog,
+ 
+});
 });
 
 export const updateBlog = asyncHandler(async (req: Request, res: Response) => {
@@ -107,7 +109,7 @@ export const getBlogDashboardStats = asyncHandler(async (req: AuthenticatedReque
     
     const [blogs, comments, views] = await Promise.all([
         Blog.countDocuments(),
-        Comment.countDocuments(),
+        comment.countDocuments(),
         BlogView.countDocuments(),
     ]);
 

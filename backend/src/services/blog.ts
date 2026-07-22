@@ -2,7 +2,6 @@ import { Types } from "mongoose";
 import { AppError } from "../utils/AppError";
 import { deleteImage, replaceImage, uploadImage } from "../utils/cloudinary";
 import { Blog } from "../models/blog";
-import { Comment } from "../models/comment";
 // CREATE BLOG
 export const createBlog = async (data: any) => {
     const {
@@ -107,7 +106,7 @@ return {
 
 // GET BLOG BY ID + INCREMENT VIEWS
 export const getBlog = async (blogId: string) => {
-  const [blog, comments] = await Promise.all([
+  const [blog] = await Promise.all([
     Blog.findByIdAndUpdate(
       blogId,
       {
@@ -120,7 +119,7 @@ export const getBlog = async (blogId: string) => {
       .populate("authorId", "name")
       .lean(),
 
-    Comment.find({ blogId }),
+    
   ]);
 
   if (!blog) {
@@ -134,7 +133,7 @@ return {
     ...rest,
     author: authorId,
   },
-  comments,
+ 
 };
 };
 

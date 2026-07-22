@@ -1,26 +1,11 @@
-import { InferSchemaType, Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
-const commentSchema = new Schema(
+const replySchema = new mongoose.Schema(
   {
-    blogId: {
-      type: Schema.Types.ObjectId,
-      ref: "Blog",
+    name: {
+      type: String,
       required: true,
-      index: true,
-    },
-
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-      index: true,
-    },
-
-    parentCommentId: {
-      type: Schema.Types.ObjectId,
-      ref: "Comment",
-      default: null,
-      index: true,
+      trim: true,
     },
 
     content: {
@@ -28,14 +13,50 @@ const commentSchema = new Schema(
       required: true,
       trim: true,
     },
+
+    likes: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-commentSchema.index({ blogId: 1, createdAt: -1 });
+const commentSchema = new mongoose.Schema(
+  {
+    blog: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Blog",
+      required: true,
+    },
 
-export type CommentDocument = InferSchemaType<typeof commentSchema>;
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-export const Comment = model("Comment", commentSchema);
+    content: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    likes: {
+      type: Number,
+      default: 0,
+    },
+
+    replies: {
+      type: [replySchema],
+      default: [],
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export default mongoose.model("Comment", commentSchema);
