@@ -14,6 +14,7 @@ import { User } from "@/src/types/user";
 import { logout } from "../services/auth.service";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { apiError } from "../services/api.service";
 
 
 interface AuthContextType {
@@ -49,11 +50,9 @@ export function AuthProvider({
             );
         } catch (error) {
             setUser(null);
-            if (error instanceof Error) {
-                console.error(
-                    error.message
-                );
-            }
+            console.error(
+                apiError(error)
+            );
         } finally {
             setIsLoading(false);
         }

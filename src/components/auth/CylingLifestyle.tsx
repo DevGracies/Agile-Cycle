@@ -32,6 +32,7 @@ const SetUpProfile = () => {
           Cycling Lifestyle
         </h1>
 
+
         <p className="text-sm text-gray-600 text-[18px]">
           Help us know your {" "}
           <Link href="/login" className="text-[#519A09] ">
@@ -44,6 +45,7 @@ const SetUpProfile = () => {
       <form onSubmit={handleSubmit}
         className="space-y-5">
 
+        <p className="text-gray-500 font-medium">Do you own a bike?</p>
         <Select
           value={bikeType ?? ""}
           onChange={(value) => setBikeType(value as BikeType)}
@@ -74,7 +76,7 @@ const SetUpProfile = () => {
         />
 
         <div>
-          <p>Do you belong to any cycling club?</p>
+          <p className="text-gray-500 font-medium">Do you belong to any cycling club?</p>
 
           <div className="flex gap-10 mt-3">
             <button

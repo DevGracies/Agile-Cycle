@@ -30,7 +30,7 @@ export default function ProductDetailsPage() {
     <main className="bg-gray-50 py-24">
       <Container>
         <div className="space-y-8">
-          <BreadCrumbs product={enhancement} />
+          <BreadCrumbs product={enhancement as Enhancement} productType="enhancements" />
           <section className="grid grid-cols-1 gap-8 lg:grid-cols-2">
 
             <ProductGallery product={enhancement as Enhancement} />

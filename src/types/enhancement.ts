@@ -1,8 +1,15 @@
-import { Pagination } from "./api";
+import { CategoryCount } from "./ebikes";
 import { Enhancement } from "./product";
 
 export interface GetEnhancementResponse {
   success: boolean;
+  message?: string;
+
   enhancements: Enhancement[];
-  pagination: Pagination;
+
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  categoryCounts: CategoryCount[];
 }

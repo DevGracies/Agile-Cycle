@@ -65,7 +65,7 @@ export default function ProductInfo({ product }: { product: Product }) {
       {/* PRICE */}
       <div className="flex items-center gap-4 mt-6">
         <h2 className="text-2xl font-bold text-secondary">
-          {formatPrice(product.discountPrice)}
+          {formatPrice(product.discountPrice || 0)}
         </h2>
 
         {product.price && (
@@ -110,7 +110,7 @@ export default function ProductInfo({ product }: { product: Product }) {
           />
         </div>
         <div className="w-full">
-          <ProductActions product={product} quantity={quantity} type="ebike" />
+          <ProductActions product={product} quantity={quantity} type="ebikes" />
         </div>
       </div>
     </div>

@@ -14,20 +14,30 @@ import {
   getAccessory,
 } from "../services/accessory.service";
 import { Accessories } from "../types/product";
+import { CategoryCount, ProductFilters } from "../types/ebikes";
 
 interface LoadingState {
   accessory: boolean;
   accessories: boolean;
 }
 
+interface PaginationState {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 interface AccessoryContextType {
   accessory: Accessories | null;
   accessories: Accessories[];
   loading: LoadingState;
+  pagination: PaginationState;
   error: string | null;
   discountPercentage: number;
+  categoryCounts: CategoryCount[];
   fetchAccessory: (accessoryId: string) => Promise<void>;
-  fetchAccessories: () => Promise<void>;
+  fetchAccessories: (filters?: Partial<ProductFilters>) => Promise<void>;
 }
 
 const AccessoryContext =
@@ -44,14 +54,28 @@ export function AccessoryProvider({
   const [accessories, setAccessories] =
     useState<Accessories[]>([]);
 
+  const [pagination, setPagination] =
+    useState<PaginationState>({
+      total: 0,
+      page: 1,
+      limit: 10,
+      totalPages: 1,
+    });
+
   const [loading, setLoading] =
     useState<LoadingState>({
       accessory: true,
       accessories: true,
     });
 
+
   const [error, setError] =
     useState<string | null>(null);
+
+  const [
+    categoryCounts,
+    setCategoryCounts
+  ] = useState<CategoryCount[]>([]);
 
   const setLoadingState = useCallback(
     (
@@ -66,30 +90,44 @@ export function AccessoryProvider({
     [],
   );
 
-  const fetchAccessories = useCallback(async () => {
-    try {
-      setLoadingState("accessories", true);
-      setError(null);
+  const fetchAccessories = useCallback(
+    async (filters?: Partial<ProductFilters>) => {
+      try {
+        setLoadingState("accessories", true);
+        setError(null);
 
-      const response =
-        await getAllAccessories();
+        const response =
+          await getAllAccessories(filters);
 
-      setAccessories(
-        response?.accessories ?? [],
-      );
-    } catch (error) {
-      console.error(error);
+        setAccessories(
+          response?.accessories,
+        );
 
-      setError(
-        "Failed to fetch accessories",
-      );
-    } finally {
-      setLoadingState(
-        "accessories",
-        false,
-      );
-    }
-  }, [setLoadingState]);
+        setCategoryCounts(
+          response.categoryCounts
+        );
+
+
+        setPagination({
+          total: response.total,
+          page: response.page,
+          limit: response.limit,
+          totalPages:
+            response.totalPages,
+        });
+      } catch (error) {
+        console.error(error);
+
+        setError(
+          "Failed to fetch accessories",
+        );
+      } finally {
+        setLoadingState(
+          "accessories",
+          false,
+        );
+      }
+    }, [setLoadingState]);
 
   const fetchAccessory = useCallback(
     async (accessoryId: string) => {
@@ -152,18 +190,22 @@ export function AccessoryProvider({
       accessories,
       loading,
       error,
+      pagination,
       fetchAccessory,
       fetchAccessories,
       discountPercentage,
+      categoryCounts,
     }),
     [
       accessory,
       accessories,
       loading,
       error,
+      pagination,
       fetchAccessory,
       fetchAccessories,
       discountPercentage,
+      categoryCounts,
     ],
   );
 

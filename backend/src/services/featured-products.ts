@@ -2,7 +2,6 @@ import { Ebike } from "../models/ebike";
 import { Accessory } from "../models/accessories";
 import { Enhancement } from "../models/enhancement";
 
-
 export const getHomeProducts = async () => {
     const [featuredEbikes, featuredAccessories, featuredEnhancements] = await Promise.all([
         Ebike.find().limit(6),

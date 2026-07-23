@@ -9,19 +9,21 @@ export const register = asyncHandler(async (
   req: Request,
   res: Response,
 ) => {
-  const { accessToken } = await registerService(req.body);
+  const { accessToken, verificationToken } = await registerService(req.body);
 
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
     secure: isProd,
     sameSite: isProd ? "none" : "lax",
     path: "/",
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
+  console.log("Token", verificationToken)
   return res.status(201).json({
     success: true,
     message: "Account created successfully",
+    data: verificationToken,
   });
 });
 
@@ -36,7 +38,7 @@ export const login = asyncHandler(async (
     secure: isProd,
     sameSite: isProd ? "none" : "lax",
     path: "/",
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   return res.status(200).json({
@@ -55,7 +57,7 @@ export const logout = asyncHandler(async (
     secure: isProd,
     sameSite: isProd ? "none" : "lax",
     path: "/",
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   return res.status(200).json({

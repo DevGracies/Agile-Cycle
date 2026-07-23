@@ -7,7 +7,6 @@ import {
     getAllUsers,
     getCurrentUser,
     getSubscribers,
-    requestEmailVerification,
     requestPasswordReset,
     resetPassword,
     setUpCyclingExperience,
@@ -33,7 +32,6 @@ router.delete("/all/delete", adminOnly, deleteAllUsers);
 router.post("/forgot-password", requestPasswordReset);
 router.patch("/reset-password/:token", resetPassword);
 
-router.post("/email-verification", requestEmailVerification);
 router.patch("/verify-email", confirmEmailVerification);
 
 router.patch("/profile", setUpProfile);

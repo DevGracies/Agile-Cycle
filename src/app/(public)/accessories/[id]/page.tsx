@@ -32,7 +32,7 @@ export default function ProductDetailsPage() {
     <main className="bg-gray-50 py-24">
       <Container>
         <div className="space-y-8">
-          <BreadCrumbs product={accessory} />
+          <BreadCrumbs product={accessory as Accessories} productType="accessories" />
           <section className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <ProductGallery product={accessory as Accessories} />
 

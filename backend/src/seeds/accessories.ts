@@ -18,12 +18,12 @@ export const accessories = [
     discountPrice: 109,
     images: [
       {
-        url: "https://images.unsplash.com/photo-1618987688327-dc0b28888fe4?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWJpa2VzfGVufDB8fDB8fHww",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1618987688327-dc0b28888fe4?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWJpa2VzfGVufDB8fDB8fHww",
+        public_id: "Accessory Image 1"
       },
       {
-        url: "https://images.unsplash.com/photo-1672860354855-9ff508724dae?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTV8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1672860354855-9ff508724dae?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTV8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Accessory Image 2"
       },
     ],
     averageRating: 4.6,
@@ -56,12 +56,12 @@ export const accessories = [
     discountPrice: 109,
     images: [
       {
-        url: "https://images.unsplash.com/photo-1619678786641-23eb19f27924?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1619678786641-23eb19f27924?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Accessory Image 3"
       },
       {
-        url: "https://images.unsplash.com/photo-1672860356563-d1ce9b67bfb6?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzh8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1672860356563-d1ce9b67bfb6?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzh8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Accessory Image 4"
       },
 
     ],
@@ -95,12 +95,12 @@ export const accessories = [
     discountPrice: 109,
     images: [
       {
-        url: "https://images.unsplash.com/photo-1618987688327-dc0b28888fe4?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWJpa2VzfGVufDB8fDB8fHww",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1618987688327-dc0b28888fe4?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWJpa2VzfGVufDB8fDB8fHww",
+        public_id: "Accessory Image 5"
       },
       {
-        url: "https://images.unsplash.com/photo-1625090665951-b93cbcb2687f?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1625090665951-b93cbcb2687f?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Accessory Image 6"
       },
 
     ],
@@ -134,12 +134,12 @@ export const accessories = [
     discountPrice: 109,
     images: [
       {
-        url: "https://images.unsplash.com/photo-1624243519828-52a0f2c88af3?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZWJpa2VzfGVufDB8fDB8fHww",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1624243519828-52a0f2c88af3?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZWJpa2VzfGVufDB8fDB8fHww",
+        public_id: "Accessory Image 7"
       },
       {
-        url: "https://images.unsplash.com/photo-1620801082287-d1913a342dce?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZWJpa2VzfGVufDB8fDB8fHww",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1620801082287-d1913a342dce?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZWJpa2VzfGVufDB8fDB8fHww",
+        public_id: "Accessory Image 8"
       },
 
     ],
@@ -173,12 +173,12 @@ export const accessories = [
     discountPrice: 109,
     images: [
       {
-        url: "https://images.unsplash.com/photo-1666360058702-a3aa07227c53?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1666360058702-a3aa07227c53?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Accessory Image 9"
       },
       {
-        url: "https://images.unsplash.com/photo-1672860356563-d1ce9b67bfb6?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzh8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
-        alt: "Accessory Image"
+        secure_url: "https://images.unsplash.com/photo-1672860356563-d1ce9b67bfb6?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzh8fGViaWtlc3xlbnwwfHwwfHx8MA%3D%3D",
+        public_id: "Accessory Image 10"
       },
 
     ],

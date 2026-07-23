@@ -18,8 +18,8 @@ export default function CartItem({ item, onRemove, onChangeQty }: Props) {
       <div className="flex gap-3">
         <div className="relative w-[100px] h-auto">
           <Image
-          src={product.images?.[0]?.url || "/fallback.png"}
-          alt={product.images?.[0]?.alt || product.name}
+          src={product.images?.[0]?.secure_url || "/fallback.png"}
+          alt={product.name || "Product Image"}
           width={140}
           height={140}
           className="w-full rounded-md object-cover"
@@ -35,7 +35,7 @@ export default function CartItem({ item, onRemove, onChangeQty }: Props) {
             </span>
           </div>
 
-          {product && "specs" in product && (
+          {item.productType === "ebikes" && (
             <>
               <div className="text-xs text-neutral-500 mt-1">
                 Color: {product.specs?.color}

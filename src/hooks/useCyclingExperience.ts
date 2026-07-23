@@ -4,6 +4,7 @@ import { setUpCyclingExperience } from "../services/user.service";
 import { useState } from "react";
 import { BikeType } from "../types/user";
 import { useRouter } from "next/navigation";
+import { apiError } from "../services/api.service";
 
 export const useCyclingExperience = () => {
     const [bikeType, setBikeType] = useState<BikeType>("");
@@ -19,6 +20,11 @@ export const useCyclingExperience = () => {
 
         const isClub = belongsToClub === "yes" ? true : false;
         try {
+            if(bikeType.trim() && !bikeBrand.trim()) {
+                toast.error("Please enter your bike brand");
+                return;
+            }
+
             if (isClub && !clubName.trim()) {
                 toast.error(
                     "Please enter your cycling club."
@@ -35,7 +41,7 @@ export const useCyclingExperience = () => {
             });
             router.push("/newsLetter")
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Failed to set up profile")
+            toast.error(apiError(error) || "Failed to set up profile")
         } finally {
             setIsLoading(false)
         }

@@ -11,7 +11,7 @@ import { ProductType } from "../models/cart";
 
 export const generateAccessToken = (payload: { id: string, role: Role }) => {
     return jwt.sign(payload, env.JWT_ACCESS_SECRET, {
-        expiresIn: "30m",
+        expiresIn: "7d",
     })
 }
 
@@ -34,7 +34,7 @@ export const allRoles = Object.values(roles);
 
 
 export const PRODUCT_MODELS: Record<ProductType, Model<any>> = {
-  ebike: Ebike,
-  accessory: Accessory,
-  enhancement: Enhancement,
+  ebikes: Ebike,
+  accessories: Accessory,
+  enhancements: Enhancement,
 };

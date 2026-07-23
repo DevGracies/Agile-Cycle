@@ -5,20 +5,59 @@ import { ACCESSORY_CATEGORIES } from "../types/accessory";
 export const createAccessorySchema = z.object({
     name: z.string().min(2),
     description: z.string(),
-    shortDescription: z.string(),
+    shortDescription: z.preprocess(
+        value => value === "" ? undefined : value,
+        z.string().min(10).max(300).optional()
+    ),
 
     category: z.enum(ACCESSORY_CATEGORIES),
-    price: z.number().positive(),
-    discountPrice: z.number().positive().optional(),
-    stock: z.number().min(0),
-    shippingDuration: z.string().optional(),
+    price: z.coerce.number().positive(),
+    discountPrice: z.preprocess(
+        value =>
+            value === "" ||
+                value === null ||
+                value === undefined
+                ? undefined
+                : value,
+        z.coerce.number().positive().optional()
+    ),
+    stock: z.coerce.number().min(0),
+    shippingDuration: z.preprocess(
+        value => value === "" ? undefined : value,
+        z.string().optional()
+    ),
+    isFeatured: z.boolean().optional(),
+})
+
+export const updateAccessorySchema = z.object({
+    name: z.string().min(2),
+    description: z.string(),
+    shortDescription: z.preprocess(
+        value => value === "" ? undefined : value,
+        z.string().min(10).max(300).optional()
+    ),
+
+    category: z.enum(ACCESSORY_CATEGORIES),
+    price: z.coerce.number().positive(),
+    discountPrice: z.preprocess(
+        value =>
+            value === "" ||
+                value === null ||
+                value === undefined
+                ? undefined
+                : value,
+        z.coerce.number().positive().optional()
+    ),
+    stock: z.coerce.number().min(0),
+    shippingDuration: z.preprocess(
+        value => value === "" ? undefined : value,
+        z.string().optional()
+    ),
     images: z.array(
         z.object({
-            url: z.string().url(),
-            alt: z.string(),
+            public_id: z.string().min(1),
+            secure_url: z.string().optional(),
         })
     ).optional(),
     isFeatured: z.boolean().optional(),
 })
-
-export const updateAccessorySchema = createAccessorySchema.partial();

@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 
 import Button from "../ui/Button";
 import { Input } from "../ui/Input";
-import { useAuth } from "@/src/hooks/useAuth";
 import { verifyEmail } from "@/src/services/user.service";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { apiError } from "@/src/services/api.service";
+import { useAuth } from "@/src/context/AuthProvider";
 
 const VerifyEmailForm = () => {
   const [timer, setTimer] = useState(30);
@@ -39,7 +40,7 @@ const VerifyEmailForm = () => {
       toast.success(res.message || "Yout email has been verified successfully");
       router.push("/setUpProfile");
     } catch (error) {
-       toast.error(error instanceof Error ? error.message : "Failed to verify email")
+       toast.error(apiError(error) || "Failed to verify email")
     } finally {
       setIsVerifying(false)
     }

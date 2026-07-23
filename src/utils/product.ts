@@ -1,3 +1,4 @@
+import { ProductFilters } from "../types/ebikes";
 import { Accessories, Ebike, Enhancement, InventoryStatus } from "../types/product";
 
 export const calculateDiscountPercentage = (
@@ -39,7 +40,7 @@ type Product = Ebike | Accessories | Enhancement;
 export function getProductImage(product: Product): string {
   // Case 1: new structured images
   if (Array.isArray(product?.images) && product?.images.length > 0) {
-    return product?.images[0]?.url || "/fallback.png";
+    return product?.images[0]?.secure_url || "/fallback.png";
   }
 
   // Case 2: legacy single image string
@@ -49,6 +50,56 @@ export function getProductImage(product: Product): string {
 
   return "/fallback.png";
 }
+
+  export const buildQueryParams = (
+    filters?: Partial<ProductFilters>
+  ) => {
+    const params = new URLSearchParams();
+
+    if (!filters) return params;
+
+    if (filters.page) {
+      params.set("page", String(filters.page));
+    }
+
+    if (filters.productType) {
+      params.set("productType", String(filters.productType));
+    }
+    
+    if (filters.limit) {
+      params.set("limit", String(filters.limit));
+    }
+
+    if (filters?.category !== undefined) {
+      params.set(
+        "category",
+        filters.category
+      );
+    }
+
+    if (filters?.inventoryStatus && filters.inventoryStatus.length > 0) {
+      params.set(
+        "inventoryStatus",
+        filters.inventoryStatus
+      );
+    }
+
+    if (filters.minPrice !== undefined) {
+    params.set(
+      "minPrice",
+      String(filters.minPrice)
+    );
+  }
+
+    if (filters.maxPrice !== undefined) {
+    params.set(
+      "maxPrice",
+      String(filters.maxPrice)
+    );
+  }
+
+    return params;
+  };
 
 
 export const ebikeImages = [

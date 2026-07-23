@@ -13,21 +13,6 @@ interface Props {
 
 export default function ProductActions({ product, card, quantity, type }: Props) {
   const { addToCart } = useCart();
-  
-  let productType;
-  switch (type) {
-    case "ebike":
-      productType = "ebikes";
-      break;
-    case "accessory":
-      productType = "accessories";
-      break;
-    case "enhancement":
-      productType = "enhancements";
-      break;
-    default:
-      productType = "ebikes";
-  }
 
   return (
     <div className="flex gap-3">
@@ -40,7 +25,7 @@ export default function ProductActions({ product, card, quantity, type }: Props)
 
       {card && (
         <Link
-          href={`/${productType}/${product._id}`}
+          href={`/${type}/${product._id}`}
           className="w-12 rounded-xl border border-secondary flex items-center justify-center"
         >
           <Expand size={20} className="text-secondary" />

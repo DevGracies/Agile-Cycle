@@ -75,4 +75,6 @@ declare module 'lucide-react' {
   export const Activity: Icon;
   export const BadgeCheckIcon: Icon;
   export const UserRoundCheck: Icon;
+  export const Filter: Icon;
+  export const ImagePlus: Icon;
 }

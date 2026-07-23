@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { toggleSubscribeToNewsLetter } from "@/src/services/user.service";
 import { useRouter } from "next/navigation";
 import Loader from "../ui/Loader";
+import { apiError } from "@/src/services/api.service";
 
 const NewsLetter = () => {
   const [newsletter, setNewsletter] = useState(false);
@@ -23,7 +24,7 @@ const NewsLetter = () => {
       toast.success(res.message || "Preferences updated successfully");
       router.push("/welcome")
     } catch(error){
-      toast.error(error instanceof Error ? error.message : "Failed to update preferences");
+      toast.error(apiError(error) || "Failed to update preferences");
     } finally{
       setIsLoading(false);
     }

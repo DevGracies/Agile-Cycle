@@ -1,216 +1,780 @@
 "use client";
 
-import { useState } from "react";
-import { SidebarFilters } from "@/src/types/ebikes";
-import { ChevronDown, ChevronRight } from "lucide-react";
-import PriceRangeSlider from "./PriceRangeSlider";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
-interface Props {
-  filters: SidebarFilters;
-  onApply?: () => void
+import {
+  ChevronDown,
+  ChevronRight,
+  X,
+} from "lucide-react";
+
+import {
+  accessoryFilters,
+  ebikeFilters,
+  enhancementFilters,
+} from "@/src/lib/product";
+
+import PriceRangeSlider from "./PriceRangeSlider";
+import { ProductFilters } from "@/src/types/ebikes";
+import { ProductType } from "@/src/services/cart.service";
+
+
+
+interface CategorySidebarProps {
+
+  filters: ProductFilters;
+
+  categoryCounts: {
+    _id: string;
+    count: number;
+  }[];
+
+  onApplyFilters:
+  (filters: ProductFilters) => void;
+  pagination: any;
+
+  onClearFilters: () => void;
+
+  mobileOpen?: boolean;
+
+  onCloseMobile?: () => void;
+
 }
 
-export default function CategorySidebar({ filters, onApply }: Props) {
-  const [selectedAvailability, setSelectedAvailability] = useState<string[]>(
-    [],
-  );
-  const [isAvailable, setIsAvailable] = useState(true);
-  const [isProductOpen, setIsProductOpen] = useState(true);
 
-  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
 
-  const [priceRange, setPriceRange] = useState({
-    min: filters.price.min,
-    max: filters.price.max,
+const productTypes = [
+  {
+    id: "ebikes",
+    label: "Electric Bikes",
+  },
+  {
+    id: "accessories",
+    label: "Ebike Accessories",
+  },
+  {
+    id: "enhancements",
+    label: "Ebike Enhancements",
+  },
+
+] as const;
+
+
+
+const filterConfigMap = {
+  ebikes: ebikeFilters,
+  accessories: accessoryFilters,
+  enhancements: enhancementFilters,
+};
+
+
+
+export default function CategorySidebar({
+  filters,
+  categoryCounts,
+  onApplyFilters,
+  onClearFilters,
+  pagination,
+  mobileOpen = false,
+  onCloseMobile,
+}: CategorySidebarProps) {
+
+
+  const [
+    draftFilters,
+    setDraftFilters
+  ] = useState<ProductFilters>(filters);
+
+
+
+  const [
+    openSections,
+    setOpenSections
+  ] = useState({
+
+    productType: true,
+
+    category: true,
+
+    availability: true,
+
+    price: true,
+
+    more: false,
+
   });
 
-  const toggleSelection = (
-    value: string,
-    selected: string[],
-    setter: (value: string[]) => void,
+
+
+  useEffect(() => {
+
+    setDraftFilters(filters);
+
+  }, [filters]);
+
+
+
+  const getCategoryCount = (
+    id: string
   ) => {
-    setter(
-      selected.includes(value)
-        ? selected.filter((item) => item !== value)
-        : [...selected, value],
-    );
+
+    if (id === "") {
+      return categoryCounts.reduce((acc, item) => acc + item.count, 0);
+    }
+
+    const item =
+      categoryCounts.find(
+        item => item._id === id
+      );
+
+    return item?.count ?? 0;
   };
 
-  const applyFilters = () => {
-    console.log({
-      priceRange,
-      selectedAvailability,
-      selectedProducts,
+  const activeFilterConfig =
+    useMemo(() => {
+
+      return filterConfigMap[
+        draftFilters.productType as keyof typeof filterConfigMap
+      ];
+
+    }, [
+      draftFilters.productType
+    ]);
+
+
+
+
+  const updateFilter = (
+    updates: Partial<ProductFilters>
+  ) => {
+
+    setDraftFilters((prev: any) => ({
+
+      ...prev,
+
+      ...updates,
+
+    }));
+
+  };
+
+
+
+  const handleProductTypeChange = (
+    type: ProductFilters["productType"]
+  ) => {
+
+
+    updateFilter({
+
+      productType: type,
+
+      category: "",
+
     });
   };
 
-  const clearFilters = () => {
-    setPriceRange({
-      min: filters.price.min,
-      max: filters.price.max,
-    });
-    setSelectedAvailability([]);
-    setSelectedProducts([]);
+
+
+  const toggleSection = (
+    section: keyof typeof openSections
+  ) => {
+
+    setOpenSections(prev => ({
+
+      ...prev,
+
+      [section]: !prev[section],
+
+    }));
+
   };
 
   return (
-    <aside className="sticky top-0 rounded-xl border border-gray-200 bg-white p-3">
-      <div className="mb-10">
-        <h2 className="mb-6 text-lg font-semibold">{filters.name}</h2>
 
-        <div className="space-y-4">
-          {filters.categories.map((category) => (
-            <button
-              key={category.id}
-              className="group flex w-full items-center gap-4 text-left transition hover:text-primary cursor-pointer"
-            >
-              <span>{category.name}</span>
+    <>
+      {/* Mobile Overlay */}
+      {mobileOpen && (
+        <div
+          onClick={onCloseMobile}
+          className="
+          fixed
+          inset-0
+          z-20
+          bg-black/40
+          lg:hidden
+        "
+        />
+      )}
 
-              <ChevronRight size={12} />
-              <span className="text-sm text-gray-400 group-hover:text-primary">
-                {category.count}
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
 
-      <div className="space-y-8">
-        <div className="py-6">
-          <h3 className="mb-6 text-lg font-semibold tracking-wider">
-            Filters
-          </h3>
+      <aside
+        onClick={(e) => e.stopPropagation()}
+        className={`
+        fixed
+        inset-y-0
+        left-0
+        z-30
+        w-[320px]
+        bg-white
+        border-r
+        border-gray-200
+        overflow-y-auto
+        transition-transform
+        duration-300
+        lg:static
+        lg:translate-x-0
 
-          <div className="space-y-4">
-            {/* PRICE SLIDER */}
-            <div className="mb-10">
-              <h4 className="mb-4 font-medium">Price</h4>
+        ${mobileOpen
+            ? "translate-x-0"
+            : "-translate-x-full"
+          }
+      `}
+      >
 
-              <PriceRangeSlider
-                min={filters.price.min}
-                max={filters.price.max}
-                value={priceRange}
-                onChange={setPriceRange}
-              />
-            </div>
 
-            <button
-              onClick={onApply}
-              className="w-1/2 rounded-lg bg-secondary py-3 font-medium text-white hover:bg-secondary/90 cursor-pointer"
-            >
-              Apply
-            </button>
-          </div>
-        </div>
-
-        <div className="space-y-8">
-          <div className="border-b border-gray-100 pb-6">
-            <div className="flex items-center justify-between pr-2">
-              <h4 className="font-medium">Availability</h4>
-
-              <button
-                onClick={() => setIsAvailable((prev) => !prev)}
-                className="transition-transform duration-300"
-              >
-                <div
-                  className={`transform transition-transform duration-300 ${
-                    isAvailable ? "rotate-180" : "rotate-0"
-                  }`}
-                >
-                  <ChevronDown size={18} />
-                </div>
-              </button>
-            </div>
-
-            {/* Animated container */}
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out
-            ${isAvailable ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0 mt-0"}
-          `}
-            >
-              <div className="space-y-3">
-                {filters.availability.map((item: any) => (
-                  <label
-                    key={item.id}
-                    className="flex cursor-pointer items-center gap-3"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={selectedAvailability.includes(item.id)}
-                      onChange={() =>
-                        toggleSelection(
-                          item.id,
-                          selectedAvailability,
-                          setSelectedAvailability,
-                        )
-                      }
-                      className="h-4 w-4 accent-primary"
-                    />
-
-                    <span className="text-sm">{item.label}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="border-b border-gray-100 pb-6">
-            <div className="flex items-center justify-between pr-2">
-              <h4 className="font-medium">Product</h4>
-
-              <button
-                onClick={() => setIsProductOpen((prev) => !prev)}
-                className="transition-transform duration-300"
-              >
-                <div
-                  className={`transform transition-transform duration-300 ${
-                    isProductOpen ? "rotate-180" : "rotate-0"
-                  }`}
-                >
-                  <ChevronDown size={18} />
-                </div>
-              </button>
-            </div>
-
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out
-            ${isProductOpen ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0 mt-0"}
-          `}
-            >
-              <div className="space-y-3">
-                {filters.products.map((item: any) => (
-                  <label
-                    key={item.id}
-                    className="flex cursor-pointer items-center gap-3"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={selectedProducts.includes(item.id)}
-                      onChange={() =>
-                        toggleSelection(
-                          item.id,
-                          selectedProducts,
-                          setSelectedProducts,
-                        )
-                      }
-                      className="h-4 w-4 accent-primary"
-                    />
-
-                    <span className="text-sm">{item.label}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button
-          onClick={clearFilters}
-          className="text-sm w-1/2 rounded-lg border border-primary py-3 font-medium text-secondary hover:bg-gray-100 cursor-pointer"
+        <div
+          className="
+flex items-center justify-between
+px-5 py-4
+border-b border-gray-200
+lg:hidden
+"
         >
-          Clear Filters
-        </button>
-      </div>
-    </aside>
+
+          <h2 className="
+font-bold
+text-xl
+text-secondary
+">
+            Filters
+          </h2>
+
+
+          <button
+            onClick={onCloseMobile}
+          >
+
+            <X size={20} />
+
+          </button>
+
+
+        </div>
+
+
+
+        <div
+          className="
+p-5
+space-y-6
+"
+        >
+
+
+
+          <FilterSection
+            title="Product Type"
+            open={openSections.productType}
+            onToggle={() => toggleSection("productType")}
+          >
+
+
+            <div
+              className="
+space-y-3
+"
+            >
+
+
+              {
+                productTypes.map(type => (
+
+                  <label
+                    key={type.id}
+                    className="
+flex items-center gap-3
+cursor-pointer
+text-sm
+"
+                  >
+
+
+                    <input
+
+                      type="checkbox"
+
+                      name="productType"
+
+                      checked={
+                        draftFilters.productType === type.id
+                      }
+
+                      onChange={() =>
+                        handleProductTypeChange(type.id)
+                      }
+                      className="accent-primary"
+
+                    />
+
+
+                    <span>
+                      {type.label}
+                    </span>
+
+
+                  </label>
+
+                ))
+
+              }
+
+
+            </div>
+
+
+          </FilterSection>
+
+
+
+
+
+          <FilterSection
+            title={
+              draftFilters.productType
+                ? (draftFilters.productType.toUpperCase() as ProductType)
+                : "Category"
+            }
+            open={openSections.category}
+            onToggle={() => toggleSection("category")}
+          >
+
+
+            <div
+              className="
+space-y-3
+"
+            >
+
+
+              {
+                activeFilterConfig.category
+                  .slice(0, 8)
+                  .map(category => (
+
+
+                    <button
+
+                      key={category.id}
+
+                      onClick={() =>
+                        updateFilter({
+                          category: category.id
+                        })
+                      }
+
+                      className={`
+flex
+items-center
+justify-between
+w-full
+text-sm
+
+${draftFilters.category === category.id
+                          ?
+                          "text-primary"
+                          :
+                          "text-gray-600"
+                        }
+
+`}
+                    >
+
+
+                      <span>
+                        {category.name}
+                      </span>
+
+
+                      <div className="
+flex items-center gap-1
+">
+
+                        <ChevronRight size={15} />
+
+                        <span>
+                          {getCategoryCount(category.id)}
+                        </span>
+
+
+                      </div>
+
+
+                    </button>
+
+
+                  ))
+
+
+              }
+
+
+            </div>
+
+
+
+          </FilterSection>
+
+
+
+
+
+          {
+            activeFilterConfig.category.length > 8 &&
+
+            <FilterSection
+
+              title="More"
+
+              open={openSections.more}
+
+              onToggle={() => toggleSection("more")}
+
+            >
+
+
+              <div
+                className="
+space-y-3
+"
+              >
+
+
+                {
+                  activeFilterConfig.category
+                    .slice(8)
+                    .map(category => (
+
+
+                      <button
+
+                        key={category.id}
+
+                        onClick={() =>
+                          updateFilter({
+                            category: category.id
+                          })
+                        }
+
+                        className={`
+flex
+justify-between
+items-center
+w-full
+text-sm
+
+${draftFilters.category === category.id
+                            ?
+                            "text-primary"
+                            :
+                            "text-gray-600"
+                          }
+
+`}
+                      >
+
+
+                        <span>
+                          {category.name}
+                        </span>
+
+
+                        <span>
+                          {getCategoryCount(category.id)}
+                        </span>
+
+
+                      </button>
+
+
+                    ))
+
+                }
+
+
+
+              </div>
+
+
+            </FilterSection>
+
+          }
+
+
+
+
+
+          <FilterSection
+
+            title="Price"
+
+            open={openSections.price}
+
+            onToggle={() => toggleSection("price")}
+
+          >
+
+
+            <PriceRangeSlider
+
+              min={
+                activeFilterConfig.minPrice
+              }
+
+              max={
+                activeFilterConfig.maxPrice
+              }
+
+              minValue={
+                draftFilters.minPrice ?? activeFilterConfig.minPrice
+              }
+
+              maxValue={
+                draftFilters.maxPrice ?? activeFilterConfig.maxPrice
+              }
+
+              onChange={(values) => {
+
+                updateFilter({
+
+                  minPrice: values.min,
+
+                  maxPrice: values.max,
+
+                });
+
+              }}
+
+            />
+
+
+          </FilterSection>
+
+
+
+
+
+          <FilterSection
+
+            title="Availability"
+
+            open={openSections.availability}
+
+            onToggle={() => toggleSection("availability")}
+
+          >
+
+
+            <div className="space-y-3">
+
+
+              {
+                activeFilterConfig.inventoryStatus.map(option => (
+
+
+                  <label
+                    key={option.id}
+                    className="
+flex gap-3
+items-center
+text-sm
+cursor-pointer
+"
+                  >
+
+
+                    <input
+
+                      type="radio"
+
+                      name="availability"
+
+                      checked={
+                        draftFilters.inventoryStatus === option.id
+                      }
+
+                      onChange={() =>
+                        updateFilter({
+
+                          inventoryStatus:
+                            option.id as ProductFilters["inventoryStatus"]
+
+                        })
+                      }
+
+                    />
+
+
+                    <span>
+                      {option.label}
+                    </span>
+
+
+                  </label>
+
+
+                ))
+
+              }
+
+
+
+            </div>
+
+
+          </FilterSection>
+
+
+
+
+
+          <button
+
+            onClick={() =>
+              onApplyFilters(draftFilters)
+            }
+
+            className="
+w-full
+bg-secondary
+text-white
+rounded-lg
+py-3
+font-medium
+text-sm
+"
+
+          >
+
+            Apply Filters
+
+          </button>
+
+
+
+          <button
+
+            onClick={onClearFilters}
+
+            className="
+w-full
+border
+border-gray-300
+rounded-lg
+py-3
+text-secondary
+font-medium
+text-sm
+"
+
+          >
+
+            Clear Filters
+
+          </button>
+
+
+
+        </div>
+
+
+
+      </aside>
+    </>
+
+
   );
+
+}
+
+
+
+
+
+
+function FilterSection({
+  title,
+  open,
+  onToggle,
+  children,
+}: {
+
+  title: string;
+
+  open: boolean;
+
+  onToggle: () => void;
+
+  children: React.ReactNode;
+
+}) {
+
+
+  return (
+
+    <section>
+
+      <button
+
+        onClick={onToggle}
+
+        className="
+w-full
+flex
+justify-between
+items-center
+mb-4
+font-medium
+text-secondary
+"
+
+      >
+
+        <span>
+          {title}
+        </span>
+
+
+        <ChevronDown
+
+          size={18}
+
+          className={
+            `
+transition-transform
+${open ? "rotate-180" : ""}
+`
+          }
+
+        />
+
+
+      </button>
+
+
+      {
+        open &&
+        children
+      }
+
+
+    </section>
+
+  );
+
+
 }

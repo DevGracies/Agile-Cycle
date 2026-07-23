@@ -1,3 +1,5 @@
+import { ProductType } from "../services/cart.service";
+
 export type ProductCategory =
   | "bike"
   | "accessory"
@@ -9,9 +11,9 @@ export type InventoryStatus =
   | "out-of-stock";
 
 export interface ProductImage {
-  _id: string;
-  url: string;
-  alt: string;
+  public_id?: string;
+  secure_url: string;
+  url?: string;
 }
 
 export interface ProductColor {
@@ -173,9 +175,37 @@ export interface Enhancement {
 }
 
 export type Product = Ebike | Accessories | Enhancement;
+export type Products = Ebike[] | Accessories[] | Enhancement[];
 
 export interface CompatibleModel {
   id: string;
   name: string;
   selected?: boolean;
+}
+
+
+export interface DashboardProduct {
+  _id: string;
+  name: string;
+  price: number;
+  stock: number;
+  category: string;
+  productType: ProductType;
+  images: {
+    public_id: string;
+    secure_url: string;
+  }[];
+  createdAt: string;
+}
+
+export interface ProductPagination {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+export interface DashboardProductsResponse {
+  products: DashboardProduct[];
+  pagination: ProductPagination;
 }

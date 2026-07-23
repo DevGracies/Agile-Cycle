@@ -10,13 +10,17 @@ router.get("/", getAllAccessories);
 router.get("/:id", getAccessory);
 
 // Protected Routes
-router.use(authenticate, adminOnly);
+router.use(authenticate, );
 router.post(
     "/",
     upload.array("images", 5),
     createAccessory
 );
-router.patch("/:id", updateAccessory);
-router.patch("/:id", archiveAccessory);
+router.patch(
+    "/:id",
+    upload.array("images", 5),
+    updateAccessory
+);
+router.patch("/:id/delete", archiveAccessory);
 
 export default router;

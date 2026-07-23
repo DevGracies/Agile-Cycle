@@ -17,6 +17,7 @@ import {
   ProductType,
   cartApi,
 } from "@/src/services/cart.service";
+import { apiError } from "../services/api.service";
 
 
 interface CartContextType {
@@ -92,10 +93,8 @@ export function CartProvider({
         `${quantity} ${item} added to cart`
       );
     } catch (error) {
-      toast.error("Failed to add item");
-      if (error instanceof Error) {
-        console.error(error.message)
-      };
+      toast.error(apiError(error) || "Failed to add item");
+      console.error(apiError(error))
     }
   }, [])
 
@@ -114,10 +113,7 @@ export function CartProvider({
       fetchCart()
       toast.success("Item removed from cart");
     } catch (error) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "Failed to remove item"
+      toast.error(apiError(error) || "Failed to remove item"
       );
     }
   }, [])
@@ -139,10 +135,7 @@ export function CartProvider({
         );
       setCart(response.data ?? null);
     } catch (error) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "Failed to update quantity"
+      toast.error(apiError(error) || "Failed to update quantity"
       );
     }
   }, [])
@@ -156,10 +149,7 @@ export function CartProvider({
         "Cart cleared"
       );
     } catch (error) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "Failed to clear cart"
+      toast.error(apiError(error) || "Failed to clear cart"
       );
 
     }

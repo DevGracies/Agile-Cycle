@@ -45,7 +45,7 @@ const SignupForm = () => {
 
       await signUp({ name, email, password });
       toast.success("Account created successfully");
-      router.push("/setUpProfile");
+      router.push("/verifyEmail");
     } catch (error) {
         toast.error(apiError(error) || "Signup failed. Please try again.");
     } finally {

@@ -3,9 +3,10 @@ import { AppError } from "../utils/AppError";
 
 import type {
   CreateEnhancementInput,
+  UpdateEnhancementInput,
 } from "../types/enhancement";
 import { ProductQuery } from "../types/ebike";
-import { formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
+import { deleteImages, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
 
 
 export const createEnhancementService = async (
@@ -33,26 +34,46 @@ export const createEnhancementService = async (
 
 export const updateEnhancementService = async (
   enhancementId: string,
-  data: Partial<CreateEnhancementInput>
+  data: Partial<UpdateEnhancementInput>,
+  files: Express.Multer.File[]
 ) => {
-  const updatedEnhancement =
-    await Enhancement.findByIdAndUpdate(
-      enhancementId,
-      data,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+  const enhancement = await Enhancement.findById(enhancementId);
+  if (!enhancement) {
+    throw new AppError("Enhancement not found", 404);
+  }
+  const existingImages =
+    Array.isArray(data.images)
+        ? data.images
+        : enhancement.images;
 
-  if (!updatedEnhancement) {
-    throw new AppError(
-      "Enhancement not found",
-      404
+  const imagesToDelete =
+    enhancement.images.filter(
+      image =>
+        !existingImages.some(
+          kept =>
+            kept.public_id === image.public_id
+        )
     );
+  if (imagesToDelete.length) {
+    await deleteImages(imagesToDelete.map(image => image.public_id));
   }
 
-  return updatedEnhancement;
+  let uploadedImages: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
+  if (files?.length) {
+    const uploads =
+      await uploadImages(files, "enhancements");
+    uploadedImages =
+      uploads.map(formatCloudinaryMedia);
+  }
+  enhancement.set({
+    ...data,
+    images: [
+      ...existingImages,
+      ...uploadedImages
+    ]
+  });
+  await enhancement.save();
+  return enhancement;
 };
 
 
@@ -85,7 +106,7 @@ export const getAllEnhancementsService = async (
 ) => {
   const {
     page = "1",
-    limit = "12",
+    limit = "10",
 
     category,
 
@@ -99,7 +120,7 @@ export const getAllEnhancementsService = async (
 
     search,
 
-    sort,
+    sort = "newest",
   } = query;
 
   const filters: Record<string, any> = {
@@ -140,7 +161,10 @@ export const getAllEnhancementsService = async (
     ];
   }
 
-  if (minPrice || maxPrice) {
+  if (
+    minPrice !== undefined ||
+    maxPrice !== undefined
+  ) {
     const priceFilter: Record<string, number> = {};
 
     if (minPrice) {
@@ -187,17 +211,14 @@ export const getAllEnhancementsService = async (
       };
   }
 
-  const pageNumber =
-    Number(page);
+  const pageNumber = Math.max(1, Number(page) || 1);
 
-  const limitNumber =
-    Number(limit);
+  const limitNumber = Math.max(1, Number(limit) || 10);
 
   const skip =
-    (pageNumber - 1) *
-    limitNumber;
+    (pageNumber - 1) * limitNumber;
 
-  const [enhancements, total] = await Promise.all([
+  const [enhancements, total, categoryCounts] = await Promise.all([
     Enhancement.find(filters)
       .sort(sortOption)
       .skip(skip)
@@ -207,19 +228,33 @@ export const getAllEnhancementsService = async (
     Enhancement.countDocuments(
       filters
     ),
+    Enhancement.aggregate([
+      {
+        $match: {
+          isActive: true
+        }
+      },
+
+      {
+        $group: {
+          _id: "$category",
+          count: {
+            $sum: 1
+          }
+        }
+      }
+    ])
   ]);
 
   return {
     enhancements,
-
-    pagination: {
-      total,
-      page: pageNumber,
-      limit: limitNumber,
-      totalPages: Math.ceil(
-        total / limitNumber
-      ),
-    },
+    total,
+    page: pageNumber,
+    limit: limitNumber,
+    totalPages: Math.ceil(
+      total / limitNumber
+    ),
+    categoryCounts
   };
 };
 

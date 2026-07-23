@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { adminOnly, authenticate } from "../middlewares/auth";
-import { archiveEbike, createEbike, deleteEbikeImage, getAllEbikes, getEbike, updateEbike, uploadEbikeImages } from "../controllers/ebike";
+import { archiveEbike, createEbike, getAllEbikes, getEbike, updateEbike } from "../controllers/ebike";
 import upload from "../middlewares/upload";
 
 const router = Router();
@@ -10,7 +10,7 @@ router.get("/", getAllEbikes);
 router.get("/:id", getEbike);
 
 // Protected Routes
-router.use(authenticate, adminOnly);
+router.use(authenticate, );
 router.post(
     "/",
     upload.array("images", 5),
@@ -19,22 +19,12 @@ router.post(
 
 router.patch(
     "/:id",
+    upload.array("images", 5),
     updateEbike
 );
 
-router.post(
-    "/:id/images",
-    upload.array("images", 5),
-    uploadEbikeImages
-);
-
-router.delete(
-    "/:id/images/:publicId",
-    deleteEbikeImage
-);
-
 router.patch(
-    "/:id/archive",
+    "/:id/delete",
     archiveEbike
 );
 

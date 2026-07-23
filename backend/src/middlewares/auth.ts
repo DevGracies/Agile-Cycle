@@ -10,15 +10,14 @@ import { JwtPayload, AuthUser, AuthenticatedRequest } from "../types/auth";
 export const authenticate = asyncHandler(
   async (req: AuthenticatedRequest, _: Response, next: NextFunction) => {
     const bearerToken = req.headers.authorization?.startsWith("Bearer ")
-  ? req.headers.authorization.split(" ")[1]
-  : null;
+      ? req.headers.authorization.split(" ")[1]
+      : null;
 
-const token = req.cookies?.accessToken || bearerToken;
+    const token = req.cookies?.accessToken || bearerToken;
 
-if (!token) {
-  throw new AppError("Unauthorized - not authenticated", 401);
-}
-console.log(req.user);
+    if (!token) {
+      throw new AppError("Unauthorized - not authenticated", 401);
+    }
 
     const decoded = jwt.verify(
       token,

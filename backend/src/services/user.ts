@@ -76,39 +76,9 @@ export const resetPasswordService = async (token: string, newPassword: string) =
     // });
 }
 
-export const requestEmailVerificationService = async (email: string) => {
-    const user = await User.findById({ email });
-
-    if (!user) {
-        throw new AppError("User not found", 404);
-    }
-
-    if (user.isEmailVerified) {
-        throw new AppError("Email already verified", 400);
-    }
-
-
-    const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
-
-    user.emailVerificationToken = verificationToken;
-    user.emailVerificationExpiresAt = new Date(Date.now() + 15 * 60 * 1000);
-
-    await user.save({ validateBeforeSave: false });
-
-    // await sendEmail({
-    //     to: user.email,
-    //     subject: "Verify your email",
-    //     html: `
-    //   <p>Here is your verification code.</p>
-    //   <h2>${verificationToken}</h2>
-    // `,
-    // });
-}
-
-export const confirmEmailVerificationService = async (userId: string, token: string): Promise<void> => {
+export const confirmEmailVerificationService = async ( token: string): Promise<void> => {
 
     const user = await User.findOne({
-        _id: userId,
         emailVerificationToken: token,
         emailVerificationExpiresAt: {
             $gt: new Date(),

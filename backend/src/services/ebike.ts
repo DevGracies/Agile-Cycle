@@ -2,10 +2,10 @@
 import { Accessory } from "../models/accessories";
 import { Enhancement } from "../models/enhancement";
 import { Ebike } from "../models/ebike";
-import { CreateEbikeInput, ProductQuery } from "../types/ebike";
+import { CreateEbikeInput, ProductQuery, UpdateEbikeInput } from "../types/ebike";
 import { AppError } from "../utils/AppError";
 import { Review } from "../models/review";
-import { deleteImage, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
+import { deleteImages, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
 
 export const createEbikeService = async (
   data: CreateEbikeInput,
@@ -29,94 +29,52 @@ export const createEbikeService = async (
 
 export const updateEbikeService = async (
   ebikeId: string,
-  data: Partial<CreateEbikeInput>
-) => {
-  const updatedEbike =
-    await Ebike.findByIdAndUpdate(
-      ebikeId,
-      data,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-
-  if (!updatedEbike) {
-    throw new AppError(
-      "Ebike not found",
-      404
-    );
-  }
-
-  return updatedEbike;
-};
-
-export const uploadEbikeImagesService = async (
-  ebikeId: string,
+  data: Partial<UpdateEbikeInput>,
   files: Express.Multer.File[]
 ) => {
-
   const ebike = await Ebike.findById(ebikeId);
-
   if (!ebike) {
-    throw new AppError(
-      "Ebike not found",
-      404
-    );
+    throw new AppError("Ebike not found", 404);
   }
-
-  const uploads =
-    await uploadImages(files, "ebikes");
-
-  const images = uploads.map(formatCloudinaryMedia);
-
-  ebike.images.push(...images);
-
-  await ebike.save();
-
-  return ebike.images;
-
-};
-
-export const deleteEbikeImageService = async (
-  ebikeId: string,
-  publicId: string
-) => {
-
-  const ebike = await Ebike.findById(ebikeId);
-
-  if (!ebike) {
-    throw new AppError(
-      "Ebike not found",
-      404
-    );
-  }
-
-  const imageExists =
-    ebike.images.some(
+  const existingImages =
+    Array.isArray(data.images)
+        ? data.images
+        : ebike.images;
+        
+  const imagesToDelete =
+    ebike.images.filter(
       image =>
-        image.public_id === publicId
+        !existingImages.some(
+          kept =>
+            kept.public_id === image.public_id
+        )
     );
-
-  if (!imageExists) {
-    throw new AppError(
-      "Image not found",
-      404
-    );
+  if (imagesToDelete.length) {
+    await deleteImages(imagesToDelete.map(image => image.public_id));
   }
 
-  await deleteImage(publicId);
-
-  ebike.images = (ebike.images.filter(
-    image => image.public_id !== publicId
-  ) as any);
-
+  let uploadedImages: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
+  if (files?.length) {
+    const uploads =
+      await uploadImages(files, "ebikes");
+    uploadedImages =
+      uploads.map(formatCloudinaryMedia);
+  }
+  ebike.set({
+    ...data,
+    images: [
+      ...existingImages,
+      ...uploadedImages
+    ]
+  });
   await ebike.save();
+  return ebike;
 };
 
 export const archiveEbikeService = async (
   ebikeId: string
 ) => {
+  console.log(ebikeId)
   const ebike = await Ebike.findById(
     ebikeId
   );
@@ -169,7 +127,7 @@ export const getEbikesService = async (
 ) => {
   const {
     page = "1",
-    limit = "12",
+    limit = "10",
 
     category,
 
@@ -183,7 +141,7 @@ export const getEbikesService = async (
 
     search,
 
-    sort,
+    sort = "newest",
   } = query;
 
   const filters: Record<string, any> = {
@@ -224,7 +182,10 @@ export const getEbikesService = async (
     ];
   }
 
-  if (minPrice || maxPrice) {
+  if (
+    minPrice !== undefined ||
+    maxPrice !== undefined
+  ) {
     const priceFilter: Record<string, number> = {};
 
     if (minPrice) {
@@ -271,17 +232,14 @@ export const getEbikesService = async (
       };
   }
 
-  const pageNumber =
-    Number(page);
+  const pageNumber = Math.max(1, Number(page) || 1);
 
-  const limitNumber =
-    Number(limit);
+  const limitNumber = Math.max(1, Number(limit) || 10);
 
   const skip =
-    (pageNumber - 1) *
-    limitNumber;
+    (pageNumber - 1) * limitNumber;
 
-  const [ebikes, total] = await Promise.all([
+  const [ebikes, total, categoryCounts] = await Promise.all([
     Ebike.find(filters)
       .sort(sortOption)
       .skip(skip)
@@ -291,18 +249,32 @@ export const getEbikesService = async (
     Ebike.countDocuments(
       filters
     ),
+    Ebike.aggregate([
+      {
+        $match: {
+          isActive: true
+        }
+      },
+
+      {
+        $group: {
+          _id: "$category",
+          count: {
+            $sum: 1
+          }
+        }
+      }
+    ])
   ]);
 
   return {
     ebikes,
-
-    pagination: {
-      total,
-      page: pageNumber,
-      limit: limitNumber,
-      totalPages: Math.ceil(
-        total / limitNumber
-      ),
-    },
+    total,
+    page: pageNumber,
+    limit: limitNumber,
+    totalPages: Math.ceil(
+      total / limitNumber
+    ),
+    categoryCounts
   };
 };

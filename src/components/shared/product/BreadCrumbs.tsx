@@ -1,12 +1,14 @@
+import { ProductType } from "@/src/services/cart.service";
 import { Product } from "@/src/types/product";
 import Link from "next/link";
 
 
 interface BreadCrumbsProps {
   product: Product;
+  productType: ProductType;
 }
 
-export default function BreadCrumbs({ product }: BreadCrumbsProps) {
+export default function BreadCrumbs({ product, productType }: BreadCrumbsProps) {
   return (
     <nav
       aria-label="Breadcrumb"
@@ -19,7 +21,7 @@ export default function BreadCrumbs({ product }: BreadCrumbsProps) {
       <span className="text-[#9d9d9d]">{">"}</span>
 
       <Link
-        href={`/ebikes?category=${product?.category}`}
+        href={`/products?productType=${productType}&category=${product?.category}`}
         className="text-[#9d9d9d]"
       >
         {product?.category}

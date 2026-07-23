@@ -117,7 +117,7 @@ const AccessoryInfo = ({ product }: AccessoryInfoProps) => {
         </div>
 
         <div className="w-full">
-          <ProductActions product={product} quantity={quantity} type="accessory" />
+          <ProductActions product={product} quantity={quantity} type="accessories" />
         </div>
       </div>
     </div>

@@ -54,7 +54,7 @@ const AccessoryCard = ({ accessory }: ProductCardProps) => {
         </div>
 
         {/* ACTIONS */}
-        <ProductActions product={accessory} card type="accessory" />
+        <ProductActions product={accessory} card type="accessories" />
       </div>
     </div>
   );

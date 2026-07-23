@@ -13,7 +13,7 @@ export default function PublicLayout({
     <>
       <div>
         <Navbar />
-         <main className="pt-16">
+         <main className="pt-4">
           {children}
          </main>
         <SubscribeSection />

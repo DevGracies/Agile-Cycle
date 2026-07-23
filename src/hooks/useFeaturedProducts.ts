@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api } from "../services/api.service";
+import { api, apiError } from "../services/api.service";
 import { Accessories, Ebike, Enhancement } from "../types/product";
 
 interface FeaturedProductsResponse {
@@ -31,9 +31,7 @@ export const useFeaturedProducts = () => {
             setAccessories(data.accessories);
             setEnhancements(data.enhancements);
         } catch (error) {
-            if (error instanceof Error) {
-                console.error(error.message);
-            }
+            console.error(apiError(error));
         } finally {
             setIsLoading(false);
         }

@@ -8,23 +8,28 @@ export const uploadImage = (
     folder: string
 ): Promise<UploadApiResponse> => {
     return new Promise((resolve, reject) => {
-
-        const uploadStream = cloudinary.uploader.upload_stream(
-            {
-                folder,
-                resource_type: "image",
-            },
-            (error, result) => {
-
-                if (error) {
-                    return reject(error);
-                }
-
-                resolve(result!);
-            }
-        );
-
-        Readable.from(file.buffer).pipe(uploadStream);
+        if (!file.buffer) {
+            return reject(
+                new Error(
+                    "File buffer missing. Check multer configuration"
+                )
+            );
+        }
+        const uploadStream =
+            cloudinary.uploader.upload_stream(
+                {
+                    folder,
+                    resource_type: "image"
+                },
+                (error, result) => {
+                    if (error) {
+                        return reject(error);
+                    }
+                    resolve(result!);
+                });
+        Readable
+            .from(file.buffer)
+            .pipe(uploadStream);
     });
 };
 

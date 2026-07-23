@@ -2,10 +2,11 @@ import { AppError } from "../utils/AppError";
 
 import type {
   CreateAccessoryInput,
+  UpdateAccessoryInput,
 } from "../types/accessory";
 import { ProductQuery } from "../types/ebike";
 import { Accessory } from "../models/accessories";
-import { formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
+import { deleteImages, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
 
 
 export const createAccessoryService = async (
@@ -33,29 +34,47 @@ export const createAccessoryService = async (
 
 export const updateAccessoryService = async (
   accessoryId: string,
-  data: Partial<CreateAccessoryInput>
+  data: Partial<UpdateAccessoryInput>,
+  files: Express.Multer.File[]
 ) => {
-  const updatedAccessory =
-    await Accessory.findByIdAndUpdate(
-      accessoryId,
-      data,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+  const accessory = await Accessory.findById(accessoryId);
+  if (!accessory) {
+    throw new AppError("Accessory not found", 404);
+  }
+  const existingImages =
+    Array.isArray(data.images)
+      ? data.images
+      : accessory.images;
 
-  if (!updatedAccessory) {
-    throw new AppError(
-      "Accessory not found",
-      404
+  const imagesToDelete =
+    accessory.images.filter(
+      image =>
+        !existingImages.some(
+          kept =>
+            kept.public_id === image.public_id
+        )
     );
+  if (imagesToDelete.length) {
+    await deleteImages(imagesToDelete.map(image => image.public_id));
   }
 
-  return updatedAccessory;
+  let uploadedImages: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
+  if (files?.length) {
+    const uploads =
+      await uploadImages(files, "accessories");
+    uploadedImages =
+      uploads.map(formatCloudinaryMedia);
+  }
+  accessory.set({
+    ...data,
+    images: [
+      ...existingImages,
+      ...uploadedImages
+    ]
+  });
+  await accessory.save();
+  return accessory;
 };
-
-
 
 export const getAccessoryService =
   async (accessoryId: string) => {
@@ -85,7 +104,7 @@ export const getAccessoriesService = async (
 ) => {
   const {
     page = "1",
-    limit = "12",
+    limit = "10",
 
     category,
 
@@ -99,7 +118,7 @@ export const getAccessoriesService = async (
 
     search,
 
-    sort,
+    sort = "newest",
   } = query;
 
   const filters: Record<string, any> = {
@@ -140,7 +159,10 @@ export const getAccessoriesService = async (
     ];
   }
 
-  if (minPrice || maxPrice) {
+  if (
+    minPrice !== undefined ||
+    maxPrice !== undefined
+  ) {
     const priceFilter: Record<string, number> = {};
 
     if (minPrice) {
@@ -187,17 +209,14 @@ export const getAccessoriesService = async (
       };
   }
 
-  const pageNumber =
-    Number(page);
+  const pageNumber = Math.max(1, Number(page) || 1);
 
-  const limitNumber =
-    Number(limit);
+  const limitNumber = Math.max(1, Number(limit) || 10);
 
   const skip =
-    (pageNumber - 1) *
-    limitNumber;
+    (pageNumber - 1) * limitNumber;
 
-  const [accessories, total] = await Promise.all([
+  const [accessories, total, categoryCounts] = await Promise.all([
     Accessory.find(filters)
       .sort(sortOption)
       .skip(skip)
@@ -207,19 +226,33 @@ export const getAccessoriesService = async (
     Accessory.countDocuments(
       filters
     ),
+    Accessory.aggregate([
+      {
+        $match: {
+          isActive: true
+        }
+      },
+
+      {
+        $group: {
+          _id: "$category",
+          count: {
+            $sum: 1
+          }
+        }
+      }
+    ])
   ]);
 
   return {
     accessories,
-
-    pagination: {
-      total,
-      page: pageNumber,
-      limit: limitNumber,
-      totalPages: Math.ceil(
-        total / limitNumber
-      ),
-    },
+    total,
+    page: pageNumber,
+    limit: limitNumber,
+    totalPages: Math.ceil(
+      total / limitNumber
+    ),
+    categoryCounts,
   };
 };
 
