@@ -7,7 +7,7 @@ type CommentsTriggerProps = {
   comments: number;
   blogTitle: string;
   icon: string;
-  blogId: number;
+  blogId: string;
 };
 
 export default function CommentsTrigger({
