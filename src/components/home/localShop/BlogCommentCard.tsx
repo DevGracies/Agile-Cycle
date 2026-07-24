@@ -11,25 +11,7 @@ import acu from "@/public/home/Like.png";
 import message from "@/public/home/club/message-2.png";
 import { Comment } from "@/src/types";
 
-<<<<<<< HEAD
-interface Reply {
-  _id: string;
-  name: string;
-  time: string;
-  likes: number;
-  content: string;
-}
-
-interface BlogCommentCardProps {
-  name: string;
-  time: string;
-  content: string;
-  likes: number;
-  replies?: Reply[];
-}
-=======
 type BlogCommentCardProps = Comment;
->>>>>>> 9cab791f4b6b1f777870548cf53ecbf502be2231
 
 export default function CommentCard({
   name,

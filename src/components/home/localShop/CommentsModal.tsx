@@ -24,14 +24,6 @@ export default function CommentsModal({
   const { data, isPending, isError } = useComments(blogId, isOpen);
 
   if (!isOpen) return null;
-<<<<<<< HEAD
-
-  const blog = insights.find(
-    (item) => item._id === blogId
-  );
-
-=======
->>>>>>> 9cab791f4b6b1f777870548cf53ecbf502be2231
 
   return (
     <div className="fixed inset-0 z-[999] bg-black/50 flex items-center justify-center p-4">
@@ -63,38 +55,6 @@ export default function CommentsModal({
           </div>
 
           {/* Comments Area */}
-<<<<<<< HEAD
-          {/* Comments Area */}
-          <div className="h-[300px] overflow-y-auto border-b border-[#DCE7D4] pr-2">
-
-
-
-            {blog?.commentsData?.map((comment) => (
-              <BlogCommentCard
-                key={comment._id}
-                {...comment}
-              />
-            ))}
-
-          </div>
-
-          {/* Input */}
-          <div className="mt-6">
-            <input type="text"
-              placeholder="Drop your comment"
-              className="w-full h-[44px] border border-[#DCE7D4] rounded-[4px] px-4 outline-none" />
-          </div>
-          {/* Actions */}
-          <div className="flex justify-end gap-4 mt-6">
-            <button onClick={onClose} className="px-6 h-[40px] border border-[#519A09] rounded-[4px] text-[#519A09]" >
-              Cancel
-            </button>
-            <button className="px-6 h-[40px] bg-[#519A09] text-white rounded-[4px]" >
-              Comment
-            </button>
-          </div>
-
-=======
           <div className="h-[300px] overflow-y-auto border-b border-[#DCE7D4] pr-2">
 
            {isPending ? (
@@ -136,7 +96,6 @@ export default function CommentsModal({
             >
               Cancel
             </button>
->>>>>>> 9cab791f4b6b1f777870548cf53ecbf502be2231
 
             <button className="px-6 h-[40px] bg-[#519A09] text-white rounded-[4px]">
               Comment

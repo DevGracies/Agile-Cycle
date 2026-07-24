@@ -11,7 +11,7 @@ export default function AccessoryList({accessories}: {accessories: Accessories[]
           Compatible Accessories & Enhancements
         </h3>
 
-        <Link href="/products" className="w-[100px] text-primary font-semibold underline max-md:text-xs">
+        <Link href="/products?productType=accessories" className="w-[100px] text-primary font-semibold underline max-md:text-xs">
           See All
         </Link>
       </div>

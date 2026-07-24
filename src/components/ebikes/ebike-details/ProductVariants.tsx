@@ -52,7 +52,7 @@ export default function ProductVariants({
   const batteryOptions = hasBatteryOptions(product) ? product.batteryOptions : undefined;
   const productSize = hasSpecs(product) ? product.specs.size : undefined;
   return (
-    <div className="space-y-7">
+    <div className="space-y-3">
       {/* COLORS */}
       <div>
         <h4 className="flex items-center gap-2 text-[13px] uppercase text-[#7e7e7e] font-semibold">
@@ -87,12 +87,12 @@ export default function ProductVariants({
           <p className="text-black">{batteryOptions?.[0]?.label}</p>
         </h4>
 
-        <div className="flex gap-3 mt-4 flex-wrap">
+        <div className="flex gap-3 mt-1 flex-wrap">
           {batteryOptions?.map((battery) => (
             <button
               key={battery._id}
               onClick={() => onSelectBattery(battery._id)}
-              className={`px-6 h-12 rounded-md font-semibold border ${
+              className={`px-4 h-10 rounded-md font-semibold border ${
                 selectedBattery === battery._id
                   ? "bg-primary text-white"
                   : "border-primary text-primary"
@@ -113,7 +113,7 @@ export default function ProductVariants({
             <span className="text-black">{productSize}</span>
           </h4>
 
-          <button className="mt-4 bg-primary text-white px-6 h-12 rounded-md font-semibold">
+          <button className="mt-1 bg-primary text-white px-4 h-10 rounded-md font-semibold">
             {productSize.split(" ")[0]}
           </button>
         </div>
@@ -129,7 +129,7 @@ export default function ProductVariants({
               onClick={() => onSelectedVariant(variant._id)}
               type="button"
               className={`
-          relative flex items-center gap-4 rounded-2xl p-3
+          relative flex items-center gap-4 rounded-2xl p-2
           border transition-all duration-300 ease-out
           transform active:scale-[0.98]
           hover:shadow-md hover:-translate-y-[2px]

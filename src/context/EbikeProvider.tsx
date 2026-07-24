@@ -218,7 +218,7 @@ export function EbikeProvider({
       } finally {
         setLoadingState(
           "ebike",
-          false,
+          true,
         );
       }
     },
