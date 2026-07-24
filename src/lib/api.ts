@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Customer } from "@/src/store/useCustomerStore";
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
   timeout: 3000, // fail fast if backend unreachable
   headers: { "Content-Type": "application/json" },

@@ -9,7 +9,9 @@ import {
 import acd from "@/public/home/unlike.png";
 import acu from "@/public/home/Like.png";
 import message from "@/public/home/club/message-2.png";
+import { Comment } from "@/src/types";
 
+<<<<<<< HEAD
 interface Reply {
   _id: string;
   name: string;
@@ -25,13 +27,16 @@ interface BlogCommentCardProps {
   likes: number;
   replies?: Reply[];
 }
+=======
+type BlogCommentCardProps = Comment;
+>>>>>>> 9cab791f4b6b1f777870548cf53ecbf502be2231
 
 export default function CommentCard({
   name,
-  time,
+  createdAt,
   content,
   likes,
-  replies = [],
+  replies,
 }: BlogCommentCardProps) {
   const [showReplies, setShowReplies] = useState(false);
   const [showComment, setShowComment] = useState(false);
@@ -64,7 +69,7 @@ export default function CommentCard({
             </p>
 
             <span className="text-sm text-[#519A09]">
-              • {time}
+              • {createdAt}
             </span>
           </div>
 
@@ -162,7 +167,7 @@ export default function CommentCard({
                   </h5>
 
                   <span className="text-sm text-[#519A09]">
-                    •&nbsp;&nbsp;{reply.time}
+                    •&nbsp;&nbsp;{reply.createdAt}
                   </span>
                 </div>
 

@@ -17,7 +17,7 @@ import enhancement5 from "@/public/enhancement/enhancement5.png"
 import enhancement6 from "@/public/enhancement/enhancement6.png"
 import { Product } from "../types/product"
 // import { Accessories, Enhancements, Product } from "../types"
-import { Insight } from "../types";
+import { Blog, Insight} from "../types";
 
 
 export const categories = [
@@ -87,8 +87,379 @@ export const services = [
   },
 ]
 
+export const accessories: Product[] = [
+  {
+    id: "product7",
+
+    name: "Adjustable Bike Stem",
+    description: "High-quality adjustable stem for better riding posture",
+    shortDescription: "Ergonomic adjustable stem",
+
+    category: "accessory",
+
+    images: [{
+      id: "img-1",
+      url: accessory1.src,
+      alt: "Adjustable Bike Stem"
+    }],
+
+    currentPrice: 73500,
+    originalPrice: 80000,
+
+    stock: 20,
+
+    rating: 4.5,
+    reviewCount: 12,
+
+    isFeatured: false,
+    isNewArrival: true,
+
+    colors: [],
+  },
+
+  {
+    id: "product8",
+
+    name: "Oversize Saddle",
+    description: "Comfortable oversized saddle designed for long-distance rides",
+    shortDescription: "Comfort padded saddle",
+
+    category: "accessory",
+
+    images: [
+      {
+        id: "img-1",
+        url: accessory2.src,
+        alt: "Oversize Saddle",
+      },
+    ],
+
+    currentPrice: 73500,
+    originalPrice: 80000,
+
+    stock: 18,
+
+    rating: 4.8,
+    reviewCount: 10,
+
+    isFeatured: false,
+    isNewArrival: false,
+
+    colors: [],
+  },
+
+  {
+    id: "product9",
+
+    name: "Ebike Hitch Rack",
+    description: "Heavy-duty rack for transporting electric bikes securely",
+    shortDescription: "Durable bike transport rack",
+
+    category: "accessory",
+
+    images: [
+      {
+        id: "img-1",
+        url: accessory3.src,
+        alt: "Ebike Hitch Rack",
+      },
+    ],
+
+    currentPrice: 100000,
+    originalPrice: 115000,
+
+    stock: 12,
+
+    rating: 4.9,
+    reviewCount: 8,
+
+    isFeatured: true,
+    isNewArrival: false,
+
+    colors: [],
+  },
+
+  {
+    id: "product10",
+
+    name: "Hunter Light",
+    description: "High-intensity front bike light for night riding safety",
+    shortDescription: "Powerful LED bike light",
+
+    category: "accessory",
+
+    images: [
+      {
+        id: "img-1",
+        url: accessory4.src,
+        alt: "Hunter Light",
+      },
+    ],
+
+    currentPrice: 73500,
+    originalPrice: 82000,
+
+    stock: 25,
+
+    rating: 5,
+    reviewCount: 15,
+
+    isFeatured: true,
+    isNewArrival: true,
+
+    colors: [],
+  },
+
+  {
+    id: "product11",
+
+    name: "E-bike Pump",
+    description: "Compact electric pump designed for quick tire inflation",
+    shortDescription: "Portable electric pump",
+
+    category: "accessory",
+
+    images: [
+      {
+        id: "img-1",
+        url: accessory5.src,
+        alt: "E-bike Pump",
+      },
+    ],
+
+    currentPrice: 73500,
+    originalPrice: 79000,
+
+    stock: 30,
+
+    rating: 5,
+    reviewCount: 6,
+
+    isFeatured: false,
+    isNewArrival: true,
+
+    colors: [],
+  },
+
+  {
+    id: "product12",
+
+    name: "Brake Handle Bell",
+    description: "Integrated brake handle with built-in bell for safety",
+    shortDescription: "2-in-1 brake and bell system",
+
+    category: "accessory",
+
+    images: [
+      {
+        id: "img-1",
+        url: accessory6.src,
+        alt: "Brake Handle Bell",
+      },
+    ],
+
+    currentPrice: 100000,
+    originalPrice: 110000,
+
+    stock: 14,
+
+    rating: 4.2,
+    reviewCount: 9,
+
+    isFeatured: false,
+    isNewArrival: false,
+
+    colors: [],
+  },
+];
+
+export const enhancements: Product[] = [
+  {
+    id: "product13",
+
+    name: "Extended Range Lithium Battery",
+    description: "Upgrade your bike with longer battery life",
+    shortDescription: "High capacity battery upgrade",
+
+    category: "enhancement",
+
+    images: [{
+      id: "img-1",
+      url: enhancement1.src,
+      alt: "Extended Range Lithium Battery"
+    }],
+
+    currentPrice: 73000,
+    originalPrice: 90000,
+
+    stock: 15,
+
+    rating: 4.6,
+    reviewCount: 8,
+
+    isFeatured: true,
+    isNewArrival: false,
+
+    colors: [],
+  },
+  {
+    id: "product14",
+
+    name: "Smart Display Console",
+    description: "Advanced LCD display with real-time ride metrics",
+    shortDescription: "Ride data smart display",
+
+    category: "enhancement",
+
+    images: [
+      {
+        id: "img-1",
+        url: enhancement2.src,
+        alt: "Smart Display Console",
+      },
+    ],
+
+    currentPrice: 73000,
+    originalPrice: 88000,
+
+    stock: 20,
+
+    rating: 4.8,
+    reviewCount: 11,
+
+    isFeatured: true,
+    isNewArrival: true,
+
+    colors: [],
+  },
+
+  {
+    id: "product15",
+
+    name: "Suspension Seat Post",
+    description: "Improves comfort by absorbing road shocks",
+    shortDescription: "Shock-absorbing seat post",
+
+    category: "enhancement",
+
+    images: [
+      {
+        id: "img-1",
+        url: enhancement3.src,
+        alt: "Suspension Seat Post",
+      },
+    ],
+
+    currentPrice: 73000,
+    originalPrice: 85000,
+
+    stock: 18,
+
+    rating: 4.5,
+    reviewCount: 6,
+
+    isFeatured: false,
+    isNewArrival: true,
+
+    colors: [],
+  },
+
+  {
+    id: "product16",
+
+    name: "Integrated LED Lighting System",
+    description: "Front and rear LED lighting for enhanced night visibility",
+    shortDescription: "Full bike LED lighting kit",
+
+    category: "enhancement",
+
+    images: [
+      {
+        id: "img-1",
+        url: enhancement4.src,
+        alt: "LED Lighting System",
+      },
+    ],
+
+    currentPrice: 73000,
+    originalPrice: 82000,
+
+    stock: 25,
+
+    rating: 4.9,
+    reviewCount: 14,
+
+    isFeatured: true,
+    isNewArrival: false,
+
+    colors: [],
+  },
+
+  {
+    id: "product17",
+
+    name: "Cargo Rear Rack with Panniers",
+    description: "Heavy-duty rear rack with storage panniers for long rides",
+    shortDescription: "Storage rack system",
+
+    category: "enhancement",
+
+    images: [
+      {
+        id: "img-1",
+        url: enhancement5.src,
+        alt: "Cargo Rear Rack",
+      },
+    ],
+
+    currentPrice: 73000,
+    originalPrice: 89000,
+
+    stock: 12,
+
+    rating: 5,
+    reviewCount: 7,
+
+    isFeatured: false,
+    isNewArrival: false,
+
+    colors: [],
+  },
+
+  {
+    id: "product18",
+
+    name: "Ergonomic Gel Saddle",
+    description: "Premium gel saddle designed for maximum riding comfort",
+    shortDescription: "Comfort gel seat",
+
+    category: "enhancement",
+
+    images: [
+      {
+        id: "img-1",
+        url: enhancement6.src,
+        alt: "Ergonomic Gel Saddle",
+      },
+    ],
+
+    currentPrice: 73000,
+    originalPrice: 87000,
+
+    stock: 22,
+
+    rating: 4.0,
+    reviewCount: 10,
+
+    isFeatured: false,
+    isNewArrival: true,
+
+    colors: [],
+  },
+]
+
 // Insights data for the Home Agile Cycle Shop section and blog page
-export const insights: Insight[] = [
+export const insights: Blog[] = [
   {
     _id: "1",
     image: "/home/insight.png",
@@ -104,89 +475,89 @@ export const insights: Insight[] = [
     comments: 12,
 
     commentsData: [
-      {
-        _id: "1",
-        name: "Chimako Favour",
-        time: "5 hrs ago",
-        likes: 12,
-        content:
-          "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door!",
-        replies: [
-          {
-            _id: "11",
-            name: "Admin",
-            time: "3 hrs ago",
-            likes: 2,
-            content: "Thanks for your feedback."
-          },
-          {
-            _id: "12",
-            name: "Samuel",
-            time: "2 hrs ago",
-            likes: 1,
-            content: "Great article."
-          }
-        ]
-      },
+    {
+      id: 1,
+      name: "Chimako Favour",
+      time: "5 hrs ago",
+      likes: 12,
+      content:
+        "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door!",
+      replies: [
+        {
+          id: 11,
+          name: "Admin",
+          time: "3 hrs ago",
+          likes: 2,
+          content: "Thanks for your feedback."
+        },
+        {
+          id: 12,
+          name: "Samuel",
+          time: "2 hrs ago",
+          likes: 1,
+          content: "Great article."
+        }
+      ]
+    },
 
-      {
-        _id: "2",
-        name: "Samuel",
-        time: "1 hr ago",
-        likes: 8,
-        content:
-          "This article was really helpful. Looking forward to more updatesss.",
-        replies: [
-
-        ]
-      }
-    ],
+    {
+      id: 2,
+      name: "Samuel",
+      time: "1 hr ago",
+      likes: 8,
+      content:
+        "This article was really helpful. Looking forward to more updatesss.",
+      replies: [
+        
+      ]
+    }
+  ],
 
     sections: [
       {
-        _id: "1",
+        id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog2.png",
       },
       {
-        _id: "2",
+          id: 2,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog3.png",
       },
       {
-        _id: "3",
+          id: 3,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog4.png",
       },
-      {
-        _id: "4",
+       {
+          id: 4,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog5.png",
       },
-      {
-        _id: "5",
+       {
+          id: 5,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog6.png",
       },
-      {
-        _id: "6",
+       {
+          id: 6,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog7.png",
       },
-      {
-        _id: "7",
+       {
+          id: 7,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog8.png",
       },
-      {
-        _id: "8",
+       {
+          id: 8,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog9.png",
@@ -207,54 +578,54 @@ export const insights: Insight[] = [
     likes: 24,
     comments: 12,
 
-    commentsData: [
-      {
-        _id: "1",
-        name: "Chimako Favour",
-        time: "5 hrs ago",
-        likes: 12,
-        content:
-          "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door!",
-        replies: [
-          {
-            _id: "11",
-            name: "User",
-            time: "3 hrs ago",
-            likes: 2,
-            content: "Thanks for your feedback."
-          },
-          {
-            _id: "12",
-            name: "Samuel",
-            time: "2 hrs ago",
-            likes: 1,
-            content: "Great article."
-          }
-        ]
-      },
+     commentsData: [
+    {
+      id: 1,
+      name: "Chimako Favour",
+      time: "5 hrs ago",
+      likes: 12,
+      content:
+        "Absolutely love Agile Cycle, affordable on any budget and such fast delivery, straight to my door!",
+      replies: [
+        {
+          id: 11,
+          name: "User",
+          time: "3 hrs ago",
+          likes: 2,
+          content: "Thanks for your feedback."
+        },
+        {
+          id: 12,
+          name: "Samuel",
+          time: "2 hrs ago",
+          likes: 1,
+          content: "Great article."
+        }
+      ]
+    },
 
-      {
-        _id: "2",
-        name: "Samuel",
-        time: "1 hr ago",
-        likes: 8,
-        content:
-          "This article was really helpful. Looking forward to more updates.",
-        replies: [
-          {
-            _id: "10",
-            name: "User",
-            time: "3 hrs ago",
-            likes: 2,
-            content: "Thanks for your feedback."
-          },
-        ]
-      }
-    ],
-
+    {
+      id: 2,
+      name: "Samuel",
+      time: "1 hr ago",
+      likes: 8,
+      content:
+        "This article was really helpful. Looking forward to more updates.",
+      replies: [
+         {
+          id: 10,
+          name: "User",
+          time: "3 hrs ago",
+          likes: 2,
+          content: "Thanks for your feedback."
+        },
+      ]
+    }
+  ],
+  
     sections: [
       {
-        _id: "1",
+          id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog3.png",
@@ -262,18 +633,18 @@ export const insights: Insight[] = [
     ],
   },
   {
-    _id: "3",
+    id: 3,
     image: "/home/insight3.png",
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
-    author: { _id: "1", name: "Agile Cycle" },
+    author: "Agile Cycle",
     likes: 24,
     comments: 12,
     sections: [
       {
-        _id: "1",
+        id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog2.png",
@@ -281,18 +652,18 @@ export const insights: Insight[] = [
     ],
   },
   {
-    _id: "4",
+    id: 4,
     image: "/home/insight.png",
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
-    author: { _id: "1", name: "Agile Cycle" },
+    author: "Agile Cycle",
     likes: 24,
     comments: 12,
     sections: [
       {
-        _id: "1",
+          id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog2.png",
@@ -300,18 +671,18 @@ export const insights: Insight[] = [
     ],
   },
   {
-    _id: "5",
+    id: 5,
     image: "/home/insight2.png",
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
-    author: { _id: "1", name: "Agile Cycle" },
+    author: "Agile Cycle",
     likes: 24,
     comments: 12,
     sections: [
       {
-        _id: "1",
+          id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog2.png",
@@ -319,18 +690,18 @@ export const insights: Insight[] = [
     ],
   },
   {
-    _id: "6",
+    id: 6,
     image: "/home/insight3.png",
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
-    author: { _id: "1", name: "Agile Cycle" },
+    author: "Agile Cycle",
     likes: 24,
     comments: 12,
     sections: [
       {
-        _id: "1",
+          id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog2.png",
@@ -338,18 +709,18 @@ export const insights: Insight[] = [
     ],
   },
   {
-    _id: "7",
+    id: 7,
     image: "/home/insight.png",
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
-    author: { _id: "1", name: "Agile Cycle" },
+    author: "Agile Cycle",
     likes: 24,
     comments: 12,
     sections: [
       {
-        _id: "1",
+        id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog2.png",
@@ -357,18 +728,18 @@ export const insights: Insight[] = [
     ],
   },
   {
-    _id: "8",
+    id: 8,
     image: "/home/insight2.png",
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
-    author: { _id: "1", name: "Agile Cycle" },
+    author: "Agile Cycle",
     likes: 24,
     comments: 12,
     sections: [
       {
-        _id: "1",
+        id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog2.png",
@@ -376,18 +747,18 @@ export const insights: Insight[] = [
     ],
   },
   {
-    _id: "9",
+    id: 9,
     image: "/home/insight3.png",
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
-    author: { _id: "1", name: "Agile Cycle" },
+    author: "Agile Cycle",
     likes: 24,
     comments: 12,
     sections: [
       {
-        _id: "1",
+        id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog2.png",
@@ -395,18 +766,18 @@ export const insights: Insight[] = [
     ],
   },
   {
-    _id: "10",
+    id: 10,
     image: "/home/insight.png",
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
-    author: { _id: "1", name: "Agile Cycle" },
+    author: "Agile Cycle",
     likes: 24,
     comments: 12,
     sections: [
       {
-        _id: "1",
+        id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog2.png",
@@ -414,37 +785,37 @@ export const insights: Insight[] = [
     ],
   },
   {
-    _id: "11",
+    id: 11,
     image: "/home/insight2.png",
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
-    author: { _id: "1", name: "Agile Cycle" },
+    author: "Agile Cycle",
     likes: 24,
     comments: 12,
     sections: [
       {
-        _id: "1",
+        id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog2.png",
       },
     ],
   },
-  {
-    _id: "12",
+   {
+    id: 12,
     image: "/home/insight3.png",
     heroImage: "/home/blog.png",
     title: "Tips and Tricks for Keeping Your E-Bike Running Smoothly",
     description: "Keeping your eBike in great shape doesn't have to be complicated.",
     date: "January 22, 2026",
-    author: { _id: "1", name: "Agile Cycle" },
+    author: "Agile Cycle",
     likes: 24,
     comments: 12,
     sections: [
       {
-        _id: "1",
+        id: 1,
         title: "Keep the battery charged",
         content: "The battery is the most critical component...",
         image: "/home/blog2.png",
@@ -452,7 +823,7 @@ export const insights: Insight[] = [
     ],
   },
 
-
+  
 
 ];
 /********************* END OF Insights data for the Home Agile Cycle Shop section and blog page******************* */
@@ -460,7 +831,7 @@ export const insights: Insight[] = [
 
 export const clubPosts = [
   {
-    _id: "1",
+    id: 1,
     image: "/home/blog2.png",
     title: "Best Affordable Bike Brands for Students sammy?",
     author: "Anitin Seggs",
@@ -471,7 +842,7 @@ export const clubPosts = [
     featured: true,
   },
   {
-    _id: "2",
+    id: 2,
     image: "/club/lifestyle.jpg",
     title: "Cycling as a Sustainable Lifestyle Choice",
     author: "Gunns Johnson",
@@ -482,7 +853,7 @@ export const clubPosts = [
     featured: false,
   },
   {
-    _id: "3",
+    id: 3,
     image: "/club/news.jpg",
     title: "Cycling Events in Lagos This Month",
     author: "Ada Jones",
@@ -496,19 +867,19 @@ export const clubPosts = [
 
 export const comments = [
   {
-    _id: "1",
+    id: 1,
     author: "Chimaka Favour",
     time: "5 hrs ago",
     content: "Absolutely love Agile Cycle. Affordable and reliable.",
     replies: [
       {
-        _id: "11",
+        id: 11,
         author: "Samuel",
         time: "4 hrs ago",
         content: "Thanks for sharing your experience.",
       },
       {
-        _id: "12",
+        id: 12,
         author: "Ese",
         time: "2 hrs ago",
         content: "You welcome .",
@@ -516,20 +887,20 @@ export const comments = [
     ],
   },
   {
-    _id: "2",
+    id: 2,
     author: "John Doe",
     time: "2 hrs ago",
     content:
       "I've been using their services for months now.",
-    replies: [
+   replies: [
       {
-        _id: "11",
+        id: 11,
         author: "Samuel",
         time: "4 hrs ago",
         content: "Thanks for sharing your experience.",
       },
       {
-        _id: "12",
+        id: 12,
         author: "Ese",
         time: "2 hrs ago",
         content: "You welcome .",

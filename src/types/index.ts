@@ -249,15 +249,29 @@ export type BikeCategory =
   | "Trikes"
   | "Ride share";
 
+<<<<<<< HEAD
 export interface Comment {
+=======
+//   export interface Comment {
+//   id: number;
+//   name: string;
+//   time: string;
+//   likes: number;
+//   content: string;
+//   replies?: Comment[];
+// }
+
+// comment for the blog 
+export interface Reply {
+>>>>>>> 9cab791f4b6b1f777870548cf53ecbf502be2231
   _id: string;
   name: string;
-  time: string;
-  likes: number;
   content: string;
-  replies?: Comment[];
+  likes: number;
+  createdAt: string;
 }
 
+<<<<<<< HEAD
 interface Section {
   _id: string;
   title: string;
@@ -267,12 +281,13 @@ interface Section {
 
 // 
 export interface Blog {
+=======
+export interface Comment {
+>>>>>>> 9cab791f4b6b1f777870548cf53ecbf502be2231
   _id: string;
-
-  title: string;
-  description: string;
-
+  name: string;
   content: string;
+<<<<<<< HEAD
   heroImage: string;
   likes: number;
   comments: number;
@@ -299,6 +314,14 @@ export interface Blog {
     comments: number;
   };
 
+=======
+  likes: number;
+>>>>>>> 9cab791f4b6b1f777870548cf53ecbf502be2231
   createdAt: string;
-  updatedAt: string;
+  replies: Reply[];
+}
+
+export interface GetCommentsResponse {
+  success: boolean;
+  comments: Comment[];
 }

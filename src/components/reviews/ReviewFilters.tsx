@@ -44,7 +44,7 @@ const ReviewFilters = ({product}: {product: Product}) => {
 
       <ReviewModal 
         open={open}
-        product={product}
+        product={product as any}
         setOpen={setOpen}
       />
     </div>

@@ -1,8 +1,6 @@
+"use client"
 import Image from "next/image";
-import { notFound } from "next/navigation";
 
-import { insights } from "@/src/lib/data";
-import { Blog, Insight } from "@/src/types";
 import CommentSection from "@/src/components/home/localShop/CommentSection";
 import commentsIcon from "@/public/home/comment.png";
 import like from "@/public/home/Like.png";
@@ -14,21 +12,40 @@ import twitterIcon from "@/public/home/Twitter.png";
 import leftArrowIcon from "@/public/home/Left-arrow.png";
 import rightArrowIcon from "@/public/home/Right-arrow.png";
 import CommentsTrigger from "@/src/components/home/localShop/CommentsTrigger";
+import { formatDate } from "@/src/utils/formatDate";
 
-interface PageProps {
-  params: Promise<{id: string;}>; 
+import { useParams, notFound } from "next/navigation";
+import { useBlog } from "@/src/hooks/useBlogUsers";
+import { insights } from "@/src/lib/data";
+
+export default function BlogDetailsPage() {
+  const params = useParams();
+
+  const id = params.id as string;
+
+  const {
+    data: blog,
+    isLoading,
+    error,
+  } = useBlog(id);
+
+  const fallbackBlog = insights.find(
+  (item) => item._id === id
+);
+
+const currentBlog = blog ?? fallbackBlog;
+
+  if (isLoading) {
+  return <p>Loading...</p>;
 }
 
-export default async function BlogDetailsPage({ params,}: PageProps) {
-  const { id } = await params;
+if (error && !fallbackBlog) {
+  return <p>Something went wrong.</p>;
+}
 
-  const blog: Blog | undefined = insights.find(
-    (item) => item._id === id
-  ) as unknown as Blog | undefined;
-
-  if (!blog) {
-    notFound();
-  }
+if (!currentBlog) {
+  notFound();
+}
 
   return (
     // <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-[35px] pt-[20px] pb-[80px] bg-red-200"></main>
@@ -38,29 +55,29 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
       <div className="flex items-center gap-2 text-[12px] sm:text-[14px] text-[#717378] mb-[20px] sm:mb-[28px]">
         <span>HOME</span>
         <span className="text-[#519A09]">›</span>
-        <span>Blog</span>
+        <span>currentBlog</span>
         <span className="text-[#519A09]">›</span>
         <span className="truncate min-w-0 text-[#717378]">
-          {blog.title}
+          {currentBlog.title}
         </span>
       </div>
 
       {/* Title */}
       <h1 className="text-[28px] sm:text-[32px] lg:text-[36px] leading-[38px] sm:leading-[46px] lg:leading-[58px] font-semibold text-[#111111] max-w-[1100px]">
-        {blog.title}
+        {currentBlog.title}
       </h1>
 
       {/* Meta */}
       <div className="mt-[18px] flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-[14px] sm:text-[16px]">
         <div className="flex items-center gap-2">
           <span className="text-[#519A09]">
-          {blog.author.name}
+          {currentBlog.author.name}
         </span>
 
         <span className="text-[#A3A3A3]">•</span>
 
         <span className="text-[#519A09]">
-          {blog.createdAt}
+          {formatDate(currentBlog.publishedAt)}
         </span>
         </div>
 
@@ -68,7 +85,7 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
          <span className="w-[2px] h-5 bg-gradient-to-b from-[#519A09] to-[#01430D]"></span>
           <img src={like.src} alt="Like" className="w-7 h-7" />
           <span className="text-[#519A09] ">
-            {blog.likes}
+            {currentBlog.stats.likes} 
           </span>
           <img src={unlike.src} alt="Unlike" className="w-5 h-5" />
         </div>
@@ -77,8 +94,8 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
       {/* Hero Image */}
       <div className="mt-[24px]">
         <Image
-          src={blog.heroImage}
-          alt={blog.title}
+          src={currentBlog.image.secure_url}
+          alt={currentBlog.title}
           width={1440}
           height={700}
           priority
@@ -104,50 +121,35 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
          </div>
 
         <CommentsTrigger
-          comments={blog.comments}
-          blogTitle={blog.title}
+          comments={currentBlog.stats.comments} 
+          blogTitle={currentBlog.title}
           icon={commentsIcon.src}
-          blogId={blog._id}
+          blogId={currentBlog._id}
         />
       </div>
 
       {/* Description */}
      <p className="text-[15px] sm:text-[16px] leading-[28px] sm:leading-[32px] text-[#333333] mb-[32px] sm:mb-[40px]">
-        {blog.description}
+        {currentBlog.description}
       </p>
 
       {/* Dynamic Sections */}
       <article className="max-w-[1200px]">
-        {blog.sections.map((section) => (
-          <section key={section._id} className="mb-[40px] lg:mb-[60px]">
-            <h2 className="mb-[18px] text-[28px] sm:text-[34px] lg:text-[40px] leading-[36px] sm:leading-[42px] lg:leading-[48px] font-medium text-[#519A09]">
-              {section.title}
-            </h2>
 
-            <p className="text-[16px] leading-[32px] text-[#333333]">
-              {section.content}
-            </p>
-
-            {section.image && (
-              <div className="mt-[32px]">
-                <Image
-                  src={section.image}
-                  alt={section.title}
-                  width={1200}
-                  height={700}
-                  className="w-full h-auto"
-                />
-              </div>
-            )}
-          </section>
-        ))}
+        <div className="text-[16px] leading-[32px] text-[#333333] whitespace-pre-line">
+          
+          {currentBlog.content}
+        </div>
 
         {/* Previous / Next Article */}
-       <div className="mt-[60px] lg:mt-[80px] flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+        <div className="mt-[60px] lg:mt-[80px] flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+
           <button className="flex items-center gap-2 text-[#519A09]">
-          
-            <img src={leftArrowIcon.src} alt="Previous" className="w-8 h-8 sm:w-10 sm:h-10" />
-            
+            <img
+              src={leftArrowIcon.src}
+              alt="Previous"
+              className="w-8 h-8 sm:w-10 sm:h-10"
+            />
 
             <span className="text-[16px]">
               Previous article
@@ -159,14 +161,18 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
               Next article
             </span>
 
-            <img src={rightArrowIcon.src} alt="Next" className="w-8 h-8 sm:w-10 sm:h-10" />
+            <img
+              src={rightArrowIcon.src}
+              alt="Next"
+              className="w-8 h-8 sm:w-10 sm:h-10"
+            />
           </button>
+
         </div>
 
-        <CommentSection />
+  <CommentSection />
 
-
-      </article>
+</article>
       </div>
       </div> 
     </main>
