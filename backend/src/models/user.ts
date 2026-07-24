@@ -6,8 +6,9 @@ import {
 
 import {
   AUTH_PROVIDERS,
-  User,
 } from "../types/user";
+
+import type {User} from "../types/user"
 
 import {
   allRoles,

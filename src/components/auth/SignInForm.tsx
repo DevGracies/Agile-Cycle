@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { login } from "@/src/services/auth.service";
 import toast from "react-hot-toast";
 import Loader from "../ui/Loader";
 import { apiError } from "@/src/services/api.service";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
 
 export default function SignInForm() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -17,6 +16,7 @@ export default function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -147,9 +147,24 @@ export default function SignInForm() {
       </div>
 
       {/* Google Button */}
-      <button className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-200 py-3 hover:bg-gray-50">
+      <button
+        onClick={() => {
+          setGoogleLoading(true);
+          const redirect =
+            new URLSearchParams(window.location.search).get("redirect") || "/";
+
+          window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google?redirect=${encodeURIComponent(redirect)}`;
+        }}
+        className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-200 py-3 hover:bg-gray-50">
         <span className="text-sm font-medium text-gray-600">
-          Continue with Google
+          {googleLoading ? (
+          <Loader text="Redirecting to Google..." />
+        ) : (
+          <div className="flex items-center gap-4">
+            <FcGoogle size={22} />
+            Continue with Google
+          </div>
+        )}
         </span>
       </button>
 

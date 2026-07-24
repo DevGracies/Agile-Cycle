@@ -11,6 +11,7 @@ export type InventoryStatus =
   | "out-of-stock";
 
 export interface ProductImage {
+  id?: string;
   public_id?: string;
   secure_url: string;
   url?: string;
@@ -36,12 +37,14 @@ export interface ProductFeature {
 }
 
 export interface ProductVariant {
+  _id: string;
   name: string;
   image: string;
   description: string;
 }
 
 export interface BatteryOption {
+  _id: string;
   label: string;
 }
 

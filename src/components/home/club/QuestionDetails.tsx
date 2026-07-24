@@ -2,7 +2,7 @@ import Image from "next/image";
 
 interface QuestionDetailsProps {
   post: {
-    id: number;
+    _id: string;
     image: string;
     title: string;
     author: string;

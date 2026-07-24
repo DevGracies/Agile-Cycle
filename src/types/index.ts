@@ -40,17 +40,17 @@ export interface ChangePasswordPayload {
 
 export type UserRole = "Admin" | "CEO" | "CTO";
 
-export interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  role: UserRole;
-  email: string;
-  phone?: string;
-  position?: string;
-  gender?: string;
-  image?: string;
-}
+// export interface User {
+//   id: string;
+//   firstName: string;
+//   lastName: string;
+//   role: UserRole;
+//   email: string;
+//   phone?: string;
+//   position?: string;
+//   gender?: string;
+//   image?: string;
+// }
 
 // FORM STATE (UI only)
 export interface CreateUserFormState {
@@ -204,24 +204,28 @@ export type DataPrivacyToggleKeys =
 
 
 export interface BlogSection {
-  id: number;
+  _id: string;
   title: string;
   content: string;
   image?: string;
 }
 
 export interface Insight {
-  id: number;
+  _id: string;
   image: string;
   heroImage: string;
   title: string;
   description: string;
-  date: string;
-  author: string;
+  date?: string;
+  author: {
+    _id: string;
+    name: string;
+  };
   likes: number;
   comments: number;
-    commentsData?: Comment[];
+  commentsData?: Comment[];
   sections: BlogSection[];
+  publishedAt?: string;
 }
 
 export type InsightCardProp = {
@@ -245,8 +249,8 @@ export type BikeCategory =
   | "Trikes"
   | "Ride share";
 
-  export interface Comment {
-  id: number;
+export interface Comment {
+  _id: string;
   name: string;
   time: string;
   likes: number;
@@ -254,7 +258,12 @@ export type BikeCategory =
   replies?: Comment[];
 }
 
-
+interface Section {
+  _id: string;
+  title: string;
+  content: string;
+  image: string;
+}
 
 // 
 export interface Blog {
@@ -264,6 +273,12 @@ export interface Blog {
   description: string;
 
   content: string;
+  heroImage: string;
+  likes: number;
+  comments: number;
+  commentsData: Comment[];
+
+  sections: Section[];
 
   image: string;
 

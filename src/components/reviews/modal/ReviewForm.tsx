@@ -76,10 +76,10 @@ export function ReviewForm({ product, onSuccess }: Props) {
       <div className="flex items-center gap-4">
         <div className="relative w-[100px] h-[80px]">
           <Image
-          src={product?.images?.[0]?.url || "/placeholder.png"}
+          src={product?.images?.[0]?.secure_url || "/placeholder.png"}
           width={100}
           height={100}
-          alt={product?.images?.[0]?.alt ?? product.name ?? "Product image"}
+          alt={product?.name ?? "Product image"}
           className="w-full h-full object-cover rounded-md"
         />
         </div>

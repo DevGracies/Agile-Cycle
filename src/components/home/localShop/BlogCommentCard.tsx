@@ -11,7 +11,7 @@ import acu from "@/public/home/Like.png";
 import message from "@/public/home/club/message-2.png";
 
 interface Reply {
-  id: number;
+  _id: string;
   name: string;
   time: string;
   likes: number;
@@ -35,7 +35,7 @@ export default function CommentCard({
 }: BlogCommentCardProps) {
   const [showReplies, setShowReplies] = useState(false);
   const [showComment, setShowComment] = useState(false);
-  const [activeReplyInput, setActiveReplyInput] = useState<number | null>(null);
+  const [activeReplyInput, setActiveReplyInput] = useState<string | null>(null);
 
   return (
     <section className="border-b border-gray-200 pb-4">
@@ -146,7 +146,7 @@ export default function CommentCard({
       {showReplies && replies.length > 0 && (
         <div className="mt-6 ml-8 space-y-8">
           {replies.map((reply) => (
-            <div key={reply.id} className="relative">
+            <div key={reply._id} className="relative">
               {/* Curved Connector */}
               <div className="absolute -left-[26px] -top-2 flex items-end ">
                 <div className="h-5 w-5 border-b-2 border-l-2 border-[#519A09] rounded-bl-[16px]" />
@@ -187,9 +187,9 @@ export default function CommentCard({
            <button
               onClick={() =>
                 setActiveReplyInput(
-                  activeReplyInput === reply.id
+                  activeReplyInput === reply._id
                     ? null
-                    : reply.id
+                    : reply._id
                 )
               }
               className="flex items-center gap-2"
@@ -205,7 +205,7 @@ export default function CommentCard({
           </div>
               </div>
 
-              {activeReplyInput === reply.id && (
+              {activeReplyInput === reply._id && (
                 <div className="mt-4">
                   <input
                     type="text"

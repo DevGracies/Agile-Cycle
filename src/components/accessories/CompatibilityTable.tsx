@@ -36,8 +36,8 @@ const CompatibilityTable = ({
                 <td className="px-4 py-4 flex gap-2 items-center">
                   <div className="relative h-16 w-20 overflow-hidden rounded-lg">
                     <Image
-                      src={item.images?.[0]?.url}
-                      alt={item.images?.[0]?.alt ?? item.name}
+                      src={item.images?.[0]?.secure_url}
+                      alt={item.name || "Product image"}
                       fill
                       className="object-cover"
                     />

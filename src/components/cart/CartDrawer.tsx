@@ -36,7 +36,11 @@ export default function CartDrawer({ open, onClose }: Props) {
   }, [open, onClose]);
 
   const subtotal = cart?.items.reduce(
-    (acc, item) => acc + item.productId?.price * item.quantity,
+    (acc, item) => {
+      const pid = item.productId;
+      const price = typeof pid !== "string" && pid !== null && "price" in pid ? (pid as any).price : 0;
+      return acc + price * item.quantity;
+    },
     0,
   );
 
@@ -78,10 +82,10 @@ export default function CartDrawer({ open, onClose }: Props) {
               <div className="mt-5 space-y-4">
                 {cart?.items.map((item) => (
                   <CartItem
-                    key={item.productId._id}
+                    key={item._id}
                     item={item}
-                    onRemove={() => removeFromCart(item.productId._id, item.productType)}
-                    onChangeQty={(q) => updateQuantity(item.productId._id, item.productType, q)}
+                    onRemove={() => removeFromCart(typeof item.productId === "string" ? item.productId : (item.productId as any)._id, item.productType)}
+                    onChangeQty={(q) => updateQuantity(typeof item.productId === "string" ? item.productId : (item.productId as any)._id, item.productType, q)}
                   />
                 ))}
               </div>

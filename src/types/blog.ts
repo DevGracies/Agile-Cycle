@@ -6,6 +6,7 @@ export interface BlogLog {
   image?: string;
   info?: string;
   comments: number;
+  category?: string;
   likes: number;
   views?: number;
   status: BlogStatus;

@@ -91,7 +91,7 @@ if (error) {
                  {blogs.map((blog) => (
                     <InsightCard
   key={blog._id}
-  blog={blog}
+  blog={blog as any}
 />
                   ))}
                 </div>

@@ -11,7 +11,7 @@ import acu from "@/public/home/club/Arrow_Circle_Up (1).png";
 import message from "@/public/home/club/message-2.png";
 
 interface Reply {
-  id: number;
+  _id: string;
   author: string;
   time: string;
   content: string;
@@ -107,7 +107,7 @@ export default function CommentCard({
       {showReplies && replies.length > 0 && (
         <div className="mt-6 ml-8 space-y-8">
           {replies.map((reply) => (
-            <div key={reply.id} className="relative">
+            <div key={reply._id} className="relative">
               {/* Curved Connector */}
               <div className="absolute -left-[26px] -top-2 flex items-end ">
                 <div className="h-5 w-5 border-b-2 border-l-2 border-[#519A09] rounded-bl-[16px]" />

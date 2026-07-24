@@ -7,10 +7,10 @@ import {
   Activity,
 } from "lucide-react";
 
-import { Product } from "@/src/types/product";
+import { Ebike, } from "@/src/types/product";
 
 interface ProductSpecsProps {
-  product: Product;
+  product: Ebike;
 }
 
 const specConfig = [

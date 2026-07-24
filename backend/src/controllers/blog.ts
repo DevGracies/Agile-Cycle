@@ -8,29 +8,25 @@ import { Comment } from "../models/comment";
 import { BlogView } from "../models/view";
 
 
-export const createBlog = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
-    if (!req.user) {
-        throw new AppError("User not found", 404);
-    }
+export const createBlog = asyncHandler(
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
+            throw new AppError("User not found", 404)
+        };
 
-    const blog = await blogService.createBlog({
-        ...req.body,
-        authorId: req.user.id,
-        image: req.file,
+        const blog = await blogService.createBlog({
+            ...req.body,
+            authorId: authReq.user.id,
+            image: req.file,
+        });
+
+        return res.status(201).json({
+            success: true,
+            message: "Blog created successfully.",
+            blog,
+        });
     });
-
-//     const blog = await blogService.createBlog({
-//     ...req.body,
-//     authorId: req.body.authorId,
-//     image: req.file,
-// });
-
-    return res.status(201).json({
-        success: true,
-        message: "Blog created successfully.",
-        blog,
-    });
-});
 
 export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
     const { blogs, pagination } = await blogService.getBlogs(req.query);
@@ -70,57 +66,65 @@ export const updateBlog = asyncHandler(async (req: Request, res: Response) => {
     });
 });
 
-export const updateBlogStatus = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
-    if (!req.user) {
-        throw new AppError("User not found", 404);
-    }
-    const { id } = req.params;
-    const { status } = req.body;
+export const updateBlogStatus = asyncHandler(
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
+            throw new AppError("User not found", 404)
+        };
 
-    const blog = await blogService.updateBlogStatus(id as string, status);
+        const { id } = req.params;
+        const { status } = req.body;
 
-    return res.status(200).json({
-        success: true,
-        message: "Blog status updated successfully.",
-        blog,
-    })
-});
+        const blog = await blogService.updateBlogStatus(id as string, status);
 
-export const deleteBlog = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
-    if (!req.user) {
-        throw new AppError("User not found", 404);
-    }
-    const { id } = req.params;
+        return res.status(200).json({
+            success: true,
+            message: "Blog status updated successfully.",
+            blog,
+        })
+    });
 
-    await blogService.deleteBlog(id as string);
+export const deleteBlog = asyncHandler(
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
+            throw new AppError("User not found", 404)
+        };
 
-    return res.status(200).json({
-        success: true,
-        message: "Blog deleted successfully.",
-    })
-});
+        const { id } = req.params;
 
-export const getBlogDashboardStats = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
-    if (!req.user) {
-        throw new AppError("User not found", 404);
-    }
-    
-    const [blogs, comments, views] = await Promise.all([
-        Blog.countDocuments(),
-        Comment.countDocuments(),
-        BlogView.countDocuments(),
-    ]);
+        await blogService.deleteBlog(id as string);
+
+        return res.status(200).json({
+            success: true,
+            message: "Blog deleted successfully.",
+        })
+    });
+
+export const getBlogDashboardStats = asyncHandler(
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
+            throw new AppError("User not found", 404)
+        };
+
+        const [blogs, comments, views] = await Promise.all([
+            Blog.countDocuments(),
+            Comment.countDocuments(),
+            BlogView.countDocuments(),
+        ]);
 
 
-    return res.status(200).json({
-        success: true,
-        message: "Blog Dashboard stats fetched successfully.",
-        data: {
-            blogs,
-            comments,
-            views,
-        }
-    })
-});
+        return res.status(200).json({
+            success: true,
+            message: "Blog Dashboard stats fetched successfully.",
+            data: {
+                blogs,
+                comments,
+                views,
+            }
+        })
+    });
 
 

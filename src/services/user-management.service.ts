@@ -48,7 +48,7 @@ export const userManagementService = {
     }
 
     const newUser: User = {
-      id: crypto.randomUUID(),
+      _id: crypto.randomUUID(),
       firstName: payload.firstName,
       lastName: payload.lastName,
       role: payload.role,
@@ -75,7 +75,7 @@ export const userManagementService = {
 
   // DELETE USER
   deleteUser(userId: string): Promise<boolean> {
-    usersDB = usersDB.filter((user) => user.id !== userId);
+    usersDB = usersDB.filter((user) => user._id !== userId);
 
     return apiRequest<boolean>({
       endpoint: `/users/${userId}`,
@@ -91,7 +91,7 @@ export const userManagementService = {
     userId: string,
     payload: Partial<CreateUserRequest>,
   ): Promise<User | null> {
-    const index = usersDB.findIndex((u) => u.id === userId);
+    const index = usersDB.findIndex((u) => u._id === userId);
 
     if (index === -1) {
       return apiRequest<null>({

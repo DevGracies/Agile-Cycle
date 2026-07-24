@@ -2,7 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { insights } from "@/src/lib/data";
-import { Insight } from "@/src/types";
+import { Blog, Insight } from "@/src/types";
 import CommentSection from "@/src/components/home/localShop/CommentSection";
 import commentsIcon from "@/public/home/comment.png";
 import like from "@/public/home/Like.png";
@@ -22,9 +22,9 @@ interface PageProps {
 export default async function BlogDetailsPage({ params,}: PageProps) {
   const { id } = await params;
 
-  const blog: Insight | undefined = insights.find(
-    (item) => item.id === Number(id)
-  );
+  const blog: Blog | undefined = insights.find(
+    (item) => item._id === id
+  ) as unknown as Blog | undefined;
 
   if (!blog) {
     notFound();
@@ -54,13 +54,13 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
       <div className="mt-[18px] flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-[14px] sm:text-[16px]">
         <div className="flex items-center gap-2">
           <span className="text-[#519A09]">
-          {blog.author}
+          {blog.author.name}
         </span>
 
         <span className="text-[#A3A3A3]">•</span>
 
         <span className="text-[#519A09]">
-          {blog.date}
+          {blog.createdAt}
         </span>
         </div>
 
@@ -107,7 +107,7 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
           comments={blog.comments}
           blogTitle={blog.title}
           icon={commentsIcon.src}
-          blogId={blog.id}
+          blogId={blog._id}
         />
       </div>
 
@@ -119,7 +119,7 @@ export default async function BlogDetailsPage({ params,}: PageProps) {
       {/* Dynamic Sections */}
       <article className="max-w-[1200px]">
         {blog.sections.map((section) => (
-          <section key={section.id} className="mb-[40px] lg:mb-[60px]">
+          <section key={section._id} className="mb-[40px] lg:mb-[60px]">
             <h2 className="mb-[18px] text-[28px] sm:text-[34px] lg:text-[40px] leading-[36px] sm:leading-[42px] lg:leading-[48px] font-medium text-[#519A09]">
               {section.title}
             </h2>

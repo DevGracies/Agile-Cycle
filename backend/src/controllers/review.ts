@@ -7,12 +7,13 @@ import { AppError } from "../utils/AppError";
 
 
 export const postReview = asyncHandler(
-    async(req: AuthenticatedRequest, res: Response) => {
-        if(!req.user){
-            throw new AppError("User not found", 404);
-        }
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
+            throw new AppError("User not found", 404)
+        };
         const review = await postReviewService(
-            req.user.id, 
+            authReq.user.id,
             req.params.productId as string,
             req.body
         );
@@ -26,7 +27,7 @@ export const postReview = asyncHandler(
 )
 
 export const getReviews = asyncHandler(
-    async(req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
         const reviews = await getReviewsService();
 
         return res.status(200).json({
@@ -38,7 +39,7 @@ export const getReviews = asyncHandler(
 )
 
 export const getReviewsByProductId = asyncHandler(
-    async(req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
         const reviews = await getReviewsByProductIdService(req.params.productId as string);
 
         return res.status(200).json({

@@ -26,7 +26,7 @@ export default function ClubPage() {
                 .filter((post) => post.category !== "Questions")
                 .slice(0, 2)
                 .map((post) => (
-                  <PostCard key={post.id} {...post} />
+                  <PostCard key={post._id} {...post} />
                 ))}
 
               {/* QuestionCard */}
@@ -37,7 +37,7 @@ export default function ClubPage() {
                 .filter((post) => post.category !== "Questions")
                 .slice(2)
                 .map((post) => (
-                  <PostCard key={post.id} {...post} />
+                  <PostCard key={post._id} {...post} />
                 ))}
             </div>
          

@@ -8,7 +8,7 @@ type CommentsModalProps = {
   isOpen: boolean;
   onClose: () => void;
   blogTitle: string;
-  blogId: number;
+  blogId: string;
 };
 
 export default function CommentsModal({
@@ -18,11 +18,11 @@ export default function CommentsModal({
   blogId,
 }: CommentsModalProps) {
 
-    if (!isOpen) return null;
+  if (!isOpen) return null;
 
-      const blog = insights.find(
-        (item) => item.id === blogId
-      );
+  const blog = insights.find(
+    (item) => item._id === blogId
+  );
 
 
   return (
@@ -55,36 +55,36 @@ export default function CommentsModal({
           </div>
 
           {/* Comments Area */}
-        {/* Comments Area */}
-<div className="h-[300px] overflow-y-auto border-b border-[#DCE7D4] pr-2">
+          {/* Comments Area */}
+          <div className="h-[300px] overflow-y-auto border-b border-[#DCE7D4] pr-2">
 
-  
 
-{blog?.commentsData?.map((comment) => (
-  <BlogCommentCard
-    key={comment.id}
-    {...comment}
-  />
-))}
 
-</div>
+            {blog?.commentsData?.map((comment) => (
+              <BlogCommentCard
+                key={comment._id}
+                {...comment}
+              />
+            ))}
 
-    {/* Input */} 
-    <div className="mt-6">
-      <input type="text" 
-        placeholder="Drop your comment" 
-        className="w-full h-[44px] border border-[#DCE7D4] rounded-[4px] px-4 outline-none" /> 
-      </div> 
-      {/* Actions */} 
-      <div className="flex justify-end gap-4 mt-6">
-        <button onClick={onClose} className="px-6 h-[40px] border border-[#519A09] rounded-[4px] text-[#519A09]" > 
-          Cancel 
-          </button>
-          <button className="px-6 h-[40px] bg-[#519A09] text-white rounded-[4px]" > 
-            Comment 
-            </button> 
-            </div> 
-                
+          </div>
+
+          {/* Input */}
+          <div className="mt-6">
+            <input type="text"
+              placeholder="Drop your comment"
+              className="w-full h-[44px] border border-[#DCE7D4] rounded-[4px] px-4 outline-none" />
+          </div>
+          {/* Actions */}
+          <div className="flex justify-end gap-4 mt-6">
+            <button onClick={onClose} className="px-6 h-[40px] border border-[#519A09] rounded-[4px] text-[#519A09]" >
+              Cancel
+            </button>
+            <button className="px-6 h-[40px] bg-[#519A09] text-white rounded-[4px]" >
+              Comment
+            </button>
+          </div>
+
 
 
         </div>

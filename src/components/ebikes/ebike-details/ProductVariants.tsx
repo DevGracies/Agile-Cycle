@@ -14,6 +14,31 @@ interface Props {
   onSelectedVariant: (id: string) => void;
 }
 
+type BatteryOption = { _id: string; label: string };
+
+function hasBatteryOptions(
+  product: Product
+): product is Product & { batteryOptions: BatteryOption[] } {
+  return Array.isArray((product as any).batteryOptions);
+}
+
+type ProductWithSpecs = Product & { specs: { size: string } };
+
+type Variant = { _id: string; image: string; name: string; description: string };
+
+type ProductWithVariants = Product & { variants: Variant[] };
+
+function hasSpecs(product: Product): product is ProductWithSpecs {
+  return (
+    typeof (product as any).specs === "object" &&
+    typeof (product as any).specs?.size === "string"
+  );
+}
+
+function hasVariants(product: Product): product is ProductWithVariants {
+  return Array.isArray((product as any).variants);
+}
+
 export default function ProductVariants({
   product,
   selectedColor,
@@ -23,7 +48,9 @@ export default function ProductVariants({
   onSelectBattery,
   onSelectedVariant,
 }: Props) {
-  const productColor = product.colors.find((col) => col._id === selectedColor);
+  const productColor = product.colors.find((col) => col.color === selectedColor);
+  const batteryOptions = hasBatteryOptions(product) ? product.batteryOptions : undefined;
+  const productSize = hasSpecs(product) ? product.specs.size : undefined;
   return (
     <div className="space-y-7">
       {/* COLORS */}
@@ -37,10 +64,10 @@ export default function ProductVariants({
         <div className="flex gap-4 mt-4">
           {product.colors.map((color) => (
             <div
-              key={color._id}
-              onClick={() => onSelectColor(color._id)}
+              key={color.color}
+              onClick={() => onSelectColor(color.color)}
               className={`w-8 h-8 rounded cursor-pointer transition-all duration-300 ${
-                selectedColor === color._id
+                selectedColor === color.color
                   ? "ring-2 ring-primary border-3 border-gray-200"
                   : ""
               }`}
@@ -57,11 +84,11 @@ export default function ProductVariants({
         <h4 className="flex items-center gap-2 text-[13px] uppercase text-[#7e7e7e] font-semibold">
           Battery Size
           <div className="w-1 h-1 rounded-full bg-black" />
-          <p className="text-black">{product?.batteryOptions?.[0]?.label}</p>
+          <p className="text-black">{batteryOptions?.[0]?.label}</p>
         </h4>
 
         <div className="flex gap-3 mt-4 flex-wrap">
-          {product?.batteryOptions?.map((battery) => (
+          {batteryOptions?.map((battery) => (
             <button
               key={battery._id}
               onClick={() => onSelectBattery(battery._id)}
@@ -78,20 +105,22 @@ export default function ProductVariants({
       </div>
 
       {/* SIZE */}
-      <div>
-        <h4 className="flex items-center gap-2 text-[13px] uppercase text-[#7e7e7e] font-semibold">
-          Size 
-          <div className="w-1 h-1 rounded-full bg-black"/>
-          <span className="text-black">{product.specs?.size}</span>
-        </h4>
+      {productSize ? (
+        <div>
+          <h4 className="flex items-center gap-2 text-[13px] uppercase text-[#7e7e7e] font-semibold">
+            Size 
+            <div className="w-1 h-1 rounded-full bg-black"/>
+            <span className="text-black">{productSize}</span>
+          </h4>
 
-        <button className="mt-4 bg-primary text-white px-6 h-12 rounded-md font-semibold">
-          {product.specs?.size?.split(" ")[0]}
-        </button>
-      </div>
+          <button className="mt-4 bg-primary text-white px-6 h-12 rounded-md font-semibold">
+            {productSize.split(" ")[0]}
+          </button>
+        </div>
+      ) : null}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-        {product?.variants?.map((variant) => {
+        {hasVariants(product) && product.variants.map((variant) => {
           const isActive = selectedVariant === variant._id;
 
           return (
