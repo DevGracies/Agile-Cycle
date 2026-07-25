@@ -1,11 +1,11 @@
-
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { blogService } from "@/src/services/blogUsers.service";
 
-export function useBlogs() {
+export function useBlogs(page: number, limit = 10) {
   return useQuery({
-    queryKey: ["blogs"],
-    queryFn: blogService.getBlogs,
+    queryKey: ["blogs", page, limit],
+    queryFn: () => blogService.getBlogs(page, limit),
+    placeholderData: keepPreviousData,
   });
 }
 
