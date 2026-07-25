@@ -106,7 +106,7 @@ export const getAccessoriesService = async (
 ) => {
   const {
     page = "1",
-    limit = "10",
+    limit = "6",
 
     category,
 
@@ -213,7 +213,7 @@ export const getAccessoriesService = async (
 
   const pageNumber = Math.max(1, Number(page) || 1);
 
-  const limitNumber = Math.max(1, Number(limit) || 10);
+  const limitNumber = Math.max(1, Number(limit) || 6);
 
   const skip =
     (pageNumber - 1) * limitNumber;

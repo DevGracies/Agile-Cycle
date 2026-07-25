@@ -40,7 +40,6 @@ export const getProductsInStockService = async () => {
         Enhancement.countDocuments({ stock: { $gt: 0 } }),
     ])
 
-    console.log(ebikes)
     return {
         ebikes, 
         accessories,

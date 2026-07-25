@@ -39,7 +39,7 @@ import { AuthenticatedRequest } from "../types/auth";
 // )
 
 export const getAllProducts = asyncHandler(
-    async(req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
         const products = await getAllProductsService(req.query);
 
         return res.status(200).json({
@@ -51,7 +51,7 @@ export const getAllProducts = asyncHandler(
 )
 
 
-export const getProduct = asyncHandler(async (req: Request, res: Response)  => {
+export const getProduct = asyncHandler(async (req: Request, res: Response) => {
     const product = await getProductService(req.params.id as string);
 
     res.status(200).json({
@@ -61,7 +61,7 @@ export const getProduct = asyncHandler(async (req: Request, res: Response)  => {
     });
 });
 
-export const getProductsInStock = asyncHandler(async (req: Request, res: Response)  => {
+export const getProductsInStock = asyncHandler(async (req: Request, res: Response) => {
     const product = await getProductsInStockService();
 
     res.status(200).json({

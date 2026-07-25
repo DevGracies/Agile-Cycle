@@ -2,49 +2,26 @@
 
 import { Pagination } from "../../dashboard/common/Dashboard";
 
-
-
 interface Props {
-
   currentPage: number;
-
   totalPages: number;
-
   totalItems: number;
-
   limit: number;
-
   onPageChange: (page: number) => void;
-
 }
 
-
-
 export default function PaginationFooter({
-
   currentPage,
-
   totalPages,
-
   totalItems,
-
   limit,
-
   onPageChange,
-
 }: Props) {
-
 
   const start =
     totalItems === 0
-      ?
-      0
-      :
-      (
-        (currentPage - 1) * limit
-      ) + 1;
-
-
+      ? 0
+      : ((currentPage - 1) * limit) + 1;
 
   const end =
     Math.min(
@@ -82,10 +59,13 @@ flex-1
 
 
         <Pagination
-
-          setCurrentPage={
-            onPageChange
-          }
+          setCurrentPage={(value: React.SetStateAction<number>) => {
+            if (typeof value === "number") {
+              onPageChange(value);
+            } else {
+              onPageChange(value(currentPage));
+            }
+          }}
 
           totalPages={
             totalPages

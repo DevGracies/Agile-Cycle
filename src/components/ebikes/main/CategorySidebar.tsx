@@ -220,6 +220,7 @@ export default function CategorySidebar({
         left-0
         z-30
         w-[320px]
+        h-fit
         bg-white
         border-r
         border-gray-200

@@ -170,7 +170,7 @@ export default function ProductPage() {
           Number(
             searchParams.get("limit")
             ??
-            10
+            6
           ),
 
 

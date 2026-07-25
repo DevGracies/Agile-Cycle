@@ -58,7 +58,7 @@ export function AccessoryProvider({
     useState<PaginationState>({
       total: 0,
       page: 1,
-      limit: 10,
+      limit: 6,
       totalPages: 1,
     });
 
@@ -115,6 +115,10 @@ export function AccessoryProvider({
           totalPages:
             response.totalPages,
         });
+        console.log("total", response.total)
+        console.log("page", response.page)
+        console.log("limit", response.limit)
+        console.log("totalPages", response.totalPages)
       } catch (error) {
         console.error(error);
 
@@ -161,10 +165,6 @@ export function AccessoryProvider({
     },
     [setLoadingState],
   );
-
-  useEffect(() => {
-    fetchAccessories();
-  }, [fetchAccessories]);
 
   const discountPercentage =
     useMemo(() => {

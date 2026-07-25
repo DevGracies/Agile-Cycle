@@ -1,11 +1,16 @@
-import { useEbike } from "@/src/context/EbikeProvider";
 import EbikeCard from "../../cards/EbikeCard";
 import EbikeCardSkeleton from "../../skeleton/EbikeCardSkeleton";
 import { useFeaturedProducts } from "@/src/hooks/useFeaturedProducts";
+import { useEffect } from "react";
 
 
 const RecentlyViewed = () => {
-  const { ebikes, isLoading } = useFeaturedProducts();
+  const { ebikes, isLoading, fetchFeaturedProducts } = useFeaturedProducts();
+
+  useEffect(() => {
+    fetchFeaturedProducts()
+  }, []);
+  
   return (
     <section className="mt-32">
       <h2 className="text-3xl font-bold mb-12">

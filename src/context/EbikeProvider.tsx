@@ -95,7 +95,7 @@ export function EbikeProvider({
     useState<PaginationState>({
       total: 0,
       page: 1,
-      limit: 10,
+      limit: 6,
       totalPages: 1,
     });
 

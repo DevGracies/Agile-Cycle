@@ -111,11 +111,6 @@ const MAX_IMAGES = 4;
 const MAX_IMAGE_SIZE =
     5 * 1024 * 1024;
 
-
-const EMPTY_IMAGE_ARRAY =
-    Array(MAX_IMAGES).fill(null);
-
-
 const DEFAULT_VALUES: ProductFormValues = {
 
     name: "",
@@ -153,8 +148,6 @@ function createEmptyImages<T>() {
         )[];
 
 }
-
-
 
 function safeImageSlots(
     images: ExistingImage[]

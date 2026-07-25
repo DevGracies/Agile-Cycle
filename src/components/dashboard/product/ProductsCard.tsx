@@ -18,6 +18,7 @@ import { deleteEnhancement } from '@/src/services/enhancement.service';
 import toast from 'react-hot-toast';
 import { apiError } from '@/src/services/api.service';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Pagination } from '../common/Dashboard';
 
 
 interface DeleteProductInput {
@@ -83,6 +84,7 @@ export default function ProductCard() {
   const pageStart = pagination ? (pagination.page - 1) * pagination.limit + 1 : 0;
   const pageEnd = pagination ? Math.min(pagination.page * pagination.limit, pagination.total) : 0;
   const totalProducts = pagination?.total ?? 0;
+  const totalPages = pagination ? Math.ceil(pagination?.total / pagination?.limit) : 0
 
   const deleteMutation = useDeleteProduct();
 
@@ -197,7 +199,7 @@ export default function ProductCard() {
       {/* Pagination Footer */}
       <div className="flex justify-between items-center mt-8 max-[689px]:flex-col">
         <div className='w-[6.5rem] max-[689px]:w-[9%] max-[689px]:hidden'></div>
-        <div className="flex items-center gap-3 max-[689px]:mb-[2rem]">
+        {/* <div className="flex items-center gap-3 max-[689px]:mb-[2rem]">
           <button
             disabled={page === 1}
             onClick={() => setPage(prev => prev - 1)}
@@ -214,7 +216,13 @@ export default function ProductCard() {
             className="w-10 h-10 flex items-center justify-center bg-[#4f7c2b] text-white rounded-full hover:bg-[#3d6122] transition-colors shadow-md">
             <ArrowForwardIcon fontSize="small" />
           </button>
-        </div>
+        </div> */}
+
+        <Pagination 
+          currentPage={page}
+          setCurrentPage={setPage}
+          totalPages={totalPages}
+        />
         <div className="text-sm text-gray-600 font-medium">
           Showing {pageStart}
           -{pageEnd} of {totalProducts}

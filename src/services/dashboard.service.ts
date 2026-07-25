@@ -44,7 +44,7 @@ export const getProduct = async (id: string)=> {
 };
 export const getProductsInStock = async ()=> {
     const { data } = await api.get(
-        `/dashboard/products/in-stock`
+        `/dashboard/products-in-stock`
     );
     return data;
 };

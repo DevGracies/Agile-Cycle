@@ -58,7 +58,7 @@ export function EnhancementProvider({
     useState<PaginationState>({
       total: 0,
       page: 1,
-      limit: 10,
+      limit: 6,
       totalPages: 1,
     });
 
@@ -167,11 +167,6 @@ export function EnhancementProvider({
     },
     [setLoadingState],
   );
-
-
-  useEffect(() => {
-    fetchEnhancements();
-  }, [fetchEnhancements]);
 
 
   const discountPercentage =

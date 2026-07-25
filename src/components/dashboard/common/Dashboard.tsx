@@ -7,7 +7,7 @@ export const Pagination = ({
   totalPages,
   currentPage,
 }: {
-  setCurrentPage?: any;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   totalPages: number;
   currentPage: number;
 }) => {

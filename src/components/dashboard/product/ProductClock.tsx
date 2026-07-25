@@ -38,6 +38,7 @@ const DigitalClock = () => {
       console.error(error);
     }
   }
+  
   useEffect(() => {
     getStats()
   }, [])
