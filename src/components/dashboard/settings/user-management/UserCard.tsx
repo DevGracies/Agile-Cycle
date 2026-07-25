@@ -1,5 +1,5 @@
 import { ROLE_STYLES } from "@/src/constants";
-import { User } from "@/src/types";
+import { User } from "@/src/types/user";
 import Image from "next/image";
 
 const DEFAULT_AVATAR = "/images/default-avatar.png";
@@ -30,7 +30,7 @@ const UserCard = ({ user }: UserCardProps) => {
 
         <div
           className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold mt-3 ${
-            ROLE_STYLES[user.role]
+            ROLE_STYLES[user.role as string]
           }`}
         >
           {user.role}

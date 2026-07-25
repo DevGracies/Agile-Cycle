@@ -91,21 +91,12 @@ const { data, isPending, isFetching, isError } = useBlogs(page);
           </div>
 
                 <div className="mt-10 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-                  {isPending ? (
-                    <>
-                      {Array.from({ length: 6 }).map((_, index) => (
-                        <InsightCardSkeleton key={index} />
-                      ))}
-                    </>
-                  ) : isError ? (
-                    <p className="col-span-full text-red-500 text-center">
-                      Failed to load blogs.
-                    </p>
-                  ) : (
-                    blogs.map((blog) => (
-                      <InsightCard key={blog._id} blog={blog} />
-                    ))
-                  )}
+                 {blogs.map((blog) => (
+                    <InsightCard
+  key={blog._id}
+  blog={blog as any}
+/>
+                  ))}
                 </div>
 
                 {isFetching && !isPending && (

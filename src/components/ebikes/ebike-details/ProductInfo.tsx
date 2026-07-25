@@ -42,15 +42,15 @@ export default function ProductInfo({ product }: { product: Product }) {
 
   console.log("Product Info", product)
   return (
-    <div>
+    <div className="space-y-2">
       <h1 className="text-3xl font-bold">{product.name}</h1>
 
-      <p className="text-[#7aac3d] mt-3 text-lg font-medium">
+      <p className="text-[#7aac3d] text-lg font-medium">
         {product.shortDescription}
       </p>
 
       {/* RATING */}
-      <div className="flex items-center gap-4 mt-3">
+      <div className="flex items-center gap-4">
         <RatingStars count={Math.floor(product.averageRating)} />
         <span className="font-semibold">{product.averageRating}/5</span>
         <ChevronRight className="text-gray-400 size-4" />
@@ -63,7 +63,7 @@ export default function ProductInfo({ product }: { product: Product }) {
       </div>
 
       {/* PRICE */}
-      <div className="flex items-center gap-4 mt-6">
+      <div className="flex items-center gap-4">
         <h2 className="text-2xl font-bold text-secondary">
           {formatPrice(product.discountPrice || 0)}
         </h2>
@@ -76,7 +76,7 @@ export default function ProductInfo({ product }: { product: Product }) {
       </div>
 
       {/* STOCK */}
-      <div className="flex justify-between mt-3">
+      <div className="flex justify-between">
         <span className={`uppercase font-bold text-sm ${stockColor()}`}>
           {stockDisplay()}
         </span>
@@ -87,7 +87,7 @@ export default function ProductInfo({ product }: { product: Product }) {
       </div>
 
       {/* VARIANTS */}
-      <div className="mt-8">
+      <div className="mt-2">
         <ProductVariants
           product={product}
           selectedColor={selectedColor}
@@ -99,7 +99,7 @@ export default function ProductInfo({ product }: { product: Product }) {
         />
       </div>
 
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center mt-10">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center mt-6">
         <div className="flex items-center gap-3">
           <span className="text-sm text-gray-600">Quantity</span>
           <QuantitySelector

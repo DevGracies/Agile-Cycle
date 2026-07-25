@@ -9,27 +9,32 @@ export const useProductPurchase = (
   const [quantity, setQuantity] =
     useState(1);
 
+  const getDefaultColor = () =>
+    "colors" in product ? product.colors?.[0]?.color ?? null : null;
+
+  const getDefaultVariant = () =>
+    "variants" in product ? product.variants?.[0]?._id ?? null : null;
+
+  const getDefaultBattery = () =>
+    "batteryOptions" in product
+      ? product.batteryOptions?.[0]?._id ?? null
+      : null;
+
   const [selectedColor, setSelectedColor] =
-    useState<string | null>(
-      product.colors?.[0]?._id ?? null,
-    );
+    useState<string | null>(getDefaultColor());
 
   const [selectedVariant, setSelectedVariant] =
-    useState<string | null>(
-      product.variants?.[0]?.id ?? null,
-    );
+    useState<string | null>(getDefaultVariant());
 
   const [selectedBattery, setSelectedBattery] =
-    useState<string | null>(
-      product.batteryOptions?.[0]?.id ?? null,
-    );
+    useState<string | null>(getDefaultBattery());
 
   const isOutOfStock =
     product.stock <= 0;
 
   const isLowStock =
     product.stock > 0 &&
-    product.stock < 5;1
+    product.stock < 5;
 
   const canAddToCart = useMemo(() => {
     return !isOutOfStock;
@@ -53,16 +58,9 @@ export const useProductPurchase = (
 
   const reset = () => {
     setQuantity(1);
-    setSelectedColor(
-      product.colors?.[0]?.id ?? null,
-    );
-    setSelectedVariant(
-      product.variants?.[0]?.id ?? null,
-    );
-    setSelectedBattery(
-      product.batteryOptions?.[0]?.id ??
-      null,
-    );
+    setSelectedColor(getDefaultColor());
+    setSelectedVariant(getDefaultVariant());
+    setSelectedBattery(getDefaultBattery());
   };
 
   const addToCart = async () => {
@@ -70,7 +68,7 @@ export const useProductPurchase = (
 
     // API READY PAYLOAD
     const payload = {
-      productId: product.id,
+      productId: product._id,
       quantity,
       color: selectedColor,
       variant: selectedVariant,

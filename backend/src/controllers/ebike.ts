@@ -35,6 +35,51 @@ export const createEbike = asyncHandler(
   }
 );
 
+export const updateEbike = asyncHandler(
+  async (req: Request, res: Response) => {
+
+    const existingImages =
+      req.body.existingImages
+        ? JSON.parse(req.body.existingImages)
+        : [];
+
+    const removedImages =
+      req.body.removedImages
+        ? JSON.parse(req.body.removedImages)
+        : [];
+
+
+    const parsed =
+      updateEbikeSchema.safeParse(req.body);
+
+
+    if (!parsed.success) {
+      throw new AppError(
+        "Invalid request data",
+        400,
+        parsed.error.flatten()
+      );
+    }
+
+
+    const ebike =
+      await updateEbikeService(
+        req.params.id as string,
+        parsed.data,
+        req.files as Express.Multer.File[],
+        existingImages,
+        removedImages
+      );
+
+
+    return res.status(200).json({
+      success: true,
+      message: "Ebike updated successfully",
+      data: ebike,
+    });
+
+  }
+);
 
 export const getEbike =
   asyncHandler(
@@ -74,51 +119,6 @@ export const getAllEbikes =
   );
 
 
-export const updateEbike = asyncHandler(
-  async (req: Request, res: Response) => {
-    console.log("body", req.body)
-    console.log("files", req.files)
-    const body = {
-      ...req.body,
-      images: req.body.existingImages
-        ? JSON.parse(req.body.existingImages)
-        : [],
-      colors: req.body.colors
-        ? JSON.parse(req.body.colors)
-        : [],
-      // variants: req.body.variants
-      //   ? JSON.parse(req.body.variants)
-      //   : [],
-      // features: req.body.features
-      //   ? JSON.parse(req.body.features)
-      //   : [],
-      // specs: req.body.specs
-      //   ? JSON.parse(req.body.specs)
-      //   : [],
-    };
-    const parsed = updateEbikeSchema.safeParse(body);
-
-    if (!parsed.success) {
-      throw new AppError(
-        "Invalid request data",
-        400,
-        parsed.error.flatten()
-      );
-    }
-
-    const ebike = await updateEbikeService(
-      req.params.id as string,
-      parsed.data,
-      req.files as Express.Multer.File[]
-    );
-
-    return res.status(200).json({
-      success: true,
-      message: "Ebike updated successfully",
-      data: ebike,
-    });
-  }
-);
 
 export const archiveEbike =
   asyncHandler(

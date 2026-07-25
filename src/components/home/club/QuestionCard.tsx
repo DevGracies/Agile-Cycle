@@ -12,7 +12,7 @@ export default function QuestionCard() {
   }
 
   return (
-    <Link href={`/Home/club/${questionPost.id}`}>
+    <Link href={`/Home/club/${questionPost._id}`}>
       <div className="overflow-hidden rounded-lg border border-[#D8E6D0] bg-white">
         <div className="flex justify-end">
           <div className="bg-[#005E11] px-6 py-2 text-white">

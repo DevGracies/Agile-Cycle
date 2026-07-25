@@ -9,14 +9,14 @@ import Image from "next/image";
 import banner from "@/public/home/club/banner.png";
 
 interface PageProps {
-  params: Promise<{ id: number }>;
+  params: Promise<{ id: string }>;
 }
 
 export default async function ClubDetailsPage({ params }: PageProps) {
   const { id } = await params;
-  const postId = Number(id);
+  const postId = String(id);
 
-  const post = clubPosts.find((item) => item.id === postId);
+  const post = clubPosts.find((item) => String(item._id) === postId);
 
   if (!post) {
     //  notFound();
@@ -24,7 +24,7 @@ export default async function ClubDetailsPage({ params }: PageProps) {
   }
 
   // Get other posts (excluding current post)
-  const otherPosts = clubPosts.filter((item) => item.id !== postId);
+  const otherPosts = clubPosts.filter((item) => item._id !== postId);
 
   return (
     <main>
@@ -91,7 +91,7 @@ export default async function ClubDetailsPage({ params }: PageProps) {
             <div className="mt-10">
               {comments.map((comment) => ( 
                 <CommentCard
-                  key={comment.id} 
+                  key={comment._id} 
                   {...comment} 
                 />
               ))}

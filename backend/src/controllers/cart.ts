@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { Types } from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler";
 import { Cart, ProductType } from "../models/cart";
@@ -8,28 +8,30 @@ import { PRODUCT_MODELS } from "../utils";
 import { getOrCreateCart, populateCartItems } from "../utils/cart";
 
 export const getCart = asyncHandler(
-    async (req: AuthenticatedRequest, res: Response) => {
-        if (!req.user) {
-            throw new AppError("User not found", 404);
-        }
+  async (req: Request, res: Response) => {
+    const authReq = req as AuthenticatedRequest;
+    if (!authReq.user) {
+      throw new AppError("User not found", 404)
+    };
 
-        const cart = await getOrCreateCart(req.user.id);
+    const cart = await getOrCreateCart(authReq.user.id);
 
-        await populateCartItems(cart);
+    await populateCartItems(cart);
 
-        return res.status(200).json({
-            success: true,
-            message: "Cart retrieved successfully.",
-            data: cart,
-        });
-    }
+    return res.status(200).json({
+      success: true,
+      message: "Cart retrieved successfully.",
+      data: cart,
+    });
+  }
 );
 
 export const addToCart = asyncHandler(
-  async (req: AuthenticatedRequest, res: Response) => {
-    if (!req.user) {
-      throw new AppError("User not found", 404);
-    }
+  async (req: Request, res: Response) => {
+    const authReq = req as AuthenticatedRequest;
+    if (!authReq.user) {
+      throw new AppError("User not found", 404)
+    };
 
     const {
       productId,
@@ -62,7 +64,7 @@ export const addToCart = asyncHandler(
       throw new AppError("Insufficient stock", 400);
     }
 
-    const cart = await getOrCreateCart(req.user.id);
+    const cart = await getOrCreateCart(authReq.user.id);
 
     const existingItem = cart.items.find(
       (item) =>
@@ -99,10 +101,11 @@ export const addToCart = asyncHandler(
 );
 
 export const updateCartItem = asyncHandler(
-  async (req: AuthenticatedRequest, res: Response) => {
-    if (!req.user) {
-      throw new AppError("User not found", 404);
-    }
+  async (req: Request, res: Response) => {
+    const authReq = req as AuthenticatedRequest;
+    if (!authReq.user) {
+      throw new AppError("User not found", 404)
+    };
 
     const { productId } = req.params;
 
@@ -135,7 +138,7 @@ export const updateCartItem = asyncHandler(
     }
 
     const cart = await Cart.findOne({
-      userId: req.user.id,
+      userId: authReq.user.id,
     });
 
     if (!cart) {
@@ -168,10 +171,11 @@ export const updateCartItem = asyncHandler(
 
 
 export const removeFromCart = asyncHandler(
-  async (req: AuthenticatedRequest, res: Response) => {
-    if (!req.user) {
-      throw new AppError("User not found", 404);
-    }
+  async (req: Request, res: Response) => {
+    const authReq = req as AuthenticatedRequest;
+    if (!authReq.user) {
+      throw new AppError("User not found", 404)
+    };
 
     const { productId } = req.params;
 
@@ -182,7 +186,7 @@ export const removeFromCart = asyncHandler(
     }
 
     const cart = await Cart.findOne({
-      userId: req.user.id,
+      userId: authReq.user.id,
     });
 
     if (!cart) {
@@ -220,20 +224,21 @@ export const removeFromCart = asyncHandler(
 );
 
 export const clearCart = asyncHandler(
-  async (req: AuthenticatedRequest, res: Response) => {
-    if (!req.user) {
-      throw new AppError("User not found", 404);
-    }
+  async (req: Request, res: Response) => {
+    const authReq = req as AuthenticatedRequest;
+    if (!authReq.user) {
+      throw new AppError("User not found", 404)
+    };
 
     const cart = await Cart.findOne({
-      userId: req.user.id,
+      userId: authReq.user.id,
     });
 
     if (!cart) {
       throw new AppError("Cart not found", 404);
     }
 
-    await Cart.findOneAndUpdate({ userId: req.user.id }, { items: [] }, { new: true });
+    await Cart.findOneAndUpdate({ userId: authReq.user.id }, { items: [] }, { new: true });
 
     return res.status(200).json({
       success: true,

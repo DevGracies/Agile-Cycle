@@ -11,7 +11,7 @@ export default function AccessoryList({accessories}: {accessories: Accessories[]
           Compatible Accessories & Enhancements
         </h3>
 
-        <Link href="/products" className="w-[100px] text-primary font-semibold underline max-md:text-xs">
+        <Link href="/products?productType=accessories" className="w-[100px] text-primary font-semibold underline max-md:text-xs">
           See All
         </Link>
       </div>
@@ -30,8 +30,8 @@ export default function AccessoryList({accessories}: {accessories: Accessories[]
               <input type="checkbox" className="w-5 h-5 accent-primary" />
 
               <Image
-                src={item.images?.[0]?.url}
-                alt={item.images?.[0]?.alt ?? item.name}
+                src={item.images?.[0]?.secure_url}
+                alt={item.name || "Product Image"}
                 width={65}
                 height={65}
                 className="object-contain"

@@ -5,6 +5,15 @@ import { Enhancement } from "../types/product";
 import { api } from "./api.service";
 import { buildQueryParams } from "../utils/product";
 
+export const getEnhancements = async (category: string) => {
+    const { data } = await api.get("/enhancements", {
+        params: {
+            category,
+        },
+    });
+
+    return data;
+};
 
 export const getAllEnhancements = async (filters?: Partial<ProductFilters>): Promise<GetEnhancementResponse> => {
     const params = buildQueryParams(filters);

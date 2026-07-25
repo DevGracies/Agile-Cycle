@@ -13,12 +13,12 @@ router.get("/:id", getEnhancement);
 router.use(authenticate, );
 router.post(
     "/",
-    upload.array("images", 5),
+    upload.array("images", 4),
     createEnhancement
 );
 router.patch(
     "/:id",
-    upload.array("images", 5),
+    upload.array("images", 4),
     updateEnhancement
 );
 

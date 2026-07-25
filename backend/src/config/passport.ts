@@ -1,54 +1,77 @@
-// import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-// import passport from "passport";
-// import { env } from "./env";
-// import User from "../models/user";
-// import { AppError } from "../utils/AppError";
+import {
+  Strategy as GoogleStrategy,
+  Profile,
+  VerifyCallback,
+} from "passport-google-oauth20";
+import passport from "passport";
+import { env } from "./env";
+import User from "../models/user";
+import { AppError } from "../utils/AppError";
 
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      callbackURL: env.GOOGLE_CALLBACK_URL,
+    },
+    async (
+      _accessToken: string,
+      _refreshToken: string,
+      profile: Profile,
+      done: VerifyCallback
+    ) => {
+      try {
+        const email = profile.emails?.[0]?.value;
 
-// passport.use(new GoogleStrategy({
-//     clientID: env.GOOGLE_CLIENT_ID,
-//     clientSecret: env.GOOGLE_CLIENT_SECRET,
-//     callbackURL: env.GOOGLE_CALLBACK_URL,
-// },
-//     async (_accessToken: any, _refreshToken: any, profile: any, done: any) => {
-//         try {
-//             const email = profile.emails?.[0]?.value;
-//             const image = profile.photos?.[0]?.value.replace("=s96-c", "=s400-c");
+        if (!email) {
+          return done(new AppError("Google account email does not exist"));
+        }
 
-//             let user = await User.findOne({
-//                 $or: [{ googleId: profile.id }, { email }],
-//             });
+        const image = profile.photos?.[0]?.value?.replace(
+          "=s96-c",
+          "=s400-c"
+        );
 
-//             if (!user) {
-//                 user = await User.create({
-//                     name: profile.displayName,
-//                     email,
-//                     googleId: profile.id,
-//                     provider: "google",
-//                     avatar: image,
-//                 });
-//             } else {
-//                 if (!user.avatar && image) {
-//                     user.avatar = image;
-//                 }
+        let isNewUser = false;
 
-//                 if (!user.googleId) {
-//                     user.googleId = profile.id;
-//                     user.provider = "google";
-//                 }
+        let user = await User.findOne({
+          $or: [{ googleId: profile.id }, { email }],
+        });
 
-//                 await user.save();
-//             }
+        if (!user) {
+          isNewUser = true;
 
-//             if (!profile.emails?.[0]?.verified) {
-//                 return done(new AppError("Google account email not verified"))
-//             }
+          user = await User.create({
+            name: profile.displayName,
+            email,
+            googleId: profile.id,
+            provider: "google",
+            avatar: image,
+            isEmailVerified: true,
+          });
+        } else {
+          if (!user.avatar && image) {
+            user.avatar = image;
+          }
 
-//             return done(null, user);
-//         } catch (error) {
-//             return done(error, null);
-//         }
-//     }
-// ));
+          if (!user.googleId) {
+            user.googleId = profile.id;
+            user.provider = "google";
+          }
 
-// export default passport;
+          await user.save();
+        }
+
+        // Attach temporary property
+        (user as any).isNewUser = isNewUser;
+
+        return done(null, user);
+      } catch (error) {
+        return done(error as Error);
+      }
+    }
+  )
+);
+
+export default passport;

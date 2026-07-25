@@ -85,7 +85,7 @@ const UserManagementPage = () => {
         // Users Grid
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-8">
           {users.map((user) => (
-            <UserCard key={user.id} user={user} />
+            <UserCard key={user._id} user={user} />
           ))}
         </div>
       )}

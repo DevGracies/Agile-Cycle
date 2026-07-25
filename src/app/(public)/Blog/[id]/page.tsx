@@ -1,7 +1,6 @@
 "use client"
 import Image from "next/image";
 
-
 import CommentSection from "@/src/components/home/localShop/CommentSection";
 import commentsIcon from "@/public/home/comment.png";
 import like from "@/public/home/Like.png";

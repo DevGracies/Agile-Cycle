@@ -35,24 +35,31 @@ export interface RiderProfile {
 }
 
 export interface User {
-  _id: string;
-  name: string;
-  email: string;
+  _id?: string;
+  name?: string;
+  email?: string;
+
+  firstName?: string;
+  lastName?: string;
+  image?: string;
+  phone?: string;
+  position?: string;
+  gender?: string;
 
   password?: string;
 
-  role: string;
+  role?: string;
 
-  provider: AuthProvider;
+  provider?: AuthProvider;
 
   avatar?: string | null;
 
   googleId?: string;
 
-  isActive: boolean;
-  isSuspended: boolean;
+  isActive?: boolean;
+  isSuspended?: boolean;
 
-  isEmailVerified: boolean;
+  isEmailVerified?: boolean;
 
   emailVerificationToken?: string;
   emailVerificationExpiresAt?: Date;
@@ -64,12 +71,12 @@ export interface User {
 
   lastLoginAt?: Date;
 
-  preferences: UserPreferences;
+  preferences?: UserPreferences;
 
-  riderProfile: RiderProfile;
+  riderProfile?: RiderProfile;
 
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 
@@ -113,7 +120,7 @@ export interface ChangePasswordPayload {
 
 
 
-// export type UserRole = "Admin" | "CEO" | "CTO";
+export type UserRole = "Admin" | "CEO" | "CTO";
 
 // export interface User {
 //   id: string;
@@ -127,28 +134,28 @@ export interface ChangePasswordPayload {
 //   image?: string;
 // }
 
-// // FORM STATE (UI only)
-// export interface CreateUserFormState {
-//   firstName: string;
-//   lastName: string;
-//   role: UserRole;
-//   email: string;
-//   phone: string;
-//   position: string;
-//   gender: string;
-//   image: File | null;
-// }
+// FORM STATE (UI only)
+export interface CreateUserFormState {
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  email: string;
+  phone: string;
+  position: string;
+  gender: string;
+  image: File | null;
+}
 
-// // API REQUEST PAYLOAD (what backend receives)
+// API REQUEST PAYLOAD (what backend receives)
 
-// export interface CreateUserRequest {
-//   firstName: string;
-//   lastName: string;
-//   role: UserRole;
-//   email: string;
-//   phone: string;
-//   position: string;
-//   gender: string;
-//   image?: File | null;
-// }
+export interface CreateUserRequest {
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  email: string;
+  phone: string;
+  position: string;
+  gender: string;
+  image?: File | null;
+}
 

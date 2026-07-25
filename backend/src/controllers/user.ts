@@ -71,11 +71,12 @@ export const deleteAllUsers = asyncHandler(
 
 
 export const getCurrentUser = asyncHandler(
-    async (req: AuthenticatedRequest, res: Response) => {
-        if (!req.user) {
-            throw new AppError("User not found", 404);
-        }
-        const user = await User.findById(req.user.id)
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
+            throw new AppError("User not found", 404)
+        };
+        const user = await User.findById(authReq.user.id)
             .select(
                 "name email avatar role isActive isEmailVerified lastLoginAt createdAt"
             )
@@ -137,10 +138,11 @@ export const resetPassword = asyncHandler(async (
 // );
 
 export const confirmEmailVerification = asyncHandler(
-    async (req: AuthenticatedRequest, res: Response) => {
-        if (!req.user) {
-            throw new AppError("User not found", 404);
-        }
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
+            throw new AppError("User not found", 404)
+        };
         await confirmEmailVerificationService(
             req.body.token
         );
@@ -153,11 +155,12 @@ export const confirmEmailVerification = asyncHandler(
 );
 
 export const setUpProfile = asyncHandler(
-    async (req: AuthenticatedRequest, res: Response) => {
-        if (!req.user) {
-            throw new AppError("User not found", 404);
-        }
-        const userId = req.user.id;
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
+            throw new AppError("User not found", 404)
+        };
+        const userId = authReq.user.id;
         await setUpProfileService(userId, req.body)
         return res.status(200).json({
             success: true,
@@ -167,11 +170,12 @@ export const setUpProfile = asyncHandler(
 )
 
 export const setUpCyclingExperience = asyncHandler(
-    async (req: AuthenticatedRequest, res: Response) => {
-        if (!req.user) {
-            throw new AppError("User not found", 404);
-        }
-        const userId = req.user.id;
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
+            throw new AppError("User not found", 404)
+        };
+        const userId = authReq.user.id;
         await setUpCyclingExperienceService(userId, req.body)
         return res.status(200).json({
             success: true,
@@ -181,12 +185,13 @@ export const setUpCyclingExperience = asyncHandler(
 )
 
 export const toggleSubscribeToNewsLetter = asyncHandler(
-    async (req: AuthenticatedRequest, res: Response) => {
-        if (!req.user) {
-            throw new AppError("User not found", 404);
-        }
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
+            throw new AppError("User not found", 404)
+        };
 
-        const { id: userId, email } = req.user;
+        const { id: userId, email } = authReq.user;
 
         const { isSubscribed, isTipsEnabled } = req.body;
         await toggleSubscribeToNewsLetterService({ userId, email, isSubscribed, isTipsEnabled });
@@ -203,14 +208,14 @@ export const subscribe = asyncHandler(
 
         const parsed = newsletterSchema.safeParse(req.body);
         if (!parsed.success) {
-        throw new AppError(
-            JSON.stringify(parsed.error.format()),
-            400,
-            "Invalid email address",
-        );
-      }
+            throw new AppError(
+                JSON.stringify(parsed.error.format()),
+                400,
+                "Invalid email address",
+            );
+        }
 
-      const { email } = parsed.data;
+        const { email } = parsed.data;
         await subscribeToNewsletter(email);
 
         return res.status(200).json({

@@ -31,7 +31,7 @@ const seedAdmin = async() => {
                 role: roles.admin ?? "admin",
             });
 
-            console.log("Admin user created successfully with email:" user.email);
+            console.log("Admin user created successfully with email:", user.email);
         } else{
             if(user.role !== roles.admin){
                 user.role = roles.admin ?? "admin";

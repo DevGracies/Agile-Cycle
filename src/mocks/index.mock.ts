@@ -35,7 +35,7 @@ export const MOCK_PROFILE: UserProfile = {
 
 export const USERS_MOCK: User[] = [
   {
-    id: "1",
+    _id: "1",
     firstName: "John",
     lastName: "Doe",
     role: "Admin",
@@ -43,7 +43,7 @@ export const USERS_MOCK: User[] = [
     image: "https://i.pravatar.cc/300?img=1",
   },
   {
-    id: "2",
+    _id: "2",
     firstName: "Sarah",
     lastName: "Wilson",
     role: "CEO",
@@ -51,7 +51,7 @@ export const USERS_MOCK: User[] = [
     image: "https://i.pravatar.cc/300?img=2",
   },
   {
-    id: "3",
+    _id: "3",
     firstName: "Michael",
     lastName: "Scott",
     role: "CTO",
@@ -59,7 +59,7 @@ export const USERS_MOCK: User[] = [
     image: "https://i.pravatar.cc/300?img=3",
   },
   {
-    id: "4",
+    _id: "4",
     firstName: "Emma",
     lastName: "Watson",
     role: "Admin",
@@ -67,7 +67,7 @@ export const USERS_MOCK: User[] = [
     image: "https://i.pravatar.cc/300?img=4",
   },
   {
-    id: "5",
+    _id: "5",
     firstName: "Daniel",
     lastName: "Craig",
     role: "CEO",
@@ -75,7 +75,7 @@ export const USERS_MOCK: User[] = [
     image: "https://i.pravatar.cc/300?img=5",
   },
   {
-    id: "6",
+    _id: "6",
     firstName: "Sophia",
     lastName: "Lee",
     role: "CTO",

@@ -39,15 +39,6 @@ export const registerService = async (
     role: user.role as Role,
   });
 
-
-  if (!user) {
-    throw new AppError("User not found", 404);
-  }
-
-  if (user.isEmailVerified) {
-    throw new AppError("Email already verified", 400);
-  }
-
   const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
 
   user.emailVerificationToken = verificationToken;

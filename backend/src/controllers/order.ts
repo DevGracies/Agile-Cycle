@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Order } from "../models/order";
 import { asyncHandler } from "../utils/asyncHandler";
 import { AppError } from "../utils/AppError";
+import { AuthenticatedRequest } from "../types/auth";
 
 export const getAllOrders = asyncHandler(
     async (_, res: Response) => {
@@ -22,7 +23,8 @@ export const getAllOrders = asyncHandler(
 
 export const updateOrderStatus = asyncHandler(
     async (req: Request, res) => {
-        if (!req.user) {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
             throw new AppError("User not found", 404)
         }
         const { id } = req.params;
@@ -56,11 +58,12 @@ export const updateOrderStatus = asyncHandler(
 
 
 export const getUserOrders = asyncHandler(
-    async (req, res) => {
-        if (!req.user) {
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
             throw new AppError("User not found", 404)
         }
-        const orders = await Order.find({ userId: req.user.id })
+        const orders = await Order.find({ userId: authReq.user.id })
             .populate("orderItems.ebikeId")
             .populate("orderItems.accessoryId")
             .populate("orderItems.enhancementId")
@@ -80,7 +83,12 @@ export const getUserOrders = asyncHandler(
 
 
 export const getOrderDashboardStats = asyncHandler(
-    async(req, res) => {
+    async (req: Request, res: Response) => {
+        const authReq = req as AuthenticatedRequest;
+        if (!authReq.user) {
+            throw new AppError("User not found", 404)
+        }
+        
         const totalOrders = await Order.countDocuments();
 
         return res.status(200).json({

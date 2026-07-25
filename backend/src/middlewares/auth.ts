@@ -1,4 +1,4 @@
-import { Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 import User from "../models/user";
@@ -8,9 +8,10 @@ import { asyncHandler } from "../utils/asyncHandler";
 import { JwtPayload, AuthUser, AuthenticatedRequest } from "../types/auth";
 
 export const authenticate = asyncHandler(
-  async (req: AuthenticatedRequest, _: Response, next: NextFunction) => {
-    const bearerToken = req.headers.authorization?.startsWith("Bearer ")
-      ? req.headers.authorization.split(" ")[1]
+  async (req: Request, _: Response, next: NextFunction) => {
+    const authReq = req as AuthenticatedRequest;
+    const bearerToken = authReq.headers.authorization?.startsWith("Bearer ")
+      ? authReq.headers.authorization.split(" ")[1]
       : null;
 
     const token = req.cookies?.accessToken || bearerToken;
@@ -53,12 +54,13 @@ export const authenticate = asyncHandler(
 
 
 export const adminOnly = asyncHandler(
-  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    if (!req.user) {
+  async (req: Request, res: Response, next: NextFunction) => {
+    const authReq = req as AuthenticatedRequest;
+    if (!authReq.user) {
       throw new AppError("Unauthorized - user not found", 401)
     };
 
-    if (req.user.email !== env.ADMIN_EMAIL) {
+    if (authReq.user.email !== env.ADMIN_EMAIL) {
       throw new AppError("Forbidden - Admin access only", 409)
     };
 

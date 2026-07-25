@@ -13,12 +13,12 @@ router.get("/:id", getAccessory);
 router.use(authenticate, );
 router.post(
     "/",
-    upload.array("images", 5),
+    upload.array("images", 4),
     createAccessory
 );
 router.patch(
     "/:id",
-    upload.array("images", 5),
+    upload.array("images", 4),
     updateAccessory
 );
 router.patch("/:id/delete", archiveAccessory);

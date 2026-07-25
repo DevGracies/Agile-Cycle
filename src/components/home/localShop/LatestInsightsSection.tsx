@@ -30,7 +30,7 @@ export default function LatestInsightsSection() {
          {insights.slice(0, 3).map((item, index) => (
             <InsightCard
               key={index}
-              {...item}
+              blog={item as any}
             />
           ))}
         </div>

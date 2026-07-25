@@ -1,40 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import CategorySidebar from "@/src/components/userBars/CategorySidebar";
 import NavSection from "@/src/components/userBars/NavSection";
-import { navbarData,} from "@/src/lib/homeData";
 
-type BikeCategory = keyof typeof navbarData.Accessories
+import {
+  ACCESSORY_CATEGORIES,
+} from "@/src/lib/productCategories";
 
-export default function AccessoryPage() {
-  const [selectedCategory, setSelectedCategory] = useState<BikeCategory>("Lights");
+const DEFAULT_CATEGORY = "lights";
 
-  const currentProducts =
-    navbarData.Accessories[selectedCategory];
-
+export default function BikesPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const selectedCategory =
+    searchParams.get("category") ??
+    DEFAULT_CATEGORY;
+  const handleCategoryChange = (
+    category: string
+  ) => {
+    const params = new URLSearchParams(
+      searchParams.toString()
+    );
+    params.set(
+      "category",
+      category
+    );
+    router.push(
+      `?${params.toString()}`
+    );
+  };
   return (
-    <div className="max-w-7xl w-full mx-auto px-3 py-7">
-    <div className="flex flex-col lg:flex-row gap-8">
-      <div className="w-[270px] shrink-0">
-        <CategorySidebar
-          activeDropdown="Accessories"
-          selectedCategory={selectedCategory}
-          setSelectedCategory={(category) =>
-            setSelectedCategory(category as BikeCategory)
-          }
-        />
-      </div>
-
-      <div className="flex-1 min-w-0">
-        <NavSection
-          activeDropdown="Accessories"
-          selectedCategory={selectedCategory}
-          currentProducts={currentProducts}
-        />
+    <div className="max-w-8xl w-full mx-auto px-3 py-7">
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* SIDEBAR */}
+        <div className="w-[270px] shrink-0">
+          <CategorySidebar
+            title="Accessories"
+            categories={
+              ACCESSORY_CATEGORIES
+            }
+            selectedCategory={
+              selectedCategory
+            }
+            setSelectedCategory={
+              handleCategoryChange
+            }
+          />
+        </div>
+        {/* PRODUCTS */}
+        <div className="flex-1 min-w-0">
+          <NavSection
+            productType="accessories"
+            selectedCategory={
+              selectedCategory
+            }
+          />
+        </div>
       </div>
     </div>
-    </div>
-);
+  );
 }
