@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import User from "../models/user";
 import { asyncHandler } from "../utils/asyncHandler";
 import { AppError } from "../utils/AppError";
-import { getAllProductsService, getProductService } from "../services/dashboard";
+import { getAllProductsService, getProductService, getProductsInStockService } from "../services/dashboard";
 import { AuthenticatedRequest } from "../types/auth";
 
 // export const getDashboardStats = asyncHandler(
@@ -53,6 +53,16 @@ export const getAllProducts = asyncHandler(
 
 export const getProduct = asyncHandler(async (req: Request, res: Response)  => {
     const product = await getProductService(req.params.id as string);
+
+    res.status(200).json({
+        success: true,
+        message: "Product fetched successfully",
+        data: product,
+    });
+});
+
+export const getProductsInStock = asyncHandler(async (req: Request, res: Response)  => {
+    const product = await getProductsInStockService();
 
     res.status(200).json({
         success: true,

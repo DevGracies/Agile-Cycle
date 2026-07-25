@@ -18,6 +18,12 @@ export const createEnhancement = asyncHandler(
       );
     }
 
+    if (!req?.files || !req?.files.length) {
+      throw new AppError("At least one image is required", 400);
+    }
+
+    console.log("files", req.files);
+
     const enhancement = await createEnhancementService(parsed.data, req?.files as Express.Multer.File[]);
 
     return res.status(201).json({
@@ -57,43 +63,51 @@ export const getAllEnhancements =
   );
 
 
-export const updateEnhancement =
-  asyncHandler(
-    async (req: Request, res: Response) => {
-      const body = {
-      ...req.body,
-      images: req.body.existingImages
+export const updateEnhancement = asyncHandler(
+  async (req: Request, res: Response) => {
+
+    const existingImages =
+      req.body.existingImages
         ? JSON.parse(req.body.existingImages)
-        : [],
-      // colors: req.body.colors
-      //   ? JSON.parse(req.body.colors)
-      //   : [],
-      }
-      const parsed = updateEnhancementSchema.safeParse(body);
+        : [];
 
-      if (!parsed.success) {
-        throw new AppError(
-          "Invalid request data",
-          400,
-          parsed.error.flatten()
-        );
-      }
+    const removedImages =
+      req.body.removedImages
+        ? JSON.parse(req.body.removedImages)
+        : [];
 
-      const enhancement =
-        await updateEnhancementService(
-          req.params.id as string,
-          parsed.data,
-          req.files as Express.Multer.File[]
-        );
 
-      return res.status(200).json({
-        success: true,
-        message:
-          "Enhancement updated successfully",
-        data: enhancement,
-      });
+    const parsed =
+      updateEnhancementSchema.safeParse(req.body);
+
+
+    if (!parsed.success) {
+      throw new AppError(
+        "Invalid request data",
+        400,
+        parsed.error.flatten()
+      );
     }
-  );
+
+
+    const enhancement =
+      await updateEnhancementService(
+        req.params.id as string,
+        parsed.data,
+        req.files as Express.Multer.File[],
+        existingImages,
+        removedImages
+      );
+
+
+    return res.status(200).json({
+      success: true,
+      message: "Enhancement updated successfully",
+      data: enhancement,
+    });
+
+  }
+);
 
 
 export const archiveEnhancement =

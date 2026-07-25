@@ -93,19 +93,29 @@ export const updateEbikeSchema = z.object({
 
   isNewArrival: z.boolean().optional(),
 
-  images: z.array(
-    z.object({
-      public_id: z.string().min(1),
-      secure_url: z.string().optional(),
-    })
-  ).optional(),
+  images:
+    z.preprocess(
+      value => {
+        if (typeof value === "string") {
+          return JSON.parse(value)
+        }
+        return value
+      },
+      
+      z.array(
+        z.object({
+          public_id: z.string(),
+          secure_url: z.string()
+        })
+      )
+        .optional()
+    ),
 
   colors: z.preprocess(
     value => {
       if (typeof value === "string") {
         return JSON.parse(value);
       }
-
       return value;
     },
 

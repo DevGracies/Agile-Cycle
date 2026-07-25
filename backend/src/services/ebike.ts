@@ -2,7 +2,7 @@
 import { Accessory } from "../models/accessories";
 import { Enhancement } from "../models/enhancement";
 import { Ebike } from "../models/ebike";
-import { CreateEbikeInput, ProductQuery, UpdateEbikeInput } from "../types/ebike";
+import { CreateEbikeInput, ExistingImage, FormattedImage, ProductQuery, UpdateEbikeInput } from "../types/ebike";
 import { AppError } from "../utils/AppError";
 import { Review } from "../models/review";
 import { deleteImages, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
@@ -30,43 +30,42 @@ export const createEbikeService = async (
 export const updateEbikeService = async (
   ebikeId: string,
   data: Partial<UpdateEbikeInput>,
-  files: Express.Multer.File[]
+  files: Express.Multer.File[],
+  existingImages: ExistingImage[],
+  removedImages: string[]
 ) => {
   const ebike = await Ebike.findById(ebikeId);
   if (!ebike) {
     throw new AppError("Ebike not found", 404);
-  }
-  const existingImages =
-    Array.isArray(data.images)
-        ? data.images
-        : ebike.images;
-        
-  const imagesToDelete =
-    ebike.images.filter(
-      image =>
-        !existingImages.some(
-          kept =>
-            kept.public_id === image.public_id
-        )
+  };
+
+  if (removedImages.length) {
+    await deleteImages(
+      removedImages
     );
-  if (imagesToDelete.length) {
-    await deleteImages(imagesToDelete.map(image => image.public_id));
   }
 
-  let uploadedImages: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
+  let uploadedImages: FormattedImage[] = [];
   if (files?.length) {
     const uploads =
-      await uploadImages(files, "ebikes");
+      await uploadImages(
+        files,
+        "ebikes"
+      );
     uploadedImages =
-      uploads.map(formatCloudinaryMedia);
+      uploads.map(
+        formatCloudinaryMedia
+      );
   }
+  const finalImages = [
+    ...existingImages,
+    ...uploadedImages
+  ];
   ebike.set({
     ...data,
-    images: [
-      ...existingImages,
-      ...uploadedImages
-    ]
+    images: finalImages,
   });
+
   await ebike.save();
   return ebike;
 };

@@ -84,9 +84,6 @@ export async function apiRequest<T>({
 const api = axios.create({
     baseURL: API_BASE_URL,
     withCredentials: true,
-    headers: {
-        "Content-Type": "application/json",
-    }
 })
 
 

@@ -46,6 +46,7 @@ import {
 import {
     Product,
 } from "@/src/types/product";
+import { getProductTypeFromCategory } from "../lib/getProductTypeFromCategory";
 
 
 // ===============================
@@ -64,8 +65,7 @@ export interface ProductColor {
 }
 
 
-export interface CreateProductFormValues {
-
+export interface ProductFormValues {
     name: string;
 
     description: string;
@@ -76,14 +76,20 @@ export interface CreateProductFormValues {
 
     discountPrice?: number;
 
-    stock: number;
-
-    inventoryStatus: InventoryStatus;
+    shippingDuration?: string;
 
     category: string;
 
-    colors?: ProductColor[];
+    stock: number;
 
+    badge?: string;
+    inventoryStatus: InventoryStatus;
+
+    isFeatured?: boolean;
+
+    isNewArrival?: boolean;
+
+    colors?: ProductColor[];
 }
 
 
@@ -110,7 +116,7 @@ const EMPTY_IMAGE_ARRAY =
     Array(MAX_IMAGES).fill(null);
 
 
-const DEFAULT_VALUES: CreateProductFormValues = {
+const DEFAULT_VALUES: ProductFormValues = {
 
     name: "",
 
@@ -125,7 +131,7 @@ const DEFAULT_VALUES: CreateProductFormValues = {
     stock: 0,
 
     inventoryStatus:
-        "in-stock",
+        "in-stock" as InventoryStatus,
 
     category: "",
 
@@ -195,11 +201,11 @@ export function useCreateProductForm() {
 
         handleSubmit,
 
-        formState:{
+        formState: {
             errors,
         },
 
-    } = useForm<CreateProductFormValues>({
+    } = useForm<ProductFormValues>({
 
         resolver:
             zodResolver(
@@ -286,6 +292,10 @@ export function useCreateProductForm() {
         createEmptyImages<ExistingImage>()
     );
 
+    const [
+        removedImages,
+        setRemovedImages,
+    ] = useState<string[]>([]);
 
 
     const [
@@ -367,6 +377,8 @@ export function useCreateProductForm() {
                 setEditingId(null);
 
 
+                setRemovedImages([]);
+
                 setImageFiles(
                     createEmptyImages<File>()
                 );
@@ -406,1574 +418,837 @@ export function useCreateProductForm() {
             ]
         );
 
-        // ===============================
-// IMAGE MANAGEMENT
-// ===============================
-
-
-const revokePreview =
-    useCallback(
-        (
-            url?: string | null
-        ) => {
-
-            if (
-                url &&
-                url.startsWith("blob:")
-            ) {
-
-                URL.revokeObjectURL(url);
-
-            }
-
-        },
-        []
-    );
-
-
-
-const addImage =
-    useCallback(
-        (
-            file: File,
-            index: number
-        ) => {
-
-
-            setImageError("");
-
-
-
-            if (
-                !file.type.startsWith(
-                    "image/"
-                )
-            ) {
-
-                toast.error(
-                    "Only image files are allowed"
-                );
-
-                return;
-
-            }
-
-
-
-            if (
-                file.size >
-                MAX_IMAGE_SIZE
-            ) {
-
-                const message =
-                    "Image size cannot exceed 5MB";
-
-
-                setImageError(
-                    message
-                );
-
-
-                toast.error(
-                    message
-                );
-
-
-                return;
-
-            }
-
-
-
-            const preview =
-                URL.createObjectURL(
-                    file
-                );
-
-
-
-            setImageFiles(
-                previous => {
-
-                    const updated =
-                        [
-                            ...previous
-                        ];
-
-
-                    updated[index] =
-                        file;
-
-
-                    return updated;
-
-                }
-            );
-
-
-
-            setImagePreview(
-                previous => {
-
-                    const updated =
-                        [
-                            ...previous
-                        ];
-
-
-                    revokePreview(
-                        updated[index]
-                    );
-
-
-                    updated[index] =
-                        preview;
-
-
-                    return updated;
-
-                }
-            );
-
-
-
-            /**
-             * Remove cloud image
-             * from this slot.
-             *
-             * The backend will know
-             * this image was replaced.
-             */
-            setExistingImages(
-                previous => {
-
-                    const updated =
-                        [
-                            ...previous
-                        ];
-
-
-                    updated[index] =
-                        null;
-
-
-                    return updated;
-
-                }
-            );
-
-
-        },
-        [
-            revokePreview
-        ]
-    );
-
-
-
-
-
-const removeImage =
-    useCallback(
-        (
-            index:number
-        ) => {
-
-
-            setImageFiles(
-                previous => {
-
-                    const updated =
-                        [
-                            ...previous
-                        ];
-
-
-                    updated[index] =
-                        null;
-
-
-                    return updated;
-
-                }
-            );
-
-
-
-            setImagePreview(
-                previous => {
-
-                    const updated =
-                        [
-                            ...previous
-                        ];
-
-
-                    revokePreview(
-                        updated[index]
-                    );
-
-
-                    updated[index] =
-                        null;
-
-
-                    return updated;
-
-                }
-            );
-
-
-
-            /**
-             * Mark existing cloud
-             * image as removed.
-             */
-            setExistingImages(
-                previous => {
-
-                    const updated =
-                        [
-                            ...previous
-                        ];
-
-
-                    updated[index] =
-                        null;
-
-
-                    return updated;
-
-                }
-            );
-
-
-        },
-        [
-            revokePreview
-        ]
-    );
-
-
-
-
-// ===============================
-// FORMDATA BUILDER
-// ===============================
-
-
-const buildFormData =
-    useCallback(
-        (
-            values:
-            CreateProductFormValues
-        ) => {
-
-
-            const formData =
-                new FormData();
-
-
-
-            Object.entries(
-                values
-            )
-            .forEach(
-                (
-                    [
-                        key,
-                        value
-                    ]
-                ) => {
-
-
-                    if (
-                        value === undefined ||
-                        value === null
-                    ) {
-
-                        return;
-
-                    }
-
-
-
-                    if (
-                        typeof value ===
-                        "object"
-                    ) {
-
-                        formData.append(
-                            key,
-                            JSON.stringify(
-                                value
-                            )
-                        );
-
-                        return;
-
-                    }
-
-
-
-                    formData.append(
-                        key,
-                        String(value)
-                    );
-
-
-                }
-            );
-
-
-
-
-            /**
-             * Only send valid
-             * existing images.
-             */
-            const keptImages =
-                existingImages.filter(
-                    (
-                        image
-                    ): image is ExistingImage =>
-                        Boolean(image)
-                );
-
-
-
-            formData.append(
-                "existingImages",
-                JSON.stringify(
-                    keptImages
-                )
-            );
-
-
-
-
-            /**
-             * New uploads
-             */
-            imageFiles
-                .filter(
-                    (
-                        file
-                    ): file is File =>
-                        Boolean(file)
-                )
-                .forEach(
-                    (
-                        file
-                    ) => {
-
-                        formData.append(
-                            "images",
-                            file
-                        );
-
-                    }
-                );
-
-
-
-            return formData;
-
-
-        },
-        [
-            existingImages,
-            imageFiles,
-        ]
-    );
-
-
-
-
-
-// ===============================
-// SUBMIT HANDLER
-// ===============================
-
-
-const submit =
-    handleSubmit(
-        async (
-            values
-        ) => {
-
-
-
-            const hasExistingImages =
-                existingImages.some(
-                    Boolean
-                );
-
-
-
-            const hasNewImages =
-                imageFiles.some(
-                    Boolean
-                );
-
-
-
-            if (
-                !hasExistingImages &&
-                !hasNewImages
-            ) {
-
-                toast.error(
-                    "At least one product image is required"
-                );
-
-                return;
-
-            }
-
-
-
-
-            try {
-
-
-                setIsPublishing(
-                    true
-                );
-
-
-
-                const formData =
-                    buildFormData(
-                        values
-                    );
-
-
-
-                let response;
-
-
-
-                switch(
-                    productType
+    // ===============================
+    // IMAGE MANAGEMENT
+    // ===============================
+
+
+    const revokePreview =
+        useCallback(
+            (
+                url?: string | null
+            ) => {
+
+                if (
+                    url &&
+                    url.startsWith("blob:")
                 ) {
 
+                    URL.revokeObjectURL(url);
 
-                    case "ebikes":
+                }
 
-
-                        response =
-                            isEditing
-
-                            ?
-
-                            await updateEbike(
-                                editingId!,
-                                formData
-                            )
-
-                            :
-
-                            await createEbike(
-                                formData
-                            );
-
-
-                        break;
+            },
+            []
+        );
 
 
 
-
-                    case "accessories":
-
-
-                        response =
-                            isEditing
-
-                            ?
-
-                            await updateAccessory(
-                                editingId!,
-                                formData
-                            )
-
-                            :
-
-                            await createAccessory(
-                                formData
-                            );
+    const addImage =
+        useCallback(
+            (
+                file: File,
+                index: number
+            ) => {
 
 
-                        break;
+                setImageError("");
 
 
 
+                if (
+                    !file.type.startsWith(
+                        "image/"
+                    )
+                ) {
 
-                    case "enhancements":
+                    toast.error(
+                        "Only image files are allowed"
+                    );
 
-
-                        response =
-                            isEditing
-
-                            ?
-
-                            await updateEnhancement(
-                                editingId!,
-                                formData
-                            )
-
-                            :
-
-                            await createEnhancement(
-                                formData
-                            );
-
-
-                        break;
-
-
-
-                    default:
-
-
-                        throw new Error(
-                            "Invalid product type"
-                        );
+                    return;
 
                 }
 
 
 
+                if (
+                    file.size >
+                    MAX_IMAGE_SIZE
+                ) {
 
-                toast.success(
-                    response?.message ??
-                    "Product saved successfully"
+                    const message =
+                        "Image size cannot exceed 5MB";
+
+
+                    setImageError(
+                        message
+                    );
+
+
+                    toast.error(
+                        message
+                    );
+
+
+                    return;
+
+                }
+
+
+
+                const preview =
+                    URL.createObjectURL(
+                        file
+                    );
+
+
+
+                setImageFiles(
+                    previous => {
+
+                        const updated =
+                            [
+                                ...previous
+                            ];
+
+
+                        updated[index] =
+                            file;
+
+
+                        return updated;
+
+                    }
                 );
 
 
 
-                resetProductState();
+                setImagePreview(
+                    previous => {
+
+                        const updated =
+                            [
+                                ...previous
+                            ];
 
 
+                        revokePreview(
+                            updated[index]
+                        );
 
-            }
-            catch(error){
+
+                        updated[index] =
+                            preview;
 
 
-                console.error(
-                    "Product submit error:",
-                    error
+                        return updated;
+
+                    }
                 );
 
 
 
-                toast.error(
-                    apiError(error) ??
-                    "Failed to save product"
+                setExistingImages(previous => {
+
+                    const updated = [...previous];
+
+                    const removedImage = updated[index];
+
+                    if (removedImage?.public_id) {
+
+                        setRemovedImages(prev => [
+                            ...prev,
+                            removedImage.public_id
+                        ]);
+
+                    }
+
+                    updated[index] = null;
+
+                    return updated;
+
+                });
+
+
+            },
+            [
+                revokePreview
+            ]
+        );
+
+
+
+
+
+    const removeImage =
+        useCallback(
+            (
+                index: number
+            ) => {
+
+
+                setImageFiles(
+                    previous => {
+
+                        const updated =
+                            [
+                                ...previous
+                            ];
+
+
+                        updated[index] =
+                            null;
+
+
+                        return updated;
+
+                    }
                 );
 
 
-            }
-            finally {
+
+                setImagePreview(
+                    previous => {
+
+                        const updated =
+                            [
+                                ...previous
+                            ];
 
 
-                setIsPublishing(
-                    false
+                        revokePreview(
+                            updated[index]
+                        );
+
+
+                        updated[index] =
+                            null;
+
+
+                        return updated;
+
+                    }
                 );
 
 
-            }
+
+                setExistingImages(previous => {
+                    const updated =
+                        [...previous];
+                    const removed =
+                        updated[index];
+                    if (
+                        removed?.public_id
+                    ) {
+                        setRemovedImages(prev => [
+                            ...prev,
+                            removed.public_id
+                        ]);
+                    }
+                    updated[index] = null;
+                    return updated;
+                });
+            },
+            [
+                revokePreview
+            ]
+        );
 
 
-        }
-    );
+
 
     // ===============================
-// POPULATE EDIT FORM
-// ===============================
+    // FORMDATA BUILDER
+    // ===============================
 
 
-const populateForm =
-    useCallback(
-        (
-            product: Product
-        ) => {
+    const buildFormData = (
+        values: ProductFormValues
+    ) => {
 
 
-            /**
-             * Prevent invalid backend values
-             * from breaking the select input.
-             */
-            const validInventoryStatuses:
-                InventoryStatus[] =
-                [
-                    "in-stock",
-                    "low-stock",
-                    "out-of-stock",
-                ];
+        const form =
+            new FormData();
+
+
+        Object.entries(values)
+            .forEach(([key, value]) => {
+
+
+                if (value === undefined)
+                    return;
+
+
+                if (
+                    typeof value === "object"
+                ) {
+
+                    form.append(
+                        key,
+                        JSON.stringify(value)
+                    )
+
+                }
+
+                else {
+
+                    form.append(
+                        key,
+                        String(value)
+                    )
+
+                }
+
+
+            });
+
+
+        form.append(
+            "removedImages",
+            JSON.stringify(removedImages)
+        );
+
+        form.append(
+            "existingImages",
+            JSON.stringify(existingImages.filter(Boolean))
+        );
 
 
 
-            const inventoryStatus =
-                validInventoryStatuses.includes(
-                    product.inventoryStatus as InventoryStatus
+        imageFiles
+            .filter(
+                (file): file is File => Boolean(file)
+            )
+            .forEach(file => {
+
+                form.append(
+                    "images",
+                    file!
                 )
-
-                    ?
-
-                    product.inventoryStatus as InventoryStatus
-
-                    :
-
-                    "in-stock";
-
-
-
-
-            /**
-             * Product type conversion
-             *
-             * Backend:
-             * bike
-             * accessory
-             * enhancement
-             *
-             * Frontend:
-             * ebikes
-             * accessories
-             * enhancements
-             */
-            const productTypeMap:
-                Record<
-                    string,
-                    ProductType
-                > =
-                {
-                    bike:
-                        "ebikes",
-
-                    accessory:
-                        "accessories",
-
-                    enhancement:
-                        "enhancements",
-
-                };
-
-
-
-            const mappedType =
-                productTypeMap[
-                    product.productType
-                ];
-
-
-
-            setProductType(
-                mappedType ??
-                "ebikes"
-            );
-
-
-
-            reset({
-
-                name:
-                    product.name ??
-                    "",
-
-
-                description:
-                    product.description ??
-                    "",
-
-
-                shortDescription:
-                    product.shortDescription ??
-                    "",
-
-
-                price:
-                    product.price ??
-                    0,
-
-
-                discountPrice:
-                    product.discountPrice ??
-                    undefined,
-
-
-                stock:
-                    product.stock ??
-                    0,
-
-
-                inventoryStatus,
-
-
-                category:
-                    product.category ??
-                    "",
-
-
-                colors:
-                    product.colors ??
-                    [],
 
             });
 
 
 
+        return form;
 
-            setEditingId(
-                product._id
-            );
-
+    }
 
 
 
-            /**
-             * Normalize cloud images
-             * into fixed slots.
-             */
-            const formattedImages =
-                (product.images ?? [])
-                    .map(
-                        image => ({
 
-                            public_id:
-                                image.public_id
-                                ??
-                                "",
+    // ===============================
+    // SUBMIT HANDLER
+    // ===============================
 
 
-                            secure_url:
-                                image.secure_url
-                                ??
-                                "",
+    const submit =
+        handleSubmit(
+            async (
+                values
+            ) => {
 
-                        })
-                    )
-                    .filter(
-                        image =>
-                            Boolean(
-                                image.secure_url
-                            )
+
+
+                const hasExistingImages =
+                    existingImages.some(
+                        Boolean
                     );
 
 
 
-            setExistingImages(
-                safeImageSlots(
-                    formattedImages
-                )
-            );
+                const hasNewImages =
+                    imageFiles.some(
+                        Boolean
+                    );
+
+
+
+                if (
+                    !hasExistingImages &&
+                    !hasNewImages
+                ) {
+
+                    toast.error(
+                        "At least one product image is required"
+                    );
+
+                    return;
+
+                }
 
 
 
 
-            /**
-             * Hydrate preview slots
-             */
-            const previews =
-                createEmptyImages<string>();
+                try {
 
 
-            formattedImages
-                .slice(
-                    0,
-                    MAX_IMAGES
-                )
-                .forEach(
-                    (
-                        image,
-                        index
-                    ) => {
+                    setIsPublishing(
+                        true
+                    );
 
-                        previews[index] =
-                            image.secure_url;
+
+
+                    const formData =
+                        buildFormData(
+                            values
+                        );
+
+
+
+                    let response;
+
+
+
+                    switch (
+                    productType
+                    ) {
+
+
+                        case "ebikes":
+
+
+                            response =
+                                isEditing
+
+                                    ?
+
+                                    await updateEbike(
+                                        editingId!,
+                                        formData
+                                    )
+
+                                    :
+
+                                    await createEbike(
+                                        formData
+                                    );
+
+
+                            break;
+
+
+
+
+                        case "accessories":
+
+
+                            response =
+                                isEditing
+
+                                    ?
+
+                                    await updateAccessory(
+                                        editingId!,
+                                        formData
+                                    )
+
+                                    :
+
+                                    await createAccessory(
+                                        formData
+                                    );
+
+
+                            break;
+
+
+
+
+                        case "enhancements":
+
+
+                            response =
+                                isEditing
+
+                                    ?
+
+                                    await updateEnhancement(
+                                        editingId!,
+                                        formData
+                                    )
+
+                                    :
+
+                                    await createEnhancement(
+                                        formData
+                                    );
+
+
+                            break;
+
+
+
+                        default:
+
+
+                            throw new Error(
+                                "Invalid product type"
+                            );
 
                     }
+
+
+
+
+                    toast.success(
+                        response?.message ??
+                        "Product saved successfully"
+                    );
+
+
+
+                    if (!isEditing) {
+                        resetProductState();
+                    }
+
+
+
+                }
+                catch (error) {
+
+
+                    console.error(
+                        "Product submit error:",
+                        error
+                    );
+
+
+
+                    toast.error(
+                        apiError(error) ??
+                        "Failed to save product"
+                    );
+
+
+                }
+                finally {
+
+
+                    setIsPublishing(
+                        false
+                    );
+
+
+                }
+
+
+            }
+        );
+
+    // ===============================
+    // POPULATE EDIT FORM
+    // ===============================
+
+
+    const populateForm =
+        useCallback(
+            (
+                product: Product
+            ) => {
+
+
+                /**
+                 * Prevent invalid backend values
+                 * from breaking the select input.
+                 */
+                const validInventoryStatuses:
+                    InventoryStatus[] =
+                    [
+                        "in-stock",
+                        "low-stock",
+                        "out-of-stock",
+                    ];
+
+
+
+                const inventoryStatus =
+                    validInventoryStatuses.includes(
+                        product.inventoryStatus as InventoryStatus
+                    )
+
+                        ?
+
+                        product.inventoryStatus as InventoryStatus
+
+                        :
+
+                        "in-stock";
+
+
+
+
+
+                setProductType(
+                    getProductTypeFromCategory(
+                        product.category
+                    )
+                );
+
+                reset({
+
+                    name:
+                        product.name ??
+                        "",
+
+
+                    description:
+                        product.description ??
+                        "",
+
+
+                    shortDescription:
+                        product.shortDescription ??
+                        "",
+
+
+                    price:
+                        product.price ??
+                        0,
+
+
+                    discountPrice:
+                        product.discountPrice ??
+                        undefined,
+
+
+                    stock:
+                        product.stock ??
+                        0,
+
+
+                    inventoryStatus,
+
+
+                    category:
+                        product.category ??
+                        "",
+
+
+                    colors:
+                        product.colors ??
+                        [],
+
+                });
+
+
+
+
+                setEditingId(
+                    product._id
                 );
 
 
 
-            /**
-             * Remove previous blob URLs
-             */
-            imagePreview.forEach(
-                preview => {
 
-                    if (
-                        preview?.startsWith(
-                            "blob:"
+                /**
+                 * Normalize cloud images
+                 * into fixed slots.
+                 */
+                const formattedImages =
+                    (product.images ?? [])
+                        .map(
+                            image => ({
+
+                                public_id:
+                                    image.public_id
+                                    ??
+                                    "",
+
+
+                                secure_url:
+                                    image.secure_url
+                                    ??
+                                    "",
+
+                            })
                         )
-                    ) {
-
-                        URL.revokeObjectURL(
-                            preview
+                        .filter(
+                            image =>
+                                Boolean(
+                                    image.secure_url
+                                )
                         );
 
-                    }
 
-                }
-            );
 
+                setExistingImages(
+                    safeImageSlots(
+                        formattedImages
+                    )
+                );
 
 
-            setImagePreview(
-                previews
-            );
 
 
+                /**
+                 * Hydrate preview slots
+                 */
+                const previews =
+                    createEmptyImages<string>();
 
-            /**
-             * Reset local uploads
-             */
-            setImageFiles(
-                createEmptyImages<File>()
-            );
 
+                formattedImages
+                    .slice(
+                        0,
+                        MAX_IMAGES
+                    )
+                    .forEach(
+                        (
+                            image,
+                            index
+                        ) => {
 
+                            previews[index] =
+                                image.secure_url;
 
-            setSelectedImage(0);
+                        }
+                    );
 
 
 
-        },
-        [
-            reset,
-            imagePreview,
-        ]
-    );
+                /**
+                 * Remove previous blob URLs
+                 */
+                setImagePreview(prev => {
 
+                    prev.forEach(preview => {
+                        if (preview?.startsWith("blob:")) {
+                            URL.revokeObjectURL(preview);
+                        }
+                    });
 
+                    return previews;
+                });
 
 
-// ===============================
-// RETURN API
-// ===============================
 
+                setImagePreview(
+                    previews
+                );
 
-return {
 
 
-    // react-hook-form
-    register,
+                /**
+                 * Reset local uploads
+                 */
+                setImageFiles(
+                    createEmptyImages<File>()
+                );
 
-    control,
 
-    watch,
 
-    setValue,
+                setSelectedImage(0);
 
-    reset,
 
-    errors,
 
+            },
+            [
+                reset,
+            ]
+        );
 
-    // submit
-    submit,
 
 
 
-    // product state
-    productType,
+    // ===============================
+    // RETURN API
+    // ===============================
 
-    setProductType,
 
+    return {
 
 
-    editingId,
+        // react-hook-form
+        register,
 
-    setEditingId,
+        control,
 
-    isEditing,
+        watch,
 
+        setValue,
 
+        reset,
 
-    // images
+        errors,
 
-    imageFiles,
 
-    imagePreview,
+        // submit
+        submit,
 
-    existingImages,
 
 
-    selectedImage,
+        // product state
+        productType,
 
-    setSelectedImage,
+        setProductType,
 
 
-    addImage,
 
-    removeImage,
+        editingId,
 
+        setEditingId,
 
+        isEditing,
 
-    // inventory/UI
 
-    isUnlimited,
 
-    setIsUnlimited,
+        // images
 
+        imageFiles,
 
-    taxIncluded,
+        imagePreview,
 
-    setTaxIncluded,
+        existingImages,
 
 
-    isPublishing,
+        selectedImage,
 
+        setSelectedImage,
 
-    imageError,
 
+        addImage,
 
+        removeImage,
 
-    // edit
 
-    populateForm,
 
+        // inventory/UI
 
+        isUnlimited,
 
-    // fields
+        setIsUnlimited,
 
-    colors,
 
+        taxIncluded,
 
-    // reset helper
+        setTaxIncluded,
 
-    resetProductState,
 
+        isPublishing,
 
-};
+
+        imageError,
+
+
+
+        // edit
+
+        populateForm,
+
+
+
+        // fields
+
+        colors,
+
+
+        // reset helper
+
+        resetProductState,
+
+
+    };
 
 }
-
-
-
-
-
-
-
-
-
-// "use client";
-
-// import {
-//     useForm,
-//     useFieldArray,
-// } from "react-hook-form";
-
-// import {
-//     zodResolver
-// } from "@hookform/resolvers/zod";
-
-// import {
-//     useCallback,
-//     useEffect,
-//     useState,
-// } from "react";
-
-// import toast from "react-hot-toast";
-
-// import {
-//     createProductSchema
-// } from "@/src/validation/product";
-
-// import {
-//     ProductType
-// } from "@/src/services/cart.service";
-
-// import {
-//     createEbike,
-//     updateEbike,
-// } from "@/src/services/ebike.service";
-
-// import {
-//     createAccessory,
-//     updateAccessory,
-// } from "@/src/services/accessory.service";
-
-// import {
-//     createEnhancement,
-//     updateEnhancement,
-// } from "@/src/services/enhancement.service";
-
-// import {
-//     apiError
-// } from "../services/api.service";
-
-// import {
-//     Product
-// } from "../types/product";
-
-// type ExistingImage = {
-//     public_id: string;
-//     secure_url: string;
-// };
-
-// export interface CreateProductFormValues {
-//     name: string;
-//     description: string;
-//     shortDescription: string;
-//     price: number;
-//     discountPrice?: number;
-//     stock: number;
-//     inventoryStatus:
-//     | "in-stock"
-//     | "low-stock"
-//     | "out-of-stock";
-//     category: string;
-//     colors?: {
-//         name: string;
-//         color: string;
-//     }[];
-//     // variants?: {
-//     //     name: string;
-//     //     value: string;
-//     // }[];
-//     // features?: {
-//     //     title: string;
-//     //     description: string;
-//     // }[];
-//     // specs?: {
-//     //     key: string;
-//     //     value: string;
-//     // }[];
-// }
-
-// const defaultValues: CreateProductFormValues = {
-//     name: "",
-//     description: "",
-//     shortDescription: "",
-//     price: 0,
-//     discountPrice: 0,
-//     stock: 0,
-//     inventoryStatus: "in-stock",
-//     category: "",
-//     colors: [],
-//     // variants: [],
-//     // features: [],
-//     // specs: []
-
-// };
-
-// export function useCreateProductForm() {
-//     const {
-//         register,
-//         control,
-//         watch,
-//         setValue,
-//         reset,
-//         handleSubmit,
-//         formState: {
-//             errors
-//         }
-//     } = useForm<CreateProductFormValues>({
-//         resolver: zodResolver(
-//             createProductSchema
-//         ),
-//         defaultValues,
-//         mode: "onChange"
-//     });
-
-//     // PRODUCT TYPE
-//     const [
-//         productType,
-//         setProductType
-//     ] = useState<ProductType>(
-//         "ebikes"
-//     );
-
-//     const [
-//         editingId,
-//         setEditingId
-//     ] = useState<string | null>(null);
-
-//     const isEditing = Boolean(editingId);
-
-//     // IMAGES
-//     const [
-//         imageFiles,
-//         setImageFiles
-//     ] = useState<(File | null)[]>([
-//         null,
-//         null,
-//         null,
-//         null
-//     ]);
-
-//     const [
-//         imagePreview,
-//         setImagePreview
-//     ] = useState<(string | null)[]>([
-//         null,
-//         null,
-//         null,
-//         null
-//     ]);
-
-//     const [
-//         existingImages,
-//         setExistingImages
-//     ] = useState<ExistingImage[]>([]);
-
-//     const [
-//         selectedImage,
-//         setSelectedImage
-//     ] = useState(0);
-
-//     const [
-//         imageError,
-//         setImageError
-//     ] = useState("");
-
-//     const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
-
-//     // OTHER UI STATES
-//     const [
-//         isUnlimited,
-//         setIsUnlimited
-//     ] = useState(true);
-
-//     const [
-//         taxIncluded,
-//         setTaxIncluded
-//     ] = useState<
-//         "yes" | "no"
-//     >("yes");
-
-//     const [
-//         isPublishing,
-//         setIsPublishing
-//     ] = useState(false);
-
-//     // FIELD ARRAYS
-//     const colors =
-//         useFieldArray({
-//             control,
-//             name: "colors"
-//         });
-
-//     // const variants =
-//     //     useFieldArray({
-//     //         control,
-//     //         name: "variants"
-//     //     });
-
-//     // const features =
-//     //     useFieldArray({
-//     //         control,
-//     //         name: "features"
-//     //     });
-
-//     // const specs =
-//     //     useFieldArray({
-//     //         control,
-//     //         name: "specs"
-//     //     });
-
-//     useEffect(() => {
-//         return () => {
-//             imagePreview.forEach(url => {
-//                 if (url?.startsWith("blob:")) {
-//                     URL.revokeObjectURL(url);
-//                 }
-//             });
-//         };
-//     }, [imagePreview]);
-//     // ADD IMAGE
-//     const addImage = useCallback(
-//         (
-//             file: File,
-//             index: number
-//         ) => {
-//             if (
-//                 !file.type.startsWith("image/")
-//             ) {
-//                 toast.error(
-//                     "Only image files are allowed"
-//                 );
-//                 return;
-//             }
-
-//             if (
-//                 file.size > MAX_IMAGE_SIZE
-//             ) {
-//                 setImageError(
-//                     "Image size cannot exceed 5MB"
-//                 );
-//                 toast.error(
-//                     `${file.name} exceeds 5MB`
-//                 );
-//                 return;
-//             }
-//             const preview = URL.createObjectURL(file);
-
-//             setImageFiles(prev => {
-//                 const updated = [
-//                     ...prev
-//                 ];
-//                 updated[index] = file;
-//                 return updated;
-//             });
-//             setImagePreview(prev => {
-//                 const updated = [
-//                     ...prev
-//                 ];
-//                 if (
-//                     updated[index]?.startsWith(
-//                         "blob:"
-//                     )
-//                 ) {
-//                     URL.revokeObjectURL(
-//                         updated[index]!
-//                     );
-//                 }
-//                 updated[index] = preview;
-//                 return updated;
-//             });
-
-//             // remove old cloud image in same slot
-//             setExistingImages(prev => {
-//                 const updated = [...prev];
-//                 updated[index] = null as any;
-//                 return updated;
-//             });
-//         }, []
-//     );
-
-//     // REMOVE IMAGE
-//     const removeImage = useCallback(
-//         (
-//             index: number
-//         ) => {
-//             setImageFiles(prev => {
-//                 const updated = [
-//                     ...prev
-//                 ];
-//                 updated[index] = null;
-//                 return updated;
-//             });
-//             setImagePreview(prev => {
-//                 const updated = [
-//                     ...prev
-//                 ];
-//                 if (
-//                     updated[index]?.startsWith(
-//                         "blob:"
-//                     )
-//                 ) {
-//                     URL.revokeObjectURL(
-//                         updated[index]!
-//                     );
-//                 }
-//                 updated[index] = null;
-//                 return updated;
-//             });
-//             setExistingImages(prev => {
-//                 const updated = [...prev];
-//                 updated[index] = null as any;
-//                 return updated;
-//             });
-//         }, []
-//     );
-
-//     // SUBMIT
-//     const submit =
-//         handleSubmit(
-//             async (values) => {
-//                 if (
-//                     existingImages.length === 0 &&
-//                     imageFiles.every(
-//                         file => file === null
-//                     )
-//                 ) {
-//                     toast.error(
-//                         "At least one product image is required"
-//                     );
-//                     return;
-//                 }
-//                 try {
-//                     setIsPublishing(true);
-//                     const formData = new FormData();
-
-//                     Object.entries(values)
-//                         .forEach(
-//                             ([key, value]) => {
-//                                 if (
-//                                     value === undefined ||
-//                                     value === null
-//                                 ) {
-//                                     return;
-//                                 }
-//                                 if (
-//                                     typeof value === "object"
-//                                 ) {
-//                                     formData.append(
-//                                         key,
-//                                         JSON.stringify(value)
-//                                     );
-//                                 }
-//                                 else {
-
-//                                     formData.append(
-//                                         key,
-//                                         String(value)
-//                                     );
-//                                 }
-//                             }
-//                         );
-
-//                     formData.append(
-//                         "existingImages",
-//                         JSON.stringify(
-//                             existingImages.filter(Boolean)
-//                         )
-//                     );
-
-//                     //   New images
-//                     imageFiles
-//                         .filter(
-//                             (
-//                                 file
-//                             ): file is File =>
-//                                 file !== null
-//                         )
-//                         .forEach(
-//                             file => {
-//                                 formData.append(
-//                                     "images",
-//                                     file
-//                                 );
-//                             }
-//                         );
-
-//                     let response;
-//                     switch (productType) {
-//                         case "ebikes":
-//                             response =
-//                                 isEditing
-
-//                                     ? await updateEbike(
-//                                         editingId!,
-//                                         formData
-//                                     )
-//                                     : await createEbike(
-//                                         formData
-//                                     );
-//                             break;
-//                         case "accessories":
-//                             response =
-//                                 isEditing
-//                                     ? await updateAccessory(
-//                                         editingId!,
-//                                         formData
-//                                     )
-//                                     : await createAccessory(
-//                                         formData
-//                                     );
-//                             break;
-//                         case "enhancements":
-//                             response =
-//                                 isEditing
-//                                     ? await updateEnhancement(
-//                                         editingId!,
-//                                         formData
-//                                     )
-//                                     : await createEnhancement(
-//                                         formData
-//                                     );
-//                             break;
-//                     }
-//                     toast.success(
-//                         response?.message ??
-//                         "Product saved successfully"
-//                     );
-//                     reset(
-//                         defaultValues
-//                     );
-//                     setEditingId(null);
-//                     setExistingImages([]);
-//                     setImageFiles([
-//                         null,
-//                         null,
-//                         null,
-//                         null
-//                     ]);
-
-//                     setImagePreview([
-//                         null,
-//                         null,
-//                         null,
-//                         null
-//                     ]);
-//                     setSelectedImage(0);
-//                     setIsUnlimited(true);
-//                     setTaxIncluded("yes");
-//                 }
-//                 catch (error) {
-//                     console.error(error);
-//                     toast.error(
-//                         apiError(error) ??
-//                         "Failed to save product"
-//                     );
-//                 }
-//                 finally {
-
-//                     setIsPublishing(false);
-//                 }
-//             }
-//         );
-
-//     const populateForm = useCallback(
-//         (product: Product) => {
-//             const validInventoryStatuses:
-//                 CreateProductFormValues["inventoryStatus"][]
-//                 = [
-//                     "in-stock",
-//                     "low-stock",
-//                     "out-of-stock",
-//                 ];
-//             const inventoryStatus =
-//                 validInventoryStatuses.includes(
-//                     product.inventoryStatus as CreateProductFormValues["inventoryStatus"]
-//                 )
-//                     ? product.inventoryStatus as CreateProductFormValues["inventoryStatus"]
-//                     : "in-stock";
-//             // const variantsValue =
-//             //     "variants" in product &&
-//             //         product.variants
-//             //         ? product.variants.map(
-//             //             variant => ({
-//             //                 name: variant.name,
-//             //                 value:
-//             //                     variant.description ??
-//             //                     variant.image ??
-//             //                     ""
-//             //             })
-//             //         )
-//             //         : [];
-//             // const specsValue =
-//             //     "specs" in product &&
-//             //         product.specs
-//             //         ? Object.entries(
-//             //             product.specs
-//             //         )
-//             //             .map(
-//             //                 ([key, value]) => ({
-//             //                     key,
-//             //                     value: String(value)
-//             //                 })
-//             //             )
-//             //         : [];
-//             const productTypeMap:
-//                 Record<string, ProductType>
-//                 = {
-//                 bike: "ebikes",
-//                 accessory: "accessories",
-//                 enhancement: "enhancements"
-//             };
-
-//             const type =
-//                 productTypeMap[product.productType];
-//             console.log("Type ", type);
-
-//             setProductType(type);
-
-//             reset({
-//                 name: product.name ?? "",
-//                 description: product.description ?? "",
-//                 shortDescription: product.shortDescription ?? "",
-//                 price: product.price ?? 0,
-//                 discountPrice: product.discountPrice,
-//                 stock: product.stock ?? 0,
-//                 inventoryStatus,
-//                 category: product.category ?? "",
-//                 colors: product.colors ?? [],
-//                 // variants: variantsValue,
-//                 // features: product.features ?? [],
-//                 // specs: specsValue,
-//             });
-
-//             setEditingId(
-//                 product._id
-//             );
-//             const productImages =
-//                 (product.images ?? [])
-//                     .map(
-//                         image => ({
-//                             public_id:
-//                                 image.public_id ?? "",
-//                             secure_url:
-//                                 image.secure_url ?? ""
-//                         })
-//                     );
-//             setExistingImages(productImages.slice(0, 4));
-//             // setImagePreview([
-
-//             //     ...productImages.map(
-//             //         image => image.secure_url
-//             //     ),
-//             //     null,
-//             //     null,
-//             //     null
-//             // ].slice(0, 4));
-
-//             const previews = Array(4).fill(null);
-
-//             productImages.forEach((image, index) => {
-//                 previews[index] = image.secure_url;
-//             });
-
-//             imagePreview.forEach(url => {
-//                 if (url?.startsWith("blob:")) {
-//                     URL.revokeObjectURL(url);
-//                 }
-//             });
-
-//             setImagePreview(previews);
-
-//             setImageFiles([
-//                 null,
-//                 null,
-//                 null,
-//                 null
-//             ]);
-//         }, [reset]
-//     );
-//     return {
-//         register,
-//         control,
-//         watch,
-//         setValue,
-//         errors,
-//         reset,
-//         submit,
-//         productType,
-//         setProductType,
-//         imageFiles,
-//         imagePreview,
-//         existingImages,
-//         selectedImage,
-//         setSelectedImage,
-//         addImage,
-//         removeImage,
-//         isUnlimited,
-//         setIsUnlimited,
-//         taxIncluded,
-//         setTaxIncluded,
-//         isPublishing,
-//         imageError,
-//         populateForm,
-//         editingId,
-//         setEditingId,
-//         isEditing,
-//         colors,
-//         // variants,
-//         // features,
-//         // specs,
-//     };
-// }

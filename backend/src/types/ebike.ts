@@ -1,5 +1,6 @@
 import z from "zod";
 import { createEbikeSchema, updateEbikeSchema } from "../validators/ebike";
+import { formatCloudinaryMedia } from "../utils/cloudinary";
 
 export const EBIKE_CATEGORIES = [
   "cruiser",
@@ -29,3 +30,10 @@ export interface ProductQuery {
   search?: string;
   sort?: string;
 }
+
+export interface ExistingImage {
+  secure_url: string;
+  public_id: string;
+}
+
+export type FormattedImage = ReturnType<typeof formatCloudinaryMedia>;

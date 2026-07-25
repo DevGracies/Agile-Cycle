@@ -5,8 +5,8 @@ import type {
   CreateEnhancementInput,
   UpdateEnhancementInput,
 } from "../types/enhancement";
-import { ProductQuery } from "../types/ebike";
 import { deleteImages, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
+import { ExistingImage, FormattedImage, ProductQuery } from "../types/ebike";
 
 
 export const createEnhancementService = async (
@@ -17,6 +17,7 @@ export const createEnhancementService = async (
 
   if (files?.length) {
     const uploads = await uploadImages(files, "accessories");
+    console.log("uploads", uploads)
 
     images = uploads.map(formatCloudinaryMedia)
   }
@@ -35,43 +36,42 @@ export const createEnhancementService = async (
 export const updateEnhancementService = async (
   enhancementId: string,
   data: Partial<UpdateEnhancementInput>,
-  files: Express.Multer.File[]
+  files: Express.Multer.File[],
+  existingImages: ExistingImage[],
+  removedImages: string[]
 ) => {
   const enhancement = await Enhancement.findById(enhancementId);
   if (!enhancement) {
     throw new AppError("Enhancement not found", 404);
-  }
-  const existingImages =
-    Array.isArray(data.images)
-        ? data.images
-        : enhancement.images;
+  };
 
-  const imagesToDelete =
-    enhancement.images.filter(
-      image =>
-        !existingImages.some(
-          kept =>
-            kept.public_id === image.public_id
-        )
+  if (removedImages.length) {
+    await deleteImages(
+      removedImages
     );
-  if (imagesToDelete.length) {
-    await deleteImages(imagesToDelete.map(image => image.public_id));
   }
 
-  let uploadedImages: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
+  let uploadedImages: FormattedImage[] = [];
   if (files?.length) {
     const uploads =
-      await uploadImages(files, "enhancements");
+      await uploadImages(
+        files,
+        "enhancements"
+      );
     uploadedImages =
-      uploads.map(formatCloudinaryMedia);
+      uploads.map(
+        formatCloudinaryMedia
+      );
   }
+  const finalImages = [
+    ...existingImages,
+    ...uploadedImages
+  ];
   enhancement.set({
     ...data,
-    images: [
-      ...existingImages,
-      ...uploadedImages
-    ]
+    images: finalImages,
   });
+
   await enhancement.save();
   return enhancement;
 };

@@ -13,13 +13,13 @@ router.get("/:id", getEbike);
 router.use(authenticate, );
 router.post(
     "/",
-    upload.array("images", 5),
+    upload.array("images", 4),
     createEbike
 );
 
 router.patch(
     "/:id",
-    upload.array("images", 5),
+    upload.array("images", 4),
     updateEbike
 );
 

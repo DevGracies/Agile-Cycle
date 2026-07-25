@@ -3,6 +3,16 @@ import { GetEbikeResponse, GetEbikesResponse, ProductFilters } from "../types/eb
 import { buildQueryParams } from "../utils/product";
 import { api } from "./api.service";
 
+export const getEbikes = async (category: string) => {
+    const { data } = await api.get("/ebikes", {
+        params: {
+            category,
+        },
+    });
+
+    return data;
+};
+
 export const getAllEbikes = async (
     filters?: Partial<ProductFilters>
 ): Promise<GetEbikesResponse> => {

@@ -16,6 +16,7 @@ import orderRouter from "./routes/order"
 import cartRouter from "./routes/cart"
 import blogRouter from "./routes/blog";
 import commentRoutes from "./routes/comment";
+import dashboardRoutes from "./routes/dashboard-stats";
 
 import passport from "passport";
 import "./config/passport";
@@ -45,6 +46,7 @@ app.use("/api/orders", orderRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/blogss", commentRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 app.use(errorHandler);
 

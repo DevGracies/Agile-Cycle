@@ -2,9 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import ArchiveIcon from '@mui/icons-material/Archive';
+import { getProductsInStock } from '../../../services/dashboard.service';
 
 const DigitalClock = () => {
   const [time, setTime] = useState(new Date());
+  const [stats, setStats] = useState({
+    ebikes: 0,
+    accessories: 0,
+    enhancements: 0
+  });
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -17,71 +23,91 @@ const DigitalClock = () => {
     hour12: true,
   }).toLowerCase();
 
+  const getStats = async () => {
+    try {
+
+      const response = await getProductsInStock();
+
+      setStats({
+        ebikes: response.data.ebikes,
+        accessories: response.data.accessories,
+        enhancements: response.data.enhancements
+      });
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  useEffect(() => {
+    getStats()
+  }, [])
+
+  console.log(stats.ebikes)
   return (
-   <div className='bg-white rounded-[0.5rem]'>
-    <div >
-       <div className="relative w-64 h-64 flex items-center justify-center max-[767px]:mx-[auto] ">
-      <svg className="absolute w-full h-full transform -rotate-90">
-        <circle
-          cx="128"
-          cy="128"
-          r="85"
-          stroke="#f0fdf4"
-          strokeWidth="10"
-          fill="transparent"
-        />
-      </svg>
+    <div className='bg-white rounded-[0.5rem]'>
+      <div >
+        <div className="relative w-64 h-64 flex items-center justify-center max-[767px]:mx-[auto] ">
+          <svg className="absolute w-full h-full transform -rotate-90">
+            <circle
+              cx="128"
+              cy="128"
+              r="85"
+              stroke="#f0fdf4"
+              strokeWidth="10"
+              fill="transparent"
+            />
+          </svg>
 
-      {/* LAYER 2: The Rotating Progress Segment and Dot */}
-      <div className="absolute w-full h-full animate-[spin_8s_linear_infinite]">
-        <svg className="w-full h-full transform -rotate-90">
-          <defs>
-            <linearGradient id="clockGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#166534" />
-              <stop offset="100%" stopColor="#86efac" />
-            </linearGradient>
-          </defs>
-          <circle
-            cx="128"
-            cy="128"
-            r="85"
-            stroke="url(#clockGradient)"
-            strokeWidth="12"
-            fill="transparent"
-            strokeDasharray="534"
-            strokeDashoffset="410" /* Length of the green arc */
-            strokeLinecap="round"
-          />
-        </svg>
+          {/* LAYER 2: The Rotating Progress Segment and Dot */}
+          <div className="absolute w-full h-full animate-[spin_8s_linear_infinite]">
+            <svg className="w-full h-full transform -rotate-90">
+              <defs>
+                <linearGradient id="clockGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#166534" />
+                  <stop offset="100%" stopColor="#86efac" />
+                </linearGradient>
+              </defs>
+              <circle
+                cx="128"
+                cy="128"
+                r="85"
+                stroke="url(#clockGradient)"
+                strokeWidth="12"
+                fill="transparent"
+                strokeDasharray="534"
+                strokeDashoffset="410" /* Length of the green arc */
+                strokeLinecap="round"
+              />
+            </svg>
 
-        
+
+          </div>
+
+          {/* LAYER 3: The Static Center */}
+          <div className="relative z-10 flex flex-col items-center justify-center w-44 h-44 bg-white rounded-full shadow-[inset_0_2px_8px_rgba(0,0,0,0.06)]">
+            <span className="text-2xl font-bold text-gray-900 tracking-tight">
+              {formattedTime}
+            </span>
+          </div>
+        </div>
       </div>
-
-      {/* LAYER 3: The Static Center */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-44 h-44 bg-white rounded-full shadow-[inset_0_2px_8px_rgba(0,0,0,0.06)]">
-        <span className="text-2xl font-bold text-gray-900 tracking-tight">
-          {formattedTime}
-        </span>
-      </div>
-    </div>
-    </div>
-    <div className='pl-[0.8rem]  max-[767px]:pl-[2.8rem] max-[397px]:pl-[1rem]'>
-      <div className='flex mb-[1rem] '>
-          <ArchiveIcon className='text-[#01430d]'/>
+      <div className='pl-[0.8rem]  max-[767px]:pl-[2.8rem] max-[397px]:pl-[1rem]'>
+        <div className='flex mb-[1rem] '>
+          <ArchiveIcon className='text-[#01430d]' />
           <div className='ml-[0.7rem]'>
             <h3 className='font-bold mb-[0.2rem]'>Ebike in Stock</h3>
-            <p className='text-[0.78rem] text-gray-500'>520</p>
+            <p className='text-[0.78rem] text-gray-500'>{stats.ebikes} </p>
           </div>
-    </div>
-    <div className='flex mb-[1rem]'>
-          <ArchiveIcon  className='text-[#519a09]'/>
+        </div>
+        <div className='flex mb-[1rem]'>
+          <ArchiveIcon className='text-[#519a09]' />
           <div className='ml-[0.7rem]'>
             <h3 className='font-bold mb-[0.2rem]'>Accessories in Stock</h3>
-            <p className='text-[0.78rem] text-gray-500'>180</p>
+            <p className='text-[0.78rem] text-gray-500'>{stats.accessories}</p>
           </div>
-    </div>
-    <div className='flex mb-[1rem]'>
-          <ArchiveIcon  className='text-[#ddeee1]'/>
+        </div>
+        <div className='flex mb-[1rem]'>
+          <ArchiveIcon className='text-[#ddeee1]' />
           <div className='ml-[0.7rem]'>
             <h3 className='font-bold mb-[0.2rem]'>Life Time Sells</h3>
             <div className='text-[0.78rem] text-gray-500 flex'>
@@ -90,9 +116,9 @@ const DigitalClock = () => {
               <p >Ebike: 300</p>
             </div>
           </div>
+        </div>
+      </div>
     </div>
-    </div>
-   </div>
   );
 };
 

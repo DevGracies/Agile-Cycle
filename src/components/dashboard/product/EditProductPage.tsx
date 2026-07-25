@@ -4,7 +4,7 @@ import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDown
 import Loader from "../../ui/Loader";
 import { useCreateProductForm } from "@/src/hooks/useCreateProductForm";
 import { ProductType } from "@/src/services/cart.service";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useProduct } from "@/src/hooks/useProducts";
 
@@ -13,7 +13,6 @@ export default function EditProductPage({ edit }: { edit?: string }) {
 
   const editId = searchParams.get("edit");
 
-  const isEditing = !!editId;
   const {
     data,
     isLoading
@@ -25,6 +24,7 @@ export default function EditProductPage({ edit }: { edit?: string }) {
     watch,
     setValue,
     submit,
+    isEditing,
 
     errors,
 
@@ -56,16 +56,40 @@ export default function EditProductPage({ edit }: { edit?: string }) {
     // specs,
   } = useCreateProductForm();
 
-  console.log("productType", productType)
+  const hasPopulated = useRef(false);
+
+
+  useEffect(() => {
+    if (
+      !data?.data ||
+      hasPopulated.current
+    ) return;
+
+    populateForm(data.data);
+    hasPopulated.current = true;
+  }, [
+    data?.data,
+    populateForm
+  ]);
+
+
   useEffect(() => {
     if (!data?.data) return;
-    populateForm(data?.data);
-  }, [data, populateForm]);
+
+    setValue(
+      "category",
+      data.data.category
+    );
+
+  }, [
+    data?.data,
+    setValue
+  ]);
 
   const hasImages =
     imageFiles.some(Boolean) ||
     imagePreview.some(Boolean);
-    
+
   return (
     <form
       onSubmit={submit}

@@ -4,9 +4,9 @@ import type {
   CreateAccessoryInput,
   UpdateAccessoryInput,
 } from "../types/accessory";
-import { ProductQuery } from "../types/ebike";
 import { Accessory } from "../models/accessories";
 import { deleteImages, formatCloudinaryMedia, uploadImages } from "../utils/cloudinary";
+import { ExistingImage, FormattedImage, ProductQuery } from "../types/ebike";
 
 
 export const createAccessoryService = async (
@@ -17,6 +17,9 @@ export const createAccessoryService = async (
 
   if (files?.length) {
     const uploads = await uploadImages(files, "accessories");
+
+    console.log("uploads", uploads)
+
 
     images = uploads.map(formatCloudinaryMedia)
   }
@@ -35,43 +38,42 @@ export const createAccessoryService = async (
 export const updateAccessoryService = async (
   accessoryId: string,
   data: Partial<UpdateAccessoryInput>,
-  files: Express.Multer.File[]
+  files: Express.Multer.File[],
+  existingImages: ExistingImage[],
+  removedImages: string[]
 ) => {
   const accessory = await Accessory.findById(accessoryId);
   if (!accessory) {
     throw new AppError("Accessory not found", 404);
-  }
-  const existingImages =
-    Array.isArray(data.images)
-      ? data.images
-      : accessory.images;
+  };
 
-  const imagesToDelete =
-    accessory.images.filter(
-      image =>
-        !existingImages.some(
-          kept =>
-            kept.public_id === image.public_id
-        )
+  if (removedImages.length) {
+    await deleteImages(
+      removedImages
     );
-  if (imagesToDelete.length) {
-    await deleteImages(imagesToDelete.map(image => image.public_id));
   }
 
-  let uploadedImages: Array<ReturnType<typeof formatCloudinaryMedia>> = [];
+  let uploadedImages: FormattedImage[] = [];
   if (files?.length) {
     const uploads =
-      await uploadImages(files, "accessories");
+      await uploadImages(
+        files,
+        "accessories"
+      );
     uploadedImages =
-      uploads.map(formatCloudinaryMedia);
+      uploads.map(
+        formatCloudinaryMedia
+      );
   }
+  const finalImages = [
+    ...existingImages,
+    ...uploadedImages
+  ];
   accessory.set({
     ...data,
-    images: [
-      ...existingImages,
-      ...uploadedImages
-    ]
+    images: finalImages,
   });
+
   await accessory.save();
   return accessory;
 };

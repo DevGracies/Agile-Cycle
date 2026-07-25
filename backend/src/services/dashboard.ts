@@ -33,6 +33,23 @@ export const getProductService = async (id: string) => {
     return product;
 };
 
+export const getProductsInStockService = async () => {
+    const [ebikes, accessories, enhancements] = await Promise.all([
+        Ebike.countDocuments({ stock: { $gt: 0 } }),
+        Accessory.countDocuments({ stock: { $gt: 0 } }),
+        Enhancement.countDocuments({ stock: { $gt: 0 } }),
+    ])
+
+    console.log(ebikes)
+    return {
+        ebikes, 
+        accessories,
+        enhancements,
+    };
+};
+
+
+
 export const getAllProductsService = async (
     query: ProductQuery
 ) => {
@@ -58,11 +75,11 @@ export const getAllProductsService = async (
         accessories,
         enhancements
     ] = await Promise.all([
-        Ebike.find({isActive: true})
+        Ebike.find({ isActive: true })
             .lean(),
-        Accessory.find({isActive: true})
+        Accessory.find({ isActive: true })
             .lean(),
-        Enhancement.find({isActive: true})
+        Enhancement.find({ isActive: true })
             .lean(),
 
     ]);
